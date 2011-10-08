@@ -1,0 +1,34 @@
+>ruby site_monitor.rb
+
+Time: Friday 04/02/10 05:28 PM
+Reading data from Excel Workbook: C:/Ruby/lib/ruby/gems/1.8/gems/watirworks-0.0.1/test/examples/site_monitor/site_monitor_data.xls
+Reading spreadsheet SMTP from Excel workbook file found at: C:/Ruby/lib/ruby/gems/1.8/gems/watirworks-0.0.1/test/examples/site_monitor/site_monitor_data.xls
+Reading spreadsheet SITES from Excel workbook file found at: C:/Ruby/lib/ruby/gems/1.8/gems/watirworks-0.0.1/test/examples/site_monitor/site_monitor_data.xls
+
+Montioring site: Google
+ URL: http://www.google.com/
+ Notify: my_account@my_domain.com
+ Starting a new ie browser object.
+ Closing the browser
+ Passed URL: http://www.google.com/
+
+Montioring site: Yahoo
+ URL: http://www.bing.com/
+ Notify: my_account@my_domain.com another_account@another_domain.biz
+ Starting a new ie browser object.
+ Closing the browser
+ Passed URL: http://www.bing.com/
+
+Montioring site: Bogus Website
+ URL: http://no-such.site.gov
+ Notify: joedio@comcast.net
+ Starting a new ie browser object.
+ Closing the browser
+ Passed URL: http://no-such.site.gov
+Loaded suite site_monitor
+Started
+
+Finished in 0.0 seconds.
+
+0 tests, 0 assertions, 0 failures, 0 errors
+>Exit code: 0
