@@ -427,6 +427,132 @@ module WatirWorks_MacUtilities
   
   #=============================================================================#
   #--
+  # Method: is_firefox8_installed_mac?()
+  #
+  #++
+  #
+  # Description: Determines if Firefox 8.x is installed in the filesystem.
+  #
+  #              On OSX the the Firefox version is noted in the file:
+  #                 /Applications/Firefox.app/Contents/Info.plist
+  #              For example Firefox v8.0.1 contains this entry:
+  #                 <string>Firefox 8.0.1</string>
+  #
+  # Returns: BOOLEAN = true if installed, otherwise false
+  #
+  # Usage Examples:
+  #                 if(is_firefox8_installed_mac?())
+  #                      # Execute FF8 specific code
+  #                 end
+  #
+  #=============================================================================#
+  def is_firefox8_installed_mac?()
+    
+    # Define values
+    sPathToFile = "/Applications/Firefox.app/Contents/Info.plist"
+    sStringtoMatch = "Firefox 8"
+    
+    aMatch = get_text_from_file(sStringtoMatch, sPathToFile, 0, 0)
+    
+    # Check for a match
+    aMatch.each do | aIndex |
+      if(aIndex[0] == true)
+        return true
+      else
+        return false
+      end
+    end # Check for a match
+    
+    
+  end # Method - is_firefox8_installed_mac?()
+  
+  
+  #=============================================================================#
+  #--
+  # Method: is_firefox9_installed_mac?()
+  #
+  #++
+  #
+  # Description: Determines if Firefox 9.x is installed in the filesystem.
+  #
+  #              On OSX the the Firefox version is noted in the file:
+  #                 /Applications/Firefox.app/Contents/Info.plist
+  #              For example Firefox v9.0.1 contains this entry:
+  #                 <string>Firefox 9.0.1</string>
+  #
+  # Returns: BOOLEAN = true if installed, otherwise false
+  #
+  # Usage Examples:
+  #                 if(is_firefox9_installed_mac?())
+  #                      # Execute FF9 specific code
+  #                 end
+  #
+  #=============================================================================#
+  def is_firefox9_installed_mac?()
+    
+    # Define values
+    sPathToFile = "/Applications/Firefox.app/Contents/Info.plist"
+    sStringtoMatch = "Firefox 9"
+    
+    aMatch = get_text_from_file(sStringtoMatch, sPathToFile, 0, 0)
+    
+    # Check for a match
+    aMatch.each do | aIndex |
+      if(aIndex[0] == true)
+        return true
+      else
+        return false
+      end
+    end # Check for a match
+    
+    
+  end # Method - is_firefox9_installed_mac?()
+  
+  
+  #=============================================================================#
+  #--
+  # Method: is_firefox10_installed_mac?()
+  #
+  #++
+  #
+  # Description: Determines if Firefox 10.x is installed in the filesystem.
+  #
+  #              On OSX the the Firefox version is noted in the file:
+  #                 /Applications/Firefox.app/Contents/Info.plist
+  #              For example Firefox v10.0.1 contains this entry:
+  #                 <string>Firefox 10.0.1</string>
+  #
+  # Returns: BOOLEAN = true if installed, otherwise false
+  #
+  # Usage Examples:
+  #                 if(is_firefox10_installed_mac?())
+  #                      # Execute FF10 specific code
+  #                 end
+  #
+  #=============================================================================#
+  def is_firefox10_installed_mac?()
+    
+    # Define values
+    sPathToFile = "/Applications/Firefox.app/Contents/Info.plist"
+    sStringtoMatch = "Firefox 10"
+    
+    aMatch = get_text_from_file(sStringtoMatch, sPathToFile, 0, 0)
+    
+    # Check for a match
+    aMatch.each do | aIndex |
+      if(aIndex[0] == true)
+        return true
+      else
+        return false
+      end
+    end # Check for a match
+    
+    
+  end # Method - is_firefox10_installed_mac?()
+  
+  
+  #=============================================================================#
+  #--
   # Method: save_screencapture_mac()
   #
   #++

@@ -450,6 +450,152 @@ module WatirWorks_LinuxUtilities
     
   end # Method - is_firefox7_installed_linux?()
   
+  
+  
+  #=============================================================================#
+  #--
+  # Method: is_firefox8_installed_linux?()
+  #
+  #++
+  #
+  # Description: Determines if Firefox 8.x is installed in the filesystem
+  #              by checking for the existence of its installation directory.
+  #
+  #              On Ubuntu 10.04 the link to the Firefox executable at: /usr/bin/firefox
+  #              and the Firefox v8.x.x install dir is: /usr/lib/firefox8.x.x/
+  #
+  #  NOTE: This is a slow way to do it, as it recursively checks the contents
+  #        of /usr/lib which contains the install folders for many applications.
+  #
+  # Returns: BOOLEAN = true if installed, otherwise false
+  #
+  # Usage Examples:
+  #                 if(is_firefox8_installed_linux?())
+  #                      # Execute FF8 specific code
+  #                 end
+  #
+  #=============================================================================#
+  def is_firefox8_installed_linux?()
+    
+    require 'find'
+    
+    # Recursively search the directory
+    Find.find("/usr/lib/") do | path |
+      
+      if($VERBOSE)
+        puts2("Searching: " + path)
+      end
+      
+      # Check current path for a match
+      if(path =~ /firefox-8/)
+        if($VERBOSE)
+          puts2("Found: " + path)
+        end
+        
+        return true
+        
+      end # Check current path for a match
+    end # Recursively search the directory
+    
+  end # Method - is_firefox8_installed_linux?()
+  
+  
+  #=============================================================================#
+  #--
+  # Method: is_firefox9_installed_linux?()
+  #
+  #++
+  #
+  # Description: Determines if Firefox 9.x is installed in the filesystem
+  #              by checking for the existence of its installation directory.
+  #
+  #              On Ubuntu 10.04 the link to the Firefox executable at: /usr/bin/firefox
+  #              and the Firefox v9.x.x install dir is: /usr/lib/firefox9.x.x/
+  #
+  #  NOTE: This is a slow way to do it, as it recursively checks the contents
+  #        of /usr/lib which contains the install folders for many applications.
+  #
+  # Returns: BOOLEAN = true if installed, otherwise false
+  #
+  # Usage Examples:
+  #                 if(is_firefox9_installed_linux?())
+  #                      # Execute FF9 specific code
+  #                 end
+  #
+  #=============================================================================#
+  def is_firefox9_installed_linux?()
+    
+    require 'find'
+    
+    # Recursively search the directory
+    Find.find("/usr/lib/") do | path |
+      
+      if($VERBOSE)
+        puts2("Searching: " + path)
+      end
+      
+      # Check current path for a match
+      if(path =~ /firefox-9/)
+        if($VERBOSE)
+          puts2("Found: " + path)
+        end
+        
+        return true
+        
+      end # Check current path for a match
+    end # Recursively search the directory
+    
+  end # Method - is_firefox9_installed_linux?()
+  
+  
+  #=============================================================================#
+  #--
+  # Method: is_firefox10_installed_linux?()
+  #
+  #++
+  #
+  # Description: Determines if Firefox 10.x is installed in the filesystem
+  #              by checking for the existence of its installation directory.
+  #
+  #              On Ubuntu 10.04 the link to the Firefox executable at: /usr/bin/firefox
+  #              and the Firefox v10.x.x install dir is: /usr/lib/firefox10.x.x/
+  #
+  #  NOTE: This is a slow way to do it, as it recursively checks the contents
+  #        of /usr/lib which contains the install folders for many applications.
+  #
+  # Returns: BOOLEAN = true if installed, otherwise false
+  #
+  # Usage Examples:
+  #                 if(is_firefox10_installed_linux?())
+  #                      # Execute FF10 specific code
+  #                 end
+  #
+  #=============================================================================#
+  def is_firefox10_installed_linux?()
+    
+    require 'find'
+    
+    # Recursively search the directory
+    Find.find("/usr/lib/") do | path |
+      
+      if($VERBOSE)
+        puts2("Searching: " + path)
+      end
+      
+      # Check current path for a match
+      if(path =~ /firefox-10/)
+        if($VERBOSE)
+          puts2("Found: " + path)
+        end
+        
+        return true
+        
+      end # Check current path for a match
+    end # Recursively search the directory
+    
+  end # Method - is_firefox10_installed_linux?()
+  
+  
   #=============================================================================#
   #--
   # Method: save_screencapture_linux()

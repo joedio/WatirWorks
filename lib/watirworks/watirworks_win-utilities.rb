@@ -1348,6 +1348,101 @@ module WatirWorks_WinUtilities
   
   #=============================================================================#
   #--
+  # Method: is_firefox8_installed_win?()
+  #++
+  #
+  # Description: Determines if the Windows Registry contains an Firefox 8.x entry.
+  #              This typically indicates that FF8 is installed as the default FF browser
+  #
+  # Returns: BOOLEAN - true if registered, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage examples:
+  #                 if(is_firefox8_installed_win?())
+  #                      # Execute FF8 specific code
+  #                 end
+  #
+  #=============================================================================#
+  def is_firefox8_installed_win?()
+    
+    if(is_win?) # Only run on Windows
+      
+      # Check the first character of the registered version for a match
+      if((get_registered_firefox_version[0].chr) == "8")
+        return true
+      else
+        return false
+      end
+    end # Only run on Windows
+  end # Function - is_firefox8_installed_win?()
+  
+  
+  #=============================================================================#
+  #--
+  # Method: is_firefox9_installed_win?()
+  #++
+  #
+  # Description: Determines if the Windows Registry contains an Firefox 9.x entry.
+  #              This typically indicates that FF9 is installed as the default FF browser
+  #
+  # Returns: BOOLEAN - true if registered, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage examples:
+  #                 if(is_firefox9_installed_win?())
+  #                      # Execute FF9 specific code
+  #                 end
+  #
+  #=============================================================================#
+  def is_firefox9_installed_win?()
+    
+    if(is_win?) # Only run on Windows
+      
+      # Check the first character of the registered version for a match
+      if((get_registered_firefox_version[0].chr) == "9")
+        return true
+      else
+        return false
+      end
+    end # Only run on Windows
+  end # Function - is_firefox9_installed_win?()
+  
+  
+  #=============================================================================#
+  #--
+  # Method: is_firefox10_installed_win?()
+  #++
+  #
+  # Description: Determines if the Windows Registry contains an Firefox 10.x entry.
+  #              This typically indicates that FF10 is installed as the default FF browser
+  #
+  # Returns: BOOLEAN - true if registered, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage examples:
+  #                 if(is_firefox10_installed_win?())
+  #                      # Execute FF10 specific code
+  #                 end
+  #
+  #=============================================================================#
+  def is_firefox10_installed_win?()
+    
+    if(is_win?) # Only run on Windows
+      
+      # Check the first character of the registered version for a match
+      if((get_registered_firefox_version[0].chr) == "10")
+        return true
+      else
+        return false
+      end
+    end # Only run on Windows
+  end # Function - is_firefox10_installed_win?()
+  
+  #=============================================================================#
+  #--
   # Method: is_ie6_installed?()
   #++
   #
@@ -2164,7 +2259,7 @@ module WatirWorks_WinUtilities
       
       # Combine the elements to make a unique file name prefix
       sFilename = sFileNamePrefix + sScreen_Region + Time.now.strftime(DATETIME_FILEFORMAT).to_s + sFileExt
-     
+      
       sFullPathToImageFile = sOutputDir + "\\" + sFilename
       #sFullPathToImageFile = File.join(sOutputDir, sFilename)
       

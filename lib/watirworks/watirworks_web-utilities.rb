@@ -2504,6 +2504,90 @@ module WatirWorks_WebUtilities
   
   #=============================================================================#
   #--
+  # Method: is_firefox8?()
+  #
+  #++
+  #
+  # Description: Identifies if running a Firefox 8.x browser
+  #
+  # Returns: BOOLEAN - true if browser is Firefox 8.x, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_firefox8?())
+  #                      # Execute Firefox specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_firefox8?()
+    
+    if((self.is_firefox?) && (is_firefox8_installed?))
+      return true
+    else
+      return false
+    end
+  end
+  
+  alias is_ff8? is_firefox8?
+  
+  #=============================================================================#
+  #--
+  # Method: is_firefox9?()
+  #
+  #++
+  #
+  # Description: Identifies if running a Firefox 9.x browser
+  #
+  # Returns: BOOLEAN - true if browser is Firefox 9.x, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_firefox9?())
+  #                      # Execute Firefox specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_firefox9?()
+    
+    if((self.is_firefox?) && (is_firefox9_installed?))
+      return true
+    else
+      return false
+    end
+  end
+  
+  alias is_ff9? is_firefox9?
+  
+  #=============================================================================#
+  #--
+  # Method: is_firefox10?()
+  #
+  #++
+  #
+  # Description: Identifies if running a Firefox 10.x browser
+  #
+  # Returns: BOOLEAN - true if browser is Firefox 10.x, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_firefox10?())
+  #                      # Execute Firefox specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_firefox10?()
+    
+    if((self.is_firefox?) && (is_firefox10_installed?))
+      return true
+    else
+      return false
+    end
+  end
+  
+  alias is_ff10? is_firefox10?
+  
+  #=============================================================================#
+  #--
   # Method: is_firefox2_installed?()
   #
   #++
@@ -2669,6 +2753,96 @@ module WatirWorks_WebUtilities
       return is_firefox7_installed_linux?()
     elsif(is_osx?)
       return is_firefox7_installed_mac?()
+    end
+  end
+  
+  
+  
+  #=============================================================================#
+  #--
+  # Method: is_firefox8_installed?()
+  #
+  #++
+  #
+  # Description: Identifies if a Firefox 8 browser in installed on the OS
+  #
+  # Returns: BOOLEAN - true if a Firefox 8 browser is installed, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_firefox8_installed?())
+  #                      # Execute Firefox specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_firefox8_installed?()
+    
+    if(is_win?)
+      return is_firefox8_installed_win?()
+    elsif(is_linux?)
+      return is_firefox8_installed_linux?()
+    elsif(is_osx?)
+      return is_firefox8_installed_mac?()
+    end
+  end
+  
+  
+  
+  #=============================================================================#
+  #--
+  # Method: is_firefox9_installed?()
+  #
+  #++
+  #
+  # Description: Identifies if a Firefox 9 browser in installed on the OS
+  #
+  # Returns: BOOLEAN - true if a Firefox 9 browser is installed, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_firefox9_installed?())
+  #                      # Execute Firefox specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_firefox7_installed?()
+    
+    if(is_win?)
+      return is_firefox9_installed_win?()
+    elsif(is_linux?)
+      return is_firefox9_installed_linux?()
+    elsif(is_osx?)
+      return is_firefox9_installed_mac?()
+    end
+  end
+  
+  
+  
+  #=============================================================================#
+  #--
+  # Method: is_firefox10_installed?()
+  #
+  #++
+  #
+  # Description: Identifies if a Firefox 10 browser in installed on the OS
+  #
+  # Returns: BOOLEAN - true if a Firefox 10 browser is installed, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_firefox10_installed?())
+  #                      # Execute Firefox specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_firefox10_installed?()
+    
+    if(is_win?)
+      return is_firefox10_installed_win?()
+    elsif(is_linux?)
+      return is_firefox10_installed_linux?()
+    elsif(is_osx?)
+      return is_firefox10_installed_mac?()
     end
   end
   
