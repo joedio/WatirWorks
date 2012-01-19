@@ -1,7 +1,7 @@
 #=============================================================================#
 # File: watirworks_linux-utilities.rb
 #
-#  Copyright (c) 2008-2011, Joe DiMauro
+#  Copyright (c) 2008-2012, Joe DiMauro
 #  All rights reserved.
 #
 # Description:
@@ -54,12 +54,13 @@ require 'rubygems'
 # Methods:
 #    clear_cache_linux()
 #    get_firefox_version_linux()
-#    is_firefox2_installed_linux?
-#    is_firefox3_installed_linux?
-#    is_firefox4_installed_linux?
-#    is_firefox5_installed_linux?
-#    is_firefox6_installed_linux?
-#    is_firefox7_installed_linux?
+#    is_firefox_installed_linux?(...)
+#    is_firefox2_installed_linux? # Deprecated use is_firefox_installed_linux?(2)
+#    is_firefox3_installed_linux? # Deprecated use is_firefox_installed_linux?(3)
+#    is_firefox4_installed_linux? # Deprecated use is_firefox_installed_linux?(4)
+#    is_firefox5_installed_linux? # Deprecated use is_firefox_installed_linux?(5)
+#    is_firefox6_installed_linux? # Deprecated use is_firefox_installed_linux?(6)
+#    is_firefox7_installed_linux? # Deprecated use is_firefox_installed_linux?(7)
 #    save_screencapture_linux(...)
 #
 # Pre-requisites:
@@ -162,6 +163,61 @@ module WatirWorks_LinuxUtilities
     end # Check for a match
     
   end # Method - get_firefox_version_linux()
+  
+  
+  #=============================================================================#
+  #--
+  # Method: is_firefox_installed_linux?(...)
+  #
+  #++
+  #
+  # Description: Determines if the specified Firefox version is installed in the filesystem
+  #              by checking for the existence of its installation directory.
+  #
+  #              On Ubuntu 10.04 the link to the Firefox executable at: /usr/bin/firefox
+  #              and the Firefox v2.0.0.20 install dir is: /usr/lib/firefox2.0.0.20/
+  #
+  #  NOTE: This is a slow way to do it as it recursively checks the contents
+  #        of /usr/lib which contains the install folders for many applications.
+  #
+  # Returns: BOOLEAN = true if installed, otherwise false
+  #
+  # Usage Examples:
+  #                 if(is_firefox_installed_linux?(7))
+  #                      # Execute FF7 specific code
+  #                 end
+  #
+  #=============================================================================#
+  def is_firefox_installed_linux?(iVersion = 7)
+    
+    if($VERBOSE == true)
+      puts2("Parameters - is_firefox_installed_linux?")
+      puts2("  iVersion " + iVersion.to_s)
+    end
+    
+    require 'find'
+    
+    sVersion = iVersion.to_s
+    
+    # Recursively search the directory
+    Find.find("/usr/lib/") do | path |
+      
+      if($VERBOSE)
+        puts2("Searching: " + path)
+      end
+      
+      # Check current path for a match
+      if(path =~ /firefox-#{sVersion}/)
+        if($VERBOSE)
+          puts2("Found: " + path)
+        end
+        
+        return true
+        
+      end # Check current path for a match
+    end # Recursively search the directory
+    
+  end # Method - is_firefox_installed_linux?(...)
   
   #=============================================================================#
   #--

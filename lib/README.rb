@@ -2,7 +2,7 @@
 
 :title:WatirWorks Rdoc
 
-Copyright (c) 2008-2011, Joe DiMauro. All rights reserved.
+Copyright (c) 2008-2012, Joe DiMauro. All rights reserved.
 
 = Welcome to WatirWorks!
 

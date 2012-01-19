@@ -1,7 +1,7 @@
 #=============================================================================#
 # File: watirworks_mac-utilities.rb
 #
-#  Copyright (c) 2008-2010, Joe DiMauro
+#  Copyright (c) 2008-2012, Joe DiMauro
 #  All rights reserved.
 #
 # Description:
@@ -54,12 +54,13 @@ require 'rubygems'
 # Methods:
 #    clear_cache_mac()
 #    get_firefox_version_mac()
-#    is_firefox2_installed_mac()
-#    is_firefox3_installed_mac()
-#    is_firefox4_installed_mac()
-#    is_firefox5_installed_mac()
-#    is_firefox6_installed_mac()
-#    is_firefox7_installed_mac()
+#    is_firefox_installed_mac(...)
+#    is_firefox2_installed_mac() # Deprecated use is_firefox2_installed_mac(2)
+#    is_firefox3_installed_mac() # Deprecated use is_firefox2_installed_mac(3)
+#    is_firefox4_installed_mac() # Deprecated use is_firefox2_installed_mac(4)
+#    is_firefox5_installed_mac() # Deprecated use is_firefox2_installed_mac(5)
+#    is_firefox6_installed_mac() # Deprecated use is_firefox2_installed_mac(6)
+#    is_firefox7_installed_mac() # Deprecated use is_firefox2_installed_mac(7)
 #    save_screencapture_mac(...)
 #
 # Pre-requisites:
@@ -173,6 +174,54 @@ module WatirWorks_MacUtilities
     end # Parse version
     
   end # Method - get_firefox_version_mac()
+  
+  
+  
+  #=============================================================================#
+  #--
+  # Method: is_firefox_installed_mac?(...)
+  #
+  #++
+  #
+  # Description: Determines the specified version of Firefox is installed in the filesystem.
+  #
+  #              On OSX the the Firefox version is noted in the file:
+  #                 /Applications/Firefox.app/Contents/Info.plist
+  #              For example Firefox v2.1.2 contains this entry:
+  #                 <string>Firefox 2.1.2</string>
+  #
+  # Returns: BOOLEAN = true if installed, otherwise false
+  #
+  # Usage Examples:
+  #                 if(is_firefox_installed_mac?(7))
+  #                      # Execute FF7 specific code
+  #                 end
+  #
+  #=============================================================================#
+  def is_firefox_installed_mac?(iVersion = 7)
+    
+    if($VERBOSE == true)
+      puts2("Parameters - is_firefox_installed_mac?")
+      puts2("  iVersion " + iVersion.to_s)
+    end
+    
+    # Define values
+    sVersion = iVersion.to_s
+    sPathToFile = "/Applications/Firefox.app/Contents/Info.plist"
+    sStringtoMatch = "Firefox #{sVersion}"
+    
+    aMatch = get_text_from_file(sStringtoMatch, sPathToFile, 0, 0)
+    
+    # Check for a match
+    aMatch.each do | aIndex |
+      if(aIndex[0] == true)
+        return true
+      else
+        return false
+      end
+    end # Check for a match
+    
+  end # Method - is_firefox_installed_mac?(...)
   
   #=============================================================================#
   #--

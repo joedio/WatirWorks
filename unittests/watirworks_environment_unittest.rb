@@ -2,7 +2,7 @@
 #=============================================================================#
 # File: watirworks_environment_unittest.rb
 #
-#  Copyright (c) 2008-2010, Joe DiMauro
+#  Copyright (c) 2008-2012, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for WatirWorks methods:
@@ -185,21 +185,22 @@ class UnitTest_Enviroment < Test::Unit::TestCase
     if(is_win?)
       
       puts2("\nRegistered IE version: " + get_registered_ie_version)
-      puts2("Is IE6: " + is_ie6_installed?.to_s)
-      puts2("Is IE7: " + is_ie7_installed?.to_s)
-      puts2("Is IE8: " + is_ie8_installed?.to_s)
-      puts2("Is IE9: " + is_ie9_installed?.to_s)
+      puts2("Is IE6: " + is_ie_installed?(6).to_s)
+      puts2("Is IE7: " + is_ie_installed?(7).to_s)
+      puts2("Is IE8: " + is_ie_installed?(8).to_s)
+      puts2("Is IE9: " + is_ie_installed?(9).to_s)
+      puts2("Is IE10: " + is_ie_installed?(10).to_s)
       
       puts2("\nRegistered Firefox version: " + get_registered_firefox_version)
-      puts2("Is FF2: " + is_firefox2_installed?.to_s)
-      puts2("Is FF3: " + is_firefox3_installed?.to_s)
-      puts2("Is FF4: " + is_firefox4_installed?.to_s)
-      puts2("Is FF5: " + is_firefox5_installed?.to_s)
-      puts2("Is FF6: " + is_firefox6_installed?.to_s)
-      puts2("Is FF7: " + is_firefox7_installed?.to_s)
-      puts2("Is FF8: " + is_firefox8_installed?.to_s)
-      puts2("Is FF9: " + is_firefox9_installed?.to_s)
-      puts2("Is FF10: " + is_firefox10_installed?.to_s)
+      puts2("Is FF2: " + is_firefox_installed?(2).to_s)
+      puts2("Is FF3: " + is_firefox_installed?(3).to_s)
+      puts2("Is FF4: " + is_firefox_installed?(4).to_s)
+      puts2("Is FF5: " + is_firefox_installed?(5).to_s)
+      puts2("Is FF6: " + is_firefox_installed?(6).to_s)
+      puts2("Is FF7: " + is_firefox_installed?(7).to_s)
+      puts2("Is FF8: " + is_firefox_installed?(8).to_s)
+      puts2("Is FF9: " + is_firefox_installed?(9).to_s)
+      puts2("Is FF10: " + is_firefox_installed?(10).to_s)
       
     end
     

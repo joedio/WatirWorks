@@ -3,20 +3,25 @@
 = WatirWorks 0.1.5   Jan. 2012
 
 == New Features
-  * Added methods for Firefox 8, 9, 10 (such as is_ff8?(), and is_firefox8_installed?()
+  * Added Firefox methods: is_ff_ver?(iVersion), is_firefox_installed?(iVersion)
+  * Added ie methods: is_ie_ver?(iVersion), is_ie_installed?(iVersion)
 
 == Fixes
   * Typo cleanup
 
 == Deprecated:
-  * N/A
+  * Firefox methods: is_ff2?, is_ff3?, is_ff4, is_ff5?, is_ff6?, is_ff7?
+    is_firefox2_installed?, is_firefox3_installed?, is_firefox4_installed?,
+    is_firefox5_installed?, is_firefox6_installed?, is_firefox6_installed?
+  * IE methods: is_ie6?, is_ie7?, is_ie8? is_ie9?
+    is_ie6_installed?, is_ie7_installed?, is_ie8_installed?, is_ie9_installed?
 
 == Known issues
 
-  * Methods that detect Firefox versions (e.g. is_firefox8_installed?) only work 
+  * Methods that detect Firefox versions (e.g. is_firefox_installed?(iVersion)) only work 
     if Firefox is installed in the default location, with the default name. They will
     not work if a tool like the 'Utliu Firefox Bundle' was used to install multiple
-    versions of Firefox in non-default location swith non-default names. But Utliu is 
+    versions of Firefox in non-default locations with non-default names. But Utliu is 
     still a great tool that I use all the time.
 
   * Watir 1.9.2 has no equivalent for these deprecated Watir methods:

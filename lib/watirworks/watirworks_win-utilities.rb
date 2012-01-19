@@ -1,7 +1,7 @@
 #=============================================================================#
 # File: watirworks_win-utilities.rb
 #
-#  Copyright (c) 2008-2011, Joe DiMauro
+#  Copyright (c) 2008-2012, Joe DiMauro
 #  All rights reserved.
 #
 # Description:
@@ -89,16 +89,18 @@ end
 #    handle_win_dialog_download_complete(...)
 #    handle_win_dialog_generic_modal(...)
 #    handle_win_dialog_saveas(...)
-#    is_firefox2_installed_win?()
-#    is_firefox3_installed_win?()
-#    is_firefox4_installed_win?()
-#    is_firefox5_installed_win?()
-#    is_firefox6_installed_win?()
-#    is_firefox7_installed_win?()
-#    is_ie6_installed?()
-#    is_ie7_installed?()
-#    is_ie8_installed?()
-#    is_ie9_installed?()
+#    is_firefox_installed_win?(...)
+#    is_firefox2_installed_win?() # Deprecated use is_firefox_installed_win?(2)
+#    is_firefox3_installed_win?() # Deprecated use is_firefox_installed_win?(3)
+#    is_firefox4_installed_win?() # Deprecated use is_firefox_installed_win?(4)
+#    is_firefox5_installed_win?() # Deprecated use is_firefox_installed_win?(5)
+#    is_firefox6_installed_win?() # Deprecated use is_firefox_installed_win?(6)
+#    is_firefox7_installed_win?() # Deprecated use is_firefox_installed_win?(7)
+#    is_ie_installed?(...)
+#    is_ie6_installed?() # Deprecated use is_ie_installed?(6)
+#    is_ie7_installed?() # Deprecated use is_ie_installed?(7)
+#    is_ie8_installed?() # Deprecated use is_ie_installed?(8)
+#    is_ie9_installed?() # Deprecated use is_ie_installed?(9)
 #    is_minimized?(...)
 #    is_maximized?(...)
 #    open_messagebox_win(...)
@@ -1153,6 +1155,43 @@ module WatirWorks_WinUtilities
     
   end # Method - handle_win_dialog_security_information
   
+  #=============================================================================#
+  #--
+  # Method: is_firefox_installed_win?()
+  #
+  #++
+  #
+  # Description: Determines if the Windows Registry contains an Firefox entry.
+  #              This typically indicates which version is installed as the default FF browser
+  #
+  # Returns: BOOLEAN - true if registered, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage examples:
+  #                 if(is_firefox_installed_win?(8) == true)
+  #                      # Execute FF8 specific code
+  #                 end
+  #
+  #=============================================================================#
+  def is_firefox_installed_win?(iVersion = 3)
+    
+    if($VERBOSE == true)
+      puts2("Parameters - is_firefox_installed_win?:")
+      puts2("  iVersion " + iVersion.to_s)
+    end
+    
+    if(is_win?) # Only run on Windows
+      
+      # Check the first character of the registered version for a match
+      if((get_registered_firefox_version[0].chr) == iVersion.to_s)
+        return true
+      else
+        return false
+      end
+      
+    end # Only run on Windows
+  end # Function - is_firefox_installed_win?()
   
   #=============================================================================#
   #--
@@ -1440,6 +1479,43 @@ module WatirWorks_WinUtilities
       end
     end # Only run on Windows
   end # Function - is_firefox10_installed_win?()
+  
+  #=============================================================================#
+  #--
+  # Method: is_ie_installed?(...)
+  #++
+  #
+  # Description: Determines if the Windows Registry contains an Internet Explorer 6.x entry.
+  #              This typically indicates that IE6 is installed as the default IE browser
+  #
+  # Returns: BOOLEAN - true if installed, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage examples:
+  #                 if(is_ie_installed?(7))
+  #                      # Execute IE7 specific code
+  #                 end
+  #
+  #=============================================================================#
+  def is_ie_installed?(iVersion = 7)
+    
+    if($VERBOSE == true)
+      puts2("Parameters - is_ie_installed?")
+      puts2("  iVersion " + iVersion.to_s)
+    end
+    
+    if(is_win?) # Only run on Windows
+      
+      # Check the first character of the installed version for a match
+      if((get_registered_ie_version[0].chr) == iVersion.to_s)
+        return true
+      else
+        return false
+      end
+    end # Only run on Windows
+  end # Function - is_ie_installed?()
+  
   
   #=============================================================================#
   #--

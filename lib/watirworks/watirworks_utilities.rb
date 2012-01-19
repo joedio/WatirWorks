@@ -1,7 +1,7 @@
 #=============================================================================#
 # File: watirworks_utilities.rb
 #
-#  Copyright (c) 2008-2011, Joe DiMauro
+#  Copyright (c) 2008-2012, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Functions and methods for WatirWorks

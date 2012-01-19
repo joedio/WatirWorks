@@ -1,7 +1,7 @@
 #=============================================================================#
 # File: watirworks_reflib.rb
 #
-#  Copyright (c) 2008-2011, Joe DiMauro
+#  Copyright (c) 2008-2012, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Reference data that is platform and application independent.

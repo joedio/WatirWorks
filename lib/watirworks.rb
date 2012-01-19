@@ -1,7 +1,7 @@
 #=============================================================================#
 # File: watirworks.rb
 #
-#  Copyright (c) 2010-2011, Joe DiMauro
+#  Copyright (c) 2010-2012, Joe DiMauro
 #  All rights reserved.
 #
 # Description: This script auto-loads WatirWorks modules and contains includes

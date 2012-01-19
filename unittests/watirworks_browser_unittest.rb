@@ -3,7 +3,7 @@
 # File: watirworks_browser_unittest.rb
 #
 #
-#  Copyright (c) 2008-2010, Joe DiMauro
+#  Copyright (c) 2008-2012, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for WatirWorks methods using the Internet Explorer, Firefox & Chrome browser's:
@@ -181,20 +181,9 @@ class Unittest_Browser < Test::Unit::TestCase
   #
   #  Test methods: start_browser(...)
   #                       is_ie?()
-  #                       is_ie6?()
-  #                       is_ie7?()
-  #                       is_ie8?()
-  #                       is_ie9?()
+  #                       is_ie_ver?(...)
   #                       is_firefox?()
-  #                       is_ff2?()
-  #                       is_ff3?()
-  #                       is_ff4?()
-  #                       is_ff5?()
-  #                       is_ff6?()
-  #                       is_ff7?()
-  #                       is_ff8?()
-  #                       is_ff9?()
-  #                       is_ff10?()
+  #                       is_ff_ver?(...)
   #                       wait_until_status(...)
   #                       kill_browsers()
   #===========================================================================#
@@ -240,21 +229,22 @@ class Unittest_Browser < Test::Unit::TestCase
       puts2("Is it a Safari browser?: " + oLocalBrowser_1.is_safari?.to_s)
 
       puts2("\nIs it an IE browser?: " + oLocalBrowser_1.is_ie?.to_s)
-      puts2("Is it an IE 6.x browser?: " + oLocalBrowser_1.is_ie6?.to_s)
-      puts2("Is it an IE 7.x browser?: " + oLocalBrowser_1.is_ie7?.to_s)
-      puts2("Is it an IE 8.x browser?: " + oLocalBrowser_1.is_ie8?.to_s)
-      puts2("Is it an IE 9.x browser?: " + oLocalBrowser_1.is_ie9?.to_s)
+      puts2("Is it an IE 6.x browser?: " + oLocalBrowser_1.is_ie_ver?(6).to_s)
+      puts2("Is it an IE 7.x browser?: " + oLocalBrowser_1.is_ie_ver?(7).to_s)
+      puts2("Is it an IE 8.x browser?: " + oLocalBrowser_1.is_ie_ver?(8).to_s)
+      puts2("Is it an IE 9.x browser?: " + oLocalBrowser_1.is_ie_ver?(9).to_s)
+      puts2("Is it an IE 10.x browser?: " + oLocalBrowser_1.is_ie_ver?(10).to_s)
 
       puts2("\nIs it a Firefox browser?: " + oLocalBrowser_1.is_firefox?.to_s)
-      puts2("Is it a Firefox 2.x browser?: " + oLocalBrowser_1.is_firefox2?.to_s)
-      puts2("Is it a Firefox 3.x browser?: " + oLocalBrowser_1.is_firefox3?.to_s)
-      puts2("Is it a Firefox 4.x browser?: " + oLocalBrowser_1.is_firefox4?.to_s)
-      puts2("Is it a Firefox 5.x browser?: " + oLocalBrowser_1.is_firefox5?.to_s)
-      puts2("Is it a Firefox 6.x browser?: " + oLocalBrowser_1.is_firefox6?.to_s)
-      puts2("Is it a Firefox 7.x browser?: " + oLocalBrowser_1.is_firefox7?.to_s)
-      puts2("Is it a Firefox 8.x browser?: " + oLocalBrowser_1.is_firefox8?.to_s)
-      puts2("Is it a Firefox 9.x browser?: " + oLocalBrowser_1.is_firefox9?.to_s)
-      puts2("Is it a Firefox 10.x browser?: " + oLocalBrowser_1.is_firefox10?.to_s)
+      puts2("Is it a Firefox 2.x browser?: " + oLocalBrowser_1.is_firefox_ver?(2).to_s)
+      puts2("Is it a Firefox 3.x browser?: " + oLocalBrowser_1.is_firefox_ver?(3).to_s)
+      puts2("Is it a Firefox 4.x browser?: " + oLocalBrowser_1.is_firefox_ver?(4).to_s)
+      puts2("Is it a Firefox 5.x browser?: " + oLocalBrowser_1.is_firefox_ver?(5).to_s)
+      puts2("Is it a Firefox 6.x browser?: " + oLocalBrowser_1.is_firefox_ver?(6).to_s)
+      puts2("Is it a Firefox 7.x browser?: " + oLocalBrowser_1.is_firefox_ver?(7).to_s)
+      puts2("Is it a Firefox 8.x browser?: " + oLocalBrowser_1.is_firefox_ver?(8).to_s)
+      puts2("Is it a Firefox 9.x browser?: " + oLocalBrowser_1.is_firefox_ver?(9).to_s)
+      puts2("Is it a Firefox 10.x browser?: " + oLocalBrowser_1.is_firefox_ver?(10).to_s)
                      
 
       puts2("\nBrowser's status text = " + oLocalBrowser_1.status)

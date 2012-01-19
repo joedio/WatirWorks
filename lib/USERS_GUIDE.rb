@@ -2,7 +2,7 @@
 
 :title:WatirWorks Users Guide
 
-Copyright (c) 2008-2010, Joe DiMauro
+Copyright (c) 2008-2012, Joe DiMauro
 All rights reserved.
 
 = Introduction

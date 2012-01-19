@@ -1,7 +1,7 @@
 #=============================================================================#
 # File: watirworks_web-utilities.rb
 #
-#  Copyright (c) 2008-2011, Joe DiMauro
+#  Copyright (c) 2008-2012, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Web application specific functions and methods for WatirWorks.
@@ -102,23 +102,26 @@ end
 #    get_xml_tag_value(...)   # Deprecating -  getXMLTagValue
 #    handle_js_dialog(...)   # NOT working with Watir1.6.5.  See issue with click_no_wait()
 #    is_firefox?()
-#    is_firefox2?()
-#    is_firefox3?()
-#    is_firefox4?()
-#    is_firefox5?()
-#    is_firefox6?()
-#    is_firefox7?()
-#    is_firefox2_installed?()
-#    is_firefox3_installed?()
-#    is_firefox4_installed?()
-#    is_firefox5_installed?()
-#    is_firefox6_installed?()
-#    is_firefox7_installed?()
+#    is_firefox_ver?(...)
+#    is_firefox2?() # Deprecated use is_firefox_ver?(2)
+#    is_firefox3?() # Deprecated use is_firefox_ver?(3)
+#    is_firefox4?() # Deprecated use is_firefox_ver?(4)
+#    is_firefox5?() # Deprecated use is_firefox_ver?(5)
+#    is_firefox6?() # Deprecated use is_firefox_ver?(6)
+#    is_firefox7?() # Deprecated use is_firefox_ver?(7)
+#    is_firefox_installed?(...)
+#    is_firefox2_installed?() # Deprecated use is_firefox_installed?(2)
+#    is_firefox3_installed?() # Deprecated use is_firefox_installed?(3)
+#    is_firefox4_installed?() # Deprecated use is_firefox_installed?(4)
+#    is_firefox5_installed?() # Deprecated use is_firefox_installed?(5)
+#    is_firefox6_installed?() # Deprecated use is_firefox_installed?(6)
+#    is_firefox7_installed?() # Deprecated use is_firefox_installed?(7)
 #    is_ie?()
-#    is_ie6?()
-#    is_ie7?()
-#    is_ie8?()
-#    is_ie9?()
+#    is_ie_ver?()
+#    is_ie6?() # Deprecated use is_ie_ver?(6)
+#    is_ie7?() # Deprecated use is_ie_ver?(7)
+#    is_ie8?() # Deprecated use is_ie_ver?(8)
+#    is_ie9?() # Deprecated use is_ie_ver?(9)
 #    is_opera?()
 #    is_safari?()
 #    is_global_browser_running?()
@@ -2329,6 +2332,40 @@ module WatirWorks_WebUtilities
   
   alias is_ff? is_firefox?
   
+  
+  #=============================================================================#
+  #--
+  # Method: is_firefox_ver?()
+  #
+  #++
+  #
+  # Description: Identifies if running a specified version of the Firefox browser
+  #
+  # Returns: BOOLEAN - true if browser is the specified Firefox version, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_firefox_ver?(3))
+  #                      # Execute Firefox 3.x specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_firefox_ver?(iVersion = 3)
+    
+    if($VERBOSE == true)
+      puts2("Parameters - is_firefox_ver?")
+      puts2("  iVersion " + iVersion.to_s)
+    end
+    
+    if((self.is_firefox?) && (is_firefox_installed?(iVersion)))
+      return true
+    else
+      return false
+    end
+  end
+  
+  alias is_ff_ver? is_firefox_ver?
+  
   #=============================================================================#
   #--
   # Method: is_firefox2?()
@@ -2348,7 +2385,7 @@ module WatirWorks_WebUtilities
   #=============================================================================#
   def is_firefox2?()
     
-    if((self.is_firefox?) && (is_firefox2_installed?()))
+    if((self.is_firefox?) && (is_firefox_installed?(2)))
       return true
     else
       return false
@@ -2377,7 +2414,7 @@ module WatirWorks_WebUtilities
   #=============================================================================#
   def is_firefox3?()
     
-    if((self.is_firefox?) && (is_firefox3_installed?))
+    if((self.is_firefox?) && (is_firefox_installed?(3)))
       return true
     else
       return false
@@ -2406,7 +2443,7 @@ module WatirWorks_WebUtilities
   #=============================================================================#
   def is_firefox4?()
     
-    if((self.is_firefox?) && (is_firefox4_installed?))
+    if((self.is_firefox?) && (is_firefox_installed?(4)))
       return true
     else
       return false
@@ -2435,7 +2472,7 @@ module WatirWorks_WebUtilities
   #=============================================================================#
   def is_firefox5?()
     
-    if((self.is_firefox?) && (is_firefox5_installed?))
+    if((self.is_firefox?) && (is_firefox_installed?(5)))
       return true
     else
       return false
@@ -2464,7 +2501,7 @@ module WatirWorks_WebUtilities
   #=============================================================================#
   def is_firefox6?()
     
-    if((self.is_firefox?) && (is_firefox6_installed?))
+    if((self.is_firefox?) && (is_firefox_installed?(6)))
       return true
     else
       return false
@@ -2493,7 +2530,7 @@ module WatirWorks_WebUtilities
   #=============================================================================#
   def is_firefox7?()
     
-    if((self.is_firefox?) && (is_firefox7_installed?))
+    if((self.is_firefox?) && (is_firefox_installed?(7)))
       return true
     else
       return false
@@ -2521,7 +2558,7 @@ module WatirWorks_WebUtilities
   #=============================================================================#
   def is_firefox8?()
     
-    if((self.is_firefox?) && (is_firefox8_installed?))
+    if((self.is_firefox?) && (is_firefox_installed?(8)))
       return true
     else
       return false
@@ -2549,7 +2586,7 @@ module WatirWorks_WebUtilities
   #=============================================================================#
   def is_firefox9?()
     
-    if((self.is_firefox?) && (is_firefox9_installed?))
+    if((self.is_firefox?) && (is_firefox_installed?(9)))
       return true
     else
       return false
@@ -2577,7 +2614,7 @@ module WatirWorks_WebUtilities
   #=============================================================================#
   def is_firefox10?()
     
-    if((self.is_firefox?) && (is_firefox10_installed?))
+    if((self.is_firefox?) && (is_firefox_installed?(10)))
       return true
     else
       return false
@@ -2585,6 +2622,41 @@ module WatirWorks_WebUtilities
   end
   
   alias is_ff10? is_firefox10?
+  
+  
+  #=============================================================================#
+  #--
+  # Method: is_firefox_installed?(...)
+  #
+  #++
+  #
+  # Description: Identifies if the specified Firefox version in installed on the OS
+  #
+  # Returns: BOOLEAN - true if specified Firefox browser is installed, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_firefox_installed?(7))
+  #                      # Execute Firefox 7.x specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_firefox_installed?(iVersion = 3)
+    
+    if($VERBOSE == true)
+      puts2("Parameters - is_firefox_installed?")
+      puts2("  iVersion " + iVersion.to_s)
+    end
+    
+    if(is_win?)
+      return is_firefox_installed_win?(iVersion)
+    elsif(is_linux?)
+      return is_firefox_installed_linux?(iVersion)
+    elsif(is_osx?)
+      return is_firefox_installed_mac?(iVersion)
+    end
+  end
+  
   
   #=============================================================================#
   #--
@@ -2606,11 +2678,11 @@ module WatirWorks_WebUtilities
   def is_firefox2_installed?()
     
     if(is_win?)
-      return is_firefox2_installed_win?()
+      return is_firefox_installed_win?(2)
     elsif(is_linux?)
-      return is_firefox2_installed_linux?()
+      return is_firefox_installed_linux?(2)
     elsif(is_osx?)
-      return is_firefox2_installed_mac?()
+      return is_firefox_installed_mac?(2)
     end
   end
   
@@ -2635,11 +2707,11 @@ module WatirWorks_WebUtilities
   def is_firefox3_installed?()
     
     if(is_win?)
-      return is_firefox3_installed_win?()
+      return is_firefox_installed_win?(3)
     elsif(is_linux?)
-      return is_firefox3_installed_linux?()
+      return is_firefox_installed_linux?(3)
     elsif(is_osx?)
-      return is_firefox4_installed_mac?()
+      return is_firefox_installed_mac?(3)
     end
   end
   
@@ -2664,11 +2736,11 @@ module WatirWorks_WebUtilities
   def is_firefox4_installed?()
     
     if(is_win?)
-      return is_firefox4_installed_win?()
+      return is_firefox_installed_win?(4)
     elsif(is_linux?)
-      return is_firefox4_installed_linux?()
+      return is_firefox_installed_linux?(4)
     elsif(is_osx?)
-      return is_firefox4_installed_mac?()
+      return is_firefox_installed_mac?(4)
     end
   end
   
@@ -2692,11 +2764,11 @@ module WatirWorks_WebUtilities
   def is_firefox5_installed?()
     
     if(is_win?)
-      return is_firefox5_installed_win?()
+      return is_firefox_installed_win?(5)
     elsif(is_linux?)
-      return is_firefox5_installed_linux?()
+      return is_firefox_installed_linux?(5)
     elsif(is_osx?)
-      return is_firefox5_installed_mac?()
+      return is_firefox_installed_mac?(5)
     end
   end
   
@@ -2720,11 +2792,11 @@ module WatirWorks_WebUtilities
   def is_firefox6_installed?()
     
     if(is_win?)
-      return is_firefox6_installed_win?()
+      return is_firefox_installed_win?(6)
     elsif(is_linux?)
-      return is_firefox6_installed_linux?()
+      return is_firefox_installed_linux?(6)
     elsif(is_osx?)
-      return is_firefox6_installed_mac?()
+      return is_firefox_installed_mac?(6)
     end
   end
   
@@ -2748,11 +2820,11 @@ module WatirWorks_WebUtilities
   def is_firefox7_installed?()
     
     if(is_win?)
-      return is_firefox7_installed_win?()
+      return is_firefox_installed_win?(7)
     elsif(is_linux?)
-      return is_firefox7_installed_linux?()
+      return is_firefox_installed_linux?(7)
     elsif(is_osx?)
-      return is_firefox7_installed_mac?()
+      return is_firefox_installed_mac?(7)
     end
   end
   
@@ -2778,14 +2850,13 @@ module WatirWorks_WebUtilities
   def is_firefox8_installed?()
     
     if(is_win?)
-      return is_firefox8_installed_win?()
+      return is_firefox_installed_win?(8)
     elsif(is_linux?)
-      return is_firefox8_installed_linux?()
+      return is_firefox_installed_linux?(8)
     elsif(is_osx?)
-      return is_firefox8_installed_mac?()
+      return is_firefox_installed_mac?(8)
     end
   end
-  
   
   
   #=============================================================================#
@@ -2805,14 +2876,14 @@ module WatirWorks_WebUtilities
   #                  end
   #
   #=============================================================================#
-  def is_firefox7_installed?()
+  def is_firefox9_installed?()
     
     if(is_win?)
-      return is_firefox9_installed_win?()
+      return is_firefox_installed_win?(9)
     elsif(is_linux?)
-      return is_firefox9_installed_linux?()
+      return is_firefox_installed_linux?(9)
     elsif(is_osx?)
-      return is_firefox9_installed_mac?()
+      return is_firefox_installed_mac?(9)
     end
   end
   
@@ -2838,11 +2909,11 @@ module WatirWorks_WebUtilities
   def is_firefox10_installed?()
     
     if(is_win?)
-      return is_firefox10_installed_win?()
+      return is_firefox_installed_win?(10)
     elsif(is_linux?)
-      return is_firefox10_installed_linux?()
+      return is_firefox_installed_linux?(10)
     elsif(is_osx?)
-      return is_firefox10_installed_mac?()
+      return is_firefox_installed_mac?(10)
     end
   end
   
@@ -2874,6 +2945,39 @@ module WatirWorks_WebUtilities
   end
   
   
+  
+  #=============================================================================#
+  #--
+  # Method: is_ie_ver?(...)
+  #
+  #++
+  #
+  # Description: Identifies if running the specified version of the Internet Explorer browser
+  #
+  # Returns: BOOLEAN - true if browser is the specified version of Internet Explorer, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_ie_ver?(7))
+  #                      # Execute IE7 specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_ie_ver?(iVersion = 7)
+    
+    if($VERBOSE == true)
+      puts2("Parameters - is_ie_ver?")
+      puts2("  iVersion " + iVersion.to_s)
+    end
+    
+    if((self.is_ie?) && (is_ie_installed?(iVersion)))
+      return true
+    else
+      return false
+    end
+  end
+  
+  
   #=============================================================================#
   #--
   # Method: is_ie6?()
@@ -2892,7 +2996,7 @@ module WatirWorks_WebUtilities
   #
   #=============================================================================#
   def is_ie6?()
-    if((self.is_ie?) && (is_ie6_installed?))
+    if((self.is_ie?) && (is_ie_installed?(6)))
       return true
     else
       return false
@@ -2918,7 +3022,7 @@ module WatirWorks_WebUtilities
   #
   #=============================================================================#
   def is_ie7?()
-    if((self.is_ie?) && (is_ie7_installed?))
+    if((self.is_ie?) && (is_ie_installed?(7)))
       return true
     else
       return false
@@ -2944,7 +3048,7 @@ module WatirWorks_WebUtilities
   #
   #=============================================================================#
   def is_ie8?()
-    if((self.is_ie?) && (is_ie8_installed?))
+    if((self.is_ie?) && (is_ie_installed?(8)))
       return true
     else
       return false
@@ -2970,13 +3074,37 @@ module WatirWorks_WebUtilities
   #
   #=============================================================================#
   def is_ie9?()
-    if((self.is_ie?) && (is_ie9_installed?))
+    if((self.is_ie?) && (is_ie_installed?(9)))
       return true
     else
       return false
     end
   end
   
+  #=============================================================================#
+  #--
+  # Method: is_ie10?()
+  #
+  #++
+  #
+  # Description: Identifies if running a Internet Explorer 10.x browser
+  #
+  # Returns: BOOLEAN - true if browser is Internet Explorer 10.x, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_ie10?)
+  #                      # Execute IE10 specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_ie10?()
+    if((self.is_ie?) && (is_ie_installed?(10)))
+      return true
+    else
+      return false
+    end
+  end
   
   #=============================================================================#
   #--

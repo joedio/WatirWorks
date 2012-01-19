@@ -2,7 +2,7 @@
 
 = WatirWorks Site Monitor
 
-  Copyright (c) 2008-2010, Joe DiMauro
+  Copyright (c) 2008-2012, Joe DiMauro
   All rights reserved.
 
   Date: 7/01/2010
