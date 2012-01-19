@@ -20,6 +20,11 @@
 #                          is_ff3?
 #                          is_ff4?
 #                          is_ff5?
+#                          is_ff6?
+#                          is_ff7?
+#                          is_ff8?
+#                          is_ff9?
+#                          is_ff10?
 #                          wait_until_status(..)
 #                          kill_browsers()
 #                          is_maximized?(...)
@@ -184,7 +189,12 @@ class Unittest_Browser < Test::Unit::TestCase
   #                       is_ff2?()
   #                       is_ff3?()
   #                       is_ff4?()
-  #                       is_ff5?
+  #                       is_ff5?()
+  #                       is_ff6?()
+  #                       is_ff7?()
+  #                       is_ff8?()
+  #                       is_ff9?()
+  #                       is_ff10?()
   #                       wait_until_status(...)
   #                       kill_browsers()
   #===========================================================================#
@@ -242,7 +252,10 @@ class Unittest_Browser < Test::Unit::TestCase
       puts2("Is it a Firefox 5.x browser?: " + oLocalBrowser_1.is_firefox5?.to_s)
       puts2("Is it a Firefox 6.x browser?: " + oLocalBrowser_1.is_firefox6?.to_s)
       puts2("Is it a Firefox 7.x browser?: " + oLocalBrowser_1.is_firefox7?.to_s)
-
+      puts2("Is it a Firefox 8.x browser?: " + oLocalBrowser_1.is_firefox8?.to_s)
+      puts2("Is it a Firefox 9.x browser?: " + oLocalBrowser_1.is_firefox9?.to_s)
+      puts2("Is it a Firefox 10.x browser?: " + oLocalBrowser_1.is_firefox10?.to_s)
+                     
 
       puts2("\nBrowser's status text = " + oLocalBrowser_1.status)
 

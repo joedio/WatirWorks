@@ -1,8 +1,54 @@
 =begin rdoc
 
-= WatirWorks 0.1.4   Sep. 2011
+= WatirWorks 0.1.5   Jan. 2012
 
 == New Features
+  * Added methods for Firefox 8, 9, 10 (such as is_ff8?(), and is_firefox8_installed?()
+
+== Fixes
+  * Typo cleanup
+
+== Deprecated:
+  * N/A
+
+== Known issues
+
+  * Methods that detect Firefox versions (e.g. is_firefox8_installed?) only work 
+    if Firefox is installed in the default location, with the default name. They will
+    not work if a tool like the 'Utliu Firefox Bundle' was used to install multiple
+    versions of Firefox in non-default location swith non-default names. But Utliu is 
+    still a great tool that I use all the time.
+
+  * Watir 1.9.2 has no equivalent for these deprecated Watir methods:
+      Watir::Checkbox.getState # Removed its use in WatirWorks
+      Watir::Radio.getState    # Removed its use in WatirWorks
+
+  * SafariWatir has no equivalent for these Watir methods:
+      Watir::Browser.status
+      Watir::Browser.attach
+      Watir::Element.hidden
+      Watir::ScreenCapture
+      Watir::Element.radios
+      Watir::SelectList.options
+
+  * Watir WebDriver has no equivalent for these Watir methods:
+      Watir::Table.row_values
+      Watir::Element tag attribute :name
+      Watir::Select.clear   (Only supports Multi-select lists)
+      Watir::ScreenCapture
+
+  * WatirWorks
+    * Function parse_table_by_row() returns an incomplete array of the text within the table, its skipping some rows and columns
+    * Methods that rely in parse_tabe_by_row() will also fail, this includes:
+    * The IE browser hangs when using methods: moveBy(), moveTo(), resizeBy(), resizeTo(), scrollBy()
+    * parse_spreadsheet() - Reading to end of contents (not just to first row starting with a blank cell), is not working properly
+    * Some unittests run OK from the command line, but fail when run from within an Eclipse IDE (watirworks_spreadsheet_unittest.rb, watirworks_xls_unittest.rb)
+    * Methods wait_until_count() and wait_until_text() not supported for SafariWatir
+    * Reliability issues connecting to Opera
+    * SafariWatir can not access the Browser's Status bar. Workaround was to hard code a 2 sec. sleep for Safari in wait_until_status() which is not reliable.
+
+= WatirWorks 0.1.4   Sep. 2011
+
   * Initial port to support Watir-WebDriver and Watir, Firewatir, and SafariWatir
   * WatirWorks_Utilites, and WatirWorks-RefLib work with JRuby.
     Due to Watir not being supported in JRuby, other WatirWorks modules are unable to be supported under JRuby.
@@ -61,35 +107,6 @@
        Deprecating: isValid_Password?       Please use: valid_password?
        Deprecating: isValid_TopLevelDomain? Please use: valid_top_level_domain?
        Deprecating: isValid_ZipCode?        Please use: valid_zip_code?
-
-== Known issues
-  * Watir 1.9.2 has no equivalent for these deprecated Watir methods:
-      Watir::Checkbox.getState # Removed its use in WatirWorks
-      Watir::Radio.getState    # Removed its use in WatirWorks
-
-  * SafariWatir has no equivalent for these Watir methods:
-      Watir::Browser.status
-      Watir::Browser.attach
-      Watir::Element.hidden
-      Watir::ScreenCapture
-      Watir::Element.radios
-      Watir::SelectList.options
-
-  * Watir WebDriver has no equivalent for these Watir methods:
-      Watir::Table.row_values
-      Watir::Element tag attribute :name
-      Watir::Select.clear   (Only supports Multi-select lists)
-      Watir::ScreenCapture
-
-  * WatirWorks
-    * Function parse_table_by_row() returns an incomplete array of the text within the table, its skipping some rows and columns
-    * Methods that rely in parse_tabe_by_row() will also fail, this includes:
-    * The IE browser hangs when using methods: moveBy(), moveTo(), resizeBy(), resizeTo(), scrollBy()
-    * parse_spreadsheet() - Reading to end of contents (not just to first row starting with a blank cell), is not working properly
-    * Some unittests run OK from the command line, but fail when run from within an Eclipse IDE (watirworks_spreadsheet_unittest.rb, watirworks_xls_unittest.rb)
-    * Methods wait_until_count() and wait_until_text() not supported for SafariWatir
-    * Reliability issues connecting to Opera
-    * SafariWatir can not access the Browser's Status bar. Workaround was to hard code a 2 sec. sleep for Safari in wait_until_status() which is not reliable.
 
 = WatirWorks 0.1.3   Aug. 2011
 
