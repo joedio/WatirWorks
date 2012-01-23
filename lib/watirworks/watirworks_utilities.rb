@@ -113,7 +113,7 @@ require 'logger'  # The Ruby logger which is the basis for the WatirWorksLogger
 module WatirWorks_Utilities
   
   # Version of this module
-  WW_UTILITIES_VERSION =  "1.0.13"
+  WW_UTILITIES_VERSION =  "1.0.14"
   
   # Format to use when appending a timestamp to file names
   DATETIME_FILEFORMAT="%Y_%m_%d_%H%M%S"
@@ -3477,6 +3477,7 @@ module WatirWorks_Utilities
   #
   #--
   # Methods: filter_by_key(...)
+  #          to_h(...)
   #++
   #=============================================================================#
   class Array
@@ -3511,10 +3512,10 @@ module WatirWorks_Utilities
     def filter_by_key(iElementToKeyOn, sStringToKeyOn, iElementWithData)
       
       if($VERBOSE==true)
-        puts "\n filter_by_key"
-        puts "  iElementToKeyOn " + iElementToKeyOn.to_s
-        puts "  sStringToKeyOn " + sStringToKeyOn.to_s
-        puts "  iElementWithData " + iElementWithData.to_s
+        puts2 "\n Array#filter_by_key"
+        puts2 "  iElementToKeyOn " + iElementToKeyOn.to_s
+        puts2 "  sStringToKeyOn " + sStringToKeyOn.to_s
+        puts2 "  iElementWithData " + iElementWithData.to_s
       end
       
       aNewArray = []
@@ -3531,6 +3532,55 @@ module WatirWorks_Utilities
       return aNewArray
       
     end # Method - filter_by_key
+    
+    #=============================================================================#
+    # Method: to_h()
+    #
+    # Description: Simulates converting an array to a hash by returning a Key:Value
+    #              pair for each record in an array, by using one Element in the
+    #              array as the Key and another as the value.
+    #
+    #              Populates the Hash from the array by specifying these values:
+    #              a) the integer of the source array's element holding the key data
+    #              c) the integer of the source array's element holding the value data
+    #
+    # Returns:
+    #              HASH - The Hash containing the specified Key:Value pairs
+    #
+    # Syntax: iElementWithKey = INT - The number of the source array's element that holds
+    #                                 the string to use as the Hashes Key.
+    #         iElementWithValue = INT - The number of the source array's element that holds
+    #                                 the string to use as the Hashes Value.
+    #
+    # Usage Examples:
+    #              If your multi-dimensional array of STRINGS is:
+    #                  my_large_array = [ ["Keith Moon", "The Who", "Drums"],
+    #                                   ["Jimmy Page", "Led Zeppelin", "Guitar"],
+    #                                   ["Keith Richards", "The Rolling Stones", "Guitar"]]
+    #               and you want to create a HASH with the Band as the Key and
+    #               the Artist as the Value:
+    #                  my_hash = my_large_array.to_h(1, 0)
+    #=============================================================================#
+    def to_h(iElementWithKey = 0, iElementWithValue = 1)
+      
+      if($VERBOSE==true)
+        puts2 "\n Array#to_h"
+        puts2 "  iElementWithKey " + iElementWithKey.to_s
+        puts2 "  iElementWithValue " + iElementWithValue.to_s
+      end
+      
+      aNewHash = {}
+      
+      # Loop through the records in the array
+      self.each do | sRowData |
+        
+        # Append each Key:Value pair to the new hash
+        aNewHash.store(sRowData[iElementWithKey], sRowData[iElementWithValue])
+      end
+      
+      return aNewHash
+      
+    end # Method - to_h
     
   end  # Class - Array
   
