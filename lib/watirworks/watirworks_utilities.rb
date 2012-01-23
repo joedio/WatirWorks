@@ -17,6 +17,7 @@
 #    WatirWorks_Utilities
 #
 # Classes Added or Extended:
+#    Array
 #    Fixnum
 #    Numeric
 #    String
@@ -3467,6 +3468,71 @@ module WatirWorks_Utilities
   #=============================================================================#
   #======================= END of MODULE ====================================#
   #=============================================================================#
+  
+  
+  #=============================================================================#
+  # Class: array
+  #
+  # Description: Extends the Ruby Array class with additional methods
+  #
+  #--
+  # Methods: filter_by_key(...)
+  #++
+  #=============================================================================#
+  class Array
+    #=============================================================================#
+    # Method: filter_by_key()
+    #
+    # Description: Returns an one dimensioned array filtered with records matching
+    #              a specified key.
+    #              Filter the larger array by specifying these values:
+    #              a) the number of the source array's element holding the data to return
+    #              b) the string to key on to determine to include or ignore the data
+    #              c) the number of the source array's element holding the string to key off
+    #
+    # Returns:
+    #              ARRAY - The filtered array
+    #
+    # Syntax: iElementToKeyOn = INT - The number of the source array's element that holds
+    #                                 the string to filter on.
+    #         sStringToKeyOn = STRING - The exact term to use as the filter. 
+    #                                   Only records with strings that match the filter are included.
+    #         iElementWithData = INT - The number of the source array's element that the
+    #                                  to include in the array
+    #
+    # Usage Examples:
+    #              If your multi-dimensional array of STRINGS is:
+    #                my_large_array = [ ["Keith Moon", "The Who", "Drums"],
+    #                                   ["Jimmy Page", "Led Zeppelin", "Guitar"],
+    #                                   ["Keith Richards", "The Rolling Stones", "Guitar"]]
+    #               and you want to filter only the names of the guitar players:
+    #                my_filtered_array = my_large_array.filter_by_key(0,"Guitar", 2)
+    #=============================================================================#
+    def filter_by_key(iElementToKeyOn, sStringToKeyOn, iElementWithData)
+      
+      if($VERBOSE==true)
+        puts "\n filter_by_key"
+        puts "  iElementToKeyOn " + iElementToKeyOn.to_s
+        puts "  sStringToKeyOn " + sStringToKeyOn.to_s
+        puts "  iElementWithData " + iElementWithData.to_s
+      end
+      
+      aNewArray = []
+      
+      # Loop through the records in the array
+      self.each do | sRowData |
+        
+        # Add the data element for records who's key element matched the filter to the new array
+        if(sRowData[iElementToKeyOn].strip == sStringToKeyOn.strip)
+          aNewArray << sRowData[iElementWithData].strip
+        end
+      end
+      
+      return aNewArray
+      
+    end # Method - filter_by_key
+    
+  end  # Class - Array
   
   #=============================================================================#
   # Class: Fixnum

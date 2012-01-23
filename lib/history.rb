@@ -5,6 +5,7 @@
 == New Features
   * Added Firefox methods: is_ff_ver?(iVersion), is_firefox_installed?(iVersion)
   * Added ie methods: is_ie_ver?(iVersion), is_ie_installed?(iVersion)
+  * Extended class Array with method: filter_by_key(...)
 
 == Fixes
   * Typo cleanup
