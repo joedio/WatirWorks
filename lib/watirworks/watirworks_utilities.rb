@@ -855,7 +855,7 @@ module WatirWorks_Utilities
   #
   #++
   #
-  # Description: Displays information on the OS runtime environment vairables:
+  # Description: Displays information on the OS runtime environment variables:
   #
   #               Basically this is a wrapper around Ruby methods that collect info.
   #               with the added ability to print that info out.
@@ -1840,7 +1840,7 @@ module WatirWorks_Utilities
     #++
     #
     # Description: Minimizes the Console window that launched Ruby.
-    #              This is a Windwos OS specific function.
+    #              This is a Windows OS specific function.
     #
     # HINT: Use this method to avoid catching the Console in any screen captures, or to just
     #       get it out of the way so you can see the full browser window.
@@ -1951,7 +1951,7 @@ module WatirWorks_Utilities
     #
     # Syntax: N/A
     #
-    # Usage Examples:  To test if watir-webriver is loaded
+    # Usage Examples:  To test if watir-webdriver is loaded
     #                           if(is_selenium_webdriver?)
     #                              # execute your Selenium WebDriver code
     #                           else
@@ -1985,7 +1985,7 @@ module WatirWorks_Utilities
     #
     # Syntax: N/A
     #
-    # Usage Examples:  To test if watir-webriver is loaded
+    # Usage Examples:  To test if watir-webdriver is loaded
     #                           if(is_webdriver?)
     #                              # execute your WatirWebDriver code
     #                           else
@@ -3541,16 +3541,18 @@ module WatirWorks_Utilities
     #              array as the Key and another as the value.
     #
     #              Populates the Hash from the array by specifying these values:
-    #              a) the integer of the source array's element holding the key data
-    #              c) the integer of the source array's element holding the value data
+    #              a) An integer specifying the element containing the key data from the source array
+    #              c) An integer specifying the element containing the value data from source array
     #
     # Returns:
     #              HASH - The Hash containing the specified Key:Value pairs
     #
     # Syntax: iElementWithKey = INT - The number of the source array's element that holds
-    #                                 the string to use as the Hashes Key.
+    #                                 the string to use as the Hash's Key.
     #         iElementWithValue = INT - The number of the source array's element that holds
-    #                                 the string to use as the Hashes Value.
+    #                                 the string to use as the Hash's Value.
+    #                                 If no integer is specified then the entire record in the array
+    #                                 is used as the Hash's Value. 
     #
     # Usage Examples:
     #              If your multi-dimensional array of STRINGS is:
@@ -3561,7 +3563,7 @@ module WatirWorks_Utilities
     #               the Artist as the Value:
     #                  my_hash = my_large_array.to_h(1, 0)
     #=============================================================================#
-    def to_h(iElementWithKey = 0, iElementWithValue = 1)
+    def to_h(iElementWithKey = 0, iElementWithValue = nil)
       
       if($VERBOSE==true)
         puts2 "\n Array#to_h"
@@ -3574,8 +3576,12 @@ module WatirWorks_Utilities
       # Loop through the records in the array
       self.each do | sRowData |
         
-        # Append each Key:Value pair to the new hash
-        aNewHash.store(sRowData[iElementWithKey], sRowData[iElementWithValue])
+        if(iElementWithValue == nil)
+          aNewHash.store(sRowData[iElementWithKey], sRowData)
+        else
+          # Append each Key:Value pair to the new hash
+          aNewHash.store(sRowData[iElementWithKey], sRowData[iElementWithValue])
+        end
       end
       
       return aNewHash
