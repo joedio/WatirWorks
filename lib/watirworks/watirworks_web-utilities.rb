@@ -2563,6 +2563,40 @@ module WatirWorks_WebUtilities
   
   #=============================================================================#
   #--
+  # Method: is_ie_installed?(...)
+  #
+  #++
+  #
+  # Description: Identifies if the specified INternet Explorer version in installed on the OS
+  #
+  # Returns: BOOLEAN - true if specified IE browser is installed, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_ie_installed?(7))
+  #                      # Execute IE 7.x specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_ie_installed?(iVersion = 10)
+    
+    if($VERBOSE == true)
+      puts2("Parameters - is_ie_installed?")
+      puts2("  iVersion " + iVersion.to_s)
+    end
+    
+    if(is_win?)
+      return is_ie_installed_win?(iVersion)
+    elsif(is_linux?)
+      return false
+    elsif(is_osx?)
+      return false
+    end
+    
+  end # Method - is_ie_installed?(...)
+  
+  #=============================================================================#
+  #--
   # Method: is_opera?(...)
   #
   #++

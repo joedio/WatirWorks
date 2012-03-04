@@ -443,7 +443,7 @@ module WatirWorks_MacUtilities
   
   #=============================================================================#
   #--
-  # Method: is_safair_installed_mac?(...)
+  # Method: is_safari_installed_mac?(...)
   #
   #++
   #
@@ -457,15 +457,15 @@ module WatirWorks_MacUtilities
   # Returns: BOOLEAN = true if installed, otherwise false
   #
   # Usage Examples:
-  #                 if(is_safair_installed_mac?(7))
+  #                 if(is_safari_installed_mac?(7))
   #                      # Execute Safari 7 specific code
   #                 end
   #
   #=============================================================================#
-  def is_safair_installed_mac?(iVersion = 7)
+  def is_safari_installed_mac?(iVersion = 7)
     
     if($VERBOSE == true)
-      puts2("Parameters - is_safair_installed_mac?")
+      puts2("Parameters - is_safari_installed_mac?")
       puts2("  iVersion " + iVersion.to_s)
     end
     
@@ -485,7 +485,7 @@ module WatirWorks_MacUtilities
       end
     end # Check for a match
     
-  end # Method - is_safair_installed_mac?(...)
+  end # Method - is_safari_installed_mac?(...)
   
   
   #=============================================================================#
