@@ -1,23 +1,26 @@
 =begin rdoc
 
-= WatirWorks 0.1.5   Jan. 2012
+= WatirWorks 0.1.6   March 2012
 
 == New Features
-  * Added Firefox methods: is_ff_ver?(iVersion), is_firefox_installed?(iVersion)
-  * Added ie methods: is_ie_ver?(iVersion), is_ie_installed?(iVersion)
-  * Extended class Array with methods: filter_by_key(...), to_h(...)
+  * Added Chrome methods: is_chrome?(iVersion), is_chrome_installed?(iVersion) 
+  * Added Firefox methods: is_firefox?(iVersion), is_firefox_installed?(iVersion)
+  * Added IE methods: is_ie?(iVersion), is_ie_installed?(iVersion)
+  * Added Opera methods: is_opera?(iVersion), is_opera_installed?(iVersion)
+  * Added Safari methods: is_safari?(iVersion), is_safari_installed?(iVersion)
 
 == Fixes
-  * Typo cleanup
+  * None
 
 == Deprecated:
-  * Firefox methods: is_ff2?, is_ff3?, is_ff4, is_ff5?, is_ff6?, is_ff7?
-    is_firefox2_installed?, is_firefox3_installed?, is_firefox4_installed?,
-    is_firefox5_installed?, is_firefox6_installed?, is_firefox6_installed?
-  * IE methods: is_ie6?, is_ie7?, is_ie8? is_ie9?
-    is_ie6_installed?, is_ie7_installed?, is_ie8_installed?, is_ie9_installed?
+  * Firefox methods: is_ff_ver?(iVersion), is_firefox_installed?(iVersion)
+  * IE methods: is_ie_ver?(iVersion), is_ie_installed?(iVersion)
 
 == Known issues
+
+  * Windows method to find the Opera version is incorrect
+  * Linux methods to find the browser versions are incorrect
+  * Mac methods to find the browser versions are incorrect
 
   * Methods that detect Firefox versions (e.g. is_firefox_installed?(iVersion)) only work 
     if Firefox is installed in the default location, with the default name. They will
@@ -52,6 +55,25 @@
     * Methods wait_until_count() and wait_until_text() not supported for SafariWatir
     * Reliability issues connecting to Opera
     * SafariWatir can not access the Browser's Status bar. Workaround was to hard code a 2 sec. sleep for Safari in wait_until_status() which is not reliable.
+
+
+= WatirWorks 0.1.5   Jan. 2012
+
+== New Features
+  * Added Firefox methods: is_ff_ver?(iVersion), is_firefox_installed?(iVersion)
+  * Added ie methods: is_ie_ver?(iVersion), is_ie_installed?(iVersion)
+  * Extended class Array with methods: filter_by_key(...), to_h(...)
+
+== Fixes
+  * Typo cleanup
+
+== Deprecated:
+  * Firefox methods: is_ff2?, is_ff3?, is_ff4, is_ff5?, is_ff6?, is_ff7?
+    is_firefox2_installed?, is_firefox3_installed?, is_firefox4_installed?,
+    is_firefox5_installed?, is_firefox6_installed?, is_firefox6_installed?
+  * IE methods: is_ie6?, is_ie7?, is_ie8? is_ie9?
+    is_ie6_installed?, is_ie7_installed?, is_ie8_installed?, is_ie9_installed?
+
 
 = WatirWorks 0.1.4   Sep. 2011
 

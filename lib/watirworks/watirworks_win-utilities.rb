@@ -89,18 +89,9 @@ end
 #    handle_win_dialog_download_complete(...)
 #    handle_win_dialog_generic_modal(...)
 #    handle_win_dialog_saveas(...)
+#    is_chrome_installed_win?(...)
 #    is_firefox_installed_win?(...)
-#    is_firefox2_installed_win?() # Deprecated use is_firefox_installed_win?(2)
-#    is_firefox3_installed_win?() # Deprecated use is_firefox_installed_win?(3)
-#    is_firefox4_installed_win?() # Deprecated use is_firefox_installed_win?(4)
-#    is_firefox5_installed_win?() # Deprecated use is_firefox_installed_win?(5)
-#    is_firefox6_installed_win?() # Deprecated use is_firefox_installed_win?(6)
-#    is_firefox7_installed_win?() # Deprecated use is_firefox_installed_win?(7)
 #    is_ie_installed?(...)
-#    is_ie6_installed?() # Deprecated use is_ie_installed?(6)
-#    is_ie7_installed?() # Deprecated use is_ie_installed?(7)
-#    is_ie8_installed?() # Deprecated use is_ie_installed?(8)
-#    is_ie9_installed?() # Deprecated use is_ie_installed?(9)
 #    is_minimized?(...)
 #    is_maximized?(...)
 #    open_messagebox_win(...)
@@ -116,7 +107,7 @@ end
 module WatirWorks_WinUtilities
   
   # Version of this module
-  WW_WIN_UTILITIES_VERSION =  "1.0.3"
+  WW_WIN_UTILITIES_VERSION =  "1.0.4"
   
   #===============================
   # Button codes for Window's Message box
@@ -268,15 +259,67 @@ module WatirWorks_WinUtilities
     
   end # End Function - exit_browsers_win
   
+  
+  #=============================================================================#
+  #--
+  # Method: get_registered_chrome_version()
+  #++
+  #
+  # Description: Reads the Windows Registry for the Chrome version key's value.
+  #              This typically indicates the full version of Chrome that is
+  #              installed as the default Chrome browser
+  #
+  # Returns: STRING - The contents of the registry key value
+  #
+  # Syntax: N/A
+  #
+  # Usage examples: With Chrome 17.x is installed
+  #                    get_registered_chrome_version()  #=> "17.0.963.96"
+  #
+  #=============================================================================#
+  def get_registered_chrome_version()
+    
+    require 'win32/registry'
+    
+    if(is_win32?) # Only run on Windows32
+      
+      @@get_registered_chrome_version ||= begin
+        
+        ::Win32::Registry::HKEY_CURRENT_USER.open("Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Google Chrome") do |chrome_key|
+          
+          chrome_key.read('Version').last
+        end
+      end
+      
+    elsif (is_win64?) # Only run on Windows64
+      
+      @@get_registered_chrome_version ||= begin
+        
+       :Win32::Registry::HKEY_CURRENT_USER.open("Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Google Chrome") do |chrome_key|
+          
+          chrome_key.read('Version').last
+        end
+      end
+      
+    else
+      return " " # Return a single character whitespace
+      
+    end # Only run on Windows
+    
+  end # Function - get_registered_chrome_version()
+  
+  alias get_chrome_version_win get_registered_chrome_version
+  
   #=============================================================================#
   #--
   # Method: get_registered_firefox_version()
   #++
   #
   # Description: Reads the Windows Registry for the Firefox version key's value.
-  #              This typically indicates the full version of Firefox that is  installed as the default Firefox browser
+  #              This typically indicates the full version of Firefox that is
+  #              installed as the default Firefox browser
   #
-  # Returns: STRING - The contents of the registry key
+  # Returns: STRING - The contents of the registry key value
   #
   # Syntax: N/A
   #
@@ -324,9 +367,10 @@ module WatirWorks_WinUtilities
   #++
   #
   # Description:  Reads the Windows Registry for the Internet Explorer version key's value.
-  #                       This typically indicates the full version of IE that is  installed as the default IE browser
+  #               This typically indicates the full version of IE that is
+  #               installed as the default IE browser
   #
-  # Returns: STRING - The contents of the registry key
+  # Returns: STRING - The contents of the registry key value
   #
   # Syntax: N/A
   #
@@ -357,6 +401,61 @@ module WatirWorks_WinUtilities
   end # Function - get_registered_ie_version()
   
   alias get_ie_version_win get_registered_ie_version
+  
+  
+  #=============================================================================#
+  #--
+  # Method: get_registered_opera_version()
+  #
+  # TODO: FINd where Opera stores it's version info
+  #++
+  #
+  # Description: Reads the Windows Registry for the Opera version key's value.
+  #              This typically indicates the full version of Opera that is
+  #              installed as the default Opera browser
+  #
+  # Returns: STRING - The contents of the registry key value
+  #
+  # Syntax: N/A
+  #
+  # Usage examples: With Opera 11.x is installed
+  #                    get_registered_opera_version()  #=> "11.6.1"
+  #
+  #=============================================================================#
+  def get_registered_opera_version()
+    
+    require 'win32/registry'
+    
+    if(is_win32?) # Only run on Windows32
+      
+      @@get_registered_opera_version ||= begin
+        
+        ::Win32::Registry::HKEY_CURRENT_USER.open("Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Google Chrome") do |opera_key|
+          
+          opera_key.read('Version').last
+        end
+      end
+      
+    elsif (is_win64?) # Only run on Windows64
+      
+      @@get_registered_chrome_version ||= begin
+        
+        ::Win32::Registry::HKEY_CURRENT_USER.open("Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Google Chrome") do |opera_key|
+          
+          opera_key.read('Version').last
+        end
+      end
+      
+    else
+      return " " # Return a single character whitespace
+      
+    end # Only run on Windows
+    
+  end # Function - get_registered_opera_version()
+  
+  alias get_opera_version_win get_registered_opera_version
+  
+  
   
   #=============================================================================#
   #--
@@ -1157,6 +1256,45 @@ module WatirWorks_WinUtilities
   
   #=============================================================================#
   #--
+  # Method: is_chrome_installed_win?()
+  #
+  #++
+  #
+  # Description: Determines if the Windows Registry contains an Chrome entry.
+  #              This typically indicates which version is installed as the default chrome browser
+  #
+  # Returns: BOOLEAN - true if registered, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage examples:
+  #                 if(is_chrome_installed_win?(17) == true)
+  #                      # Execute Chrome17 specific code
+  #                 end
+  #
+  #=============================================================================#
+  def is_chrome_installed_win?(iVersion = 17)
+    
+    if($VERBOSE == true)
+      puts2("Parameters - is_chrome_installed_win?:")
+      puts2("  iVersion " + iVersion.to_s)
+    end
+    
+    if(is_win?) # Only run on Windows
+      
+      # Check the Windows registry for a match with major release version
+      if(get_registered_chrome_version.prefix(".") == iVersion.to_s)
+        return true
+      else
+        return false
+      end
+      
+    end # Only run on Windows
+  end # Function - is_chrome_installed_win?()
+  
+  
+  #=============================================================================#
+  #--
   # Method: is_firefox_installed_win?()
   #
   #++
@@ -1183,8 +1321,8 @@ module WatirWorks_WinUtilities
     
     if(is_win?) # Only run on Windows
       
-      # Check the first character of the registered version for a match
-      if((get_registered_firefox_version[0].chr) == iVersion.to_s)
+      # Check the Windows registry for a match with major release version
+      if(get_registered_firefox_version.prefix(".") == iVersion.to_s)
         return true
       else
         return false
@@ -1193,292 +1331,6 @@ module WatirWorks_WinUtilities
     end # Only run on Windows
   end # Function - is_firefox_installed_win?()
   
-  #=============================================================================#
-  #--
-  # Method: is_firefox2_installed_win?()
-  #
-  #++
-  #
-  # Description: Determines if the Windows Registry contains an Firefox 2.x entry.
-  #              This typically indicates that FF2 is installed as the default FF browser
-  #
-  # Returns: BOOLEAN - true if registered, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage examples:
-  #                 if(is_firefox2_installed_win?())
-  #                      # Execute FF2 specific code
-  #                 end
-  #
-  #=============================================================================#
-  def is_firefox2_installed_win?()
-    
-    if(is_win?) # Only run on Windows
-      
-      # Check the first character of the registered version for a match
-      if((get_registered_firefox_version[0].chr) == "2")
-        return true
-      else
-        return false
-      end
-      
-    end # Only run on Windows
-  end # Function - is_firefox2_installed_win?()
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox3_installed_win?()
-  #++
-  #
-  # Description: Determines if the Windows Registry contains an Firefox 3.x entry.
-  #              This typically indicates that FF3is installed as the default FF browser
-  #
-  # Returns: BOOLEAN - true if registered, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage examples:
-  #                 if(is_firefox3_installed_win?())
-  #                      # Execute FF3 specific code
-  #                 end
-  #
-  #=============================================================================#
-  def is_firefox3_installed_win?()
-    
-    if(is_win?) # Only run on Windows
-      
-      # Check the first character of the registered version for a match
-      if((get_registered_firefox_version[0].chr) == "3")
-        return true
-      else
-        return false
-      end
-    end # Only run on Windows
-  end # Function - is_firefox3_installed_win?()
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox4_installed_win?()
-  #++
-  #
-  # Description: Determines if the Windows Registry contains an Firefox 4.x entry.
-  #              This typically indicates that FF4is installed as the default FF browser
-  #
-  # Returns: BOOLEAN - true if registered, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage examples:
-  #                 if(is_firefox4_installed_win?())
-  #                      # Execute FF4 specific code
-  #                 end
-  #
-  #=============================================================================#
-  def is_firefox4_installed_win?()
-    
-    if(is_win?) # Only run on Windows
-      
-      # Check the first character of the registered version for a match
-      if((get_registered_firefox_version[0].chr) == "4")
-        return true
-      else
-        return false
-      end
-    end # Only run on Windows
-  end # Function - is_firefox4_installed_win?()
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox5_installed_win?()
-  #++
-  #
-  # Description: Determines if the Windows Registry contains an Firefox 5.x entry.
-  #              This typically indicates that FF5 is installed as the default FF browser
-  #
-  # Returns: BOOLEAN - true if registered, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage examples:
-  #                 if(is_firefox5_installed_win?())
-  #                      # Execute FF5 specific code
-  #                 end
-  #
-  #=============================================================================#
-  def is_firefox5_installed_win?()
-    
-    if(is_win?) # Only run on Windows
-      
-      # Check the first character of the registered version for a match
-      if((get_registered_firefox_version[0].chr) == "5")
-        return true
-      else
-        return false
-      end
-    end # Only run on Windows
-  end # Function - is_firefox5_installed_win?()
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox6_installed_win?()
-  #++
-  #
-  # Description: Determines if the Windows Registry contains an Firefox 6.x entry.
-  #              This typically indicates that FF6 is installed as the default FF browser
-  #
-  # Returns: BOOLEAN - true if registered, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage examples:
-  #                 if(is_firefox6_installed_win?())
-  #                      # Execute FF6 specific code
-  #                 end
-  #
-  #=============================================================================#
-  def is_firefox6_installed_win?()
-    
-    if(is_win?) # Only run on Windows
-      
-      # Check the first character of the registered version for a match
-      if((get_registered_firefox_version[0].chr) == "6")
-        return true
-      else
-        return false
-      end
-    end # Only run on Windows
-  end # Function - is_firefox6_installed_win?()
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox7_installed_win?()
-  #++
-  #
-  # Description: Determines if the Windows Registry contains an Firefox 7.x entry.
-  #              This typically indicates that FF7 is installed as the default FF browser
-  #
-  # Returns: BOOLEAN - true if registered, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage examples:
-  #                 if(is_firefox7_installed_win?())
-  #                      # Execute FF7 specific code
-  #                 end
-  #
-  #=============================================================================#
-  def is_firefox7_installed_win?()
-    
-    if(is_win?) # Only run on Windows
-      
-      # Check the first character of the registered version for a match
-      if((get_registered_firefox_version[0].chr) == "7")
-        return true
-      else
-        return false
-      end
-    end # Only run on Windows
-  end # Function - is_firefox7_installed_win?()
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox8_installed_win?()
-  #++
-  #
-  # Description: Determines if the Windows Registry contains an Firefox 8.x entry.
-  #              This typically indicates that FF8 is installed as the default FF browser
-  #
-  # Returns: BOOLEAN - true if registered, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage examples:
-  #                 if(is_firefox8_installed_win?())
-  #                      # Execute FF8 specific code
-  #                 end
-  #
-  #=============================================================================#
-  def is_firefox8_installed_win?()
-    
-    if(is_win?) # Only run on Windows
-      
-      # Check the first character of the registered version for a match
-      if((get_registered_firefox_version[0].chr) == "8")
-        return true
-      else
-        return false
-      end
-    end # Only run on Windows
-  end # Function - is_firefox8_installed_win?()
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox9_installed_win?()
-  #++
-  #
-  # Description: Determines if the Windows Registry contains an Firefox 9.x entry.
-  #              This typically indicates that FF9 is installed as the default FF browser
-  #
-  # Returns: BOOLEAN - true if registered, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage examples:
-  #                 if(is_firefox9_installed_win?())
-  #                      # Execute FF9 specific code
-  #                 end
-  #
-  #=============================================================================#
-  def is_firefox9_installed_win?()
-    
-    if(is_win?) # Only run on Windows
-      
-      # Check the first character of the registered version for a match
-      if((get_registered_firefox_version[0].chr) == "9")
-        return true
-      else
-        return false
-      end
-    end # Only run on Windows
-  end # Function - is_firefox9_installed_win?()
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox10_installed_win?()
-  #++
-  #
-  # Description: Determines if the Windows Registry contains an Firefox 10.x entry.
-  #              This typically indicates that FF10 is installed as the default FF browser
-  #
-  # Returns: BOOLEAN - true if registered, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage examples:
-  #                 if(is_firefox10_installed_win?())
-  #                      # Execute FF10 specific code
-  #                 end
-  #
-  #=============================================================================#
-  def is_firefox10_installed_win?()
-    
-    if(is_win?) # Only run on Windows
-      
-      # Check the first character of the registered version for a match
-      if((get_registered_firefox_version[0].chr) == "10")
-        return true
-      else
-        return false
-      end
-    end # Only run on Windows
-  end # Function - is_firefox10_installed_win?()
   
   #=============================================================================#
   #--
@@ -1507,140 +1359,55 @@ module WatirWorks_WinUtilities
     
     if(is_win?) # Only run on Windows
       
-      # Check the first character of the installed version for a match
-      if((get_registered_ie_version[0].chr) == iVersion.to_s)
+      # Check the Windows registry for a match with major release version
+      if(get_registered_ie_version.prefix(".") == iVersion.to_s)
         return true
       else
         return false
       end
+    else
+      return false
     end # Only run on Windows
   end # Function - is_ie_installed?()
   
-  
   #=============================================================================#
   #--
-  # Method: is_ie6_installed?()
+  # Method: is_opera_installed_win?()
+  #
   #++
   #
-  # Description: Determines if the Windows Registry contains an Internet Explorer 6.x entry.
-  #              This typically indicates that IE6 is installed as the default IE browser
+  # Description: Determines if the Windows Registry contains an Opera entry.
+  #              This typically indicates which version is installed as the default Opera browser
   #
-  # Returns: BOOLEAN - true if installed, otherwise false
+  # Returns: BOOLEAN - true if registered, otherwise false
   #
   # Syntax: N/A
   #
   # Usage examples:
-  #                 if(is_ie6_installed?)
-  #                      # Execute IE6 specific code
+  #                 if(is_opera_installed_win?(17) == true)
+  #                      # Execute Opera 10 specific code
   #                 end
   #
   #=============================================================================#
-  def is_ie6_installed?()
+  def is_opera_installed_win?(iVersion = 10)
+    
+    if($VERBOSE == true)
+      puts2("Parameters - is_opera_installed_win?:")
+      puts2("  iVersion " + iVersion.to_s)
+    end
     
     if(is_win?) # Only run on Windows
       
-      # Check the first character of the installed version for a match
-      if((get_registered_ie_version[0].chr) == "6")
+      # Check the Windows registry for a match with major release version
+      if(get_registered_opera_version.prefix(".") == iVersion.to_s)
         return true
       else
         return false
       end
-    end # Only run on Windows
-  end # Function - is_ie6_installed?()
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_ie7_installed?()
-  #++
-  #
-  # Description: Determines if the Windows Registry contains an Internet Explorer 7.x entry.
-  #              This typically indicates that IE7 is installed as the default IE browser
-  #
-  # Returns: BOOLEAN - true if installed, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage examples:
-  #                 if(is_ie7_installed?)
-  #                      # Execute IE7 specific code
-  #                 end
-  #
-  #=============================================================================#
-  def is_ie7_installed?()
-    
-    if(is_win?) # Only run on Windows
-      # Check the first character of the installed version for a match
-      if((get_registered_ie_version[0].chr) == "7")
-        return true
-      else
-        return false
-      end
-    end # Only run on Windows
-  end # Function - is_ie7_installed?()
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_ie8_installed?()
-  #++
-  #
-  # Description: Determines if the Windows Registry contains an Internet Explorer 8.x entry.
-  #              This typically indicates that IE8 is installed as the default IE browser
-  #
-  # Returns: BOOLEAN - true if installed, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage examples:
-  #                 if(is_ie8_installed?)
-  #                      # Execute IE8 specific code
-  #                 end
-  #
-  #=============================================================================#
-  def is_ie8_installed?()
-    
-    if(is_win?) # Only run on Windows
       
-      # Check the first character of the installed version for a match
-      if((get_registered_ie_version[0].chr) == "8")
-        return true
-      else
-        return false
-      end
     end # Only run on Windows
-  end # Function - is_ie8_installed?()
+  end # Function - is_opera_installed_win?()
   
-  #=============================================================================#
-  #--
-  # Method: is_ie9_installed?()
-  #++
-  #
-  # Description: Determines if the Windows Registry contains an Internet Explorer 9.x entry.
-  #              This typically indicates that IE9 is installed as the default IE browser
-  #
-  # Returns: BOOLEAN - true if installed, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage examples:
-  #                 if(is_ie9_installed?)
-  #                      # Execute IE8 specific code
-  #                 end
-  #
-  #=============================================================================#
-  def is_ie9_installed?()
-    
-    if(is_win?) # Only run on Windows
-      
-      # Check the first character of the installed version for a match
-      if((get_registered_ie_version[0].chr) == "9")
-        return true
-      else
-        return false
-      end
-    end # Only run on Windows
-  end # Function - is_ie9_installed?()
   
   #=============================================================================#
   #--

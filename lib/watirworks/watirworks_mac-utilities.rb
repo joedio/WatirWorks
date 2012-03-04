@@ -135,13 +135,56 @@ module WatirWorks_MacUtilities
   
   #=============================================================================#
   #--
+  # Method: get_chrome_version_mac()
+  #
+  #++
+  #
+  # Description: Determines if Chrome version installed in the filesystem.
+  #
+  # Returns: STRING = Version of the browser that is installed in the system's
+  #                   default location
+  #
+  # Usage Examples:
+  #                 puts2("Chrome version: " + get_chrome_version_mac())
+  #
+  #=============================================================================#
+  def get_chrome_version_mac()
+    
+    # Define values
+    sPathToFile = "/Applications/Chrome.app/Contents/Info.plist"
+    
+    sStringtoMatch = nil
+    
+    for iVersion in 10..20
+      if(is_chrome_installed_mac?(iVersion) == true)
+        sStringtoMatch = "Chrome " + iVersion.to_s
+      end
+    end
+    
+    if(sStringtoMatch == nil)
+      return "Unknown"
+    else
+      aMatch = get_text_from_file(sStringtoMatch, sPathToFile, 0, 0)
+      
+      # Parse version
+      aMatch.each do | aIndex |
+        return (getXMLTagValue(aIndex[2].to_s, "string").prefix(",").suffix(" "))
+      end # Parse version
+    end
+    
+  end # Method - get_chrome_version_mac()
+  
+  
+  #=============================================================================#
+  #--
   # Method: get_firefox_version_mac()
   #
   #++
   #
   # Description: Determines if Firefox version installed in the filesystem.
   #
-  # Returns: BOOLEAN = true if installed, otherwise false
+  # Returns: STRING = Version of the browser that is installed in the system's
+  #                   default location
   #
   # Usage Examples:
   #                 puts2("Firefox version: " + get_firefox_version_mac())
@@ -152,29 +195,156 @@ module WatirWorks_MacUtilities
     # Define values
     sPathToFile = "/Applications/Firefox.app/Contents/Info.plist"
     
-    if(is_firefox2_installed_mac?() == true)
-      sStringtoMatch = "Firefox 2"
-    elsif(is_firefox3_installed_mac?() == true)
-      sStringtoMatch = "Firefox 3"
-    elsif(is_firefox4_installed_mac?() == true)
-      sStringtoMatch = "Firefox 4"
-    elsif(is_firefox5_installed_mac?() == true)
-      sStringtoMatch = "Firefox 5"
-    elsif(is_firefox6_installed_mac?() == true)
-      sStringtoMatch = "Firefox 6"
-    elsif(is_firefox7_installed_mac?() == true)
-      sStringtoMatch = "Firefox 7"
+    sStringtoMatch = nil
+    
+    for iVersion in 2..12
+      if(is_firefox_installed_mac?(iVersion) == true)
+        sStringtoMatch = "Firefox " + iVersion.to_s
+      end
     end
     
-    aMatch = get_text_from_file(sStringtoMatch, sPathToFile, 0, 0)
-    
-    # Parse version
-    aMatch.each do | aIndex |
-      return (getXMLTagValue(aIndex[2].to_s, "string").prefix(",").suffix(" "))
-    end # Parse version
+    if(sStringtoMatch == nil)
+      return "Unknown"
+    else
+      aMatch = get_text_from_file(sStringtoMatch, sPathToFile, 0, 0)
+      
+      # Parse version
+      aMatch.each do | aIndex |
+        return (getXMLTagValue(aIndex[2].to_s, "string").prefix(",").suffix(" "))
+      end # Parse version
+    end
     
   end # Method - get_firefox_version_mac()
   
+  
+  #=============================================================================#
+  #--
+  # Method: get_opera_version_mac()
+  #
+  #++
+  #
+  # Description: Determines if Opera version installed in the filesystem.
+  #
+  # Returns: STRING = Version of the browser that is installed in the system's
+  #                   default location
+  #
+  # Usage Examples:
+  #                 puts2("Opera version: " + get_opera_version_mac())
+  #
+  #=============================================================================#
+  def get_opera_version_mac()
+    
+    # Define values
+    sPathToFile = "/Applications/Opera.app/Contents/Info.plist"
+    
+    sStringtoMatch = nil
+    
+    for iVersion in 10..20
+      if(is_chrome_installed_mac?(iVersion) == true)
+        sStringtoMatch = "Opera " + iVersion.to_s
+      end
+    end
+    
+    if(sStringtoMatch == nil)
+      return "Unknown"
+    else
+      aMatch = get_text_from_file(sStringtoMatch, sPathToFile, 0, 0)
+      
+      # Parse version
+      aMatch.each do | aIndex |
+        return (getXMLTagValue(aIndex[2].to_s, "string").prefix(",").suffix(" "))
+      end # Parse version
+    end
+    
+  end # Method - get_opera_version_mac()
+  
+  
+  #=============================================================================#
+  #--
+  # Method: get_safari_version_mac()
+  #
+  #++
+  #
+  # Description: Determines if Safari version installed in the filesystem.
+  #
+  # Returns: STRING = Version of the browser that is installed in the system's
+  #                   default location
+  #
+  # Usage Examples:
+  #                 puts2("Safari version: " + get_safari_version_mac())
+  #
+  #=============================================================================#
+  def get_safari_version_mac()
+    
+    # Define values
+    sPathToFile = "/Applications/Safari.app/Contents/Info.plist"
+    
+    sStringtoMatch = nil
+    
+    for iVersion in 10..20
+      if(is_safari_installed_mac?(iVersion) == true)
+        sStringtoMatch = "Opera " + iVersion.to_s
+      end
+    end
+    
+    if(sStringtoMatch == nil)
+      return "Unknown"
+    else
+      aMatch = get_text_from_file(sStringtoMatch, sPathToFile, 0, 0)
+      
+      # Parse version
+      aMatch.each do | aIndex |
+        return (getXMLTagValue(aIndex[2].to_s, "string").prefix(",").suffix(" "))
+      end # Parse version
+    end
+    
+  end # Method - get_safari_version_mac()
+  
+  #=============================================================================#
+  #--
+  # Method: is_chrome_installed_mac?(...)
+  #
+  #++
+  #
+  # Description: Determines the specified version of Chrome is installed in the filesystem.
+  #
+  #              On OSX the default installed browesr's version is noted in the file:
+  #                 /Applications/Chrome.app/Contents/Info.plist
+  #              For example Chrome v17.1.2 contains this entry:
+  #                 <string>Chrome 2.1.2</string>
+  #
+  # Returns: BOOLEAN = true if installed, otherwise false
+  #
+  # Usage Examples:
+  #                 if(is_chrome_installed_mac?(17))
+  #                      # Execute Chrome 17 specific code
+  #                 end
+  #
+  #=============================================================================#
+  def is_chrome_installed_mac?(iVersion = 7)
+    
+    if($VERBOSE == true)
+      puts2("Parameters - is_chrome_installed_mac?")
+      puts2("  iVersion " + iVersion.to_s)
+    end
+    
+    # Define values
+    sVersion = iVersion.to_s
+    sPathToFile = "/Applications/Chrome.app/Contents/Info.plist"
+    sStringtoMatch = "Chrome #{sVersion}"
+    
+    aMatch = get_text_from_file(sStringtoMatch, sPathToFile, 0, 0)
+    
+    # Check for a match
+    aMatch.each do | aIndex |
+      if(aIndex[0] == true)
+        return true
+      else
+        return false
+      end
+    end # Check for a match
+    
+  end # Method - is_chrome_installed_mac?(...)
   
   
   #=============================================================================#
@@ -185,7 +355,7 @@ module WatirWorks_MacUtilities
   #
   # Description: Determines the specified version of Firefox is installed in the filesystem.
   #
-  #              On OSX the the Firefox version is noted in the file:
+  #              On OSX the default installed browesr's version is noted in the file:
   #                 /Applications/Firefox.app/Contents/Info.plist
   #              For example Firefox v2.1.2 contains this entry:
   #                 <string>Firefox 2.1.2</string>
@@ -223,32 +393,39 @@ module WatirWorks_MacUtilities
     
   end # Method - is_firefox_installed_mac?(...)
   
+  
   #=============================================================================#
   #--
-  # Method: is_firefox2_installed_mac?()
+  # Method: is_opera_installed_mac?(...)
   #
   #++
   #
-  # Description: Determines if Firefox 2.x is installed in the filesystem.
+  # Description: Determines the specified version of Opera is installed in the filesystem.
   #
-  #              On OSX the the Firefox version is noted in the file:
-  #                 /Applications/Firefox.app/Contents/Info.plist
-  #              For example Firefox v2.1.2 contains this entry:
-  #                 <string>Firefox 2.1.2</string>
+  #              On OSX the default installed browesr's version is noted in the file:
+  #                 /Applications/Opera.app/Contents/Info.plist
+  #              For example Opera v2.1.2 contains this entry:
+  #                 <string>Opera 2.1.2</string>
   #
   # Returns: BOOLEAN = true if installed, otherwise false
   #
   # Usage Examples:
-  #                 if(is_firefox2_installed_mac?())
-  #                      # Execute FF2 specific code
+  #                 if(is_opera_installed_mac?(7))
+  #                      # Execute Opera 7 specific code
   #                 end
   #
   #=============================================================================#
-  def is_firefox2_installed_mac?()
+  def is_opera_installed_mac?(iVersion = 7)
+    
+    if($VERBOSE == true)
+      puts2("Parameters - is_opera_installed_mac?")
+      puts2("  iVersion " + iVersion.to_s)
+    end
     
     # Define values
-    sPathToFile = "/Applications/Firefox.app/Contents/Info.plist"
-    sStringtoMatch = "Firefox 2"
+    sVersion = iVersion.to_s
+    sPathToFile = "/Applications/Opera.app/Contents/Info.plist"
+    sStringtoMatch = "Opera #{sVersion}"
     
     aMatch = get_text_from_file(sStringtoMatch, sPathToFile, 0, 0)
     
@@ -261,35 +438,41 @@ module WatirWorks_MacUtilities
       end
     end # Check for a match
     
-  end # Method - is_firefox2_installed_mac?()
+  end # Method - is_opera_installed_mac?(...)
   
   
   #=============================================================================#
   #--
-  # Method: is_firefox3_installed_mac?()
+  # Method: is_safair_installed_mac?(...)
   #
   #++
   #
-  # Description: Determines if Firefox 3.x is installed in the filesystem.
+  # Description: Determines the specified version of Safari is installed in the filesystem.
   #
-  #              On OSX the the Firefox version is noted in the file:
-  #                 /Applications/Firefox.app/Contents/Info.plist
-  #              For example Firefox v3.6.3 contains this entry:
-  #                 <string>Firefox 3.6.19, 1998-2011 Contributors</string>
+  #              On OSX the default installed browesr's version is noted in the file:
+  #                 /Applications/Safari.app/Contents/Info.plist
+  #              For example Safari v2.1.2 contains this entry:
+  #                 <string>Safari 2.1.2</string>
   #
   # Returns: BOOLEAN = true if installed, otherwise false
   #
   # Usage Examples:
-  #                 if(is_firefox3_installed_mac?())
-  #                      # Execute FF3 specific code
+  #                 if(is_safair_installed_mac?(7))
+  #                      # Execute Safari 7 specific code
   #                 end
   #
   #=============================================================================#
-  def is_firefox3_installed_mac?()
+  def is_safair_installed_mac?(iVersion = 7)
+    
+    if($VERBOSE == true)
+      puts2("Parameters - is_safair_installed_mac?")
+      puts2("  iVersion " + iVersion.to_s)
+    end
     
     # Define values
-    sPathToFile = "/Applications/Firefox.app/Contents/Info.plist"
-    sStringtoMatch = "Firefox 3"
+    sVersion = iVersion.to_s
+    sPathToFile = "/Applications/Safari.app/Contents/Info.plist"
+    sStringtoMatch = "Safari #{sVersion}"
     
     aMatch = get_text_from_file(sStringtoMatch, sPathToFile, 0, 0)
     
@@ -302,302 +485,7 @@ module WatirWorks_MacUtilities
       end
     end # Check for a match
     
-    
-  end # Method - is_firefox3_installed_mac?()
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox4_installed_mac?()
-  #
-  #++
-  #
-  # Description: Determines if Firefox 4.x is installed in the filesystem.
-  #
-  #              On OSX the the Firefox version is noted in the file:
-  #                 /Applications/Firefox.app/Contents/Info.plist
-  #              For example Firefox v4.0.1 contains this entry:
-  #                 <string>Firefox 4.0.1</string>
-  #
-  # Returns: BOOLEAN = true if installed, otherwise false
-  #
-  # Usage Examples:
-  #                 if(is_firefox4_installed_mac?())
-  #                      # Execute FF4 specific code
-  #                 end
-  #
-  #=============================================================================#
-  def is_firefox4_installed_mac?()
-    
-    # Define values
-    sPathToFile = "/Applications/Firefox.app/Contents/Info.plist"
-    sStringtoMatch = "Firefox 4"
-    
-    aMatch = get_text_from_file(sStringtoMatch, sPathToFile, 0, 0)
-    
-    # Check for a match
-    aMatch.each do | aIndex |
-      if(aIndex[0] == true)
-        return true
-      else
-        return false
-      end
-    end # Check for a match
-    
-    
-  end # Method - is_firefox4_installed_mac?()
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox5_installed_mac?()
-  #
-  #++
-  #
-  # Description: Determines if Firefox 5.x is installed in the filesystem.
-  #
-  #              On OSX the the Firefox version is noted in the file:
-  #                 /Applications/Firefox.app/Contents/Info.plist
-  #              For example Firefox v5.0.1 contains this entry:
-  #                 <string>Firefox 5.0.1</string>
-  #
-  # Returns: BOOLEAN = true if installed, otherwise false
-  #
-  # Usage Examples:
-  #                 if(is_firefox5_installed_mac?())
-  #                      # Execute FF5 specific code
-  #                 end
-  #
-  #=============================================================================#
-  def is_firefox5_installed_mac?()
-    
-    # Define values
-    sPathToFile = "/Applications/Firefox.app/Contents/Info.plist"
-    sStringtoMatch = "Firefox 5"
-    
-    aMatch = get_text_from_file(sStringtoMatch, sPathToFile, 0, 0)
-    
-    # Check for a match
-    aMatch.each do | aIndex |
-      if(aIndex[0] == true)
-        return true
-      else
-        return false
-      end
-    end # Check for a match
-    
-    
-  end # Method - is_firefox5_installed_mac?()
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox6_installed_mac?()
-  #
-  #++
-  #
-  # Description: Determines if Firefox 6.x is installed in the filesystem.
-  #
-  #              On OSX the the Firefox version is noted in the file:
-  #                 /Applications/Firefox.app/Contents/Info.plist
-  #              For example Firefox v6.0.1 contains this entry:
-  #                 <string>Firefox 6.0.1</string>
-  #
-  # Returns: BOOLEAN = true if installed, otherwise false
-  #
-  # Usage Examples:
-  #                 if(is_firefox6_installed_mac?())
-  #                      # Execute FF6 specific code
-  #                 end
-  #
-  #=============================================================================#
-  def is_firefox6_installed_mac?()
-    
-    # Define values
-    sPathToFile = "/Applications/Firefox.app/Contents/Info.plist"
-    sStringtoMatch = "Firefox 6"
-    
-    aMatch = get_text_from_file(sStringtoMatch, sPathToFile, 0, 0)
-    
-    # Check for a match
-    aMatch.each do | aIndex |
-      if(aIndex[0] == true)
-        return true
-      else
-        return false
-      end
-    end # Check for a match
-    
-    
-  end # Method - is_firefox6_installed_mac?()
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox7_installed_mac?()
-  #
-  #++
-  #
-  # Description: Determines if Firefox 7.x is installed in the filesystem.
-  #
-  #              On OSX the the Firefox version is noted in the file:
-  #                 /Applications/Firefox.app/Contents/Info.plist
-  #              For example Firefox v7.0.1 contains this entry:
-  #                 <string>Firefox 7.0.1</string>
-  #
-  # Returns: BOOLEAN = true if installed, otherwise false
-  #
-  # Usage Examples:
-  #                 if(is_firefox7_installed_mac?())
-  #                      # Execute FF7 specific code
-  #                 end
-  #
-  #=============================================================================#
-  def is_firefox7_installed_mac?()
-    
-    # Define values
-    sPathToFile = "/Applications/Firefox.app/Contents/Info.plist"
-    sStringtoMatch = "Firefox 7"
-    
-    aMatch = get_text_from_file(sStringtoMatch, sPathToFile, 0, 0)
-    
-    # Check for a match
-    aMatch.each do | aIndex |
-      if(aIndex[0] == true)
-        return true
-      else
-        return false
-      end
-    end # Check for a match
-    
-    
-  end # Method - is_firefox7_installed_mac?()
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox8_installed_mac?()
-  #
-  #++
-  #
-  # Description: Determines if Firefox 8.x is installed in the filesystem.
-  #
-  #              On OSX the the Firefox version is noted in the file:
-  #                 /Applications/Firefox.app/Contents/Info.plist
-  #              For example Firefox v8.0.1 contains this entry:
-  #                 <string>Firefox 8.0.1</string>
-  #
-  # Returns: BOOLEAN = true if installed, otherwise false
-  #
-  # Usage Examples:
-  #                 if(is_firefox8_installed_mac?())
-  #                      # Execute FF8 specific code
-  #                 end
-  #
-  #=============================================================================#
-  def is_firefox8_installed_mac?()
-    
-    # Define values
-    sPathToFile = "/Applications/Firefox.app/Contents/Info.plist"
-    sStringtoMatch = "Firefox 8"
-    
-    aMatch = get_text_from_file(sStringtoMatch, sPathToFile, 0, 0)
-    
-    # Check for a match
-    aMatch.each do | aIndex |
-      if(aIndex[0] == true)
-        return true
-      else
-        return false
-      end
-    end # Check for a match
-    
-    
-  end # Method - is_firefox8_installed_mac?()
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox9_installed_mac?()
-  #
-  #++
-  #
-  # Description: Determines if Firefox 9.x is installed in the filesystem.
-  #
-  #              On OSX the the Firefox version is noted in the file:
-  #                 /Applications/Firefox.app/Contents/Info.plist
-  #              For example Firefox v9.0.1 contains this entry:
-  #                 <string>Firefox 9.0.1</string>
-  #
-  # Returns: BOOLEAN = true if installed, otherwise false
-  #
-  # Usage Examples:
-  #                 if(is_firefox9_installed_mac?())
-  #                      # Execute FF9 specific code
-  #                 end
-  #
-  #=============================================================================#
-  def is_firefox9_installed_mac?()
-    
-    # Define values
-    sPathToFile = "/Applications/Firefox.app/Contents/Info.plist"
-    sStringtoMatch = "Firefox 9"
-    
-    aMatch = get_text_from_file(sStringtoMatch, sPathToFile, 0, 0)
-    
-    # Check for a match
-    aMatch.each do | aIndex |
-      if(aIndex[0] == true)
-        return true
-      else
-        return false
-      end
-    end # Check for a match
-    
-    
-  end # Method - is_firefox9_installed_mac?()
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox10_installed_mac?()
-  #
-  #++
-  #
-  # Description: Determines if Firefox 10.x is installed in the filesystem.
-  #
-  #              On OSX the the Firefox version is noted in the file:
-  #                 /Applications/Firefox.app/Contents/Info.plist
-  #              For example Firefox v10.0.1 contains this entry:
-  #                 <string>Firefox 10.0.1</string>
-  #
-  # Returns: BOOLEAN = true if installed, otherwise false
-  #
-  # Usage Examples:
-  #                 if(is_firefox10_installed_mac?())
-  #                      # Execute FF10 specific code
-  #                 end
-  #
-  #=============================================================================#
-  def is_firefox10_installed_mac?()
-    
-    # Define values
-    sPathToFile = "/Applications/Firefox.app/Contents/Info.plist"
-    sStringtoMatch = "Firefox 10"
-    
-    aMatch = get_text_from_file(sStringtoMatch, sPathToFile, 0, 0)
-    
-    # Check for a match
-    aMatch.each do | aIndex |
-      if(aIndex[0] == true)
-        return true
-      else
-        return false
-      end
-    end # Check for a match
-    
-    
-  end # Method - is_firefox10_installed_mac?()
+  end # Method - is_safair_installed_mac?(...)
   
   
   #=============================================================================#

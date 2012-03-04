@@ -98,7 +98,7 @@ The unit tests for WatirWorks reside under the folder:
 
 = SETUP
 
-Prerequisites: Ruby1.8.7, Watir1.9.0
+Prerequisites: Ruby1.8.7, watir v1.9.2, watir-webdriver v0.4.1
 
 To use WatirWorks you will need to perform the following:
 * Install Ruby

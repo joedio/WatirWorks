@@ -1,7 +1,7 @@
 require 'rubygems'
 spec = Gem::Specification.new do |s|
   s.name = 'watirworks'
-  s.version = '0.1.5'
+  s.version = '0.1.6'
   s.summary = "WatirWorks is a testing framework and toolkit for Watir and Watir-WebDriver."
   s.description = "WatirWorks is a collection of cross-platform, cross-browser tools to enhance and expand Ruby when used with the Watir, FireWatir, or WatirWebDriver gems"
   s.files = Dir.glob("**/**/**")

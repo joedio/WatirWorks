@@ -101,27 +101,10 @@ end
 #    get_multiple_xml_tag_values(...) # Deprecating - getMultipleXMLTagValues(...)
 #    get_xml_tag_value(...)   # Deprecating -  getXMLTagValue
 #    handle_js_dialog(...)   # NOT working with Watir1.6.5.  See issue with click_no_wait()
-#    is_firefox?()
-#    is_firefox_ver?(...)
-#    is_firefox2?() # Deprecated use is_firefox_ver?(2)
-#    is_firefox3?() # Deprecated use is_firefox_ver?(3)
-#    is_firefox4?() # Deprecated use is_firefox_ver?(4)
-#    is_firefox5?() # Deprecated use is_firefox_ver?(5)
-#    is_firefox6?() # Deprecated use is_firefox_ver?(6)
-#    is_firefox7?() # Deprecated use is_firefox_ver?(7)
+#    is_chrome?(...)
+#    is_firefox?(...)
 #    is_firefox_installed?(...)
-#    is_firefox2_installed?() # Deprecated use is_firefox_installed?(2)
-#    is_firefox3_installed?() # Deprecated use is_firefox_installed?(3)
-#    is_firefox4_installed?() # Deprecated use is_firefox_installed?(4)
-#    is_firefox5_installed?() # Deprecated use is_firefox_installed?(5)
-#    is_firefox6_installed?() # Deprecated use is_firefox_installed?(6)
-#    is_firefox7_installed?() # Deprecated use is_firefox_installed?(7)
-#    is_ie?()
-#    is_ie_ver?()
-#    is_ie6?() # Deprecated use is_ie_ver?(6)
-#    is_ie7?() # Deprecated use is_ie_ver?(7)
-#    is_ie8?() # Deprecated use is_ie_ver?(8)
-#    is_ie9?() # Deprecated use is_ie_ver?(9)
+#    is_ie?(...)
 #    is_opera?()
 #    is_safari?()
 #    is_global_browser_running?()
@@ -1734,11 +1717,38 @@ module WatirWorks_WebUtilities
   
   #=============================================================================#
   #--
+  # Method: get_chrome_version()
+  #
+  #++
+  #
+  # Description: Identifies the version of Chrome browser installed on the OS
+  #
+  # Returns: STRING - The version of the browser
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  puts2("Chrome version: " + get_chrome_version())
+  #
+  #
+  #=============================================================================#
+  def get_chrome_version()
+    
+    if(is_win?)
+      return get_chrome_version_win()
+    elsif(is_linux?)
+      return get_chrome_version_linux()
+    elsif(is_osx?)
+      return get_chrome_version_mac()
+    end
+  end # Function - get_chrome_version
+  
+  #=============================================================================#
+  #--
   # Method: get_firefox_version()
   #
   #++
   #
-  # Description: Identifies the version of Firefox 2 browser installed on the OS
+  # Description: Identifies the version of Firefox browser installed on the OS
   #
   # Returns: STRING - The version of the browser
   #
@@ -1786,6 +1796,61 @@ module WatirWorks_WebUtilities
     end
   end # Function - get_ie_version
   
+  
+  #=============================================================================#
+  #--
+  # Method: get_opera_version()
+  #
+  #++
+  #
+  # Description: Identifies the version of Opera browser installed on the OS
+  #
+  # Returns: STRING - The version of the browser
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  puts2("Opera version: " + get_opera_version())
+  #
+  #
+  #=============================================================================#
+  def get_opera_version()
+    
+    if(is_win?)
+      return get_opera_version_win()
+    elsif(is_linux?)
+      return get_opera_version_linux()
+    elsif(is_osx?)
+      return get_opera_version_mac()
+    end
+  end # Function - get_opera_version
+  
+  
+  #=============================================================================#
+  #--
+  # Method: get_safari_version()
+  #
+  #++
+  #
+  # Description: Identifies the version of Safari browser installed on the OS
+  #
+  # Returns: STRING - The version of the browser
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  puts2("Safari version: " + get_safari_version())
+  #
+  #
+  #=============================================================================#
+  def get_safari_version()
+    
+    if(is_win?)
+      return get_safari_version_win()
+    elsif(is_linux?)
+      return get_safari_version_linux()
+    elsif(is_osx?)
+      return get_safari_version_mac()
+    end
+  end # Function - get_safari_version
   
   #=============================================================================#
   #--
@@ -2278,7 +2343,7 @@ module WatirWorks_WebUtilities
   
   #=============================================================================#
   #--
-  # Method: is_chrome?()
+  # Method: is_chrome?(...)
   #
   #++
   #
@@ -2293,15 +2358,71 @@ module WatirWorks_WebUtilities
   #                  end
   #
   #=============================================================================#
-  def is_chrome?()
+  def is_chrome?(iVersion = nil)
     
-    if(is_webdriver? == true)
-      return (self.driver.browser.to_s.downcase == "chrome")
-    else
-      return (self.class.to_s == "ChromeWatir::Browser")
+    if($VERBOSE == true)
+      puts2("Parameters - is_chrome?")
+      puts2("  iVersion " + iVersion.to_s)
     end
     
-  end
+    if(iVersion == nil)
+      if(is_webdriver? == true)
+        return (self.driver.browser.to_s.downcase == "chrome")
+      else
+        return (self.class.to_s == "ChromeWatir::Browser")
+      end
+      
+    elsif(iVersion >= 10)
+      if(is_chrome_installed?(iVersion))
+        if(is_webdriver? == true)
+          return (self.driver.browser.to_s.downcase == "chrome")
+        else
+          return (self.class.to_s == "ChromeWatir::Browser")
+        end
+      else
+        return false
+      end
+      
+    else # Not nil and not >=10
+      return false
+    end
+    
+  end # Method - is_chrome?(...)
+  
+  
+  #=============================================================================#
+  #--
+  # Method: is_chrome_installed?(...)
+  #
+  #++
+  #
+  # Description: Identifies if the specified Chrome version in installed on the OS
+  #
+  # Returns: BOOLEAN - true if specified Chrome browser is installed, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_chrome_installed?(17))
+  #                      # Execute Chrome 17.x specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_chrome_installed?(iVersion = 10)
+    
+    if($VERBOSE == true)
+      puts2("Parameters - is_chrome_installed?")
+      puts2("  iVersion " + iVersion.to_s)
+    end
+    
+    if(is_win?)
+      return is_chrome_installed_win?(iVersion)
+    elsif(is_linux?)
+      return is_chrome_installed_linux?(iVersion)
+    elsif(is_osx?)
+      return is_chrome_installed_mac?(iVersion)
+    end
+    
+  end # Method - is_chrome_installed?(...)
   
   #=============================================================================#
   #--
@@ -2320,308 +2441,38 @@ module WatirWorks_WebUtilities
   #                  end
   #
   #=============================================================================#
-  def is_firefox?()
-    
-    if(is_webdriver? == true)
-      return (self.driver.browser.to_s.downcase == "firefox")
-    else
-      return (self.class.to_s == "FireWatir::Firefox")
-    end
-    
-  end
-  
-  alias is_ff? is_firefox?
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox_ver?()
-  #
-  #++
-  #
-  # Description: Identifies if running a specified version of the Firefox browser
-  #
-  # Returns: BOOLEAN - true if browser is the specified Firefox version, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_firefox_ver?(3))
-  #                      # Execute Firefox 3.x specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_firefox_ver?(iVersion = 3)
+  def is_firefox?(iVersion = nil)
     
     if($VERBOSE == true)
-      puts2("Parameters - is_firefox_ver?")
+      puts2("Parameters - is_firefox?")
       puts2("  iVersion " + iVersion.to_s)
     end
     
-    if((self.is_firefox?) && (is_firefox_installed?(iVersion)))
-      return true
-    else
+    if(iVersion == nil)
+      if(is_webdriver? == true)
+        return (self.driver.browser.to_s.downcase == "firefox")
+      else
+        return (self.class.to_s == "FireWatir::Firefox")
+      end
+      
+    elsif(iVersion >= 2)
+      if(is_firefox_installed?(iVersion))
+        if(is_webdriver? == true)
+          return (self.driver.browser.to_s.downcase == "firefox")
+        else
+          return (self.class.to_s == "FireWatir::Firefox")
+        end
+      else
+        return false
+      end
+      
+    else # Not nil and not >=2
       return false
     end
-  end
-  
-  alias is_ff_ver? is_firefox_ver?
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox2?()
-  #
-  #++
-  #
-  # Description: Identifies if running a Firefox 2.x browser
-  #
-  # Returns: BOOLEAN - true if browser is Firefox 2.x, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_firefox2?())
-  #                      # Execute Firefox specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_firefox2?()
     
-    if((self.is_firefox?) && (is_firefox_installed?(2)))
-      return true
-    else
-      return false
-    end
-  end
+  end # Method - is_firefox?(...)
   
-  alias is_ff2? is_firefox2?
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox3?()
-  #
-  #++
-  #
-  # Description: Identifies if running a Firefox 3.x browser
-  #
-  # Returns: BOOLEAN - true if browser is Firefox 3.x, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_firefox3?())
-  #                      # Execute Firefox specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_firefox3?()
-    
-    if((self.is_firefox?) && (is_firefox_installed?(3)))
-      return true
-    else
-      return false
-    end
-  end
-  
-  alias is_ff3? is_firefox3?
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox4?()
-  #
-  #++
-  #
-  # Description: Identifies if running a Firefox 4.x browser
-  #
-  # Returns: BOOLEAN - true if browser is Firefox 4.x, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_firefox4?())
-  #                      # Execute Firefox specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_firefox4?()
-    
-    if((self.is_firefox?) && (is_firefox_installed?(4)))
-      return true
-    else
-      return false
-    end
-  end
-  
-  alias is_ff4? is_firefox4?
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox5?()
-  #
-  #++
-  #
-  # Description: Identifies if running a Firefox 5.x browser
-  #
-  # Returns: BOOLEAN - true if browser is Firefox 5.x, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_firefox5?())
-  #                      # Execute Firefox specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_firefox5?()
-    
-    if((self.is_firefox?) && (is_firefox_installed?(5)))
-      return true
-    else
-      return false
-    end
-  end
-  
-  alias is_ff5? is_firefox5?
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox6?()
-  #
-  #++
-  #
-  # Description: Identifies if running a Firefox 6.x browser
-  #
-  # Returns: BOOLEAN - true if browser is Firefox 6.x, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_firefox6?())
-  #                      # Execute Firefox specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_firefox6?()
-    
-    if((self.is_firefox?) && (is_firefox_installed?(6)))
-      return true
-    else
-      return false
-    end
-  end
-  
-  alias is_ff6? is_firefox6?
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox7?()
-  #
-  #++
-  #
-  # Description: Identifies if running a Firefox 7.x browser
-  #
-  # Returns: BOOLEAN - true if browser is Firefox 7.x, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_firefox7?())
-  #                      # Execute Firefox specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_firefox7?()
-    
-    if((self.is_firefox?) && (is_firefox_installed?(7)))
-      return true
-    else
-      return false
-    end
-  end
-  
-  alias is_ff7? is_firefox7?
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox8?()
-  #
-  #++
-  #
-  # Description: Identifies if running a Firefox 8.x browser
-  #
-  # Returns: BOOLEAN - true if browser is Firefox 8.x, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_firefox8?())
-  #                      # Execute Firefox specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_firefox8?()
-    
-    if((self.is_firefox?) && (is_firefox_installed?(8)))
-      return true
-    else
-      return false
-    end
-  end
-  
-  alias is_ff8? is_firefox8?
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox9?()
-  #
-  #++
-  #
-  # Description: Identifies if running a Firefox 9.x browser
-  #
-  # Returns: BOOLEAN - true if browser is Firefox 9.x, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_firefox9?())
-  #                      # Execute Firefox specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_firefox9?()
-    
-    if((self.is_firefox?) && (is_firefox_installed?(9)))
-      return true
-    else
-      return false
-    end
-  end
-  
-  alias is_ff9? is_firefox9?
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox10?()
-  #
-  #++
-  #
-  # Description: Identifies if running a Firefox 10.x browser
-  #
-  # Returns: BOOLEAN - true if browser is Firefox 10.x, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_firefox10?())
-  #                      # Execute Firefox specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_firefox10?()
-    
-    if((self.is_firefox?) && (is_firefox_installed?(10)))
-      return true
-    else
-      return false
-    end
-  end
-  
-  alias is_ff10? is_firefox10?
+  alias is_ff? is_firefox?
   
   
   #=============================================================================#
@@ -2655,271 +2506,15 @@ module WatirWorks_WebUtilities
     elsif(is_osx?)
       return is_firefox_installed_mac?(iVersion)
     end
-  end
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox2_installed?()
-  #
-  #++
-  #
-  # Description: Identifies if a Firefox 2 browser in installed on the OS
-  #
-  # Returns: BOOLEAN - true if a Firefox 2 browser is installed, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_firefox2_installed?())
-  #                      # Execute Firefox specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_firefox2_installed?()
     
-    if(is_win?)
-      return is_firefox_installed_win?(2)
-    elsif(is_linux?)
-      return is_firefox_installed_linux?(2)
-    elsif(is_osx?)
-      return is_firefox_installed_mac?(2)
-    end
-  end
+  end # Method - is_firefox_installed?(...)
+  
+  alias is_ff_installed?   is_firefox_installed?
   
   
   #=============================================================================#
   #--
-  # Method: is_firefox3_installed?()
-  #
-  #++
-  #
-  # Description: Identifies if a Firefox 3 browser in installed on the OS
-  #
-  # Returns: BOOLEAN - true if a Firefox 3 browser is installed, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_firefox3_installed?())
-  #                      # Execute Firefox specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_firefox3_installed?()
-    
-    if(is_win?)
-      return is_firefox_installed_win?(3)
-    elsif(is_linux?)
-      return is_firefox_installed_linux?(3)
-    elsif(is_osx?)
-      return is_firefox_installed_mac?(3)
-    end
-  end
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox4_installed?()
-  #
-  #++
-  #
-  # Description: Identifies if a Firefox 4 browser in installed on the OS
-  #
-  # Returns: BOOLEAN - true if a Firefox 4 browser is installed, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_firefox4_installed?())
-  #                      # Execute Firefox specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_firefox4_installed?()
-    
-    if(is_win?)
-      return is_firefox_installed_win?(4)
-    elsif(is_linux?)
-      return is_firefox_installed_linux?(4)
-    elsif(is_osx?)
-      return is_firefox_installed_mac?(4)
-    end
-  end
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox5_installed?()
-  #
-  #++
-  #
-  # Description: Identifies if a Firefox 5 browser in installed on the OS
-  #
-  # Returns: BOOLEAN - true if a Firefox 5 browser is installed, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_firefox5_installed?())
-  #                      # Execute Firefox specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_firefox5_installed?()
-    
-    if(is_win?)
-      return is_firefox_installed_win?(5)
-    elsif(is_linux?)
-      return is_firefox_installed_linux?(5)
-    elsif(is_osx?)
-      return is_firefox_installed_mac?(5)
-    end
-  end
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox6_installed?()
-  #
-  #++
-  #
-  # Description: Identifies if a Firefox 6 browser in installed on the OS
-  #
-  # Returns: BOOLEAN - true if a Firefox 6 browser is installed, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_firefox6_installed?())
-  #                      # Execute Firefox specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_firefox6_installed?()
-    
-    if(is_win?)
-      return is_firefox_installed_win?(6)
-    elsif(is_linux?)
-      return is_firefox_installed_linux?(6)
-    elsif(is_osx?)
-      return is_firefox_installed_mac?(6)
-    end
-  end
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox7_installed?()
-  #
-  #++
-  #
-  # Description: Identifies if a Firefox 7 browser in installed on the OS
-  #
-  # Returns: BOOLEAN - true if a Firefox 7 browser is installed, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_firefox7_installed?())
-  #                      # Execute Firefox specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_firefox7_installed?()
-    
-    if(is_win?)
-      return is_firefox_installed_win?(7)
-    elsif(is_linux?)
-      return is_firefox_installed_linux?(7)
-    elsif(is_osx?)
-      return is_firefox_installed_mac?(7)
-    end
-  end
-  
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox8_installed?()
-  #
-  #++
-  #
-  # Description: Identifies if a Firefox 8 browser in installed on the OS
-  #
-  # Returns: BOOLEAN - true if a Firefox 8 browser is installed, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_firefox8_installed?())
-  #                      # Execute Firefox specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_firefox8_installed?()
-    
-    if(is_win?)
-      return is_firefox_installed_win?(8)
-    elsif(is_linux?)
-      return is_firefox_installed_linux?(8)
-    elsif(is_osx?)
-      return is_firefox_installed_mac?(8)
-    end
-  end
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox9_installed?()
-  #
-  #++
-  #
-  # Description: Identifies if a Firefox 9 browser in installed on the OS
-  #
-  # Returns: BOOLEAN - true if a Firefox 9 browser is installed, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_firefox9_installed?())
-  #                      # Execute Firefox specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_firefox9_installed?()
-    
-    if(is_win?)
-      return is_firefox_installed_win?(9)
-    elsif(is_linux?)
-      return is_firefox_installed_linux?(9)
-    elsif(is_osx?)
-      return is_firefox_installed_mac?(9)
-    end
-  end
-  
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_firefox10_installed?()
-  #
-  #++
-  #
-  # Description: Identifies if a Firefox 10 browser in installed on the OS
-  #
-  # Returns: BOOLEAN - true if a Firefox 10 browser is installed, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_firefox10_installed?())
-  #                      # Execute Firefox specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_firefox10_installed?()
-    
-    if(is_win?)
-      return is_firefox_installed_win?(10)
-    elsif(is_linux?)
-      return is_firefox_installed_linux?(10)
-    elsif(is_osx?)
-      return is_firefox_installed_mac?(10)
-    end
-  end
-  
-  #=============================================================================#
-  #--
-  # Method: is_ie?()
+  # Method: is_ie?(...)
   #
   #++
   #
@@ -2934,181 +2529,41 @@ module WatirWorks_WebUtilities
   #                  end
   #
   #=============================================================================#
-  def is_ie?()
-    
-    if(is_webdriver? == true)
-      return (self.driver.browser.to_s.downcase == "internet_explorer")
-    else
-      return (self.class.to_s == "Watir::IE")
-    end
-    
-  end
-  
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_ie_ver?(...)
-  #
-  #++
-  #
-  # Description: Identifies if running the specified version of the Internet Explorer browser
-  #
-  # Returns: BOOLEAN - true if browser is the specified version of Internet Explorer, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_ie_ver?(7))
-  #                      # Execute IE7 specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_ie_ver?(iVersion = 7)
+  def is_ie?(iVersion = nil)
     
     if($VERBOSE == true)
-      puts2("Parameters - is_ie_ver?")
+      puts2("Parameters - is_ie?")
       puts2("  iVersion " + iVersion.to_s)
     end
     
-    if((self.is_ie?) && (is_ie_installed?(iVersion)))
-      return true
-    else
+    if(iVersion == nil)
+      if(is_webdriver? == true)
+        return (self.driver.browser.to_s.downcase == "internet_explorer")
+      else
+        return (self.class.to_s == "Watir::IE")
+      end
+      
+    elsif(iVersion >= 6)
+      if(is_ie_installed?(iVersion))
+        if(is_webdriver? == true)
+          return (self.driver.browser.to_s.downcase == "internet_explorer")
+        else
+          return (self.class.to_s == "Watir::IE")
+        end
+      else
+        return false
+      end
+      
+    else # Not nil and not >=6
       return false
     end
-  end
+    
+  end # Method - is_ie?(...)
   
   
   #=============================================================================#
   #--
-  # Method: is_ie6?()
-  #
-  #++
-  #
-  # Description: Identifies if running a Internet Explorer 6.x browser
-  #
-  # Returns: BOOLEAN - true if browser is Internet Explorer 6.x, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_ie6?)
-  #                      # Execute IE6 specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_ie6?()
-    if((self.is_ie?) && (is_ie_installed?(6)))
-      return true
-    else
-      return false
-    end
-  end
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_ie7?()
-  #
-  #++
-  #
-  # Description: Identifies if running a Internet Explorer 7.x browser
-  #
-  # Returns: BOOLEAN - true if browser is Internet Explorer 7.x, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_ie7?)
-  #                      # Execute IE7 specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_ie7?()
-    if((self.is_ie?) && (is_ie_installed?(7)))
-      return true
-    else
-      return false
-    end
-  end
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_ie8?()
-  #
-  #++
-  #
-  # Description: Identifies if running a Internet Explorer 8.x browser
-  #
-  # Returns: BOOLEAN - true if browser is Internet Explorer 8.x, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_ie8?)
-  #                      # Execute IE8 specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_ie8?()
-    if((self.is_ie?) && (is_ie_installed?(8)))
-      return true
-    else
-      return false
-    end
-  end
-  
-  
-  #=============================================================================#
-  #--
-  # Method: is_ie9?()
-  #
-  #++
-  #
-  # Description: Identifies if running a Internet Explorer 9.x browser
-  #
-  # Returns: BOOLEAN - true if browser is Internet Explorer 9.x, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_ie9?)
-  #                      # Execute IE9 specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_ie9?()
-    if((self.is_ie?) && (is_ie_installed?(9)))
-      return true
-    else
-      return false
-    end
-  end
-  
-  #=============================================================================#
-  #--
-  # Method: is_ie10?()
-  #
-  #++
-  #
-  # Description: Identifies if running a Internet Explorer 10.x browser
-  #
-  # Returns: BOOLEAN - true if browser is Internet Explorer 10.x, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_ie10?)
-  #                      # Execute IE10 specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_ie10?()
-    if((self.is_ie?) && (is_ie_installed?(10)))
-      return true
-    else
-      return false
-    end
-  end
-  
-  #=============================================================================#
-  #--
-  # Method: is_opera?()
+  # Method: is_opera?(...)
   #
   #++
   #
@@ -3123,15 +2578,71 @@ module WatirWorks_WebUtilities
   #                  end
   #
   #=============================================================================#
-  def is_opera?()
+  def is_opera?(iVersion = nil)
     
-    if(is_webdriver? == true)
-      return (self.driver.browser.to_s.downcase == "opera")
-    else
-      return (self.class.to_s == "Watir::IE")
+    if($VERBOSE == true)
+      puts2("Parameters - is_opera?")
+      puts2("  iVersion " + iVersion.to_s)
     end
     
-  end
+    if(iVersion == nil)
+      if(is_webdriver? == true)
+        return (self.driver.browser.to_s.downcase == "opera")
+      else
+        return false
+      end
+    elsif(iVersion >= 8)
+      if(is_opera_installed?(iVersion))
+        if(is_webdriver? == true)
+          return (self.driver.browser.to_s.downcase == "opera")
+        else
+          return false
+        end
+      else
+        return false
+      end
+      
+    else # Not nil and not >= 8
+      return false
+    end
+    
+  end # Method - is_opera?(...)
+  
+  
+  #=============================================================================#
+  #--
+  # Method: is_opera_installed?(...)
+  #
+  #++
+  #
+  # Description: Identifies if the specified Opera version in installed on the OS
+  #
+  # Returns: BOOLEAN - true if specified Opera browser is installed, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_opera_installed?(10))
+  #                      # Execute Opera 10.x specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_opera_installed?(iVersion = 10)
+    
+    if($VERBOSE == true)
+      puts2("Parameters - is_opera_installed?")
+      puts2("  iVersion " + iVersion.to_s)
+    end
+    
+    if(is_win?)
+      return is_opera_installed_win?(iVersion)
+    elsif(is_linux?)
+      return is_opera_installed_linux?(iVersion)
+    elsif(is_osx?)
+      return is_opera_installed_mac?(iVersion)
+    end
+    
+  end # Method - is_opera_installed?(...)
+  
   
   #=============================================================================#
   #--
@@ -3150,15 +2661,71 @@ module WatirWorks_WebUtilities
   #                  end
   #
   #=============================================================================#
-  def is_safari?()
+  def is_safari?(iVersion = nil)
     
-    if(is_webdriver? == true)
-      return (self.driver.browser.to_s.downcase == "safari")
-    else
-      return (self.class.to_s == "Watir::Safari")
+    if($VERBOSE == true)
+      puts2("Parameters - is_safari?")
+      puts2("  iVersion " + iVersion.to_s)
     end
     
-  end
+    if(iVersion == nil)
+      if(is_webdriver? == true)
+        return (self.driver.browser.to_s.downcase == "safari")
+      else
+        return (self.class.to_s == "Watir::Safari")
+      end
+      
+    elsif(iVersion >= 4)
+      if(is_safari_installed?(iVersion))
+        if(is_webdriver? == true)
+          return (self.driver.browser.to_s.downcase == "safari")
+        else
+          return (is_safari_installed?(iVersion))
+        end
+      else
+        return false
+      end
+      
+    else # Not nil and not >= 4
+      return false
+    end
+    
+  end # Method - is_safari?...)
+  
+  
+  #=============================================================================#
+  #--
+  # Method: is_safari_installed?(...)
+  #
+  #++
+  #
+  # Description: Identifies if the specified Safari version in installed on the OS
+  #
+  # Returns: BOOLEAN - true if specified Safari browser is installed, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_safari_installed?(10))
+  #                      # Execute Safari 5.x specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_safari_installed?(iVersion = 5)
+    
+    if($VERBOSE == true)
+      puts2("Parameters - is_safari_installed?")
+      puts2("  iVersion " + iVersion.to_s)
+    end
+    
+    if(is_win?)
+      return false
+    elsif(is_linux?)
+      return false
+    elsif(is_osx?)
+      return is_safari_installed_mac?(iVersion)
+    end
+    
+  end # Method - is_safari_installed?(...)
   
   #=============================================================================#
   #--
@@ -6918,7 +6485,7 @@ module WatirWorks_WebUtilities
   #
   #              For backwards compatibility with Watir/WatirWorks
   #
-  #     
+  #
   # Methods: xx()
   #++
   #=============================================================================#
