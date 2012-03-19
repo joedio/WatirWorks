@@ -2206,6 +2206,54 @@ class Watir::IE
   
   #=============================================================================#
   #--
+  # Method: brand()
+  #
+  #++
+  #
+  # Description: Returns the brand of the current browser (IE, Firefox, Chrome, Safari)
+  #              Uses a JavaScript object method that is recognized by most browsers.
+  #              Based on info at: http://www.w3schools.com/js/js_browser.asp
+  #              To debug browse this URL: javascript:alert(window.navigator.userAgent);
+  #
+  # Usage Examples: To verify that the current browser is a Firefox browser:
+  #                    sBrand = browser.brand()
+  #                    assert(sBrand == "Firefox")
+  #
+  #=============================================================================#
+  def brand()
+    
+    if($bUseWebDriver == false)
+      sRawType = self.execute_script("window.navigator.userAgent")
+    else
+      sRawType = self.execute_script("return window.navigator.userAgent")
+    end
+    
+    if($VERBOSE == true)
+      puts2(sRawType)
+    end
+    
+    if(sRawType =~ /MSIE \d/)
+      sBrand = "IE"
+    elsif(sRawType =~ /Firefox\//)
+      sBrand = "Firefox"
+    elsif(sRawType =~ /Chrome\//)
+      sBrand = "Chrome"
+    elsif(sRawType =~ /Safari\/\d\.\d/)
+      sBrand = "Safari"
+    elsif(sRawType =~ /Opera\//)
+      sBrand = "Opera"
+    else
+      sBrand = "Unknown"
+    end
+    
+    # puts2(sBrand)
+    
+    return sBrand
+    
+  end # Method - brand()
+  
+  #=============================================================================#
+  #--
   # Method: moveBy(...)
   #
   #++
@@ -2480,6 +2528,64 @@ class Watir::IE
     loc = url # relies on IE.url to return @ie.locationUrl and not @ie.document.url
      (loc[0,8] == "file:///") ? loc.split("file:///")[1].gsub("/", '\\') : loc
   end
+  
+  
+  #=============================================================================#
+  #--
+  # Method: version()
+  #
+  #++
+  #
+  # Description: Returns the version of the current browser.
+  #              Uses a JavaScript object method that is recognized by most browsers.
+  #              Based on info at: http://www.w3schools.com/js/js_browser.asp
+  #              To debug browse this URL: javascript:alert(window.navigator.userAgent);
+  #
+  # Usage Examples: To verify that the current Firefox browser's version is > 9:
+  #                    sVersion = browser.version()
+  #                    assert(sVersion >= "9")
+  #
+  #=============================================================================#
+  def version()
+    
+    if($bUseWebDriver == false)
+      sRawType = self.execute_script("window.navigator.userAgent")
+    else
+      sRawType = self.execute_script("return window.navigator.userAgent")
+    end
+    
+    if($VERBOSE == true)
+      puts2(sRawType)
+    end
+    
+    if(sRawType =~ /MSIE \d/)
+      # IE 8.0 returns this:
+      #   Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; WOW64; Trident/4.0; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; .NET CLR 3.5.30729; .NET CLR 3.0.30729; .NET4.0C; MS-RTC LM 8)
+      sVersion = sRawType.remove_prefix(";").prefix(";").remove_prefix(" ")
+    elsif(sRawType =~ /Firefox\//)
+      # Firefox 3.6.28 returns this:
+      #   Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.28) Gecko/20120306 Firefox/3.6.28
+      sVersion = sRawType.suffix("/").prefix(" ")
+    elsif(sRawType =~ /Chrome\//)
+      # Chrome 17.0.963.79 returns this:
+      #   Mozilla/5.0 (Windows NT 6.0; WOW64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.79 Safari/535.11
+      sVersion = sRawType.suffix(")").remove_prefix("/").prefix(" ")
+    elsif(sRawType =~ /Safari\/\d\.\d/)
+      # Safari 5.1.4 returns this:
+      #   Mozilla/5.0 (Windows NT 6.0; WOW64) AppleWebKit/534.54.16 (KHTML, like Gecko) Version/5.1.4 Safari/5.3.4.54.16
+      sVersion = sRawType.suffix(")").remove_prefix("/").prefix(" ")
+    elsif(sRawType =~ /Opera\//)
+      # Opera 11.61 returns this:
+      #   Opera/9.80 (Windows NT 6.0; U; en) Presto/2.10.229 Version/11.61
+      sVersion = sRawType.suffix("/")
+    else
+      sVersion = "-1"
+    end
+    
+    # puts2(sVersion)
+    
+    return sVersion
+  end # Method - version()
   
   
 end  # END Class - Watir::IE

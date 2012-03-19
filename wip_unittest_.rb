@@ -258,95 +258,7 @@ class UnitTest_WIP < Test::Unit::TestCase
       puts2("Starting Testcase: #{sTestCase_Name}")
 
       sleep(2)
-
-    #puts2("Is jQuery active?")
-    #$browser.execute_script("return jQuery.active == 0")
-
-    if($bUseWebDriver == false)
-	    puts2("Browser name: " + $browser.execute_script("window.navigator.appName").to_s)
-	    puts2("Browser version: " + $browser.execute_script("window.navigator.appVersion").to_s)
-	    puts2("Cookies Enabled: " + $browser.execute_script("window.navigator.cookieEnabled").to_s)
-	    puts2("Platform: " + $browser.execute_script("window.navigator.platform").to_s)
-	    puts2("User Agent: " + $browser.execute_script("window.navigator.userAgent").to_s)
-	    puts2("appCodeName: " + $browser.execute_script("window.navigator.appCodeName").to_s)
-    else
-	    puts2("Browser Name: " + $browser.execute_script("navigator.appName").to_s)
-	    puts2("Browser version: " + $browser.execute_script("window.navigator.appVersion").to_s)
-	    puts2("Cookies Enabled: " + $browser.execute_script("window.navigator.cookieEnabled").to_s)
-	    puts2("Platform: " + $browser.execute_script("window.navigator.platform").to_s)
-	    puts2("User Agent: " + $browser.execute_script("window.navigator.userAgent").to_s)
-	    puts2("appCodeName: " + $browser.execute_script("window.navigator.appCodeName").to_s)
-    end
-
-    puts2("Brand: " + $browser.brand())
-    puts2("Version: " + $browser.version())
-
-=begin
-   #def brand()
-
-	   sRawType = $browser.execute_script("window.navigator.userAgent")
-	   #sRawType = self.execute_script("window.navigator.userAgent")
-
-	if(sRawType =~ /MSIE \d/)
-		sType = "IE"
-	elsif(sRawType =~ /Firefox\//)
-		sType = "Firefox"
-	elsif(sRawType =~ /Chrome\//)
-		sType = "Chrome"
-	elsif(sRawType =~ /Safari\/\d\.\d/)
-		sType = "Safari"
-	elsif(sRawType =~ /Opera\//)
-		sType = "Opera"
-	else
-		sType = "Unknown"
-	end
-
-        puts2(sType)
-
-	#return sType
-
-   #end
-
-=end
-
-=begin
-#def version()
-
-           # Use this as a URL   javascript:alert(window.navigator.userAgent);
-	   sRawType = $browser.execute_script("window.navigator.userAgent")
-	   #sRawType = self.execute_script("window.navigator.userAgent")
-
-	if(sRawType =~ /MSIE \d/)
-	        # IE 8.0 returns this:
-		#   Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; WOW64; Trident/4.0; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; .NET CLR 3.5.30729; .NET CLR 3.0.30729; .NET4.0C; MS-RTC LM 8)
-		sVersion = sRawType.remove_prefix(";").prefix(";").remove_prefix(" ")
-	elsif(sRawType =~ /Firefox\//)
-		# Firefox 3.6.28 returns this:
-		#   Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.28) Gecko/20120306 Firefox/3.6.28
-		sVersion = sRawType.suffix("/")
-	elsif(sRawType =~ /Chrome\//)
-		# Chrome 17.0.963.79 returns this:
-		#   Mozilla/5.0 (Windows NT 6.0; WOW64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.79 Safari/535.11
-		sVersion = sRawType.suffix(")").remove_prefix("/").prefix(" ")
-	elsif(sRawType =~ /Safari\/\d\.\d/)
-		# Safari 5.1.4 returns this:
-		#   Mozilla/5.0 (Windows NT 6.0; WOW64) AppleWebKit/534.54.16 (KHTML, like Gecko) Version/5.1.4 Safari/5.3.4.54.16
-		sVersion = sRawType.suffix(")").remove_prefix("/").prefix(" ")
-	elsif(sRawType =~ /Opera\//)
-		# Opera 11.61 returns this:
-		#   Opera/9.80 (Windows NT 6.0; U; en) Presto/2.10.229 Version/11.61
-		sVersion = sRawType.suffix("/")
-	else
-		sVersion = "-1"
-	end
-
-        puts2(sVersion)
-
-	#return sVersion
-
-   #end
-=end
-
+    
 =begin
 
 # Example outputs on Win7 64bit for FF3.6.28 and IE 8
@@ -367,9 +279,30 @@ appCodeName: Mozilla
 
 =end
 
-    #$browser.execute_script("BrowserDetect.OS")
-    #$browser.execute_script("BrowserDetect.browser")
-    #$browser.execute_script("BrowserDetect.version")
+
+
+
+    if($bUseWebDriver == false)
+	    puts2("Browser appName: " + $browser.execute_script("window.navigator.appName").to_s)
+	    puts2("Browser appVersion: " + $browser.execute_script("window.navigator.appVersion").to_s)
+	    puts2("Cookies Enabled: " + $browser.execute_script("window.navigator.cookieEnabled").to_s)
+	    puts2("Platform: " + $browser.execute_script("window.navigator.platform").to_s)
+	    puts2("User Agent: " + $browser.execute_script("window.navigator.userAgent").to_s)
+	    puts2("appCodeName: " + $browser.execute_script("window.navigator.appCodeName").to_s)
+    else
+	    puts2("Browser appName: " + $browser.execute_script("return window.navigator.appName").to_s)
+	    puts2("Browser appVersion: " + $browser.execute_script("return window.navigator.appVersion").to_s)
+	    puts2("Cookies Enabled: " + $browser.execute_script("return window.navigator.cookieEnabled").to_s)
+	    puts2("Platform: " + $browser.execute_script("return window.navigator.platform").to_s)
+	    puts2("User Agent: " + $browser.execute_script("return window.navigator.userAgent").to_s)
+	    puts2("appCodeName: " + $browser.execute_script("return window.navigator.appCodeName").to_s)
+    end
+
+    puts2("Brand: " + $browser.brand())
+    puts2("Version: " + $browser.version())
+    
+    #puts2("Is jQuery active?")
+    #$browser.execute_script("return jQuery.active == 0")
 
     rescue => e
 
