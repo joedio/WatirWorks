@@ -69,7 +69,7 @@ require 'rubygems'
 module WatirWorks_MacUtilities
   
   # Version of this module
-  WW_MAC_UTILITIES_VERSION =  "1.0.0"
+  WW_MAC_UTILITIES_VERSION =  "2.0.0"
   
   #=============================================================================#
   #--
@@ -584,6 +584,9 @@ module WatirWorks_MacUtilities
   
 end # Module - WatirWorks_MacUtilities
 
+=begin 
+# Dropping support if SafariWatir, will support Safari via watir-webdriver 
+
 # Include if not using webdriver
 if(is_webdriver? != true)
   
@@ -992,5 +995,7 @@ if(is_webdriver? != true)
   end # Class - Safari
   
 end # Include if not using webdriver
+
+=end
 
 # END File - watirworks_mac-utilities.rb

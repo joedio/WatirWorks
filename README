@@ -8,7 +8,7 @@ Copyright (c) 2008-2012, Joe DiMauro. All rights reserved.
 
 == Introduction
 
-WatirWorks is a test toolkit for Ruby, Watir, FireWatir.
+WatirWorks is a test toolkit for Ruby, Watir, FireWatir, Watir-webdriver.
 
 Its a collection of information and utilities written in Ruby and Watir for developing and executing automated tests.
 Its focused at testers who are just starting to use Ruby/Watir. As such it is highly documented to help get folks on board. While
@@ -35,7 +35,7 @@ WatirWorks also contains:
 * A dictionary file (dictionary_en.txt) and methods to access it
 * Web utilities for testing of GUI based applications via Watir's supported web browsers (Internet Explorer, FireFox)
 * Full RDoc documentation
-* Open Source libraries to access Microsoft Excel workbooks by liujunjun (Xls.rb, XlsEx.rb) http://code.google.com/p/wwatf/source/browse/#svn/trunk/util
+* Open Source libraries to access Microsoft Excel workbooks by liujunjun (Xls.rb) http://code.google.com/p/wwatf/source/browse/#svn/trunk/util
   and David Brown   http://wiki.openqa.org/display/WTR/Excel+interface+class
 * Methods that add or extend the abilities of Ruby and Watir:
   * General Utilities (watirworks_utilities.rb)
@@ -49,12 +49,12 @@ WatirWorks also contains:
   * TestWise - A Watir Development Environment with a recorder
   * RDE - The Ruby Development Environment
   * FreeRIDE - A Ruby IDE written in Ruby
-  * Aptana RadRails - Aptana Studio with a plug-in for the Ruby on Rails Development Environment
+  * Aptana Studio 2 - Aptana Studio with a plug-in for the Ruby on Rails Development Environment
 * Unit tests and Example files for WatirWorks
 
 WatirWorks runs on the Windows platforms supported by Ruby and Watir, and under the IE and Firefox web browsers supported by Watir.
 It has been tested on Linux using both Ubuntu 10.04 and Debian 5.04, with Firefox 3.6.x.
-Sorry but it hasn't been tested on OSx, or with the SafariWatir, OperaWatir, ChormeWatir or FlashWatir gems.
+Sorry but it doesn't support SafariWatir, OperaWatir, ChormeWatir or FlashWatir gems.
 
 = WatirWorks Examples
 
@@ -161,7 +161,7 @@ From the Console type the following commands:
 	=> nil
 	irb(main):005:0> exit
 
-* These Gem dependencies should Download and install with WatirWorks. They are listed her in case you want to manually install them:
+* These Gem dependencies should Download and install with WatirWorks. They are listed here in case you want to manually install them:
      gem install ffi -v1.0.9
      gem install roo -v10.0.1
      

@@ -35,7 +35,7 @@ WatirWorks also contains:
 * A dictionary file (dictionary_en.txt) and methods to access it
 * Web utilities for testing of GUI based applications via Watir's supported web browsers (Internet Explorer, FireFox)
 * Full RDoc documentation
-* Open Source libraries to access Microsoft Excel workbooks by liujunjun (Xls.rb, XlsEx.rb) http://code.google.com/p/wwatf/source/browse/#svn/trunk/util
+* Open Source libraries to access Microsoft Excel workbooks by liujunjun (Xls.rb) http://code.google.com/p/wwatf/source/browse/#svn/trunk/util
   and David Brown   http://wiki.openqa.org/display/WTR/Excel+interface+class
 * Methods that add or extend the abilities of Ruby and Watir:
   * General Utilities (watirworks_utilities.rb)
@@ -54,7 +54,7 @@ WatirWorks also contains:
 
 WatirWorks runs on the Windows platforms supported by Ruby and Watir, and under the IE and Firefox web browsers supported by Watir.
 It has been tested on Linux using both Ubuntu 10.04 and Debian 5.04, with Firefox 3.6.x.
-Sorry but it hasn't been tested on OSx, or with the SafariWatir, OperaWatir, ChormeWatir or FlashWatir gems.
+Sorry but it doesn't support with the SafariWatir, OperaWatir, ChormeWatir or FlashWatir gems.
 
 = WatirWorks Examples
 
