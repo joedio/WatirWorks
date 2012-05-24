@@ -584,52 +584,59 @@ module WatirWorks_MacUtilities
   
 end # Module - WatirWorks_MacUtilities
 
-=begin 
+
+
+#=begin 
 # Dropping support if SafariWatir, will support Safari via watir-webdriver 
 
-# Include if not using webdriver
-if(is_webdriver? != true)
+# Include if using webdriver
+#if(is_webdriver? == true)
+#if(is_webdriver? != true)
+
+#=============================================================================#
+# Class: Watir::Safari
+#
+# Description: Extends the Watir::Safari class with additional methods
+#              This class is is NOT supported if using Watir, FireWatir or Watir_WebDriver
+#
+#--
+# Methods:
+#
+#          moveBy(...)
+#          moveTo(...)
+#          resizeBy(...)
+#          resizeTo(...)
+#          restart()
+#          scrollBy(...)
+#          title()
+#          title_from_url
+#++
+#=============================================================================#
+class Watir::Safari
+  
   
   #=============================================================================#
-  # Class: Watir::Safari
-  #
-  # Description: Extends the Watir::Safari class with additional methods
-  #              This class is is NOT supported if using Watir, FireWatir or Watir_WebDriver
-  #
   #--
-  # Methods:
+  # Method: brand()
   #
-  #          moveBy(...)
-  #          moveTo(...)
-  #          resizeBy(...)
-  #          resizeTo(...)
-  #          restart()
-  #          scrollBy(...)
-  #          title()
-  #          title_from_url
   #++
+  #
+  # Description: Returns the brand of the current browser (IE, Firefox, Chrome, Safari)
+  #              Uses a JavaScript object method that is recognized by most browsers.
+  #              Based on info at: http://www.w3schools.com/js/js_browser.asp
+  #              To debug browse this URL: javascript:alert(window.navigator.userAgent);
+  #
+  # Usage Examples: To verify that the current browser is a Firefox browser:
+  #                    sBrand = browser.brand()
+  #                    assert(sBrand == "Firefox")
+  #
   #=============================================================================#
-  class Watir::Safari
+  def brand()
     
+    # Return hard coded value until watir-webdriver supports JavaScript
+    sBrand = "Safari"
     
-    #=============================================================================#
-    #--
-    # Method: brand()
-    #
-    #++
-    #
-    # Description: Returns the brand of the current browser (IE, Firefox, Chrome, Safari)
-    #              Uses a JavaScript object method that is recognized by most browsers.
-    #              Based on info at: http://www.w3schools.com/js/js_browser.asp
-    #              To debug browse this URL: javascript:alert(window.navigator.userAgent);
-    #
-    # Usage Examples: To verify that the current browser is a Firefox browser:
-    #                    sBrand = browser.brand()
-    #                    assert(sBrand == "Firefox")
-    #
-    #=============================================================================#
-    def brand()
-      
+=begin      
       if($bUseWebDriver == false)
         sRawType = self.execute_script("window.navigator.userAgent")
       else
@@ -655,69 +662,81 @@ if(is_webdriver? != true)
       end
       
       # puts2(sBrand)
-      
-      return sBrand
-      
-    end # Method - brand()
+=end      
+    return sBrand
     
-    #=============================================================================#
-    #--
-    # Method: moveBy(...)
-    #
-    #++
-    #
-    # Description: Move the Browser window relative to its current location
-    #              Per: http://www.w3schools.com/jsref/obj_window.asp
-    #                   The moveBy() method is supported in all major browsers,
-    #
-    # Returns: BOOLEAN - true if successful, otherwise false
-    #
-    # Syntax: iXPos = INTEGER - The X-coordinate in pixels to re-position the top left
-    #                           corner of the browser window
-    #                           Default value = 0
-    #
-    #         iYPos = INTEGER - The Y-coordinate  in pixels to re-position the top left
-    #                           corner of the browser window
-    #                           Default value = 0
-    #
-    # Usage Examples:
-    #                To reposition the browser relative to its current location by 10, -20
-    #                     browser.moveBY(10, -20)
-    #
-    #=============================================================================#
-    def moveBy(iXPos=0, iYPos=0)
-      
+  end # Method - brand()
+  
+  #=============================================================================#
+  #--
+  # Method: moveBy(...)
+  #
+  #++
+  #
+  # Description: Move the Browser window relative to its current location
+  #              Per: http://www.w3schools.com/jsref/obj_window.asp
+  #                   The moveBy() method is supported in all major browsers,
+  #
+  # Returns: BOOLEAN - true if successful, otherwise false
+  #
+  # Syntax: iXPos = INTEGER - The X-coordinate in pixels to re-position the top left
+  #                           corner of the browser window
+  #                           Default value = 0
+  #
+  #         iYPos = INTEGER - The Y-coordinate  in pixels to re-position the top left
+  #                           corner of the browser window
+  #                           Default value = 0
+  #
+  # Usage Examples:
+  #                To reposition the browser relative to its current location by 10, -20
+  #                     browser.moveBY(10, -20)
+  #
+  #=============================================================================#
+  def moveBy(iXPos=0, iYPos=0)
+    
+    # Return hard coded value until watir-webdriver supports JavaScript
+    bReturnStatus = true
+    
+=begin      
       self.goto("javascript:window.moveBy(#{iXPos},#{iYPos})")
-    end # moveBy()
+=end
     
+    return bReturnStatus
     
-    #=============================================================================#
-    #--
-    # Method: moveTo(...)
-    #
-    #++
-    #
-    # Description: Move the current Browser window to the specified location
-    #              Per: http://www.w3schools.com/jsref/obj_window.asp
-    #                   The moveTo() method is supported in all major browsers.
-    #
-    # Returns: BOOLEAN - true if successful, otherwise false
-    #
-    # Syntax: iXPos = INTEGER - The X-coordinate in pixels to position the top left
-    #                           corner of the browser window
-    #                           Default value = 0
-    #
-    #         iYPos = INTEGER - The Y-coordinate in pixels to position the top left
-    #                           corner of the browser window
-    #                           Default value = 0
-    #
-    # Usage Examples:
-    #                To move the browser to 100, 200
-    #                     browser.moveTo(100,200)
-    #
-    #=============================================================================#
-    def moveTo(iXPos=0, iYPos=0)
-      
+  end # moveBy()
+  
+  
+  #=============================================================================#
+  #--
+  # Method: moveTo(...)
+  #
+  #++
+  #
+  # Description: Move the current Browser window to the specified location
+  #              Per: http://www.w3schools.com/jsref/obj_window.asp
+  #                   The moveTo() method is supported in all major browsers.
+  #
+  # Returns: BOOLEAN - true if successful, otherwise false
+  #
+  # Syntax: iXPos = INTEGER - The X-coordinate in pixels to position the top left
+  #                           corner of the browser window
+  #                           Default value = 0
+  #
+  #         iYPos = INTEGER - The Y-coordinate in pixels to position the top left
+  #                           corner of the browser window
+  #                           Default value = 0
+  #
+  # Usage Examples:
+  #                To move the browser to 100, 200
+  #                     browser.moveTo(100,200)
+  #
+  #=============================================================================#
+  def moveTo(iXPos=0, iYPos=0)
+    
+    # Return hard coded value until watir-webdriver supports JavaScript
+    bReturnStatus = true
+    
+=begin      
       if(iXPos <0)
         iXPos = 0
       end
@@ -726,63 +745,77 @@ if(is_webdriver? != true)
       end
       
       self.goto("javascript:window.moveTo(#{iXPos},#{iYPos})")
-    end # moveTo()
+=end
     
+    return bReturnStatus
     
-    #=============================================================================#
-    #--
-    # Method: resizeBy(...)
-    #
-    #++
-    #
-    # Description: Resize the current Browser window relative to its current size (in pixels)
-    #              Per: http://www.w3schools.com/jsref/obj_window.asp
-    #                   The resizeBy() method is supported in all major browsers, except Opera and Chrome.
-    #
-    # Returns: BOOLEAN - true if successful, otherwise false
-    #
-    # Syntax: iHeight = INTEGER - The width in pixels to resize the browser window
-    #                             Default value = 0
-    #
-    #         iWidth = INTEGER - The height in pixels to resize the browser window
-    #                            Default value = 0
-    #
-    # Usage Examples:
-    #                To size the browser by an additional 100, 200
-    #                     browser.resizeTo(100, 200)
-    #
-    #=============================================================================#
-    def resizeBy(iHeight=0, iWidth=0)
-      
+  end # moveTo()
+  
+  
+  #=============================================================================#
+  #--
+  # Method: resizeBy(...)
+  #
+  #++
+  #
+  # Description: Resize the current Browser window relative to its current size (in pixels)
+  #              Per: http://www.w3schools.com/jsref/obj_window.asp
+  #                   The resizeBy() method is supported in all major browsers, except Opera and Chrome.
+  #
+  # Returns: BOOLEAN - true if successful, otherwise false
+  #
+  # Syntax: iHeight = INTEGER - The width in pixels to resize the browser window
+  #                             Default value = 0
+  #
+  #         iWidth = INTEGER - The height in pixels to resize the browser window
+  #                            Default value = 0
+  #
+  # Usage Examples:
+  #                To size the browser by an additional 100, 200
+  #                     browser.resizeTo(100, 200)
+  #
+  #=============================================================================#
+  def resizeBy(iHeight=0, iWidth=0)
+    
+    # Return hard coded value until watir-webdriver supports JavaScript
+    bReturnStatus = true
+    
+=begin      
       self.goto("javascript:window.resizeBy(#{iHeight},#{iWidth})")
-    end # resizeTo()
+=end
+    return bReturnStatus
     
+  end # resizeTo()
+  
+  
+  #=============================================================================#
+  #--
+  # Method: resizeTo(...)
+  #
+  #++
+  #
+  # Description: Move the current Browser window to the specified location (in pixels)
+  #              Per: http://www.w3schools.com/jsref/obj_window.asp
+  #                   The resizeTo() method is supported in all major browsers, except Opera and Chrome
+  #
+  # Returns: BOOLEAN - true if successful, otherwise false
+  #
+  # Syntax: iHeight = INTEGER - The width in pixels to resize the browser window
+  #                             Default value = 640
+  #
+  #         iWidth = INTEGER - The height in pixels to resize the browser window
+  #                            Default value = 480
+  #
+  # Usage Examples:
+  #                To size the browser to 1024 by 756
+  #                     browser.resizeTo(1024,756)
+  #
+  #=============================================================================#
+  def resizeTo(iHeight=640, iWidth=480)
     
-    #=============================================================================#
-    #--
-    # Method: resizeTo(...)
-    #
-    #++
-    #
-    # Description: Move the current Browser window to the specified location (in pixels)
-    #              Per: http://www.w3schools.com/jsref/obj_window.asp
-    #                   The resizeTo() method is supported in all major browsers, except Opera and Chrome
-    #
-    # Returns: BOOLEAN - true if successful, otherwise false
-    #
-    # Syntax: iHeight = INTEGER - The width in pixels to resize the browser window
-    #                             Default value = 640
-    #
-    #         iWidth = INTEGER - The height in pixels to resize the browser window
-    #                            Default value = 480
-    #
-    # Usage Examples:
-    #                To size the browser to 1024 by 756
-    #                     browser.resizeTo(1024,756)
-    #
-    #=============================================================================#
-    def resizeTo(iHeight=640, iWidth=480)
-      
+    # Return hard coded value until watir-webdriver supports JavaScript
+    bReturnStatus = true
+=begin      
       if(iHeight <1)
         iHeight = 1
       end
@@ -791,104 +824,114 @@ if(is_webdriver? != true)
       end
       
       self.goto("javascript:window.resizeTo(#{iHeight},#{iWidth})")
-    end # resizeTo()
+=end
+    return bReturnStatus
     
+  end # resizeTo()
+  
+  
+  #=============================================================================#
+  #--
+  # Method: restart(...)
+  #
+  #++
+  #
+  # Description: Close the current browser object, pause,
+  #              then create and return a new browser object.
+  #              Any URL that the current browser is displaying is lost.
+  #
+  # Returns: BROWSER object
+  #
+  # Syntax: sURL = STRING - The URL to load in the new browser, defaults to the currently loaded URL
+  #
+  #         bClearCache = BOOLEAN - true - clear the cache and cookies after the old browser closes, but before the new browser starts
+  #                                 false - don't clear the cache & cookies
+  #
+  # Usage Examples:
+  #            To restart Global Browser Object with the same URL loaded:
+  #                $browser = $browser.restart()
+  #
+  #            To restart local browser object (e.g. myCurrentBrowser) with a different url:
+  #                myRestartedBrowser = myCurrentBrowser.restart("www.myNewURL.com")
+  #
+  #=============================================================================#
+  def restart(sURL ="", bClearCache = false)
     
-    #=============================================================================#
-    #--
-    # Method: restart(...)
-    #
-    #++
-    #
-    # Description: Close the current browser object, pause,
-    #              then create and return a new browser object.
-    #              Any URL that the current browser is displaying is lost.
-    #
-    # Returns: BROWSER object
-    #
-    # Syntax: sURL = STRING - The URL to load in the new browser, defaults to the currently loaded URL
-    #
-    #         bClearCache = BOOLEAN - true - clear the cache and cookies after the old browser closes, but before the new browser starts
-    #                                 false - don't clear the cache & cookies
-    #
-    # Usage Examples:
-    #            To restart Global Browser Object with the same URL loaded:
-    #                $browser = $browser.restart()
-    #
-    #            To restart local browser object (e.g. myCurrentBrowser) with a different url:
-    #                myRestartedBrowser = myCurrentBrowser.restart("www.myNewURL.com")
-    #
-    #=============================================================================#
-    def restart(sURL ="", bClearCache = false)
-      
-      if($VERBOSE == true)
-        puts2("Parameters - restart:")
-        puts2("  sURL: " + sURL)
-      end
-      
-      puts2("Closing the browser...")
-      
-      if(sURL=="")
-        sURL = self.url
-      end
-      
-      self.close
-      
-      if($browser == self) # If a Global Browser Object exists remove it
-        $browser = nil
-      end
-      
-      # Allow time to mourn the passing of the old browser.
-      sleep 3  # That's long enough to mourn
-      
-      if(bClearCache == true)
-        clear_cache()
-      end
-      
-      puts2("Starting a new browser object...")
-      
-      # Create a new browser object using Watir's method directly
-      # Can't use start_Browser() as both local and Global Browser's may coexist
-      oBrowser = Watir::Safari.new
-      oBrowser.goto(sURL)
-      
-      # Allow time to celebrate the birth of the new browser.
-      sleep 2  # That's long enough to celebrate
-      
-      return oBrowser  # Return the new browser.
-      
-    end # END Method - restart()
+    if($VERBOSE == true)
+      puts2("Parameters - restart:")
+      puts2("  sURL: " + sURL)
+    end
     
+    puts2("Closing the browser...")
     
-    #=============================================================================#
-    #--
-    # Method: scrollBy(...)
-    #
-    #++
-    #
-    # Description: Scroll the current Browser window (in pixels)
-    #              Per: http://www.w3schools.com/jsref/obj_window.asp
-    #                    The ScrollBy() method is supported in all major browsers.
-    #
-    # Returns: BOOLEAN - true if successful, otherwise false
-    #
-    # Syntax: iHorizontal = INTEGER - How many pixels to scroll by, along the x-axis (horizontal)
-    #                                 Positive values move scroll left, Negative values move scroll right
-    #                                 Default value = 0
-    #
-    #         iVertical = INTEGER - How many pixels to scroll by, along the y-axis (vertical)
-    #                               Positive values move scroll down, Negative values move scroll up
-    #                               Default value = 0
-    #
-    # Usage Examples:
-    #                To scroll the browser vertically by 100 pixels
-    #                     browser.scrollBy(0, 100)
-    #
-    #=============================================================================#
-    def scrollBy(iHorizontal=0, iVertical=0)
-      
+    if(sURL=="")
+      sURL = self.url
+    end
+    
+    self.close
+    
+    if($browser == self) # If a Global Browser Object exists remove it
+      $browser = nil
+    end
+    
+    # Allow time to mourn the passing of the old browser.
+    sleep 3  # That's long enough to mourn
+    
+    if(bClearCache == true)
+      clear_cache()
+    end
+    
+    puts2("Starting a new browser object...")
+    
+    # Create a new browser object using Watir's method directly
+    # Can't use start_Browser() as both local and Global Browser's may coexist
+    oBrowser = Watir::Safari.new
+    oBrowser.goto(sURL)
+    
+    # Allow time to celebrate the birth of the new browser.
+    sleep 2  # That's long enough to celebrate
+    
+    return oBrowser  # Return the new browser.
+    
+  end # END Method - restart()
+  
+  
+  #=============================================================================#
+  #--
+  # Method: scrollBy(...)
+  #
+  #++
+  #
+  # Description: Scroll the current Browser window (in pixels)
+  #              Per: http://www.w3schools.com/jsref/obj_window.asp
+  #                    The ScrollBy() method is supported in all major browsers.
+  #
+  # Returns: BOOLEAN - true if successful, otherwise false
+  #
+  # Syntax: iHorizontal = INTEGER - How many pixels to scroll by, along the x-axis (horizontal)
+  #                                 Positive values move scroll left, Negative values move scroll right
+  #                                 Default value = 0
+  #
+  #         iVertical = INTEGER - How many pixels to scroll by, along the y-axis (vertical)
+  #                               Positive values move scroll down, Negative values move scroll up
+  #                               Default value = 0
+  #
+  # Usage Examples:
+  #                To scroll the browser vertically by 100 pixels
+  #                     browser.scrollBy(0, 100)
+  #
+  #=============================================================================#
+  def scrollBy(iHorizontal=0, iVertical=0)
+    
+    # Return hard coded value until watir-webdriver supports JavaScript
+    bReturnStatus = true
+=begin      
       self.goto("javascript:window.scrollBy(#{iHorizontal},#{iVertical})")
-    end # scrollBy()
+=end
+    return bReturnStatus
+    
+  end # scrollBy()
+  
     
     #=============================================================================#
     #--
@@ -896,7 +939,7 @@ if(is_webdriver? != true)
     #
     #++
     #
-    # Description: SafariWatir does not support browser.status().
+    # Description: Watir-webdriver for Safari does not support browser.status().
     #              This method is hard coded to delay and always return "Done"
     #
     # Returns: STRING - Hard coded to delay and always return "Done"
@@ -912,47 +955,52 @@ if(is_webdriver? != true)
       sleep 2
       return "Done"
       
-    end # moveBy()
+    end # status()
+
+  
+  #=============================================================================#
+  #--
+  # Method: title_from_url()
+  #
+  #++
+  #
+  # Description:  When a file is loaded in browser served by file system in location "c:\data\file.html"
+  #               And the title tag is empty ""
+  #               Then url method returns file:/// format "file:///c:/data/file.html"
+  #               But the window title displays "c:\data\file.html"
+  #               this method massages the locationUrl and returns its representation in title bar
+  #
+  #  From: http://gist.github.com/141738
+  #
+  #=============================================================================#
+  def title_from_url
+    loc = url # relies on browser.url to return @browser.locationUrl and not @browser.document.url
+     (loc[0,8] == "file:///") ? loc.split("file:///")[1].gsub("/", '\\') : loc
+  end
+  
+  
+  #=============================================================================#
+  #--
+  # Method: version()
+  #
+  #++
+  #
+  # Description: Returns the version of the current browser.
+  #              Uses a JavaScript object method that is recognized by most browsers.
+  #              Based on info at: http://www.w3schools.com/js/js_browser.asp
+  #              To debug browse this URL: javascript:alert(window.navigator.userAgent);
+  #
+  # Usage Examples: To verify that the current Firefox browser's version is > 9:
+  #                    sVersion = browser.version()
+  #                    assert(sVersion >= "9")
+  #
+  #=============================================================================#
+  def version()
     
-    #=============================================================================#
-    #--
-    # Method: title_from_url()
-    #
-    #++
-    #
-    # Description:  When a file is loaded in browser served by file system in location "c:\data\file.html"
-    #               And the title tag is empty ""
-    #               Then url method returns file:/// format "file:///c:/data/file.html"
-    #               But the window title displays "c:\data\file.html"
-    #               this method massages the locationUrl and returns its representation in title bar
-    #
-    #  From: http://gist.github.com/141738
-    #
-    #=============================================================================#
-    def title_from_url
-      loc = url # relies on browser.url to return @browser.locationUrl and not @browser.document.url
-       (loc[0,8] == "file:///") ? loc.split("file:///")[1].gsub("/", '\\') : loc
-    end
+    # Return hard coded value until watir-webdriver supports JavaScript
+    sVersion = "5"
     
-    
-    #=============================================================================#
-    #--
-    # Method: version()
-    #
-    #++
-    #
-    # Description: Returns the version of the current browser.
-    #              Uses a JavaScript object method that is recognized by most browsers.
-    #              Based on info at: http://www.w3schools.com/js/js_browser.asp
-    #              To debug browse this URL: javascript:alert(window.navigator.userAgent);
-    #
-    # Usage Examples: To verify that the current Firefox browser's version is > 9:
-    #                    sVersion = browser.version()
-    #                    assert(sVersion >= "9")
-    #
-    #=============================================================================#
-    def version()
-      
+=begin      
       if($bUseWebDriver == false)
         sRawType = self.execute_script("window.navigator.userAgent")
       else
@@ -988,14 +1036,15 @@ if(is_webdriver? != true)
       end
       
       # puts2(sVersion)
-      
-      return sVersion
-    end # Method - version()
+=end      
+    return sVersion
     
-  end # Class - Safari
+  end # Method - version()
   
-end # Include if not using webdriver
+end # Class - Safari
 
-=end
+#  end # Include if using webdriver
+
+#=end
 
 # END File - watirworks_mac-utilities.rb

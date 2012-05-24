@@ -1,6 +1,6 @@
 =begin rdoc
 
-= WatirWorks 0.1.7   May 2012
+= WatirWorks 2.0.0   May 2012
 
 == New Features
   * Changing WatirWorks to utilize Watir-webdriver's limited support for Safari on OSX 
@@ -8,14 +8,19 @@
   * Initial prep work for migration to Ruby 1.9.3
 
 == Fixes
-  * None
+  * The Safari method #status now works using watir-webdriver
 
 == Deprecated:
+  * Support of SafariWatir
   * Firefox methods: is_ff_ver?(iVersion), is_firefox_installed?(iVersion)
   * IE methods: is_ie_ver?(iVersion), is_ie_installed?(iVersion)
 
 == Known issues
 
+  * Watir-webdriver does not currently support JavaScript for Safari
+  * Watirworks methods for Safari that rely on JavaScript are hard coded to perform noop's
+    and return hard coded values. These methods are:
+      #brand, #move_to, #move_by, #resize_to, #resize_by, #scroll_to, #version
   * Windows method to find the Opera version is incorrect
   * Linux methods to find the browser versions are incorrect
   * Mac methods to find the browser versions are incorrect
