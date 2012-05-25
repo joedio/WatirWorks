@@ -33,6 +33,7 @@ require 'rubygems'
 
 if($bUseWebDriver == nil)
   $bUseWebDriver = false
+  #$bUseWebDriver = true
 end
 
 # WatirWorks

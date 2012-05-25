@@ -69,11 +69,15 @@ require 'rubygems' # Precaution if the O/S Env Variable RUBYOPT = -rubygems was 
 require 'find'  # Require the Ruby's Find methods
 
 $bUseWebDriver = false
+#$bUseWebDriver = true
+
 $sDefaultBrowser = "firefox"
 #$sDefaultBrowser = "ie"
 #$sDefaultBrowser = "chrome"
+#$sDefaultBrowser = "safari"
 #$sDefaultBrowser = "opera"
 #$sDefaultBrowser = "android"
+
 
 # WatirWorks
 require 'watirworks'  # The WatirWorks library loader

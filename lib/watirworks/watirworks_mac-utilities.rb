@@ -585,19 +585,12 @@ module WatirWorks_MacUtilities
 end # Module - WatirWorks_MacUtilities
 
 
-
-#=begin 
-# Dropping support if SafariWatir, will support Safari via watir-webdriver 
-
-# Include if using webdriver
-#if(is_webdriver? == true)
-#if(is_webdriver? != true)
-
 #=============================================================================#
 # Class: Watir::Safari
 #
 # Description: Extends the Watir::Safari class with additional methods
-#              This class is is NOT supported if using Watir, FireWatir or Watir_WebDriver
+#              This class is is NOT supported if using Watir, FireWatir or SafariWatir
+#              It is only supported for Watir_WebDriver on OSX and the Safari Browser
 #
 #--
 # Methods:
@@ -674,6 +667,7 @@ class Watir::Safari
   #++
   #
   # Description: Move the Browser window relative to its current location
+  #              Uses a JavaScript method that is recognized by most browsers.
   #              Per: http://www.w3schools.com/jsref/obj_window.asp
   #                   The moveBy() method is supported in all major browsers,
   #
@@ -713,6 +707,7 @@ class Watir::Safari
   #++
   #
   # Description: Move the current Browser window to the specified location
+  #              Uses a JavaScript method that is recognized by most browsers.
   #              Per: http://www.w3schools.com/jsref/obj_window.asp
   #                   The moveTo() method is supported in all major browsers.
   #
@@ -759,6 +754,7 @@ class Watir::Safari
   #++
   #
   # Description: Resize the current Browser window relative to its current size (in pixels)
+  #              Uses a JavaScript method that is recognized by most browsers.
   #              Per: http://www.w3schools.com/jsref/obj_window.asp
   #                   The resizeBy() method is supported in all major browsers, except Opera and Chrome.
   #
@@ -795,6 +791,7 @@ class Watir::Safari
   #++
   #
   # Description: Move the current Browser window to the specified location (in pixels)
+  #              Uses a JavaScript method that is recognized by most browsers.
   #              Per: http://www.w3schools.com/jsref/obj_window.asp
   #                   The resizeTo() method is supported in all major browsers, except Opera and Chrome
   #
@@ -903,6 +900,7 @@ class Watir::Safari
   #++
   #
   # Description: Scroll the current Browser window (in pixels)
+  #              Uses a JavaScript method that is recognized by most browsers.
   #              Per: http://www.w3schools.com/jsref/obj_window.asp
   #                    The ScrollBy() method is supported in all major browsers.
   #
@@ -932,31 +930,31 @@ class Watir::Safari
     
   end # scrollBy()
   
+  
+  #=============================================================================#
+  #--
+  # Method: status()
+  #
+  #++
+  #
+  # Description: Watir-webdriver for Safari does not support browser.status().
+  #              This method is hard coded to delay and always return "Done"
+  #
+  # Returns: STRING - Hard coded to delay and always return "Done"
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:
+  #                
+  #                     browser.status()
+  #
+  #=============================================================================#
+  def status()
+    sleep 2
+    return "Done"
     
-    #=============================================================================#
-    #--
-    # Method: status()
-    #
-    #++
-    #
-    # Description: Watir-webdriver for Safari does not support browser.status().
-    #              This method is hard coded to delay and always return "Done"
-    #
-    # Returns: STRING - Hard coded to delay and always return "Done"
-    #
-    # Syntax: N/A
-    #
-    # Usage Examples:
-    #                
-    #                     browser.status()
-    #
-    #=============================================================================#
-    def status()
-      sleep 2
-      return "Done"
-      
-    end # status()
-
+  end # status()
+  
   
   #=============================================================================#
   #--
@@ -1042,9 +1040,5 @@ class Watir::Safari
   end # Method - version()
   
 end # Class - Safari
-
-#  end # Include if using webdriver
-
-#=end
 
 # END File - watirworks_mac-utilities.rb
