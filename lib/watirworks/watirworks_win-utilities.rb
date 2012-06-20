@@ -1942,7 +1942,7 @@ module WatirWorks_WinUtilities
           if($VERBOSE == true)
             puts2("###################################")
             puts2("Reading data from:")
-            puts2(" Workbook: " + sDataDirectory + "/" +sWorkbook)
+            puts2(" Workbook: " + sDataDirectory + "/" + sWorkbook)
             puts2(" Spreadsheet: " + sSpreadsheet_Name)
             puts2(" Cell Range: " + sCellRange)
             puts2(" Records by Row: " + bDataInRows.to_s)

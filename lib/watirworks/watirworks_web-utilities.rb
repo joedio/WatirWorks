@@ -685,7 +685,7 @@ module WatirWorks_WebUtilities
       end
       
       # Check the next lower indexed div
-      iCurrentIndex = iCurrentIndex -1
+      iCurrentIndex = iCurrentIndex - 1
       
     end
     
@@ -790,7 +790,7 @@ module WatirWorks_WebUtilities
       end
       
       # Check the next lower indexed span
-      iCurrentIndex = iCurrentIndex -1
+      iCurrentIndex = iCurrentIndex - 1
       
     end
     
@@ -947,7 +947,7 @@ module WatirWorks_WebUtilities
               end
               
               # Break out of the while loops
-              iRowIndex = (iTotalRows +1)
+              iRowIndex = (iTotalRows + 1)
               iTableIndex = 0
               
               if($VERBOSE == true)
@@ -1196,7 +1196,7 @@ module WatirWorks_WebUtilities
             end
             
             # Break out of the while loops
-            iRowIndex = (iTotalRows +1)
+            iRowIndex = (iTotalRows + 1)
             iTableIndex = 0
             if($VERBOSE == true)
               puts2("   iRowIndex: #{iRowIndex.to_s}, iTableIndex: #{iTableIndex.to_s}")
@@ -1550,7 +1550,7 @@ module WatirWorks_WebUtilities
             
           end # Loop for Attribute
           
-          iIndex = iIndex +1
+          iIndex = iIndex + 1
         end # while
         
       end # Only check existing elements
@@ -2048,7 +2048,7 @@ module WatirWorks_WebUtilities
         
       else
         # Get the text between the Opening and Closing Tags
-        sFoundXMLTagValue = sXML[(iIndexOfFirstOpeningTag + iOpeningTagLength)..iIndexOfFirstClosingTag -1]
+        sFoundXMLTagValue = sXML[(iIndexOfFirstOpeningTag + iOpeningTagLength)..iIndexOfFirstClosingTag - 1]
         
         if ($VERBOSE == true)
           puts2("Found XML tag value: '" + sFoundXMLTagValue + "'")
@@ -5517,7 +5517,7 @@ module WatirWorks_WebUtilities
             
           end # Loop for Attribute
           
-          iIndex = iIndex +1
+          iIndex = iIndex + 1
         end # while
         
       end # Only check existing elements
@@ -5776,7 +5776,7 @@ module WatirWorks_WebUtilities
         sleep iInterval
         tElapsedTime = calc_elapsed_time(tStartTime).to_f
         
-      end
+    end
       
       # In case the timeout was reached need to check once more to set the return status
       if(self.status == sStatusText)
@@ -5786,10 +5786,9 @@ module WatirWorks_WebUtilities
       end
       
       
-    end # Method - wait_until_status()
+  end # Method - wait_until_status()
     
-    
-  end # END Module - WatirWorks_WebUtilities
+end # END Module - WatirWorks_WebUtilities
   
   # Skip if using webdriver
   if(is_webdriver? != true)
@@ -6841,7 +6840,7 @@ module WatirWorks_WebUtilities
         
         aStrings = []
         iColumnCount = self.row(:index => iRowNumber.adjust_index).column_count
-        iLast_column = iColumnCount -1
+        iLast_column = iColumnCount - 1
         iCurrent_column = 0
         
         while iCurrent_column < iLast_column do

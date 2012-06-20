@@ -149,7 +149,7 @@ module WatirWorks_LinuxUtilities
     for iVersion in 10..20
         if(self.is_chrome?(iVersion) == true)
            return iVersion.to_s + ".x"
-         end
+        end
     end # Check for a match
     
   end # Method - get_chrome_version_linux()
@@ -174,7 +174,7 @@ module WatirWorks_LinuxUtilities
     for iVersion in 2..12
         if(self.is_ff?(iVersion) == true)
            return iVersion.to_s + ".x"
-         end
+        end
     end # Check for a match
     
   end # Method - get_firefox_version_linux()
@@ -199,7 +199,7 @@ module WatirWorks_LinuxUtilities
     for iVersion in 8..12
         if(self.is_ff?(iVersion) == true)
            return iVersion.to_s + ".x"
-         end
+        end
     end # Check for a match
     
   end # Method - get_opera_version_linux()

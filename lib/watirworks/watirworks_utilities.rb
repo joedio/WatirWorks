@@ -557,7 +557,7 @@ module WatirWorks_Utilities
           if(sText_1.to_s.strip == sText_2.to_s.strip)
 
             # Increment the match counter
-            iMatchesFound = iMatchesFound +1
+            iMatchesFound = iMatchesFound + 1
 
             # Record the matching text
             aMatchingText << sText_1
@@ -569,7 +569,7 @@ module WatirWorks_Utilities
           if((sText_1 =~ /#{sText_2}/) || (sText_2 =~ /#{sText_1}/))
 
             # Increment the match counter
-            iMatchesFound = iMatchesFound +1
+            iMatchesFound = iMatchesFound + 1
 
             # Record the matching text
             aMatchingText << sText_1
@@ -1090,7 +1090,7 @@ module WatirWorks_Utilities
           puts2("Searching: " + sCurrentDir)
         end
 
-      end # Loop until we've reached the top level of the filesystem.
+    end # Loop until we've reached the top level of the filesystem.
 
 
       if(sFullPathToDir == "") # Search sub-directories of the original directory
@@ -1163,7 +1163,7 @@ module WatirWorks_Utilities
 
       return sFullPathToDir
 
-    end # Method - find_folder_in_tree()
+  end # Method - find_folder_in_tree()
 
 
     #=============================================================================#
@@ -1431,7 +1431,7 @@ module WatirWorks_Utilities
 
 
         # Default adjustment for line number (one indexed) to loop counter (zero indexed)
-        iStart = iStartLine -1
+        iStart = iStartLine - 1
 
         # Adjust the start line  (0, line-1, or last_line-1)
         if (iStartLine < 0)
@@ -1476,9 +1476,9 @@ module WatirWorks_Utilities
 
           # Start values (0, line-1, or last_line-1)
           if(iStart + iRangeOfLines >= iNumberOfLinesInFile)
-            iEnd = iNumberOfLinesInFile -1
+            iEnd = iNumberOfLinesInFile - 1
           else
-            iEnd = iStart + iRangeOfLines -1
+            iEnd = iStart + iRangeOfLines - 1
           end
 
           if($VERBOSE == true)
@@ -1505,7 +1505,7 @@ module WatirWorks_Utilities
           end
 
           if(iRangeOfLines.abs <= iStart )
-            iEnd =  iStart + iRangeOfLines +1
+            iEnd =  iStart + iRangeOfLines + 1
             if($VERBOSE == true)
               puts2("Adjusted end line  ***")
             end
@@ -1549,14 +1549,14 @@ module WatirWorks_Utilities
           if(bSearchFromBottomUp == false)
 
             # increment line
-            iStart = iStart +1
+            iStart = iStart + 1
 
             break if(iStart > iEnd)
 
           else
 
             # decrement line
-            iStart = iStart -1
+            iStart = iStart - 1
 
             break if(iStart < iEnd)
 
@@ -2374,7 +2374,7 @@ module WatirWorks_Utilities
 
           aRowData = oWorkbook.row(iCurrentRow, oWorkbook.default_sheet.to_s)
 
-          iCurrentRow = iCurrentRow +1
+          iCurrentRow = iCurrentRow + 1
 
           if($VERBOSE == true)
             puts2(aRowData.to_s)
@@ -2388,7 +2388,7 @@ module WatirWorks_Utilities
             if(aRowData[0] == nil)
               puts2("Skip from the row starting with an empty first column to the last row")
               # Force skipping the remaining rows
-              iCurrentRow = iLastRow +1
+              iCurrentRow = iLastRow + 1
             else
               aSpreadsheetContents_byRow << aRowData
             end
@@ -2488,7 +2488,7 @@ module WatirWorks_Utilities
           if($VERBOSE == true)
             puts2("###################################")
             puts2("Reading data from:")
-            puts2(" Workbook: " + sDataDirectory + "/" +sWorkbookFile)
+            puts2(" Workbook: " + sDataDirectory + "/" + sWorkbookFile)
             puts2(" Spreadsheet: " + sSpreadsheet_Name)
             puts2(" Stop at Empty Row: " + bStopAtEmptyRow.to_s)
           end
@@ -3463,7 +3463,7 @@ module WatirWorks_Utilities
     end # Method - watchlist()
 
 
-  end # end of module WatirWorks_Utilities
+end # end of module WatirWorks_Utilities
 
   #=============================================================================#
   #======================= END of MODULE ====================================#
@@ -3763,7 +3763,7 @@ module WatirWorks_Utilities
           iMyEndOfLine = self.index(/$/)
 
           sMonthToConvert = self[0,iMySeperator].to_s.strip
-          sDayYearToConvert = self[iMySeperator +1 ,iMyEndOfLine].to_s.strip
+          sDayYearToConvert = self[iMySeperator + 1 ,iMyEndOfLine].to_s.strip
 
           if($VERBOSE == true)
             puts2(" Origional Month: " + sMonthToConvert)
@@ -3773,7 +3773,7 @@ module WatirWorks_Utilities
           iMySeperator = sDayYearToConvert.index(sDelimiter)
           iMyEndOfLine = sDayYearToConvert.index(/$/)
           sDayToConvert = sDayYearToConvert[0,iMySeperator].to_s.strip
-          sYearToConvert = sDayYearToConvert[iMySeperator +1 ,iMyEndOfLine].to_s.strip
+          sYearToConvert = sDayYearToConvert[iMySeperator + 1 ,iMyEndOfLine].to_s.strip
 
           if($VERBOSE == true)
             puts2(" Origional Day: " + sDayToConvert)
@@ -3915,7 +3915,7 @@ module WatirWorks_Utilities
           iMyEndOfLine = self.index(/$/)
 
           sMonthToConvert = self[0,iMySeperator].to_s.strip
-          sDayYearToConvert = self[iMySeperator +1 ,iMyEndOfLine].to_s.strip
+          sDayYearToConvert = self[iMySeperator + 1 ,iMyEndOfLine].to_s.strip
 
           if($VERBOSE == true)
             puts2(" Origional Month: " + sMonthToConvert)
@@ -3926,7 +3926,7 @@ module WatirWorks_Utilities
           iMySeperator = sDayYearToConvert.index(sDelimiter)
           iMyEndOfLine = sDayYearToConvert.index(/$/)
           sDayToConvert = sDayYearToConvert[0,iMySeperator].to_s.strip
-          sYearToConvert = sDayYearToConvert[iMySeperator +1 ,iMyEndOfLine].to_s.strip
+          sYearToConvert = sDayYearToConvert[iMySeperator + 1 ,iMyEndOfLine].to_s.strip
 
           if($VERBOSE == true)
             puts2(" Origional Day: " + sDayToConvert)
@@ -4089,14 +4089,14 @@ module WatirWorks_Utilities
       # Count backward from the end of the string through only the last 4 character
       # which will catch formats ( *, *., *.0, *.00)
       case
-        when self[iEndOfString -1].chr == sDecimalPoint
-        iSplit = iEndOfString -1
-        when self[iEndOfString -2].chr == sDecimalPoint
-        iSplit = iEndOfString -2
-        when self[iEndOfString -3].chr == sDecimalPoint
-        iSplit = iEndOfString -3
-        when self[iEndOfString -4].chr == sDecimalPoint
-        iSplit = iEndOfString -4
+        when self[iEndOfString - 1].chr == sDecimalPoint
+        iSplit = iEndOfString - 1
+        when self[iEndOfString - 2].chr == sDecimalPoint
+        iSplit = iEndOfString - 2
+        when self[iEndOfString - 3].chr == sDecimalPoint
+        iSplit = iEndOfString - 3
+        when self[iEndOfString - 4].chr == sDecimalPoint
+        iSplit = iEndOfString - 4
       else
         iSplit = iEndOfString
       end # Determine if the Numeric String has a decimal and where's its located
@@ -4210,7 +4210,7 @@ module WatirWorks_Utilities
 
       # Determine the last character of the string
       iStringLength = sString.length
-      sLastCharacter =  sString[iStringLength -1].chr  # Adjust for 0 vs 1 indexed
+      sLastCharacter =  sString[iStringLength - 1].chr  # Adjust for 0 vs 1 indexed
 
       # If string ends in a decimal, pad it with zeros
       if(sLastCharacter == ".")
@@ -4245,7 +4245,7 @@ module WatirWorks_Utilities
       end
 
       # Pad to 2-decimal places if necessary
-      if(sStringRepresentationOfAmount[iEndOfString -3].chr != ".")
+      if(sStringRepresentationOfAmount[iEndOfString - 3].chr != ".")
 
         sStringRepresentationOfAmount = sStringRepresentationOfAmount + "0"
 
@@ -5011,7 +5011,7 @@ module WatirWorks_Utilities
         iIndex = sReversedString.index(sDelimiter)
 
         # Save character from 0, up to the Delimiter's index, leaving off the Delimiter
-        sReversedString = sReversedString[iIndex +1, iStringLength]
+        sReversedString = sReversedString[iIndex + 1, iStringLength]
 
         #Flip the remaining string which now has the suffix by itself
         sString = sReversedString.reverse
