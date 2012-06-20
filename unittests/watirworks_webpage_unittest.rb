@@ -378,7 +378,7 @@ class Unittest_WebPage < Test::Unit::TestCase
           puts2("\t Options in select list:")
           aSelections.each do | sSelection |
             if(is_webdriver? == false)
-              puts2("\t " +sSelection.to_s)
+              puts2("\t " + sSelection.to_s)
             else
               puts2("\t " + sSelection.text)
             end
@@ -481,7 +481,7 @@ class Unittest_WebPage < Test::Unit::TestCase
         puts2("\t Options in select list:")
         aSelections.each do | sSelection |
           if(is_webdriver? == false)
-            puts2("\t " +sSelection.to_s)
+            puts2("\t " + sSelection.to_s)
           else
             puts2("\t " + sSelection.text)
           end
@@ -584,7 +584,7 @@ class Unittest_WebPage < Test::Unit::TestCase
           puts2("\t Options in select list:")
           aSelections.each do | sSelection |
             if(is_webdriver? == false)
-              puts2("\t " +sSelection.to_s)
+              puts2("\t " + sSelection.to_s)
             else
               puts2("\t " + sSelection.text)
             end
@@ -688,7 +688,7 @@ class Unittest_WebPage < Test::Unit::TestCase
         puts2("\t Options in select list:")
         aSelections.each do | sSelection |
           if(is_webdriver? == false)
-            puts2("\t " +sSelection.to_s)
+            puts2("\t " + sSelection.to_s)
           else
             puts2("\t " + sSelection.text)
           end
@@ -793,7 +793,7 @@ class Unittest_WebPage < Test::Unit::TestCase
           puts2("\t Options in select list:")
           aSelections.each do | sSelection |
             if(is_webdriver? == false)
-              puts2("\t " +sSelection.to_s)
+              puts2("\t " + sSelection.to_s)
             else
               puts2("\t " + sSelection.text)
             end
@@ -899,7 +899,7 @@ class Unittest_WebPage < Test::Unit::TestCase
         puts2("\t Options in select list:")
         aSelections.each do | sSelection |
           if(is_webdriver? == false)
-            puts2("\t " +sSelection.to_s)
+            puts2("\t " + sSelection.to_s)
           else
             puts2("\t " + sSelection.text)
           end
@@ -1077,7 +1077,7 @@ class Unittest_WebPage < Test::Unit::TestCase
           puts2("Did NOT find at least #{iItemCountInList} items in the list")
         end
 
-        iItemCountInList = iItemCountInList +1
+        iItemCountInList = iItemCountInList + 1
 
       end # Loop
 
