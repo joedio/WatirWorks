@@ -7,16 +7,16 @@
 #  All rights reserved.
 #
 # Description: Unit tests for the HTML text using WatirWorks methods:
-#                is_text_in_div_class?(...)
-#                is_text_in_div_id?(...)
-#                is_text_in_div_index?(...)
-#                is_text_in_span_class?(...)
-#                is_text_in_span_id?(...)
-#                is_text_in_span_index?(...)
-#                is_text_in_table_class?(...)
-#                is_text_in_table_id?(...)
-#                is_text_in_table_index?(...)
-#                is_text_in_table_name?(...)
+#                isTextIn_DivClass?(...)
+#                isTextIn_DivID?(...)
+#                isTextIn_DivIndex?(...)
+#                isTextIn_SpanClass?(...)
+#                isTextIn_SpanID?(...)
+#                isTextIn_SpanIndex?(...)
+#                isTextIn_TableClass?(...)
+#                isTextIn_TableID?(...)
+#                isTextIn_TableIndex?(...)
+#                isTextIn_TableName?(...)
 #                parse_table_by_row(...)
 #                find_string_in_div(...)
 #                find_string_in_span(...)
@@ -32,8 +32,10 @@
 #=============================================================================#
 require 'rubygems'
 
+$bUseWebDriver = true
+
 if($bUseWebDriver == nil)
-  $bUseWebDriver = false
+  $bUseWebDriver = true
 end
 
 # FireWatir
@@ -133,16 +135,16 @@ class UnitTest_HTMLText < Test::Unit::TestCase
   end # end of teardown
 
   #===========================================================================#
-  # Testcase method: test_HTMLText_001_is_text_in_div_class
+  # Testcase method: test_HTMLText_001_isTextIn_DivClass
   #
-  # Description: Test the method: is_text_in_div_class?(...)
+  # Description: Test the method: isTextIn_DivClass?(...)
   #
   #===========================================================================#
-  def test_HTMLText_001_is_text_in_div_class
+  def test_HTMLText_001_isTextIn_DivClass
 
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_HTMLText_001_is_text_in_div_class")
+    puts2("Testcase: test_HTMLText_001_isTextIn_DivClass")
     puts2("#######################")
 
     #$VERBOSE = true
@@ -197,7 +199,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
         puts2("\nSerching Div class:  \"#{sClass}\"  for the text \"#{sExpectedText}\"")
 
-        if((browser.is_text_in_div_class?(sExpectedText, sClass, bSaveIssues, sCaptureFileNamePrefix)) == true)
+        if((browser.isTextIn_DivClass?(sExpectedText, sClass, bSaveIssues, sCaptureFileNamePrefix)) == true)
           puts2(" Found text: " + sExpectedText)
         else
           puts2("*** WARNING - Text not found: " + sExpectedText, "WARN")
@@ -213,7 +215,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
       browser.close
 
       # Raise the error with a custom message after the rest of the rescue actions
-      raise("*** TESTCASE - test_HTMLText_001_is_text_in_div_class")
+      raise("*** TESTCASE - test_HTMLText_001_isTextIn_DivClass")
 
     ensure
 
@@ -222,19 +224,19 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     end # Test the method
 
-  end # END TestCase - test_HTMLText_001_is_text_in_div_class
+  end # END TestCase - test_HTMLText_001_isTextIn_DivClass
 
   #===========================================================================#
-  # Testcase method: test_HTMLText_002_is_text_in_div_id
+  # Testcase method: test_HTMLText_002_isTextIn_DivID
   #
-  # Description: Test the method: is_text_in_div_id?(...)
+  # Description: Test the method: isTextIn_DivID?(...)
   #
   #===========================================================================#
-  def test_HTMLText_002_is_text_in_div_id
+  def test_HTMLText_002_isTextIn_DivID
 
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_HTMLText_002_is_text_in_div_id")
+    puts2("Testcase: test_HTMLText_002_isTextIn_DivID")
     puts2("#######################")
 
     #$VERBOSE = true
@@ -289,7 +291,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
         puts2("\nSerching Div ID:  \"#{sDivID}\"  for the text \"#{sExpectedText}\"")
 
-        if((browser.is_text_in_div_id?(sExpectedText, sDivID, bSaveIssues, sCaptureFileNamePrefix)) == true)
+        if((browser.isTextIn_DivID?(sExpectedText, sDivID, bSaveIssues, sCaptureFileNamePrefix)) == true)
           puts2(" Found text: " + sExpectedText)
         else
           puts2("*** WARNING - Text not found: " + sExpectedText, "WARN")
@@ -305,7 +307,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
       browser.close
 
       # Raise the error with a custom message after the rest of the rescue actions
-      raise("*** TESTCASE - test_HTMLText_002_is_text_in_div_id")
+      raise("*** TESTCASE - test_HTMLText_002_isTextIn_DivID")
 
     ensure
 
@@ -314,20 +316,20 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     end # Test the method
 
-  end # END TestCase - test_HTMLText_002_is_text_in_div_id
+  end # END TestCase - test_HTMLText_002_isTextIn_DivID
 
 
   #===========================================================================#
-  # Testcase method: test_HTMLText_003_is_text_in_div_index
+  # Testcase method: test_HTMLText_003_isTextIn_DivIndex
   #
-  # Description: Test the method: is_text_in_div_index?(...)
+  # Description: Test the method: isTextIn_DivIndex?(...)
   #
   #===========================================================================#
-  def test_HTMLText_003_is_text_in_div_index
+  def test_HTMLText_003_isTextIn_DivIndex
 
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_HTMLText_003_is_text_in_div_index")
+    puts2("Testcase: test_HTMLText_003_isTextIn_DivIndex")
     puts2("#######################")
 
     #$VERBOSE = true
@@ -393,7 +395,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
         puts2("\nSerching Div Index:  \"#{iDivIndex.to_s}\"  for the text \"#{sExpectedText}\"")
 
-        if((browser.is_text_in_div_index?(sExpectedText, iDivIndex, bSaveIssues, sCaptureFileNamePrefix)) == true)
+        if((browser.isTextIn_DivIndex?(sExpectedText, iDivIndex, bSaveIssues, sCaptureFileNamePrefix)) == true)
           puts2(" Found text: " + sExpectedText)
         else
           puts2("*** WARNING - Text not found: " + sExpectedText, "WARN")
@@ -409,7 +411,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
       browser.close
 
       # Raise the error with a custom message after the rest of the rescue actions
-      raise("*** TESTCASE - test_HTMLText_003_is_text_in_div_index")
+      raise("*** TESTCASE - test_HTMLText_003_isTextIn_DivIndex")
 
     ensure
 
@@ -418,20 +420,20 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     end # Test the method
 
-  end # END TestCase - test_HTMLText_003_is_text_in_div_index
+  end # END TestCase - test_HTMLText_003_isTextIn_DivIndex
 
 
   #===========================================================================#
-  # Testcase method: test_HTMLText_004_is_text_in_span_class
+  # Testcase method: test_HTMLText_004_isTextIn_SpanClass
   #
-  # Description: Test the method: is_text_in_span_class?(...)
+  # Description: Test the method: isTextIn_SpanClass?(...)
   #
   #===========================================================================#
-  def test_HTMLText_004_is_text_in_span_class
+  def test_HTMLText_004_isTextIn_SpanClass
 
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_HTMLText_004_is_text_in_span_class")
+    puts2("Testcase: test_HTMLText_004_isTextIn_SpanClass")
     puts2("#######################")
 
     #$VERBOSE = true
@@ -486,7 +488,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
         puts2("\nSerching Span class:  \"#{sClass}\"  for the text \"#{sExpectedText}\"")
 
-        if((browser.is_text_in_span_class?(sExpectedText, sClass, bSaveIssues, sCaptureFileNamePrefix)) == true)
+        if((browser.isTextIn_SpanClass?(sExpectedText, sClass, bSaveIssues, sCaptureFileNamePrefix)) == true)
           puts2(" Found text: " + sExpectedText)
         else
           puts2("*** WARNING - Text not found: " + sExpectedText, "WARN")
@@ -502,7 +504,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
       browser.close
 
       # Raise the error with a custom message after the rest of the rescue actions
-      raise("*** TESTCASE - test_HTMLText_004_is_text_in_span_class")
+      raise("*** TESTCASE - test_HTMLText_004_isTextIn_SpanClass")
 
     ensure
 
@@ -511,19 +513,19 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     end # Test the method
 
-  end # END TestCase - test_HTMLText_004_is_text_in_span_class
+  end # END TestCase - test_HTMLText_004_isTextIn_SpanClass
 
   #===========================================================================#
-  # Testcase method: test_HTMLText_005_is_text_in_span_id
+  # Testcase method: test_HTMLText_005_isTextIn_SpanID
   #
-  # Description: Test the method: is_text_in_span_id?(...)
+  # Description: Test the method: isTextIn_SpanID?(...)
   #
   #===========================================================================#
-  def test_HTMLText_005_is_text_in_span_id
+  def test_HTMLText_005_isTextIn_SpanID
 
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_HTMLText_005_is_text_in_span_id")
+    puts2("Testcase: test_HTMLText_005_isTextIn_SpanID")
     puts2("#######################")
 
     #$VERBOSE = true
@@ -578,7 +580,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
         puts2("\nSerching Span ID:  \"#{sSpanID}\"  for the text \"#{sExpectedText}\"")
 
-        if((browser.is_text_in_span_id?(sExpectedText, sSpanID, bSaveIssues, sCaptureFileNamePrefix)) == true)
+        if((browser.isTextIn_SpanID?(sExpectedText, sSpanID, bSaveIssues, sCaptureFileNamePrefix)) == true)
           puts2(" Found text: " + sExpectedText)
         else
           puts2("*** WARNING - Text not found: " + sExpectedText, "WARN")
@@ -594,7 +596,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
       browser.close
 
       # Raise the error with a custom message after the rest of the rescue actions
-      raise("*** TESTCASE - test_HTMLText_005_is_text_in_span_id")
+      raise("*** TESTCASE - test_HTMLText_005_isTextIn_SpanID")
 
     ensure
 
@@ -603,21 +605,21 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     end # Test the method
 
-  end # END TestCase - test_HTMLText_005_is_text_in_span_id
+  end # END TestCase - test_HTMLText_005_isTextIn_SpanID
 
 
 
   #===========================================================================#
-  # Testcase method: test_HTMLText_006_is_text_in_span_index
+  # Testcase method: test_HTMLText_006_isTextIn_SpanIndex
   #
-  # Description: Test the method: is_text_in_span_index?(...)
+  # Description: Test the method: isTextIn_SpanIndex?(...)
   #
   #===========================================================================#
-  def test_HTMLText_006_is_text_in_span_index
+  def test_HTMLText_006_isTextIn_SpanIndex
 
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_HTMLText_006_is_text_in_span_index")
+    puts2("Testcase: test_HTMLText_006_isTextIn_SpanIndex")
     puts2("#######################")
 
     #$VERBOSE = true
@@ -683,7 +685,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
         puts2("\nSerching Span Index:  \"#{iSpanIndex.to_s}\"  for the text \"#{sExpectedText}\"")
 
-        if((browser.is_text_in_span_index?(sExpectedText, iSpanIndex, bSaveIssues, sCaptureFileNamePrefix)) == true)
+        if((browser.isTextIn_SpanIndex?(sExpectedText, iSpanIndex, bSaveIssues, sCaptureFileNamePrefix)) == true)
           puts2(" Found text: " + sExpectedText)
         else
           puts2("*** WARNING - Text not found: " + sExpectedText, "WARN")
@@ -699,7 +701,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
       browser.close
 
       # Raise the error with a custom message after the rest of the rescue actions
-      raise("*** TESTCASE - test_HTMLText_006_is_text_in_span_index")
+      raise("*** TESTCASE - test_HTMLText_006_isTextIn_SpanIndex")
 
     ensure
 
@@ -708,21 +710,21 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     end # Test the method
 
-  end # END TestCase - test_HTMLText_006_is_text_in_span_index
+  end # END TestCase - test_HTMLText_006_isTextIn_SpanIndex
 
 
 
   #===========================================================================#
-  # Testcase method: test_HTMLText_007_is_text_in_table_class
+  # Testcase method: test_HTMLText_007_isTextIn_TableClass
   #
-  # Description: Test the method: is_text_in_table_class?(...)
+  # Description: Test the method: isTextIn_TableClass?(...)
   #
   #===========================================================================#
-  def test_HTMLText_007_is_text_in_table_class
+  def test_HTMLText_007_isTextIn_TableClass
 
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_HTMLText_007_is_text_in_table_class")
+    puts2("Testcase: test_HTMLText_007_isTextIn_TableClass")
     puts2("#######################")
 
     #$VERBOSE = true
@@ -776,7 +778,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
         puts2("\nSerching Table class:  \"#{sClass}\"  for the text \"#{sExpectedText}\"")
 
-        if((browser.is_text_in_table_class?(sExpectedText, sClass, bSaveIssues, sCaptureFileNamePrefix)) == true)
+        if((browser.isTextIn_TableClass?(sExpectedText, sClass, bSaveIssues, sCaptureFileNamePrefix)) == true)
           puts2(" Found text: " + sExpectedText)
         else
           puts2("*** WARNING - Text not found: " + sExpectedText, "WARN")
@@ -792,7 +794,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
       browser.close
 
       # Raise the error with a custom message after the rest of the rescue actions
-      raise("*** TESTCASE - test_HTMLText_007_is_text_in_table_class")
+      raise("*** TESTCASE - test_HTMLText_007_isTextIn_TableClass")
 
     ensure
 
@@ -801,19 +803,19 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     end # Test the method
 
-  end # END TestCase - test_HTMLText_007_is_text_in_table_class
+  end # END TestCase - test_HTMLText_007_isTextIn_TableClass
 
   #===========================================================================#
-  # Testcase method: test_HTMLText_008_is_text_in_table_id
+  # Testcase method: test_HTMLText_008_isTextIn_TableID
   #
-  # Description: Test the method: is_text_in_table_id?(...)
+  # Description: Test the method: isTextIn_TableID?(...)
   #
   #===========================================================================#
-  def test_HTMLText_008_is_text_in_table_id
+  def test_HTMLText_008_isTextIn_TableID
 
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_HTMLText_008_is_text_in_table_id")
+    puts2("Testcase: test_HTMLText_008_isTextIn_TableID")
     puts2("#######################")
 
     #$VERBOSE = true
@@ -867,7 +869,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
         puts2("\nSerching Table ID:  \"#{sTableID}\"  for the text \"#{sExpectedText}\"")
 
-        if((browser.is_text_in_table_id?(sExpectedText, sTableID, bSaveIssues, sCaptureFileNamePrefix)) == true)
+        if((browser.isTextIn_TableID?(sExpectedText, sTableID, bSaveIssues, sCaptureFileNamePrefix)) == true)
           puts2(" Found text: " + sExpectedText)
         else
           puts2("*** WARNING - Text not found: " + sExpectedText, "WARN")
@@ -883,7 +885,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
       browser.close
 
       # Raise the error with a custom message after the rest of the rescue actions
-      raise("*** TESTCASE - test_HTMLText_008_is_text_in_table_id")
+      raise("*** TESTCASE - test_HTMLText_008_isTextIn_TableID")
 
     ensure
 
@@ -892,20 +894,20 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     end # Test the method
 
-  end # END TestCase - test_HTMLText_008_is_text_in_table_id
+  end # END TestCase - test_HTMLText_008_isTextIn_TableID
 
 
   #===========================================================================#
-  # Testcase method: test_HTMLText_009_is_text_in_table_index
+  # Testcase method: test_HTMLText_009_isTextIn_TableIndex
   #
-  # Description: Test the method: is_text_in_table_index?(...)
+  # Description: Test the method: isTextIn_TableIndex?(...)
   #
   #===========================================================================#
-  def test_HTMLText_009_is_text_in_table_index
+  def test_HTMLText_009_isTextIn_TableIndex
 
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_HTMLText_009_is_text_in_table_index")
+    puts2("Testcase: test_HTMLText_009_isTextIn_TableIndex")
     puts2("#######################")
 
     #$VERBOSE = true
@@ -969,7 +971,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
         puts2("\nSerching Table Index:  \"#{iTableIndex.to_s}\"  for the text \"#{sExpectedText}\"")
 
-        if((browser.is_text_in_table_index?(sExpectedText, iTableIndex, bSaveIssues, sCaptureFileNamePrefix)) == true)
+        if((browser.isTextIn_TableIndex?(sExpectedText, iTableIndex, bSaveIssues, sCaptureFileNamePrefix)) == true)
           puts2(" Found text: " + sExpectedText)
         else
           puts2("*** WARNING - Text not found: " + sExpectedText, "WARN")
@@ -985,7 +987,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
       browser.close
 
       # Raise the error with a custom message after the rest of the rescue actions
-      raise("*** TESTCASE - test_HTMLText_009_is_text_in_table_index")
+      raise("*** TESTCASE - test_HTMLText_009_isTextIn_TableIndex")
 
     ensure
 
@@ -994,20 +996,20 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     end # Test the method
 
-  end # END TestCase - test_HTMLText_009_is_text_in_table_index
+  end # END TestCase - test_HTMLText_009_isTextIn_TableIndex
 
 
   #===========================================================================#
-  # Testcase method: test_HTMLText_010_is_text_in_table_name
+  # Testcase method: test_HTMLText_010_isTextIn_TableName
   #
-  # Description: Test the method: is_text_in_table_name?(...)
+  # Description: Test the method: isTextIn_TableName?(...)
   #
   #===========================================================================#
-  def test_HTMLText_010_is_text_in_table_name
+  def test_HTMLText_010_isTextIn_TableName
 
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_HTMLText_010_is_text_in_table_name")
+    puts2("Testcase: test_HTMLText_010_isTextIn_TableName")
     puts2("#######################")
 
     #$VERBOSE = true
@@ -1061,7 +1063,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
         puts2("\nSerching Table name:  \"#{sName}\"  for the text \"#{sExpectedText}\"")
 
-        if((browser.is_text_in_table_name?(sExpectedText, sName, bSaveIssues, sCaptureFileNamePrefix)) == true)
+        if((browser.isTextIn_TableName?(sExpectedText, sName, bSaveIssues, sCaptureFileNamePrefix)) == true)
           puts2(" Found text: " + sExpectedText)
         else
           puts2("*** WARNING - Text not found: " + sExpectedText, "WARN")
@@ -1077,7 +1079,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
       browser.close
 
       # Raise the error with a custom message after the rest of the rescue actions
-      raise("*** TESTCASE - test_HTMLText_010_is_text_in_table_name")
+      raise("*** TESTCASE - test_HTMLText_010_isTextIn_TableName")
 
     ensure
 
@@ -1086,7 +1088,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     end # Test the method
 
-  end # END TestCase - test_HTMLText_010_is_text_in_table_name
+  end # END TestCase - test_HTMLText_010_isTextIn_TableName
 
 
   #===========================================================================#

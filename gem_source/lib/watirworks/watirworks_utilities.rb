@@ -1,7 +1,7 @@
 #=============================================================================#
 # File: watirworks_utilities.rb
 #
-#  Copyright (c) 2008-2012, Joe DiMauro
+#  Copyright (c) 2008-2015, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Functions and methods for WatirWorks
@@ -32,6 +32,10 @@
 #=============================================================================#
 require 'rubygems'
 require 'logger'  # The Ruby logger which is the basis for the WatirWorksLogger
+
+# WatirWorks
+require 'watirworks'
+include WatirWorks_RefLib #  WatirWorks Reference data module
 
 #=============================================================================#
 # Module: WatirWorks_Utilities
@@ -113,7 +117,7 @@ require 'logger'  # The Ruby logger which is the basis for the WatirWorksLogger
 module WatirWorks_Utilities
 
   # Version of this module
-  WW_UTILITIES_VERSION =  "1.0.14"
+  WW_UTILITIES_VERSION =  "1.0.13"
 
   # Format to use when appending a timestamp to file names
   DATETIME_FILEFORMAT="%Y_%m_%d_%H%M%S"
@@ -771,8 +775,8 @@ module WatirWorks_Utilities
     # Files
     display_ruby_loaded_files()
 
-    # Ruby Global Variables
-    display_ruby_global_variables()
+    # Ruby Global Variables  #failing
+    #display_ruby_global_variables()
 
   end # Method - display_ruby_environment()
 
@@ -781,6 +785,7 @@ module WatirWorks_Utilities
   # Method: display_ruby_global_variables()
   #
   #++
+  # TypeError: can't convert Symbol into String
   #
   # Description: Displays information on the runtime environment:
   #                       Ruby's Global variables
@@ -806,7 +811,7 @@ module WatirWorks_Utilities
     puts2("\nRuby Global Variables: ")
     aRubyGlobalVars = global_variables()  # Populate array with the Ruby Global variables
     aRubyGlobalVars.each do |key|  # Loop through the Ruby Global variables
-      if(eval(key).class.to_s == "String")
+      if(eval(key).class.to_s == "String")  # TypeError: can't convert Symbol into String
         puts2("  #{key.to_s} = \""  + eval(key).to_s  + "\",\t  Class: "  + eval(key).class.to_s)
       else
         puts2("  #{key.to_s} = "  + eval(key).to_s  + ",\t  Class: "  + eval(key).class.to_s)
@@ -855,7 +860,7 @@ module WatirWorks_Utilities
   #
   #++
   #
-  # Description: Displays information on the OS runtime environment variables:
+  # Description: Displays information on the OS runtime environment vairables:
   #
   #               Basically this is a wrapper around Ruby methods that collect info.
   #               with the added ability to print that info out.
@@ -998,6 +1003,8 @@ module WatirWorks_Utilities
   # TODO: Perform a case sensitive search. Limitation of Ruby#File.exist?
   #++
   #
+  # NoMethodError: undefined method `grep' for "./":String
+  #
   # Description: Searches for the specified folder and returns the full pathname of its location in the directory tree.
   #              The Ruby methods called by this method appear to be case insensitive, so the search ignores case.
   #
@@ -1120,6 +1127,7 @@ module WatirWorks_Utilities
         Find.find('./') do |path|
 
           aTemp = path.grep(/#{sFolderName}$/) # save the grep'd file path string in the array
+	  # NoMethodError: undefined method `grep' for "./":String
 
 
           if aTemp.to_s != "" # Determine if its a valid folder
@@ -1840,7 +1848,7 @@ module WatirWorks_Utilities
     #++
     #
     # Description: Minimizes the Console window that launched Ruby.
-    #              This is a Windows OS specific function.
+    #              This is a Windwos OS specific function.
     #
     # HINT: Use this method to avoid catching the Console in any screen captures, or to just
     #       get it out of the way so you can see the full browser window.
@@ -1951,7 +1959,7 @@ module WatirWorks_Utilities
     #
     # Syntax: N/A
     #
-    # Usage Examples:  To test if watir-webdriver is loaded
+    # Usage Examples:  To test if watir-webriver is loaded
     #                           if(is_selenium_webdriver?)
     #                              # execute your Selenium WebDriver code
     #                           else
@@ -1985,7 +1993,7 @@ module WatirWorks_Utilities
     #
     # Syntax: N/A
     #
-    # Usage Examples:  To test if watir-webdriver is loaded
+    # Usage Examples:  To test if watir-webriver is loaded
     #                           if(is_webdriver?)
     #                              # execute your WatirWebDriver code
     #                           else
@@ -2034,6 +2042,11 @@ module WatirWorks_Utilities
     #                    end
     #=============================================================================#
     def parse_ascii_file(sFullPathToFile)
+
+      if($VERBOSE == true)
+	      puts2("Parameters - parse_ascii_file")
+	      puts2("  sFullPathToFile =  " + sFullPathToFile.to_s)
+      end
 
       # Define default return value
       aFileContents = []
@@ -2100,25 +2113,38 @@ module WatirWorks_Utilities
     #
     # Returns: ARRAY = An array of STRINGS -Each item in the array is a separate word read from Dictionary
     #
-    # Syntax: N/A
+    # Syntax: sFilename  - STRING - name of the dictionary file
+    #                sDataDirectory - STRING  - Folder name of the data directory
     #
     #
     # Usage Examples: To read the words in the dictionary into an array
     #                      aDictionaryContents =  parse_dictionary()
     #=============================================================================#
-    def parse_dictionary()
+    def parse_dictionary(sFilename="english.dictionary", sDataDirectory = DATA_DIR)
+
+      if($VERBOSE == true)
+	      puts2("Parameters - parse_dictionary")
+	      puts2("  sFilename =  " + sFilename.to_s)
+	      puts2("  sDataDirectory =  " + sDataDirectory.to_s)
+      end
 
       # Define default return value
       aDictionaryContents = []
 
       # Name of the WatirWorks dictionary file
-      sFile = "dictionary_en.txt"
+      #sFile = "english.dictionary"
 
       # Determine where in the filesystem that WatirWorks is installed
-      sPath = get_watirworks_install_path()
+      sGemInstallPath = get_watirworks_install_path()
 
-      #
-      sFullPathToFile = File.join(sPath, sFile)
+      # Join the data directory to the gem install path
+      sPathToDataDir = File.join(sGemInstallPath, sDataDirectory)
+
+      sFullPathToFile = File.join(sPathToDataDir, sFilename)
+
+      if($VERBOSE == true)
+	      puts2("sFullPathToFile = " + sFullPathToFile)
+      end
 
       # Populate the array with the contents of the dictionary
       aDictionaryContents = parse_ascii_file(sFullPathToFile)
@@ -2159,6 +2185,10 @@ module WatirWorks_Utilities
         puts2("  sCSVFilename: " + sCSVFilename)
         puts2("  Containting folder: " + sSubDirName)
       end
+
+      # Require the roo library in the script
+      require 'roo' # Gem for reading Workbooks/spreadsheets for Excel (.xlsx), OpenOffice (.ods), and Google
+      include Roo::CSV
 
       # The CSV library
       require 'csv'
@@ -2250,27 +2280,28 @@ module WatirWorks_Utilities
     #
     # Usage example: To Read data from a sheets in a workbook:
     #
-    #                    sDataDirectory = "data"
     #                    sWorkbookFile = "TestData.xls"
     #                    sSpreadsheet = "Credentials"
+    #                    sDataDirectory = "data"
     #                    bStopAtEmptyRow = true
     #
-    #                     aMy_Array = sSpreadsheet_Name => parse_spreadsheet(sWorkbookFile, sSpreadsheet, bStopAtEmptyRow, sDataDirectory)
+    #                     aMy_Array = sSpreadsheet_Name => parse_spreadsheet(sWorkbookFile, sSpreadsheet, sDataDirectory,  bStopAtEmptyRow)
     #
     #=============================================================================#
-    def parse_spreadsheet(sWorkbookFile=nil, sSpreadsheet=nil, bStopAtEmptyRow=true, sDataDirectory="data")
+    def parse_spreadsheet(sWorkbookFile=nil, sSpreadsheet=nil,  sDataDirectory="data", bStopAtEmptyRow=true)
 
       if($VERBOSE == true)
         puts2("Parameters - parse_spreadsheet:")
         puts2("  sWorkbookFile: " + sWorkbookFile)
         puts2("  sSpreadsheet: " + sSpreadsheet.to_s)
-        puts2("  bStopAtEmptyRow: " + bStopAtEmptyRow.to_s)
         puts2("  sDataDirectory: " + sDataDirectory)
+	puts2("  bStopAtEmptyRow: " + bStopAtEmptyRow.to_s)
       end
 
 
       # Require the roo library in the script
-      require 'roo' # Gem for reading Workbooks/spreadsheets for Excel (.xls and .xlsx), OpenOffice (.ods), and Google
+      require 'roo' # Gem for reading Workbooks/spreadsheets for Excel (.xlsx), OpenOffice (.ods), and Google
+      require 'roo-xls' # Gem for reading Workbooks/spreadsheets for Excel (.xls)
 
       # Find the location of the directory holding the testsuite data
       sDataDir = find_folder_in_tree(sDataDirectory)
@@ -2306,19 +2337,19 @@ module WatirWorks_Utilities
         case sFormat.downcase
           when "xls"
           # Create an instance of Excel XLS workbook
-          oWorkbook = Excel.new(sFullPathToWorkbookFile)
+          oWorkbook = Roo::Excel.new(sFullPathToWorkbookFile)
           if($VERBOSE == true)
             puts2("Excel XLS Workbook")
           end
           when "xlsx"
           # Create an instance of Excel XLSX workbook
-          oWorkbook = Excelx.new(sFullPathToWorkbookFile)
+          oWorkbook = Roo::Excelx.new(sFullPathToWorkbookFile)
           if($VERBOSE == true)
             puts2("Excel XLSX Workbook")
           end
           when "ods"
           # Create an instance of OpenOffice ODS  workbook
-          oWorkbook = Openoffice.new(sFullPathToWorkbookFile)
+          oWorkbook = Roo::OpenOffice.new(sFullPathToWorkbookFile)
           if($VERBOSE == true)
             puts2("OpenOffice ODS Workbook")
           end
@@ -2327,14 +2358,14 @@ module WatirWorks_Utilities
 
         aSheetsInWorkbook = oWorkbook.sheets
 
-        if($VERBOSE == true)
-          puts2("\t Workbook contains spreadsheets: " )
+        #if($VERBOSE == true)
+        puts2("\t Workbook contains spreadsheets: " )
 
-          # Loop through sheets in workbook
-          aSheetsInWorkbook.each do | sSheetLabel |
-            puts2("\t\t" + sSheetLabel)
-          end # Loop through sheets in workbook
-        end
+        # Loop through sheets in workbook
+        aSheetsInWorkbook.each do | sSheetLabel |
+          puts2("\t\t" + sSheetLabel)
+        end # Loop through sheets in workbook
+        #end
 
         # Set the specified Spreadsheet as the default (active) sheet
         if(sSpreadsheet == nil)
@@ -2397,7 +2428,7 @@ module WatirWorks_Utilities
         end # Loop through rows
 
         # Have roo cleanup after itself and recursively remove any tmp folders (oo_xxxx)
-        oWorkbook.remove_tmp()
+        #oWorkbook.remove_tmp()
 
         return aSpreadsheetContents_byRow
 
@@ -2455,26 +2486,25 @@ module WatirWorks_Utilities
     #
     # Usage example: To Read data from multiple sheets in the workbook:
     #
-    #                    sDataDirectory = "data"
     #                    sWorkbookFile = "TestData.xls"
     #                    aSpreadsheet_List = ["Credentials",
     #                                         "Workflow_Data",
     #                                         "Access_Data"
     #                                         ]
+    #                    sDataDirectory = "data"
     #                    bStopAtEmptyRow = true
     #
-    #                     hMy_Hash = sSpreadsheet_Name => parse_workbook(sWorkbookFile, aSpreadsheet_List, bStopAtEmptyRow, sDataDirectory)
+    #                     hMy_Hash = sSpreadsheet_Name => parse_workbook(sWorkbookFile, aSpreadsheet_List,  sDataDirectory, bStopAtEmptyRow)
     #
     #=============================================================================#
-    #
-    def parse_workbook(sWorkbookFile=nil, aSpreadsheet_List=nil, bStopAtEmptyRow=true, sDataDirectory="data")
+    def parse_workbook(sWorkbookFile=nil, aSpreadsheet_List=nil, sDataDirectory="data", bStopAtEmptyRow=true)
 
       if($VERBOSE == true)
         puts2("Parameters - parse_workbook:")
         puts2("  sWorkbookFile: " + sWorkbookFile)
         puts2("  aSpreadsheet_List: " + aSpreadsheet_List.to_s)
-        puts2("  bStopAtEmptyRow: " + bStopAtEmptyRow.to_s)
         puts2("  sDataDirectory: " + sDataDirectory)
+	puts2("  bStopAtEmptyRow: " + bStopAtEmptyRow.to_s)
       end
 
       begin # BEGIN - Read each spreadsheet's data into a separate hash ###
@@ -2565,20 +2595,26 @@ module WatirWorks_Utilities
     #=============================================================================#
     def printenv(sEnvVar = nil)
 
-      # Loop through the O/S Env variables
-      ENV.each do |key, value|
+      if($bRunLocal == true)
 
-        if(sEnvVar == nil)  # Display all the variables if a specific variable was NOT specified
-          puts2("#{key} = #{value}")
+        # Loop through the O/S Env variables
+        ENV.each do |key, value|
 
-        else # Display only the specified variable if one was specified
-          if(key == sEnvVar)
+          if(sEnvVar == nil)  # Display all the variables if a specific variable was NOT specified
             puts2("#{key} = #{value}")
+
+          else # Display only the specified variable if one was specified
+            if(key == sEnvVar)
+              puts2("#{key} = #{value}")
+            end
+
           end
 
-        end
+        end # End of loop
 
-      end # End of loop
+      else
+        puts2("Remote Execution not supported for this method")
+      end
 
     end # Method - printenv()
 
@@ -3469,127 +3505,6 @@ end # end of module WatirWorks_Utilities
   #======================= END of MODULE ====================================#
   #=============================================================================#
 
-
-  #=============================================================================#
-  # Class: array
-  #
-  # Description: Extends the Ruby Array class with additional methods
-  #
-  #--
-  # Methods: filter_by_key(...)
-  #          to_h(...)
-  #++
-  #=============================================================================#
-  class Array
-    #=============================================================================#
-    # Method: filter_by_key()
-    #
-    # Description: Returns an one dimensioned array filtered with records matching
-    #              a specified key.
-    #              Filter the larger array by specifying these values:
-    #              a) the number of the source array's element holding the data to return
-    #              b) the string to key on to determine to include or ignore the data
-    #              c) the number of the source array's element holding the string to key off
-    #
-    # Returns:
-    #              ARRAY - The filtered array
-    #
-    # Syntax: iElementToKeyOn = INT - The number of the source array's element that holds
-    #                                 the string to filter on.
-    #         sStringToKeyOn = STRING - The exact term to use as the filter.
-    #                                   Only records with strings that match the filter are included.
-    #         iElementWithData = INT - The number of the source array's element that the
-    #                                  to include in the array
-    #
-    # Usage Examples:
-    #              If your multi-dimensional array of STRINGS is:
-    #                my_large_array = [ ["Keith Moon", "The Who", "Drums"],
-    #                                   ["Jimmy Page", "Led Zeppelin", "Guitar"],
-    #                                   ["Keith Richards", "The Rolling Stones", "Guitar"]]
-    #               and you want to filter only the names of the guitar players:
-    #                my_filtered_array = my_large_array.filter_by_key(0,"Guitar", 2)
-    #=============================================================================#
-    def filter_by_key(iElementToKeyOn, sStringToKeyOn, iElementWithData)
-
-      if($VERBOSE==true)
-        puts2 "\n Array#filter_by_key"
-        puts2 "  iElementToKeyOn " + iElementToKeyOn.to_s
-        puts2 "  sStringToKeyOn " + sStringToKeyOn.to_s
-        puts2 "  iElementWithData " + iElementWithData.to_s
-      end
-
-      aNewArray = []
-
-      # Loop through the records in the array
-      self.each do | sRowData |
-
-        # Add the data element for records who's key element matched the filter to the new array
-        if(sRowData[iElementToKeyOn].strip == sStringToKeyOn.strip)
-          aNewArray << sRowData[iElementWithData].strip
-        end
-      end
-
-      return aNewArray
-
-    end # Method - filter_by_key
-
-    #=============================================================================#
-    # Method: to_h()
-    #
-    # Description: Simulates converting an array to a hash by returning a Key:Value
-    #              pair for each record in an array, by using one Element in the
-    #              array as the Key and another as the value.
-    #
-    #              Populates the Hash from the array by specifying these values:
-    #              a) An integer specifying the element containing the key data from the source array
-    #              c) An integer specifying the element containing the value data from source array
-    #
-    # Returns:
-    #              HASH - The Hash containing the specified Key:Value pairs
-    #
-    # Syntax: iElementWithKey = INT - The number of the source array's element that holds
-    #                                 the string to use as the Hash's Key.
-    #         iElementWithValue = INT - The number of the source array's element that holds
-    #                                 the string to use as the Hash's Value.
-    #                                 If no integer is specified then the entire record in the array
-    #                                 is used as the Hash's Value.
-    #
-    # Usage Examples:
-    #              If your multi-dimensional array of STRINGS is:
-    #                  my_large_array = [ ["Keith Moon", "The Who", "Drums"],
-    #                                   ["Jimmy Page", "Led Zeppelin", "Guitar"],
-    #                                   ["Keith Richards", "The Rolling Stones", "Guitar"]]
-    #               and you want to create a HASH with the Band as the Key and
-    #               the Artist as the Value:
-    #                  my_hash = my_large_array.to_h(1, 0)
-    #=============================================================================#
-    def to_h(iElementWithKey = 0, iElementWithValue = nil)
-
-      if($VERBOSE==true)
-        puts2 "\n Array#to_h"
-        puts2 "  iElementWithKey " + iElementWithKey.to_s
-        puts2 "  iElementWithValue " + iElementWithValue.to_s
-      end
-
-      aNewHash = {}
-
-      # Loop through the records in the array
-      self.each do | sRowData |
-
-        if(iElementWithValue == nil)
-          aNewHash.store(sRowData[iElementWithKey], sRowData)
-        else
-          # Append each Key:Value pair to the new hash
-          aNewHash.store(sRowData[iElementWithKey], sRowData[iElementWithValue])
-        end
-      end
-
-      return aNewHash
-
-    end # Method - to_h
-
-  end  # Class - Array
-
   #=============================================================================#
   # Class: Fixnum
   #
@@ -3703,10 +3618,10 @@ end # end of module WatirWorks_Utilities
   #                word_count()     # alias  wc()
   #                format_dateString_mdyy(...)
   #                format_dateString_mmddyyyy(...)
-  #                valid_email_address?()    # Deprecating - isValid_EmailAddress?()
-  #                valid_password?()         # Deprecating - isValid_Password?()
-  #                valid_top_level_domain?() # Deprecating - isValid_TopLevelDomain?()
-  #                valid_zip_code?()         # Deprecating - isValid_ZipCode?()
+  #                isValid_EmailAddress?()
+  #                isValid_Password?()
+  #                isValid_TopLevelDomain?()
+  #                isValid_ZipCode?()
   #                prefix(...)
   #                remove_prefix(...)
   #                remove_suffix(...)
@@ -4279,7 +4194,7 @@ end # end of module WatirWorks_Utilities
 
     #=============================================================================#
     #--
-    # Method: valid_email_address?()
+    # Method: isValid_EmailAddress?()
     #++
     #
     # Description: Checks the specified string against Email Address rules defined herein.
@@ -4300,7 +4215,7 @@ end # end of module WatirWorks_Utilities
     # Syntax: N/A
     #
     # Usage Examples: sMyString = "qa@test.com"
-    #                 assert(sMyString.valid_email_address?)
+    #                 assert(sMyString.isValid_EmailAddress?)
     #
     # Limitations: Does not check the following:
     #                     1. IP Address instead of <local-domain>.<top-level-domain> :
@@ -4317,7 +4232,7 @@ end # end of module WatirWorks_Utilities
     #
     #                    5. The validation is skipped if email address is nil
     #=============================================================================#
-    def valid_email_address?()
+    def isValid_EmailAddress?()
 
       begin ### BEGIN - Check the Email Address  ###
 
@@ -4378,7 +4293,7 @@ end # end of module WatirWorks_Utilities
           sTLD2Check = self.suffix(".")
 
           # Check the validity of the TLD
-          bValidEmailAddress = sTLD2Check.valid_top_level_domain?
+          bValidEmailAddress = sTLD2Check.isValid_TopLevelDomain?
 
           if((bValidEmailAddress == false) & ($VERBOSE == true))
             puts2("   ## Invalid Email Address Top Level domain " + self.to_s)
@@ -4409,13 +4324,11 @@ end # end of module WatirWorks_Utilities
 
       end ### END - Check the Email Address  ###
 
-    end # Method - valid_email_address?
-
-    alias isValid_EmailAddress? valid_email_address?
+    end # Method - isValid_EmailAddress?
 
     #=============================================================================#
     #--
-    # Method: valid_password?()
+    # Method: isValid_Password?()
     #
     #++
     #
@@ -4440,10 +4353,10 @@ end # end of module WatirWorks_Utilities
     # Syntax: N/A
     #
     # Usage examples: sMyString = "MyPa55w0rd"
-    #                 assert(sMyString.valid_password?)
+    #                 assert(sMyString.isValid_Password?)
     #
     #=============================================================================#
-    def valid_password?()
+    def isValid_Password?()
 
       begin ### BEGIN - Check the password  ###
 
@@ -4555,13 +4468,12 @@ end # end of module WatirWorks_Utilities
 
       end ### END - Check the password  ###
 
-    end # Method - valid_password?
+    end # Method - isValid_Password?
 
-    alias isValid_Password? valid_password?
 
     #=============================================================================#
     #--
-    # Method: valid_top_level_domain?()
+    # Method: isValid_TopLevelDomain?()
     #++
     #
     # Description: Checks the specified string against the list of valid Top Level Domain abbreviations.
@@ -4572,10 +4484,10 @@ end # end of module WatirWorks_Utilities
     # Syntax: N/A
     #
     # Usage Examples:  sMyString = "com"
-    #                  assert(sMyString.valid_top_level_domain?)
+    #                  assert(sMyString.isValid_TopLevelDomain?)
     #
     #=============================================================================#
-    def valid_top_level_domain?()
+    def isValid_TopLevelDomain?()
 
       begin ### BEGIN - Check the TLD  ###
 
@@ -4628,13 +4540,11 @@ end # end of module WatirWorks_Utilities
 
       end ### END - Check the TLD  ###
 
-    end # Method - valid_top_level_domain?
-
-    alias isValid_TopLevelDomain? valid_top_level_domain?
+    end # Method - isValid_TopLevelDomain?
 
     #=============================================================================#
     #--
-    # Method: valid_zip_code?()
+    # Method: isValid_ZipCode?()
     #
     #++
     #
@@ -4654,14 +4564,14 @@ end # end of module WatirWorks_Utilities
     # Syntax: N/A
     #
     # Usage examples: sMyString = "80303-4000"
-    #                 assert(sMyString.valid_zip_code?)
+    #                 assert(sMyString.isValid_ZipCode?)
     #
     # Limitations: Does not check the following:
     #                 1. The Zip Code is listed by the US Postal Service as currently supported
     #                 2. Does not lie outside of the range of valid numbers
     #
     #=============================================================================#
-    def valid_zip_code?()
+    def isValid_ZipCode?()
 
       begin ### BEGIN - Check the Zip Code  ###
 
@@ -4709,9 +4619,7 @@ end # end of module WatirWorks_Utilities
 
       end ### END - Check the Zip Code  ###
 
-    end # Method - valid_zip_code?
-
-    alias isValid_ZipCode? valid_zip_code?
+    end # Method - isValid_ZipCode?
 
     #=============================================================================#
     #--

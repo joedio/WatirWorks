@@ -147,7 +147,7 @@ class UnitTest_Spreadsheet < Test::Unit::TestCase
     # Loop through workbook types
     aWorkbookFiles.each do | sWorkbookFile |
 
-      aSpreadsheetContents_byRow = parse_spreadsheet(sWorkbookFile, sSpreadsheet, bStopatBlankRow, sDataDir)
+      aSpreadsheetContents_byRow = parse_spreadsheet(sWorkbookFile, sSpreadsheet, sDataDir, bStopatBlankRow)
 
       aSpreadsheetContents_byRow.each do | sRowData |
         puts2(sRowData)
@@ -188,7 +188,7 @@ class UnitTest_Spreadsheet < Test::Unit::TestCase
     aWorkbookFiles.each do | sWorkbookFile |
 
       puts2("Data read from Workbook File: " + sWorkbookFile)
-      hSpreadsheetData = parse_workbook(sWorkbookFile, aSpreadsheets, true, sDataDir)
+      hSpreadsheetData = parse_workbook(sWorkbookFile, aSpreadsheets, sDataDir, true)
 
       hSpreadsheetData.sort.each do |sSpreadsheet, aSpreadsheetContents_byRow|
 

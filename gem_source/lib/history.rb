@@ -1,85 +1,50 @@
 =begin rdoc
 
-= WatirWorks 2.0.0   May 2012
+= WatirWorks 0.1.4   Sep. 2011
 
 == New Features
-  * Changing WatirWorks to utilize Watir-webdriver's limited support for Safari on OSX 
-  * Dropping support for SafariWatir
-  * Initial prep work for migration to Ruby 1.9.3
+  * Initial port for working with Watir-WebDriver or with Watir / Firewatir
+  * WatirWorks_Utilites, and WatirWorks-RefLib work with JRuby.
+    Due to Watir not being supported under JRuby, other WatirWorks modules are unable to be supported under JRuby.
+  * Added methods for Firefox v6, v7 (such as is_ff6?(), and is_firefox6_installed?()
+  * Added methods to WatiwWorks_Utilities:
+      is_webdriver?()
+      Fixnum#adjust_index()
+      display_os_environment()
+      display_ruby_loaded_files()
+      display_ruby_global_variables()
+  * Wrapped Classes and methods specific to: Watir, Firewatir, or WatirWebDriver in "if statements"
+  * Methods to check the browser type now work with either Watir / Firewatir or Watir-WebDriver: is_ie?(), is_firefox?()
+  * Added methods to check the browser type with Watir-WebDriver: is_chrome?(), is_android?(), is_opera?(), is_safari?()
+
+
 
 == Fixes
-  * The Safari method #status now works using watir-webdriver
+  * Update several Watir command to v1.9.2 syntax (some were deprecated in Watir v1.6.x):
+    Camel cased methods replaced:
+      Container#checkBox  = checkbox
+      Checkbox#isSet? = set?
+      Image#hasLoaded?    = loaded?
+      Image#fileSize      = file_size
+      Image#fileCreatedDate = file_created_date
+      Radio#isSet?          = set?
+      SelectList#getSelectedItems  = selected_options
+      SelectList#getAllContents    = options
+      SelectList#clearSelection    = clear
+      TextField#getContents        = text
+
+  * Corrected typo in the file name of watirworks_calc_time_unittest.rb
+  * Removed screen capture dependency from functions: is_TextIn_DivClass(), is_TextIn_DivID(),is_TextIn_DivIndex(),is_TextIn_DivXpath()
+  * Removed screen capture dependency from functions: is_TextIn_SpanClass(), is_TextIn_SpanID(),is_TextIn_SpanIndex(),is_TextIn_SpanXpath()
+  * Removed screen capture dependency from functions: is_TextIn_TableClass(), is_TextIn_TableID(),is_TextIn_TableIndex(),is_TextIn_TableXpath(), is_TextIn_TableName()
 
 == Deprecated:
-  * Support of SafariWatir
-  * Firefox methods: is_ff_ver?(iVersion), is_firefox_installed?(iVersion)
-  * IE methods: is_ie_ver?(iVersion), is_ie_installed?(iVersion)
+  * display_browser_env(), get_doc_app_version()
+  * get_hwnd_js_dialog()
+  * handle_js_dialog()
+  * Deprecated library Xls.rb, and methods parse_spreadsheet_xls(), parse_workbook_xls()
 
 == Known issues
-
-  * Watir-webdriver does not currently support JavaScript for Safari
-  * Watirworks methods for Safari that rely on JavaScript are hard coded to perform noop's
-    and return hard coded values. These methods are:
-      #brand, #move_to, #move_by, #resize_to, #resize_by, #scroll_to, #version
-  * Windows method to find the Opera version is incorrect
-  * Linux methods to find the browser versions are incorrect
-  * Mac methods to find the browser versions are incorrect
-
-  * Methods that detect Firefox versions (e.g. is_firefox_installed?(iVersion)) only work 
-    if Firefox is installed in the default location, with the default name. They will
-    not work if a tool like the 'Utliu Firefox Bundle' was used to install multiple
-    versions of Firefox in non-default locations with non-default names. But Utliu is 
-    still a great tool that I use all the time.
-
-  * Watir 1.9.2 has no equivalent for these deprecated Watir methods:
-      Watir::Checkbox.getState # Removed its use in WatirWorks
-      Watir::Radio.getState    # Removed its use in WatirWorks
-
-  * Watir WebDriver has no equivalent for these Watir methods:
-      Watir::Table.row_values
-      Watir::Element tag attribute :name
-      Watir::Select.clear   (Only supports Multi-select lists)
-      Watir::ScreenCapture
-
-  * WatirWorks
-    * Function parse_table_by_row() returns an incomplete array of the text within the table, its skipping some rows and columns
-    * Methods that rely in parse_tabe_by_row() will also fail, this includes:
-    * The IE browser hangs when using methods: moveBy(), moveTo(), resizeBy(), resizeTo(), scrollBy()
-    * parse_spreadsheet() - Reading to end of contents (not just to first row starting with a blank cell), is not working properly
-    * Some unittests run OK from the command line, but fail when run from within an Eclipse IDE (watirworks_spreadsheet_unittest.rb, watirworks_xls_unittest.rb)
-    * Methods wait_until_count() and wait_until_text() not supported for SafariWatir
-    * Reliability issues connecting to Opera
-    * SafariWatir can not access the Browser's Status bar. Workaround was to hard code a 2 sec. sleep for Safari in wait_until_status() which is not reliable.
-
-
-= WatirWorks 0.1.6   March 2012
-
-== New Features
-  * Added Chrome methods: is_chrome?(iVersion), is_chrome_installed?(iVersion) 
-  * Added Firefox methods: is_firefox?(iVersion), is_firefox_installed?(iVersion)
-  * Added IE methods: is_ie?(iVersion), is_ie_installed?(iVersion)
-  * Added Opera methods: is_opera?(iVersion), is_opera_installed?(iVersion)
-  * Added Safari methods: is_safari?(iVersion), is_safari_installed?(iVersion)
-
-== Fixes
-  * None
-
-== Deprecated:
-  * Firefox methods: is_ff_ver?(iVersion), is_firefox_installed?(iVersion)
-  * IE methods: is_ie_ver?(iVersion), is_ie_installed?(iVersion)
-
-== Known issues
-
-  * Windows method to find the Opera version is incorrect
-  * Linux methods to find the browser versions are incorrect
-  * Mac methods to find the browser versions are incorrect
-
-  * Methods that detect Firefox versions (e.g. is_firefox_installed?(iVersion)) only work 
-    if Firefox is installed in the default location, with the default name. They will
-    not work if a tool like the 'Utliu Firefox Bundle' was used to install multiple
-    versions of Firefox in non-default locations with non-default names. But Utliu is 
-    still a great tool that I use all the time.
-
   * Watir 1.9.2 has no equivalent for these deprecated Watir methods:
       Watir::Checkbox.getState # Removed its use in WatirWorks
       Watir::Radio.getState    # Removed its use in WatirWorks
@@ -100,93 +65,13 @@
 
   * WatirWorks
     * Function parse_table_by_row() returns an incomplete array of the text within the table, its skipping some rows and columns
-    * Methods that rely in parse_tabe_by_row() will also fail, this includes:
-    * The IE browser hangs when using methods: moveBy(), moveTo(), resizeBy(), resizeTo(), scrollBy()
+    * methods that rely in parse_tabe_by_row() will also fail, this includes:
+    * IE hangs when using methods: moveBy(), moveTo(), resizeBy(), resizeTo(), scrollBy()
     * parse_spreadsheet() - Reading to end of contents (not just to first row starting with a blank cell), is not working properly
-    * Some unittests run OK from the command line, but fail when run from within an Eclipse IDE (watirworks_spreadsheet_unittest.rb, watirworks_xls_unittest.rb)
+    * Some unittests run OK from the command line, but fail when run from within the Eclipse IDE (watirworks_spreadsheet_unittest.rb, watirworks_xls_unittest.rb)
     * Methods wait_until_count() and wait_until_text() not supported for SafariWatir
     * Reliability issues connecting to Opera
-    * SafariWatir can not access the Browser's Status bar. Workaround was to hard code a 2 sec. sleep for Safari in wait_until_status() which is not reliable.
-
-
-= WatirWorks 0.1.5   Jan. 2012
-
-== New Features
-  * Added Firefox methods: is_ff_ver?(iVersion), is_firefox_installed?(iVersion)
-  * Added ie methods: is_ie_ver?(iVersion), is_ie_installed?(iVersion)
-  * Extended class Array with methods: filter_by_key(...), to_h(...)
-
-== Fixes
-  * Typo cleanup
-
-== Deprecated:
-  * Firefox methods: is_ff2?, is_ff3?, is_ff4, is_ff5?, is_ff6?, is_ff7?
-    is_firefox2_installed?, is_firefox3_installed?, is_firefox4_installed?,
-    is_firefox5_installed?, is_firefox6_installed?, is_firefox6_installed?
-  * IE methods: is_ie6?, is_ie7?, is_ie8? is_ie9?
-    is_ie6_installed?, is_ie7_installed?, is_ie8_installed?, is_ie9_installed?
-
-
-= WatirWorks 0.1.4   Sep. 2011
-
-  * Initial port to support Watir-WebDriver and Watir, Firewatir, and SafariWatir
-  * WatirWorks_Utilites, and WatirWorks-RefLib work with JRuby.
-    Due to Watir not being supported in JRuby, other WatirWorks modules are unable to be supported under JRuby.
-  * Added methods for Firefox v6, v7 (such as is_ff6?(), and is_firefox6_installed?()
-  * Added methods to WatiwWorks_Utilities:
-      Fixnum#adjust_index()
-      is_webdriver?()
-      display_os_environment()
-      display_ruby_loaded_files()
-      display_ruby_global_variables()
-  * Wrapped Classes and methods specific to: Watir, Firewatir, SafariWatir, or WatirWebDriver in "if" statements
-  * Methods to check the browser type now work with either Watir / Firewatir or Watir-WebDriver: is_ie?(), is_firefox?(), etc.
-  * Added methods to check the browser type with Watir-WebDriver: is_chrome?(), is_android?(), is_opera?(), is_safari?()
-
-== Fixes
-  * Update several WatirWorks methods to use Watir v1.9.2 syntax (some were deprecated in Watir v1.6.x):
-    Camel cased methods replaced:
-      Container#checkBox            Replaced with: Container#checkbox
-      Checkbox#isSet?               Replaced with: Checkbox#set?
-      Image#hasLoaded?              Replaced with: Image#loaded?
-      Image#fileSize                Replaced with: Image#file_size
-      Image#fileCreatedDate         Replaced with: Image#file_created_date
-      Radio#isSet?                  Replaced with: Radio#set?
-      SelectList#getSelectedItems   Replaced with: SelectList#selected_options
-      SelectList#getAllContents     Replaced with: SelectList#options
-      SelectList#clearSelection     Replaced with: SelectList#clear
-      TextField#getContents         Replaced with: TextField#text
-
-  * Corrected file names of some WatirWorks Unit tests
-  * Removed screen capture dependency from functions: is_TextIn_DivClass(), is_TextIn_DivID(),is_TextIn_DivIndex(),is_TextIn_DivXpath()
-  * Removed screen capture dependency from functions: is_TextIn_SpanClass(), is_TextIn_SpanID(),is_TextIn_SpanIndex(),is_TextIn_SpanXpath()
-  * Removed screen capture dependency from functions: is_TextIn_TableClass(), is_TextIn_TableID(),is_TextIn_TableIndex(),is_TextIn_TableXpath(), is_TextIn_TableName()
-
-== Deprecated:
-  * The library Xls.rb, and methods parse_spreadsheet_xls(), parse_workbook_xls()
-  * display_browser_env(), get_doc_app_version(), get_hwnd_js_dialog(), handle_js_dialog()
-  * WatirWorks method that used CamelCase names are replaced by under_score_separated names instead:
-       Deprecating: createXMLTags           Please use: create_xml_tags
-       Deprecating: getMultipleXMLTagValues Please use: get_multiple_xml_tag_values
-       Deprecating: getXMLTagValue          Please use: get_xml_tag_value
-       Deprecating: isTagInXML?             Please use: is_tag_in_xml?
-       Deprecating: isTextIn_DivClass?      Please use: is_text_in_div_class?
-       Deprecating: isTextIn_DivID?         Please use: is_text_in_div_id?
-       Deprecating: isTextIn_DivIndex?      Please use: is_text_in_div_index?
-       Deprecating: isTextIn_DivXpath?      Please use: is_text_in_div_xpath?
-       Deprecating: isTextIn_SpanClass?     Please use: is_text_in_span_class?
-       Deprecating: isTextIn_SpanID?        Please use: is_text_in_span_id?
-       Deprecating: isTextIn_SpanIndex?     Please use: is_text_in_span_index?
-       Deprecating: isTextIn_SpanXpath?     Please use: is_text_in_span_xpath?
-       Deprecating: isTextIn_TableClass?    Please use: is_text_in_table_class?
-       Deprecating: isTextIn_TableID?       Please use: is_text_in_table_id?
-       Deprecating: isTextIn_TableIndex?    Please use: is_text_in_table_index?
-       Deprecating: isTextIn_TableName?     Please use: is_text_in_table_name?
-       Deprecating: removeXMLBrackets       Please use: remove_xml_brackets
-       Deprecating: isValid_EmailAddress?   Please use: valid_email_address?
-       Deprecating: isValid_Password?       Please use: valid_password?
-       Deprecating: isValid_TopLevelDomain? Please use: valid_top_level_domain?
-       Deprecating: isValid_ZipCode?        Please use: valid_zip_code?
+    * SafariWatir can not access the Browser's Status bar, hard coded a 2 sec. sleep for Safari in wait_until_status() which is not reliable.
 
 = WatirWorks 0.1.3   Aug. 2011
 

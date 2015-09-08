@@ -339,10 +339,11 @@ class UnitTest_FileSytem < Test::Unit::TestCase
     puts2("Testcase: test_FileSystem_004_parse_dictionary")
     puts2("#######################")
 
-    #$VERBOSE = true
-    
-    aDictionaryContents = parse_dictionary()
+    $VERBOSE = true
 
+    aDictionaryContents = parse_dictionary("english.dictionary")
+
+    # NoMethodError: undefined method `[]' for #<Enumerator:0x34ccae8>
     puts2("First word in dictionary: " + aDictionaryContents[0])
     puts2("Second word in dictionary: " + aDictionaryContents[1])
 

@@ -1,7 +1,7 @@
 #=============================================================================#
 # File: watirworks.rb
 #
-#  Copyright (c) 2010-2012, Joe DiMauro
+#  Copyright (c) 2010-2015, Joe DiMauro
 #  All rights reserved.
 #
 # Description: This script auto-loads WatirWorks modules and contains includes
@@ -44,17 +44,10 @@ require "test/unit"               # Require Ruby's Unit Test framework files
 require "test/unit/assertions"    # Require Ruby's assertions files
 include Test::Unit::Assertions    # A Ruby Module
 
-# Watir section
+# Watir WebDriver section
 #===============
-#require 'watir'              # Require the files for the Watir gem
+require 'watir-webdriver'            # Require the files for the Watir WebDriver gem
 
-# To use Watir-WebDriver uncomment this command
-# To use Watir or Firewatir comment out this command
-#$bUseWebDriver = false
-
-if($bUseWebDriver == true)
-  require 'watir-webdriver'
-end
 
 # WatirWorks section
 #====================

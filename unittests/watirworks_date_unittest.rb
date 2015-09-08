@@ -126,7 +126,7 @@ class UnitTest_Date < Test::Unit::TestCase
     tDate = Date.new(iYear, iMonth, iDay)
     puts2("The date is #{tDate.to_s}")
 
-    tDayBefore = tDate - 1
+    tDayBefore = tDate -1
     puts2("The day before is #{tDayBefore.to_s}")
     puts2("The day before is also #{tDayBefore.strftime("%m/%d/%Y")}")
 
@@ -173,7 +173,7 @@ class UnitTest_Date < Test::Unit::TestCase
     tDate = Date.new(iYear, iMonth, iDay)
     puts2("The date is #{tDate.to_s}")
 
-    tDayBefore = tDate - 1
+    tDayBefore = tDate -1
     puts2("The day before is #{tDayBefore.to_s}")
     puts2("The day before is also #{tDayBefore.strftime("%m/%d/%Y")}")
 
@@ -221,7 +221,7 @@ class UnitTest_Date < Test::Unit::TestCase
     tDate = Date.new(iYear, iMonth, iDay)
     puts2("The date is #{tDate.to_s}")
 
-    tDayBefore = tDate - 1
+    tDayBefore = tDate -1
     puts2("The day before is #{tDayBefore.to_s}")
     puts2("The day before is also #{tDayBefore.strftime("%m/%d/%Y")}")
 
@@ -268,7 +268,7 @@ class UnitTest_Date < Test::Unit::TestCase
     tDate = Date.new(iYear, iMonth, iDay)
     puts2("The date is #{tDate.to_s}")
 
-    tDayBefore = tDate - 1
+    tDayBefore = tDate -1
     puts2("The day before is #{tDayBefore.to_s}")
     puts2("The day before is also #{tDayBefore.strftime("%m/%d/%Y")}")
 

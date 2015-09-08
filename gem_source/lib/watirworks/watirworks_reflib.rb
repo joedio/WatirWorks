@@ -1,7 +1,7 @@
 #=============================================================================#
 # File: watirworks_reflib.rb
 #
-#  Copyright (c) 2008-2012, Joe DiMauro
+#  Copyright (c) 2008-2015, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Reference data that is platform and application independent.
@@ -42,29 +42,32 @@ require 'rubygems'
 #=============================================================================#
 
 module WatirWorks_RefLib
-  
+
   # Version of this module
-  WW_REFLIB_VERSION = "1.0.1"
-  
+  WW_REFLIB_VERSION = "1.0.2"
+
+  # Format to use when appending a timestamp to file names
+  DATETIME_FILEFORMAT="%Y_%m_%d_%H%M%S"
+
   # Common time constants for year, month, and day
   # Year strings (yyyy)
   THIS_YEAR=Time.new.year.to_s
   NEXT_YEAR=(Time.new.year + 1).to_s
   LAST_YEAR=(Time.new.year - 1).to_s
-  
+
   # Define strings with only the last 2-digits of the year (e.g. 08 for 2008)
   # Remember for strings index 0 is the 1st character
   THIS_YR = THIS_YEAR[2,3]
   NEXT_YR = NEXT_YEAR[2,3]
   LAST_YR = LAST_YEAR[2,3]
-  
+
   # This month string (01-12)
   THIS_MONTH=Time.new.month.to_s
-  
+
   # This Day string (01-31)
   THIS_DAY=Time.new.day.to_s
-  
-  
+
+
   #   Define the format for date strings
   #
   # Formatting parameters for methods:
@@ -120,57 +123,80 @@ module WatirWorks_RefLib
   # %z - Time zone as  hour offset from UTC (e.g. +0900)
   # %Z - Time zone name
   # %% - Literal ``%'' character
-  
-  #
+
+  # Global flag to indicate if test runs on local system or remote system
+  $bRunLocal = true
+
   sDateformat = "%m/%d/%Y"  # e.g. 12/31/2011
   #sDateformat = "%Y-%m-%d" # e.g. 2011-12-31
-  
+
   # Set the current date
   dToday = Time.now
-  
+
   # Calculate various strings representations of dates (both future and past) based on the current date
   TODAY = dToday.strftime(sDateformat)
   TOMORROW = (dToday + (60 * 60 * 24 * 1)).strftime(sDateformat)
   YESTERDAY = (dToday - (60 * 60 * 24 * 1)).strftime(sDateformat)
+
+  DAYS_FUTURE_1 = (dToday + (60 * 60 * 24 * 1 * 1)).strftime(sDateformat)
+  DAYS_FUTURE_2 = (dToday + (60 * 60 * 24 * 1 * 2)).strftime(sDateformat)
+  DAYS_FUTURE_3 = (dToday + (60 * 60 * 24 * 1 * 3)).strftime(sDateformat)
+  DAYS_FUTURE_4 = (dToday + (60 * 60 * 24 * 1 * 4)).strftime(sDateformat)
+  DAYS_FUTURE_5 = (dToday + (60 * 60 * 24 * 1 * 5)).strftime(sDateformat)
+  DAYS_FUTURE_6 = (dToday + (60 * 60 * 24 * 1 * 6)).strftime(sDateformat)
   DAYS_FUTURE_7 = (dToday + (60 * 60 * 24 * 1 * 7)).strftime(sDateformat)
-  DAYS_PAST_7 = (dToday - (60 * 60 * 24 * 1 * 7)).strftime(sDateformat)
+  DAYS_FUTURE_8 = (dToday + (60 * 60 * 24 * 1 * 8)).strftime(sDateformat)
+  DAYS_FUTURE_9 = (dToday + (60 * 60 * 24 * 1 * 9)).strftime(sDateformat)
+  DAYS_FUTURE_10 = (dToday + (60 * 60 * 24 * 1 * 10)).strftime(sDateformat)
   DAYS_FUTURE_30 = (dToday + (60 * 60 * 24 * 1 * 30)).strftime(sDateformat)
-  DAYS_PAST_30 = (dToday - (60 * 60 * 24 * 1 * 30)).strftime(sDateformat)
   DAYS_FUTURE_60 = (dToday + (60 * 60 * 24 * 1 * 60)).strftime(sDateformat)
-  DAYS_PAST_60 = (dToday - (60 * 60 * 24 * 1 * 60)).strftime(sDateformat)
   DAYS_FUTURE_90 = (dToday + (60 * 60 * 24 * 1 * 90)).strftime(sDateformat)
-  DAYS_PAST_90 = (dToday - (60 * 60 * 24 * 1 * 90)).strftime(sDateformat)
   DAYS_FUTURE_365 = (dToday + (60 * 60 * 24 * 1 * 365)).strftime(sDateformat)
+
+  DAYS_PAST_1 = (dToday - (60 * 60 * 24 * 1 * 1)).strftime(sDateformat)
+  DAYS_PAST_2 = (dToday - (60 * 60 * 24 * 1 * 2)).strftime(sDateformat)
+  DAYS_PAST_3 = (dToday - (60 * 60 * 24 * 1 * 3)).strftime(sDateformat)
+  DAYS_PAST_4 = (dToday - (60 * 60 * 24 * 1 * 4)).strftime(sDateformat)
+  DAYS_PAST_5 = (dToday - (60 * 60 * 24 * 1 * 5)).strftime(sDateformat)
+  DAYS_PAST_6 = (dToday - (60 * 60 * 24 * 1 * 6)).strftime(sDateformat)
+  DAYS_PAST_7 = (dToday - (60 * 60 * 24 * 1 * 7)).strftime(sDateformat)
+  DAYS_PAST_8 = (dToday - (60 * 60 * 24 * 1 * 8)).strftime(sDateformat)
+  DAYS_PAST_9 = (dToday - (60 * 60 * 24 * 1 * 9)).strftime(sDateformat)
+  DAYS_PAST_10 = (dToday - (60 * 60 * 24 * 1 * 10)).strftime(sDateformat)
+  DAYS_PAST_30 = (dToday - (60 * 60 * 24 * 1 * 30)).strftime(sDateformat)
+  DAYS_PAST_60 = (dToday - (60 * 60 * 24 * 1 * 60)).strftime(sDateformat)
+  DAYS_PAST_90 = (dToday - (60 * 60 * 24 * 1 * 90)).strftime(sDateformat)
   DAYS_PAST_365 = (dToday - (60 * 60 * 24 * 1 * 365)).strftime(sDateformat)
-  
+
   WEEKS_FUTURE_1 = (dToday + (60 * 60 * 24 * 1 * 7 * 1)).strftime(sDateformat)
   WEEKS_FUTURE_2 = (dToday + (60 * 60 * 24 * 1 * 7 * 2)).strftime(sDateformat)
   WEEKS_FUTURE_4 = (dToday + (60 * 60 * 24 * 1 * 7 * 4)).strftime(sDateformat)
   WEEKS_FUTURE_8 = (dToday + (60 * 60 * 24 * 1 * 7 * 8)).strftime(sDateformat)
   WEEKS_FUTURE_12 = (dToday + (60 * 60 * 24 * 1 * 7 * 12)).strftime(sDateformat)
   WEEKS_FUTURE_52 = (dToday + (60 * 60 * 24 * 1 * 7 * 52)).strftime(sDateformat)
+
   WEEKS_PAST_1 = (dToday - (60 * 60 * 24 * 1 * 7 * 1)).strftime(sDateformat)
   WEEKS_PAST_2 = (dToday - (60 * 60 * 24 * 1 * 7 * 2)).strftime(sDateformat)
   WEEKS_PAST_4 = (dToday - (60 * 60 * 24 * 1 * 7 * 4)).strftime(sDateformat)
   WEEKS_PAST_8 = (dToday - (60 * 60 * 24 * 1 * 7 * 8)).strftime(sDateformat)
   WEEKS_PAST_12 = (dToday - (60 * 60 * 24 * 1 * 7 * 12)).strftime(sDateformat)
   WEEKS_PAST_52 = (dToday - (60 * 60 * 24 * 1 * 7 * 52)).strftime(sDateformat)
-  
-  
+
+
   # Save the current time to be used Globally for all test in a suite.
   #
   # This will ensure that the same time can be used throughout all the tests, and ensures
   # that if a STRING is created at one point in the test with a timestamp appended to it,
   # that the same timestamp can be re-used at subsequent points in all tests within a testsuite.
   TESTSUITE_START_TIME = Time.now
-  
+
   # Define timestamp format for use with file names
   # The timestamp of 14 characters can be appended to a file name (e.g. mylogfile_2007_Dec_30_235959.log)
   # Example: sMyPrefix = "mylogfile"
   #          sMyExtension = ".log"
   #          sMyFilename = sMyPrefix + TIMESTAMP_STRING + sMyExtension
   TIMESTAMP_STRING = TESTSUITE_START_TIME.strftime("%Y_%m_%d_%H%M%S")
-  
+
   #=============================================================================#
   # ObjectName: CANADIAN_PROVINCES
   # Returns: HASH
@@ -197,10 +223,10 @@ module WatirWorks_RefLib
    "SK" => "Saskatchewan",
    "YT" => "Yukon"
   }
-  
+
   # Hash with the keys and values flipped
   CANADIAN_PROVINCE_ABBREVIATION = CANADIAN_PROVINCES.invert
-  
+
   #=============================================================================#
   # ObjectName: MEXICAN_STATES
   # Returns: HASH
@@ -246,10 +272,10 @@ module WatirWorks_RefLib
    "YC" => "Yucatan",
    "ZT" => "Zacatecas"
   }
-  
+
   # Hash with the keys and values flipped
   MEXICAN_STATE_ABBREVIATION = MEXICAN_STATES.invert
-  
+
   #=============================================================================#
   # ObjectName: USPS_STATES
   # Returns: HASH
@@ -321,10 +347,10 @@ module WatirWorks_RefLib
    "WI" => "Wisconsin",
    "WY" => "Wyoming"
   }
-  
+
   # Hash with the keys and values flipped
   USPS_STATE_ABBREVIATION = USPS_STATES.invert
-  
+
   #=============================================================================#
   # ObjectName: USPS_SECONDARY_UNIT_DESIGNATOR
   # Returns: HASH
@@ -361,7 +387,7 @@ module WatirWorks_RefLib
     "UNIT" => "UNIT",
     "UPPER" => "UPPR"
   }
-  
+
   #=============================================================================#
   # ObjectName: USPS_STREET_SUFFIX
   # Returns: HASH
@@ -577,7 +603,7 @@ module WatirWorks_RefLib
    'WELL' => 'WL',
    'WELLS' => 'WLS'
   }
-  
+
   #=============================================================================#
   # ObjectName: COUNTRY_CODES
   # Returns: Hash
@@ -833,11 +859,11 @@ module WatirWorks_RefLib
     "Zambia" => "ZMB",
     "Zimbabwe " => "ZWE"
   }
-  
-  
+
+
   # Hash with the keys and values flipped
   COUNTRY_CODES_ABBREVIATION = COUNTRY_CODES.invert
-  
+
   #=============================================================================#
   # ObjectName: COUNTRY_CODES_2CHAR
   # Returns: Hash
@@ -1102,11 +1128,11 @@ module WatirWorks_RefLib
     "Zaire" => "ZR",
     "Zimbabwe" => "ZW"
   }
-  
+
   # Hash with the keys and values flipped
   COUNTRY_CODES_2CHAR_ABBREVIATION = COUNTRY_CODES_2CHAR.invert
-  
-  
+
+
   #=============================================================================#
   # ObjectName: MONTH_ABBREVIATION
   # Returns: HASH
@@ -1130,10 +1156,10 @@ module WatirWorks_RefLib
    "nov" => "November",
    "dec" => "December"
   }
-  
+
   # Hash with the keys and values flipped
   MONTHS = MONTH_ABBREVIATION.invert
-  
+
   #=============================================================================#
   # ObjectName: SAFARIWATIR_UNSUPPORTED_HTML_ELEMENTS
   # Returns: ARRAY
@@ -1153,7 +1179,7 @@ module WatirWorks_RefLib
   #
   #=============================================================================#
   SAFARIWATIR_UNSUPPORTED_HTML_ELEMENTS = ["hidden"]
-  
+
   #=============================================================================#
   # ObjectName: SUPPORTED_HTML_ELEMENTS
   # Returns: ARRAY
@@ -1223,7 +1249,7 @@ module WatirWorks_RefLib
   "ye", "yt", "yu",
   "za", "zm", "zw"
   ]
-  
+
 end # end of module WatirWorks_RefLib
 
 # END FILE watirworks-reflib.rb

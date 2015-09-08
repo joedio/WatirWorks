@@ -1,7 +1,7 @@
 #=============================================================================#
 # File: watirworks_linux-utilities.rb
 #
-#  Copyright (c) 2008-2012, Joe DiMauro
+#  Copyright (c) 2008-2015, Joe DiMauro
 #  All rights reserved.
 #
 # Description:
@@ -53,24 +53,22 @@ require 'rubygems'
 #
 # Methods:
 #    clear_cache_linux()
-#    get_firefox_version_linux()
-#    is_firefox_installed_linux?(...)
-#    is_firefox2_installed_linux? # Deprecated use is_firefox_installed_linux?(2)
-#    is_firefox3_installed_linux? # Deprecated use is_firefox_installed_linux?(3)
-#    is_firefox4_installed_linux? # Deprecated use is_firefox_installed_linux?(4)
-#    is_firefox5_installed_linux? # Deprecated use is_firefox_installed_linux?(5)
-#    is_firefox6_installed_linux? # Deprecated use is_firefox_installed_linux?(6)
-#    is_firefox7_installed_linux? # Deprecated use is_firefox_installed_linux?(7)
-#    save_screencapture_linux(...)
+#   get_chrome_version_linux()
+#   get_firefox_version_linux()
+#   get_opera_version_linux()
+#   is_chrome_installed_linux?(...)
+#   is_firefox_installed_linux?(...)
+#   is_opera_installed_linux?(...)
+#   save_screencapture_linux(...)
 #
 # Pre-requisites:
 # ++
 #=============================================================================#
 module WatirWorks_LinuxUtilities
-  
+
   # Version of this module
-  WW_LINUX_UTILITIES_VERSION =  "1.0.0"
-  
+  WW_LINUX_UTILITIES_VERSION =  "0.0.3"
+
   #=============================================================================#
   #--
   # Method: clear_cache_linux()
@@ -100,36 +98,35 @@ module WatirWorks_LinuxUtilities
   #              Configure BleachBit to exclude any cookies you do NOT wish removed.
   #=============================================================================#
   def clear_cache_linux()
-    
+
     if(is_linux?) # Only run on Linux
-      
+
       # Default install location of the tool
       sToolInstallPath = "\\Path\\To\\Tool\\Tool.exe"
-      
+
       sToolCommandLineOptions = ""
-      
+
       # Determine if Tool is installed in the default location
       if(File.exists?(sToolInstallPath))
-        
+
         puts2("")
         puts2("Clearing Cookies and Cache by running: " + sToolInstallPath + sToolCommandLineOptions)
-        
+
         # Run the tool
         system(sToolInstallPath + sToolCommandLineOptions)
         sleep 3 # Allow time for the cleaner to complete
-        
+
       else # Tool is NOT installed so skip the command and log a WARNING
-        
+
         puts2(" ")
         puts2("WARNING - Clearing Cookies and Cache: Not performed", "WARN") # Log as a warning message
-        
+
       end # Use Tool if its installed
-      
+
     end # Only run on Linux
-    
+
   end # Method - clear_cache_linux()
-  
-  
+
   #=============================================================================#
   #--
   # Method: get_chrome_version_linux()
@@ -145,17 +142,17 @@ module WatirWorks_LinuxUtilities
   #
   #=============================================================================#
   def get_chrome_version_linux()
-    
+
     for iVersion in 10..20
         if(self.is_chrome?(iVersion) == true)
            return iVersion.to_s + ".x"
         end
     end # Check for a match
-    
+
   end # Method - get_chrome_version_linux()
-  
-  
-  #=============================================================================#
+
+
+   #=============================================================================#
   #--
   # Method: get_firefox_version_linux()
   #
@@ -170,16 +167,16 @@ module WatirWorks_LinuxUtilities
   #
   #=============================================================================#
   def get_firefox_version_linux()
-    
+
     for iVersion in 2..12
         if(self.is_ff?(iVersion) == true)
            return iVersion.to_s + ".x"
         end
     end # Check for a match
-    
+
   end # Method - get_firefox_version_linux()
-  
-  
+
+
   #=============================================================================#
   #--
   # Method: get_opera_version_linux()
@@ -195,15 +192,15 @@ module WatirWorks_LinuxUtilities
   #
   #=============================================================================#
   def get_opera_version_linux()
-    
+
     for iVersion in 8..12
         if(self.is_ff?(iVersion) == true)
            return iVersion.to_s + ".x"
         end
     end # Check for a match
-    
+
   end # Method - get_opera_version_linux()
-  
+
   #=============================================================================#
   #--
   # Method: is_chrome_installed_linux?(...)
@@ -222,42 +219,42 @@ module WatirWorks_LinuxUtilities
   # Returns: BOOLEAN = true if installed, otherwise false
   #
   # Usage Examples:
-  #                 if(is_chrome_installed_linux?(17))
-  #                      # Execute Chrome 17 specific code
+  #                 if(is_chrome_installed_linux?(45))
+  #                      # Execute Chrome 45 specific code
   #                 end
   #
   #=============================================================================#
-  def is_chrome_installed_linux?(iVersion = 7)
-    
+  def is_chrome_installed_linux?(iVersion = 45)
+
     if($VERBOSE == true)
       puts2("Parameters - is_chrome_installed_linux?")
       puts2("  iVersion " + iVersion.to_s)
     end
-    
+
     require 'find'
-    
+
     sVersion = iVersion.to_s
-    
+
     # Recursively search the directory
     Find.find("/usr/lib/") do | path |
-      
+
       if($VERBOSE)
         puts2("Searching: " + path)
       end
-      
+
       # Check current path for a match
       if(path =~ /chrome-#{sVersion}/)
         if($VERBOSE)
           puts2("Found: " + path)
         end
-        
+
         return true
-        
+
       end # Check current path for a match
     end # Recursively search the directory
-    
+
   end # Method - is_chrome_installed_linux?(...)
-  
+
   #=============================================================================#
   #--
   # Method: is_firefox_installed_linux?(...)
@@ -276,43 +273,43 @@ module WatirWorks_LinuxUtilities
   # Returns: BOOLEAN = true if installed, otherwise false
   #
   # Usage Examples:
-  #                 if(is_firefox_installed_linux?(7))
-  #                      # Execute FF7 specific code
+  #                 if(is_firefox_installed_linux?(40))
+  #                      # Execute FF40 specific code
   #                 end
   #
   #=============================================================================#
-  def is_firefox_installed_linux?(iVersion = 3)
-    
+  def is_firefox_installed_linux?(iVersion = 40)
+
     if($VERBOSE == true)
       puts2("Parameters - is_firefox_installed_linux?")
       puts2("  iVersion " + iVersion.to_s)
     end
-    
+
     require 'find'
-    
+
     sVersion = iVersion.to_s
-    
+
     # Recursively search the directory
     Find.find("/usr/lib/") do | path |
-      
+
       if($VERBOSE)
         puts2("Searching: " + path)
       end
-      
+
       # Check current path for a match
       if(path =~ /firefox-#{sVersion}/)
         if($VERBOSE)
           puts2("Found: " + path)
         end
-        
+
         return true
-        
+
       end # Check current path for a match
     end # Recursively search the directory
-    
+
   end # Method - is_firefox_installed_linux?(...)
-  
-  
+
+
   #=============================================================================#
   #--
   # Method: is_opera_installed_linux?(...)
@@ -337,36 +334,37 @@ module WatirWorks_LinuxUtilities
   #
   #=============================================================================#
   def is_opera_installed_linux?(iVersion = 10)
-    
+
     if($VERBOSE == true)
       puts2("Parameters - is_opera_installed_linux?")
       puts2("  iVersion " + iVersion.to_s)
     end
-    
+
     require 'find'
-    
+
     sVersion = iVersion.to_s
-    
+
     # Recursively search the directory
     Find.find("/usr/lib/") do | path |
-      
+
       if($VERBOSE)
         puts2("Searching: " + path)
       end
-      
+
       # Check current path for a match
       if(path =~ /opera-#{sVersion}/)
         if($VERBOSE)
           puts2("Found: " + path)
         end
-        
+
         return true
-        
+
       end # Check current path for a match
     end # Recursively search the directory
-    
+
   end # Method - is_opera_installed_linux?(...)
-  
+
+
   #=============================================================================#
   #--
   # Method: save_screencapture_linux()
@@ -402,7 +400,7 @@ module WatirWorks_LinuxUtilities
   #
   #=============================================================================#
   def save_screencapture_linux(sFileNamePrefix="", bActiveWindowOnly=false, bSaveAsJpg=true, sOutputDir="/tmp")
-    
+
     if($VERBOSE == true)
       puts2("Parameters - save_screencapture_linux:")
       puts2("  sFileNamePrefix: " + sFileNamePrefix)
@@ -410,14 +408,14 @@ module WatirWorks_LinuxUtilities
       puts2("  bSaveAsJpg: " + bSaveAsJpg.to_s)
       puts2("  sOutputDir: " + sOutputDir)
     end
-    
+
     if(is_linux?) # Only run on Linux
-      
+
       # Default to the tmp folder on local filesystem, as it allows write permissions
       if(sOutputDir == "")
         sOutputDir = "/tmp"
       end
-      
+
       # Define file format parameters
       if bSaveAsJpg
         sFileExt = ".jpg"
@@ -428,7 +426,7 @@ module WatirWorks_LinuxUtilities
         sFormat = " -format PNG "
         sOptions = " -type TrueColor "
       end
-      
+
       # Define the region of the capture
       if bActiveWindowOnly
         sScreen_Region = "_window_"
@@ -437,30 +435,28 @@ module WatirWorks_LinuxUtilities
         sScreen_Region = "_desktop_"
         sWindowID = " root "
       end
-      
+
       # Combine the elements to make a unique file name prefix
       sFilename = sFileNamePrefix + sScreen_Region + Time.now.strftime(DATETIME_FILEFORMAT).to_s + sFileExt
-      
+
       sFullPathToImageFile = File.join(sOutputDir, sFilename)
-      
+
       if($VERBOSE)
         puts2("Capturing window: #{sWindowID}")
       end
-      
+
       # Minimize the Ruby Console window so it doesn't block the browser window
       #minimize_ruby_console()
-      
+
       # Perform the screen capture
       system("import #{sFormat} -window \"#{sWindowID}\" #{sFullPathToImageFile} #{sOptions}")
-      
+
       puts2("Saved image to: #{sFullPathToImageFile}")
-      
-      
+
     end # Only run on Linux
-    
-    
+
   end # Method - save_screencapture_linux()
-  
+
 end # Module - WatirWorks_LinuxUtilities
 
 # END File - watirworks_linux-utilities.rb

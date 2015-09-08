@@ -2,7 +2,7 @@
 
 :title:WatirWorks Free Editors Rdoc
 
-Copyright (c) 2008-2012, Joe DiMauro
+Copyright (c) 2008-2011, Joe DiMauro
 All rights reserved.
 
 = Selecting an Editor / IDE

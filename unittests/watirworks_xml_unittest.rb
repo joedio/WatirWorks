@@ -7,9 +7,9 @@
 #
 # Description: Unit tests for WatirWorks WebUtilities methods:
 #    createXMLTags(...)
-#    get_xml_tag_value(...)
-#    is_tag_in_xml?(..)
-#    remove_xml_brackets(...)
+#    getXMLTagValue(...)
+#    isTagInXML?(..)
+#    removeXMLBrackets(...)
 #
 #=============================================================================#
 
@@ -93,18 +93,18 @@ class UnitTest_WebUtilities < Test::Unit::TestCase
   end # end of teardown
   
   #===========================================================================#
-  # Testcase method: test_xml_001_is_tag_in_xml?
+  # Testcase method: test_xml_001_isTagInXML?
   #
   # Description: Test the methods:
-  #                                is_tag_in_xml?(...)
-  #                                create_xml_tags(...)
-  #                                remove_xml_brackets(...)
+  #                                isTagInXML?(...)
+  #                                createXMLTags(...)
+  #                                removeXMLBrackets(...)
   #===========================================================================#
-  def test_xml_001_is_tag_in_xml?
+  def test_xml_001_isTagInXML?
     
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_xml_001_is_tag_in_xml?")
+    puts2("Testcase: test_xml_001_isTagInXML?")
     puts2("#######################")
     
     #$VERBOSE = true
@@ -119,24 +119,24 @@ class UnitTest_WebUtilities < Test::Unit::TestCase
     
     aTags.each do | sTag |
       
-      sTagExists = is_tag_in_xml?(sXML, sTag).to_s
+      sTagExists = isTagInXML?(sXML, sTag).to_s
       puts2("Closing Tag for " + sTag + " in XML = " + sTagExists.to_s)
     end # end
     
-  end # end test_XMLTtest_xml_001_is_tag_in_xml?()
+  end # end test_XMLTtest_xml_001_isTagInXML?()
   
   
   #===========================================================================#
-  # Testcase method: test_xml_002_get_xml_tag_value
+  # Testcase method: test_xml_002_getXMLTagValue
   #
   # Description: Test the methods:
-  #                                get_xml_tag_value(...)
+  #                                getXMLTagValue(...)
   #===========================================================================#
-  def test_xml_002_get_xml_tag_value
+  def test_xml_002_getXMLTagValue
     
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_xml_002_get_xml_tag_value")
+    puts2("Testcase: test_xml_002_getXMLTagValue")
     puts2("#######################")
     
     #$VERBOSE = true
@@ -151,24 +151,24 @@ class UnitTest_WebUtilities < Test::Unit::TestCase
     
     aTags.each do | sTag |
       
-      sXMLTagValue = get_xml_tag_value(sXML, sTag).to_s
+      sXMLTagValue = getXMLTagValue(sXML, sTag).to_s
       puts2("Value of XML Tag '" + sTag + "' in XML = '" + sXMLTagValue + "'")
     end
     
-  end # end test_xml_002_get_xml_tag_value()(...)
+  end # end test_xml_002_getXMLTagValue()(...)
   
   
   #===========================================================================#
-  # Testcase method: test_xml_003_get_multiple_xml_tag_values
+  # Testcase method: test_xml_003_getMultipleXMLTagValues
   #
   # Description: Test the methods:
-  #                                get_multiple_xml_tag_values(...)
+  #                                getMultipleXMLTagValues(...)
   #===========================================================================#
-  def test_xml_003_get_multiple_xml_tag_values
+  def test_xml_003_getMultipleXMLTagValues
     
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_xml_003_get_multiple_xml_tag_values")
+    puts2("Testcase: test_xml_003_getMultipleXMLTagValues")
     puts2("#######################")
     
     #$VERBOSE = true
@@ -185,8 +185,8 @@ class UnitTest_WebUtilities < Test::Unit::TestCase
     
     aTags.each do | sTag |
       
-      aXMLTagValue = get_multiple_xml_tag_values(sXML, sTag)
-      #sXMLTagValue = get_multiple_xml_tag_values(sXML, sTag).to_s
+      aXMLTagValue = getMultipleXMLTagValues(sXML, sTag)
+      #sXMLTagValue = getMultipleXMLTagValues(sXML, sTag).to_s
       aXMLTagValue.each do | sXMLTagValue |
         puts2("Value of XML Tag '" + sTag + "' in XML = '" + sXMLTagValue + "'")
       end
@@ -199,8 +199,8 @@ class UnitTest_WebUtilities < Test::Unit::TestCase
     
     for sTag in aTags
       
-      aXMLTagValue = get_multiple_xml_tag_values(sXML, sTag)
-      #sXMLTagValue = get_multiple_xml_tag_values(sXML, sTag).to_s
+      aXMLTagValue = getMultipleXMLTagValues(sXML, sTag)
+      #sXMLTagValue = getMultipleXMLTagValues(sXML, sTag).to_s
       
       aXMLTagValue.each do | sXMLTagValue |
         puts2("Value of XML Tag '" + sTag + "' in XML = '" + sXMLTagValue + "'")
@@ -212,13 +212,13 @@ class UnitTest_WebUtilities < Test::Unit::TestCase
     aTags = ["n1:MsgResponseDesc"]
     
     for sTag in aTags
-      aXMLTagValue = get_multiple_xml_tag_values(sXML, sTag)
-      #sXMLTagValue = get_multiple_xml_tag_values(sXML, sTag).to_s
+      aXMLTagValue = getMultipleXMLTagValues(sXML, sTag)
+      #sXMLTagValue = getMultipleXMLTagValues(sXML, sTag).to_s
       aXMLTagValue.each do | sXMLTagValue |
         puts2("Value of XML Tag '" + sTag + "' in XML = '" + sXMLTagValue + "'")
       end
     end
     
-  end # end test_xml_003_get_multiple_xml_tag_values()(...)
+  end # end test_xml_003_getMultipleXMLTagValues()(...)
   
 end # End of class - UnitTest_WebUtilities

@@ -1,7 +1,7 @@
 #=============================================================================#
 # File: watirworks_win-utilities.rb
 #
-#  Copyright (c) 2008-2012, Joe DiMauro
+#  Copyright (c) 2008-2015, Joe DiMauro
 #  All rights reserved.
 #
 # Description:
@@ -40,19 +40,8 @@ require 'rubygems'
 require 'watirworks'  # The WatirWorks library loader
 include WatirWorks_Utilities  # The WatirWorks Utilities Library
 
-# Uncomment this command if running under Watir-WebDriver
-# If using Watir or Firewatir comment it out.
-#require 'watir-webdriver'
-
-# Determine if executing under watir-webdriver or under Watir/FireWatir
-if(is_webdriver? != true)
-  require 'firewatir'
-  if(RUBY_PLATFORM.downcase =~ /mswin|window|mingw/)
-    require 'watir'
-    require 'watir/screen_capture'
-    include Watir::ScreenCapture
-  end
-end
+# Watir-WebDriver
+require 'watir-webdriver'
 
 #============================================================================#
 # Module: WatirWorks_WinUtilities
@@ -84,7 +73,7 @@ end
 #    exit_browsers_win(...)
 #    get_firefox_version_win(), get_registered_firefox_version()
 #    get_ie_version_win(), get_registered_ie_version()
-#    get_window_list(...)  Deprecated use get_windows()
+#    get_windows()
 #    handle_win_dialog_confirm_saveas(...)
 #    handle_win_dialog_download_complete(...)
 #    handle_win_dialog_generic_modal(...)
@@ -92,23 +81,23 @@ end
 #    is_chrome_installed_win?(...)
 #    is_firefox_installed_win?(...)
 #    is_ie_installed?(...)
+#    is_opera_installed_win?(...)
 #    is_minimized?(...)
 #    is_maximized?(...)
 #    open_messagebox_win(...)
-#    pause(...)
-#    popup_watchpoint(...)
-#    parse_spreadsheet_xls(...) Deprecated use parse_spreadsheet()
-#    parse_workbook_xls(....)   Deprecated use parse_workbook()
+#    pause(...
+#    parse_spreadsheet()
+#    parse_workbook()
 #    save_screencapture_win(...)
 #
 # Pre-requisites:
 # ++
 #=============================================================================#
 module WatirWorks_WinUtilities
-  
+
   # Version of this module
-  WW_WIN_UTILITIES_VERSION =  "1.0.4"
-  
+  WW_WIN_UTILITIES_VERSION =  "1.0.3"
+
   #===============================
   # Button codes for Window's Message box
   #===============================
@@ -119,7 +108,7 @@ module WatirWorks_WinUtilities
   BUTTONS_YES_NO = 4
   BUTTONS_RETRY_CANCEL = 5
   BUTTONS_CANCEL_TRYAGAIN_CONTINUE = 6
-  
+
   #===================================
   #  Return codes for Window's Message box
   #===================================
@@ -130,7 +119,7 @@ module WatirWorks_WinUtilities
   SELECTED_IGNORE = 5
   SELECTED_YES = 6
   SELECTED_NO = 7
-  
+
   #=============================================================================#
   #--
   # Method: clear_cache_win(...)
@@ -172,58 +161,58 @@ module WatirWorks_WinUtilities
   #              Configure CCleaner to exclude any cookies you do NOT wish removed.
   #=============================================================================#
   def clear_cache_win()
-    
+
     if(is_win?) # Only run on Windows
-      
+
       # Default value
       sToolInstallPath = ""
-      
+
       bVista = false
-      
+
       # Tool default install location on WinXP and earlier windows versions
       sToolInstallPath_WinXP = "C:\\Program Files\\CCleaner\\CCleaner.exe"
-      
+
       # Tool default install location on Vista and Win7
       sToolInstallPath_VISTA = "C:\\Program Files (x86)\\CCleaner\\CCleaner.exe"
-      
+
       sToolCommandLineOptions = " /AUTO"
-      
+
       # Determine if Tool is installed in either default location
       if(File.exists?(sToolInstallPath_WinXP))
         sToolInstallPath = sToolInstallPath_WinXP
       end
-      
+
       if(File.exists?(sToolInstallPath_VISTA))
         sToolInstallPath = sToolInstallPath_VISTA
         bVista = true
       end
-      
+
       if(sToolInstallPath != "") # Use Tool if its installed
-        
+
         puts2("")
         puts2("Clearing Cookies and Cache by running: " + sToolInstallPath + sToolCommandLineOptions)
-        
+
         # Run the tool
         system(sToolInstallPath + sToolCommandLineOptions)
-        
+
         if(bVista == true)
           BUTTONS_OK_CANCEL
         end
-        
+
         sleep 3 # Allow time for the cleaner to complete
-        
+
       else # Tool is NOT installed so skip the command and log
-        
+
         puts2(" ")
         puts2("WARNING - Clearing Cookies and Cache: Not performed", "WARN") # Log as a warning message
-        
+
       end # Use Tool if its installed
-      
+
     end # Only run on Windows
-    
+
   end # Method - clear_cache_win()
-  
-  
+
+
   #=============================================================================#
   #--
   # Method: exit_browsers_win()
@@ -254,72 +243,20 @@ module WatirWorks_WinUtilities
   #
   #=============================================================================#
   def exit_browsers_win(oBrowsersToClose=nil)
-    
+
     return exit_browsers(oBrowsersToClose)
-    
+
   end # End Function - exit_browsers_win
-  
-  
-  #=============================================================================#
-  #--
-  # Method: get_registered_chrome_version()
-  #++
-  #
-  # Description: Reads the Windows Registry for the Chrome version key's value.
-  #              This typically indicates the full version of Chrome that is
-  #              installed as the default Chrome browser
-  #
-  # Returns: STRING - The contents of the registry key value
-  #
-  # Syntax: N/A
-  #
-  # Usage examples: With Chrome 17.x is installed
-  #                    get_registered_chrome_version()  #=> "17.0.963.96"
-  #
-  #=============================================================================#
-  def get_registered_chrome_version()
-    
-    require 'win32/registry'
-    
-    if(is_win32?) # Only run on Windows32
-      
-      @@get_registered_chrome_version ||= begin
-        
-        ::Win32::Registry::HKEY_CURRENT_USER.open("Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Google Chrome") do |chrome_key|
-          
-          chrome_key.read('Version').last
-        end
-      end
-      
-    elsif (is_win64?) # Only run on Windows64
-      
-      @@get_registered_chrome_version ||= begin
-        
-       :Win32::Registry::HKEY_CURRENT_USER.open("Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Google Chrome") do |chrome_key|
-          
-          chrome_key.read('Version').last
-        end
-      end
-      
-    else
-      return " " # Return a single character whitespace
-      
-    end # Only run on Windows
-    
-  end # Function - get_registered_chrome_version()
-  
-  alias get_chrome_version_win get_registered_chrome_version
-  
+
   #=============================================================================#
   #--
   # Method: get_registered_firefox_version()
   #++
   #
   # Description: Reads the Windows Registry for the Firefox version key's value.
-  #              This typically indicates the full version of Firefox that is
-  #              installed as the default Firefox browser
+  #              This typically indicates the full version of Firefox that is  installed as the default Firefox browser
   #
-  # Returns: STRING - The contents of the registry key value
+  # Returns: STRING - The contents of the registry key
   #
   # Syntax: N/A
   #
@@ -328,49 +265,48 @@ module WatirWorks_WinUtilities
   #
   #=============================================================================#
   def get_registered_firefox_version()
-    
+
     require 'win32/registry'
-    
+
     if(is_win32?) # Only run on Windows32
-      
+
       @@get_registered_firefox_version ||= begin
-        
+
         ::Win32::Registry::HKEY_LOCAL_MACHINE.open("SOFTWARE\\Mozilla\\Mozilla Firefox") do |ff_key|
-          
+
           ff_key.read('CurrentVersion').last
         end
       end
-      
+
     elsif (is_win64?) # Only run on Windows64
-      
+
       @@get_registered_firefox_version ||= begin
-        
-        
+
+
    	   :Win32::Registry::HKEY_LOCAL_MACHINE.open("SOFTWARE\\Wow6432Node\\Mozilla\\Mozilla Firefox") do |ff_key|
-          
+
           ff_key.read('CurrentVersion').last
         end
       end
-      
+
     else
       return " " # Return a single character whitespace
-      
+
     end # Only run on Windows
-    
+
   end # Function - get_registered_firefox_version()
-  
+
   alias get_firefox_version_win get_registered_firefox_version
-  
+
   #=============================================================================#
   #--
   # Method: get_registered_ie_version()
   #++
   #
   # Description:  Reads the Windows Registry for the Internet Explorer version key's value.
-  #               This typically indicates the full version of IE that is
-  #               installed as the default IE browser
+  #                       This typically indicates the full version of IE that is  installed as the default IE browser
   #
-  # Returns: STRING - The contents of the registry key value
+  # Returns: STRING - The contents of the registry key
   #
   # Syntax: N/A
   #
@@ -379,84 +315,29 @@ module WatirWorks_WinUtilities
   #
   #=============================================================================#
   def get_registered_ie_version()
-    
+
     if(is_win?) # Only run on Windows
-      
+
       require 'win32/registry'
-      
+
       @@get_registered_ie_version ||= begin
-        
+
         ::Win32::Registry::HKEY_LOCAL_MACHINE.open("SOFTWARE\\Microsoft\\Internet Explorer") do |ie_key|
-          
+
           ie_key.read('Version').last
         end
       end
-      
+
     else # Not Windows
-      
+
       return " " # Return a single character whitespace
-      
+
     end # Only run on Windows
-    
+
   end # Function - get_registered_ie_version()
-  
+
   alias get_ie_version_win get_registered_ie_version
-  
-  
-  #=============================================================================#
-  #--
-  # Method: get_registered_opera_version()
-  #
-  # TODO: FINd where Opera stores it's version info
-  #++
-  #
-  # Description: Reads the Windows Registry for the Opera version key's value.
-  #              This typically indicates the full version of Opera that is
-  #              installed as the default Opera browser
-  #
-  # Returns: STRING - The contents of the registry key value
-  #
-  # Syntax: N/A
-  #
-  # Usage examples: With Opera 11.x is installed
-  #                    get_registered_opera_version()  #=> "11.6.1"
-  #
-  #=============================================================================#
-  def get_registered_opera_version()
-    
-    require 'win32/registry'
-    
-    if(is_win32?) # Only run on Windows32
-      
-      @@get_registered_opera_version ||= begin
-        
-        ::Win32::Registry::HKEY_CURRENT_USER.open("Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Google Chrome") do |opera_key|
-          
-          opera_key.read('Version').last
-        end
-      end
-      
-    elsif (is_win64?) # Only run on Windows64
-      
-      @@get_registered_chrome_version ||= begin
-        
-        ::Win32::Registry::HKEY_CURRENT_USER.open("Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Google Chrome") do |opera_key|
-          
-          opera_key.read('Version').last
-        end
-      end
-      
-    else
-      return " " # Return a single character whitespace
-      
-    end # Only run on Windows
-    
-  end # Function - get_registered_opera_version()
-  
-  alias get_opera_version_win get_registered_opera_version
-  
-  
-  
+
   #=============================================================================#
   #--
   # Method: handle_win_dialog_confirm_saveas(...)
@@ -484,74 +365,74 @@ module WatirWorks_WinUtilities
   #
   #=============================================================================#
   def handle_win_dialog_confirm_saveas(sChoice="yes", iTimeout=5)
-    
+
     if($VERBOSE == true)
       puts2("Parameters - handle_win_dialog_confirm_saveas:")
       puts2("  sChoice: " + sChoice)
       puts2("  iTimeout: " + iTimeout.to_s)
     end
-    
+
     require 'rautomation'
-    
+
     if(is_win?) # Only run on Windows
-      
+
       # Define the identifiers for the  Windows dialog
       sDialogTitle = "Confirm Save As"
-      
+
       # Create an rAutomation object
       oDialog = RAutomation::Window.new(:title => sDialogTitle)
-      
+
       # Determine if the dialog exists
       if(oDialog.exists?())
-        
+
         if($VERBOSE == true)
           puts2("Found Dialog tittled: " + sDialogTitle)
         end
-        
+
         # Bring dialog to the top
         oDialog.activate()
-        
+
         # Determine which action to take
         case sChoice.downcase.strip
           when /yes/
-          
+
           # Identify the control using its - text
           sControlID = "&Yes"
-          
+
           if($VERBOSE == true)
             puts2("Selecting button: " + sControlID)
           end
-          
+
           # Focus on and select the choice
           oDialog.button(:text => sControlID).click()
-          
+
           when /no/
-          
+
           # Identify the control using its - text
           sControlID = "&No"
-          
+
           if($VERBOSE == true)
             puts2("Selecting button: " + sControlID)
           end
-          
+
           # Focus on and select the choice
           oDialog.button(:text => sControlID).click()
-          
+
         else # No action specified so close the dialog
           oDialog.close()
           if($VERBOSE == true)
             puts2("No specific action specified. Closing dialog...")
           end
-          
+
         end # Determine which action to take
-        
+
       end # Determine if the dialog exists
-      
+
     end  # Only run on Windows
-    
+
   end # Method - handle_win_dialog_confirm_saveas()
-  
-  
+
+
   #=============================================================================#
   #--
   # Method: handle_win_dialog_download_complete(...)
@@ -585,148 +466,148 @@ module WatirWorks_WinUtilities
   #
   #=============================================================================#
   def handle_win_dialog_download_complete(sChoice="", iTimeout=5)
-    
+
     if($VERBOSE == true)
       puts2("Parameters - handle_win_dialog_download_complete:")
       puts2("  sChoice: " + sChoice.to_s)
       puts2("  iTimeout: " + iTimeout.to_s)
     end
-    
+
     require 'rautomation'
-    
+
     if(is_win?) # Only run on Windows
-      
+
       # Deal with IE dialog
       if(self.is_ie?)
-        
+
         sDialogTitle = "Download complete"
-        
+
         # Create an rAutomation object
         oDialog = RAutomation::Window.new(:title => sDialogTitle)
-        
+
         # Determine if the dialog exists
         if(oWindow.exists?())
-          
+
           # Bring dialog to the top
           oDialog.activate()
-          
+
           if($VERBOSE == true)
             puts2("Found Dialog tittled: " + sDialogTitle)
           end
-          
+
           # Determine which action to take
           case sChoice.downcase.strip
             when /close/
-            
+
             # Identify the control using its - text
             sControlID = "Close"
-            
+
             if($VERBOSE == true)
               puts2("Selecting button: " + sControlID)
             end
-            
+
             # Focus on and select the choice
             oDialog.button(:text => sControlID).click()
-            
+
             when /run/
-            
+
             # Identify the control using its - text
             sControlID = "Run"
-            
+
             if($VERBOSE == true)
               puts2("Selecting button: " + sControlID)
             end
-            
+
             # Focus on and select the choice
             oDialog.button(:text => sControlID).click()
-            
+
             when /open folder/
-            
+
             # Identify the control using its - text
             sControlID = "Open &Folder"
-            
+
             if($VERBOSE == true)
               puts2("Selecting button: " + sControlID)
             end
-            
+
             # Focus on and select the choice
             oDialog.button(:text => sControlID).click()
-            
+
             when "open"
-            
+
             # Identify the control using its - text
             sControlID = "&Open"
-            
+
             if($VERBOSE == true)
               puts2("Selecting button: " + sControlID)
             end
-            
+
             # Focus on and select the choice
             oDialog.button(:text => sControlID).click()
-            
+
           else # No action specified so close the dialog
             if($VERBOSE == true)
               puts2("No specific action specified. Closing dialog...")
             end
             oDialog.close()
-            
+
           end # Determine which action to take
         end # Determine if the dialog exists
-        
+
       end # Deal with IE dialog
-      
+
       # Deal with FF dialog
       if(self.is_firefox?)
-        
+
         sDialogTitle = "Downloads"
-        
+
         # Create an rAutomation object
         oDialog = RAutomation::Window.new(:title => sDialogTitle)
-        
+
         # Determine if the dialog exists
         if(oDialog.exists?())
-          
+
           # Bring dialog to the top
           oDialog.activate()
-          
+
           if($VERBOSE == true)
             puts2("Found Dialog tittled: " + sDialogTitle)
           end
-          
+
           # Determine which action to take
           case sChoice.downcase.strip
-            
+
             when /clear/
-            
+
             # Identify the control using its - text
             sControlID = "Clear List"
-            
+
             if($VERBOSE == true)
               puts2("Selecting button: " + sControlID)
             end
-            
+
             # Focus on and select the choice
             oDialog.button(:text => sControlID).click()
-            
+
             # Close the dialog
             if($VERBOSE == true)
               puts2("Closing dialog...")
             end
             oDialog.close()
-            
+
           else # No action specified so close the dialog
             if($VERBOSE == true)
               puts2("No specific action specified. Closing dialog...")
             end
             oDialog.close()
           end # Determine which action to take
-          
+
         end # Determine if the dialog exists
       end # Deal with FF dialog
     end  # Only run on Windows
-    
+
   end # Method - handle_win_dialog_download_complete
-  
+
   #=============================================================================#
   #--
   # Method: handle_win_dialog_generic_modal(...)
@@ -816,7 +697,7 @@ module WatirWorks_WinUtilities
   #                     browser.handle_win_dialog_generic_modal(sDialogTitle, sChoice, sInputText, bCloseDialog, iTimeout)
   #=============================================================================#
   def handle_win_dialog_generic_modal(sDialogTitle, sButtonControlID="", sInputTextControlID="Edit", sInputText="", bCloseDialog=true, iTimeout=5)
-    
+
     if($VERBOSE == true)
       puts2("Parameters - handle_win_dialog_generic_modal:")
       puts2("  sDialogTitle: " + sDialogTitle)
@@ -826,63 +707,63 @@ module WatirWorks_WinUtilities
       puts2("  bCloseDialog: " + bCloseDialog.to_s)
       puts2("  iTimeout: " + iTimeout.to_s)
     end
-    
+
     require 'rautomation'
-    
+
     # Create an rAutomation object
     oDialog = RAutomation::Window.new(:title => sDialogTitle)
-    
+
     if(is_win?) # Only run on Windows
-      
+
       # Determine if the dialog exists
       if(oDialog.exists?())
-        
+
         # Bring dialog to the top
         oDialog.activate()
-        
+
         if($VERBOSE == true)
           puts2("Found Dialog tittled: " + sDialogTitle)
         end
-        
+
         if((sInputTextControlID != "") && (sInputText != ""))
-          
+
           if($VERBOSE == true)
             puts2("Entering text: " + sInputText)
             puts2(" into field: " + sInputTextControlID)
           end
-          
+
           # Focus on and enter the text into the control
           oDialog.text_field(:class => sInputTextControlID).set(sInputText)
         end
-        
+
         # Determine if a choice button should be selected
         if(sButtonControlID != "")
-          
+
           if($VERBOSE == true)
             puts2("Selecting button: " + sButtonControlID)
           end
-          
+
           # Focus on and select the choice
           oDialog.button(:text => sButtonControlID).click()
-          
+
         end
-        
+
         # Determine if the dialog should be closed if it is open
         if((bCloseDialog) && (oDialog.exists?()) && (sButtonControlID == ""))
-          
+
           # Close the dialog via the window manager
           if($VERBOSE == true)
             puts2("No specific action specified. Closing dialog...")
           end
           oDialog.close()
-          
+
         end # Determine if the dialog should be closed if it is open
       end # Determine if the dialog exists
     end  # Only run on Windows
-    
+
   end # Method - handle_win_dialog_generic_modal
-  
-  
+
+
   #=============================================================================#
   #--
   # Method: handle_win_dialog_saveas(...)
@@ -921,7 +802,7 @@ module WatirWorks_WinUtilities
   #
   #=============================================================================#
   def handle_win_dialog_saveas(sChoice="", sFullFilePath="", bConfirmChioce=true, iTimeout=5)
-    
+
     if($VERBOSE == true)
       puts2("Parameters - handle_win_dialog_saveas:")
       puts2("  sChoice: " + sChoice)
@@ -929,103 +810,103 @@ module WatirWorks_WinUtilities
       puts2("  bConfirmChioce: " + bConfirmChioce.to_s)
       puts2("  iTimeout: " + iTimeout.to_s)
     end
-    
+
     require 'rautomation'
-    
+
     if(bConfirmChioce)
       sConfirmChoice ="yes"
     else
       sConfirmChoice ="no"
     end
-    
+
     if(is_win?) # Only run on Windows
-      
+
       # Deal with IE dialog
       if(self.is_ie?)
-        
+
         sDialogTitle = "Save As"
-        
+
         # Create an rAutomation object
         oDialog = RAutomation::Window.new(:title => sDialogTitle)
-        
+
         # Determine if the dialog exists
         if(oDialog.exists?())
-          
-          
+
+
           # Bring dialog to the top
           oDialog.activate()
-          
+
           if($VERBOSE == true)
             puts2("Found Dialog tittled: " + sDialogTitle)
           end
-          
+
           # Determine which action to take
           case sChoice.downcase.strip
             when /save/
-            
+
             # Determine to use the default value or enter a user specified value
             if(sFullFilePath != "")
-              
+
               # Identify the control using its - ClassnameNN
               sEditControlID = "Edit1"
-              
+
               # Identify the control using its - text
               sControlID = "&Save"
-              
+
               if($VERBOSE == true)
                 puts2("Entering filename into : " + sEditControlID)
               end
-              
+
               # Focus on and enter the pathname to save the file
               oDialog.text_field(:class => sInputTextControlID).set(sFullFilePath)
-              
+
             end # Determine to use the default value or enter a user specified value
-            
+
             # Identify the control using its - text
             sControlID = "&Save"
-            
+
             if($VERBOSE == true)
               puts2("Selecting button: " + sControlID)
             end
-            
+
             # Focus on and select the choice
             oDialog.button(:text => sControlID).click()
-            
+
             when /cancel/
-            
+
             # Identify the control using its - text
             sControlID = "Cancel"
-            
+
             if($VERBOSE == true)
               puts2("Selecting button: " + sControlID)
             end
-            
+
             # Focus on and select the choice
             oDialog.button(:text => sControlID).click()
-            
+
           else # No action specified so close the dialog
             if($VERBOSE == true)
               puts2("No specific action specified. Closing dialog...")
             end
             oDialog.close()
-            
+
           end # Determine which action to take
         end # Determine if the dialog exists
       end # Deal with IE dialog
-      
-      
+
+
       # Determine if the Confirm Save As dialog exists
       #  which only opens if the specified file pre-existed
       if(RAutomation::Window.new(:title => "Confirm Save As").exists?())
         self.handle_win_dialog_confirm_saveas(sConfirmChoice, 5)
       end
-      
-      
+
+
     end  # Only run on Windows
-    
+
   end # Method - handle_win_dialog_saveas
-  
-  
+
+
   #=============================================================================#
   #--
   # Method: handle_win_dialog_security_alert(...)
@@ -1059,87 +940,87 @@ module WatirWorks_WinUtilities
   #
   #=============================================================================#
   def handle_win_dialog_security_alert(sChoice="yes", iTimeout=5)
-    
+
     if($VERBOSE == true)
       puts2("Parameters - handle_win_dialog_security_alert:")
       puts2("  sChoice: " + sChoice)
       puts2("  iTimeout: " + iTimeout.to_s)
     end
-    
+
     require 'rautomation'
-    
+
     if(is_win?) # Only run on Windows
-      
+
       # Define the identifiers for the  Windows dialog
       sDialogTitle = "Security Alert"
-      
+
       # Create an rAutomation object
       oDialog = RAutomation::Window.new(:title =>  sDialogTitle)
-      
+
       # Determine if the dialog exists
       if(oDialog.exists?())
-        
+
         # Bring dialog to the top
         oDialog.activate()
-        
+
         if($VERBOSE == true)
           puts2("Found Dialog tittled: " + sDialogTitle)
         end
-        
+
         # Determine which action to take
         case sChoice.downcase.strip
           when /yes/
-          
+
           # Identify the control using its - text
           sControlID = "&Yes"
-          
+
           if($VERBOSE == true)
             puts2("Selecting button: " + sControlID)
           end
-          
+
           # Focus on and select the choice
           oDialog.button(:text => sControlID).click()
-          
+
           when /no/
-          
+
           # Identify the control using its - text
           sControlID = "&No"
-          
+
           if($VERBOSE == true)
             puts2("Selecting button: " + sControlID)
           end
-          
+
           # Focus on and select the choice
           oDialog.button(:text => sControlID).click()
-          
+
           when /view/
-          
+
           # Identify the control using its - text
           sControlID = "&View Certificate"
-          
+
           if($VERBOSE == true)
             puts2("Selecting button: " + sControlID)
           end
-          
+
           # Focus on and select the choice
           oDialog.button(:text => sControlID).click()
-          
+
         else # No action specified so close the dialog
           if($VERBOSE == true)
             puts2("No specific action specified. Closing dialog...")
           end
           oDialog.close()
-          
+
         end # Determine which action to take
-        
-        
+
+
       end # Determine if the dialog exists
-      
+
     end  # Only run on Windows
-    
+
   end # Method - handle_win_dialog_security_alert
-  
-  
+
+
   #=============================================================================#
   #--
   # Method: handle_win_dialog_security_information(...)
@@ -1172,88 +1053,89 @@ module WatirWorks_WinUtilities
   #
   #=============================================================================#
   def handle_win_dialog_security_information(sChoice="yes", iTimeout=5)
-    
+
     if($VERBOSE == true)
       puts2("Parameters - handle_win_dialog_security_information:")
       puts2("  sChoice: " + sChoice)
       puts2("  iTimeout: " + iTimeout.to_s)
     end
-    
+
     require 'rautomation'
-    
+
     if(is_win?) # Only run on Windows
-      
+
       require 'win32ole'
-      
+
       # Define the identifiers for the  Windows dialog
       sDialogTitle = "Security Information"
-      
+
       # Create an rAutomation object
       oDialog = RAutomation::Window.new(:title =>  sDialogTitle)
-      
+
       # Determine if the dialog exists
       if(oDialog.exists?())
-        
+
         # Bring dialog to the top
         oDialog.activate()
-        
+
         if($VERBOSE == true)
           puts2("Found Dialog tittled: " + sDialogTitle)
         end
-        
+
         # Determine which action to take
         case sChoice.downcase.strip
           when /yes/
-          
+
           # Identify the control using its - text
           sControlID = "&Yes"
-          
+
           if($VERBOSE == true)
             puts2("Selecting button: " + sControlID)
           end
-          
+
           # Focus on and select the choice
           oDialog.button(:text => sControlID).click()
-          
+
           when /no/
-          
+
           # Identify the control using its - text
           sControlID = "&No"
-          
+
           if($VERBOSE == true)
             puts2("Selecting button: " + sControlID)
           end
-          
+
           # Focus on and select the choice
           oDialog.button(:text => sControlID).click()
-          
+
           when /more info/
-          
+
           # Identify the control using its - text
           sControlID = "&More Info"
-          
+
           if($VERBOSE == true)
             puts2("Selecting button: " + sControlID)
           end
-          
+
           # Focus on and select the choice
           oDialog.button(:text => sControlID).click()
-          
+
         else # No action specified so close the dialog
           if($VERBOSE == true)
             puts2("No specific action specified. Closing dialog...")
           end
           oDialog.close()
-          
+
         end # Determine which action to take
-        
-        
+
+
       end # Determine if the dialog exists
-      
+
     end  # Only run on Windows
-    
+
   end # Method - handle_win_dialog_security_information
-  
+
+
   #=============================================================================#
   #--
   # Method: is_chrome_installed_win?()
@@ -1274,25 +1156,25 @@ module WatirWorks_WinUtilities
   #
   #=============================================================================#
   def is_chrome_installed_win?(iVersion = 17)
-    
+
     if($VERBOSE == true)
       puts2("Parameters - is_chrome_installed_win?:")
       puts2("  iVersion " + iVersion.to_s)
     end
-    
+
     if(is_win?) # Only run on Windows
-      
+
       # Check the Windows registry for a match with major release version
       if(get_registered_chrome_version.prefix(".") == iVersion.to_s)
         return true
       else
         return false
       end
-      
+
     end # Only run on Windows
   end # Function - is_chrome_installed_win?()
-  
-  
+
+
   #=============================================================================#
   #--
   # Method: is_firefox_installed_win?()
@@ -1313,25 +1195,25 @@ module WatirWorks_WinUtilities
   #
   #=============================================================================#
   def is_firefox_installed_win?(iVersion = 3)
-    
+
     if($VERBOSE == true)
       puts2("Parameters - is_firefox_installed_win?:")
       puts2("  iVersion " + iVersion.to_s)
     end
-    
+
     if(is_win?) # Only run on Windows
-      
+
       # Check the Windows registry for a match with major release version
       if(get_registered_firefox_version.prefix(".") == iVersion.to_s)
         return true
       else
         return false
       end
-      
+
     end # Only run on Windows
   end # Function - is_firefox_installed_win?()
-  
-  
+
+
   #=============================================================================#
   #--
   # Method: is_ie_installed?(...)
@@ -1351,14 +1233,14 @@ module WatirWorks_WinUtilities
   #
   #=============================================================================#
   def is_ie_installed?(iVersion = 7)
-    
+
     if($VERBOSE == true)
       puts2("Parameters - is_ie_installed?")
       puts2("  iVersion " + iVersion.to_s)
     end
-    
+
     if(is_win?) # Only run on Windows
-      
+
       # Check the Windows registry for a match with major release version
       if(get_registered_ie_version.prefix(".") == iVersion.to_s)
         return true
@@ -1369,7 +1251,7 @@ module WatirWorks_WinUtilities
       return false
     end # Only run on Windows
   end # Function - is_ie_installed?()
-  
+
   #=============================================================================#
   #--
   # Method: is_opera_installed_win?()
@@ -1390,25 +1272,24 @@ module WatirWorks_WinUtilities
   #
   #=============================================================================#
   def is_opera_installed_win?(iVersion = 10)
-    
+
     if($VERBOSE == true)
       puts2("Parameters - is_opera_installed_win?:")
       puts2("  iVersion " + iVersion.to_s)
     end
-    
+
     if(is_win?) # Only run on Windows
-      
+
       # Check the Windows registry for a match with major release version
       if(get_registered_opera_version.prefix(".") == iVersion.to_s)
         return true
       else
         return false
       end
-      
+
     end # Only run on Windows
   end # Function - is_opera_installed_win?()
-  
-  
+
   #=============================================================================#
   #--
   # Method: is_minimized?(...)
@@ -1431,37 +1312,37 @@ module WatirWorks_WinUtilities
   #
   #=============================================================================#
   def is_minimized?(sWinTitle=self.title, sWinText="")
-    
+
     if($VERBOSE == true)
       puts2("Parameters - is_minimized?:")
       puts2("  sWinTitle: " + sWinTitle)
       puts2("  sWinText: " + sWinText)
     end
-    
+
     if(is_win?) # Only run on Windows
-      
+
       require 'win32ole'
-      
+
       # Create an AutoIt object
       oAutoIt = WIN32OLE.new("AutoItX3.Control")
-      
+
       # Use AutoIt to retrieve the list of all top level windows
       iStatus = oAutoIt.WinGetState(sWinTitle, sWinText)
-      
+
       if(iStatus == 0)
         puts("Browser NOT found")
         return false
       end
-      
+
       if((iStatus >= 16) && (iStatus < 32))
         return true
       else
         return false
       end
-      
+
     end # Only run on Windows
   end # Method - is_minimized?()
-  
+
   #=============================================================================#
   #--
   # Method: is_maximized?(...)
@@ -1486,28 +1367,28 @@ module WatirWorks_WinUtilities
   #
   #=============================================================================#
   def is_maximized?(sWinTitle=self.title, sWinText="")
-    
+
     if($VERBOSE == true)
       puts2("Parameters - is_maximized:")
       puts2("  sWinTitle: " + sWinTitle)
       puts2("  sWinText: " + sWinText)
     end
-    
+
     if(is_win?) # Only run on Windows
-      
+
       require 'win32ole'
-      
+
       # Create an AutoIt object
       oAutoIt = WIN32OLE.new("AutoItX3.Control")
-      
+
       # Use AutoIt to retrieve the list of all top level windows
       iStatus = oAutoIt.WinGetState(sWinTitle, sWinText)
-      
+
       if(iStatus == 0)
         puts2("Browser NOT found")
         return false
       end
-      
+
       if(iStatus >= 32)
         return true
       else
@@ -1515,8 +1396,8 @@ module WatirWorks_WinUtilities
       end
     end # Only run on Windows
   end  # Method - is_maximized?()
-  
-  
+
+
   #=============================================================================#
   #--
   # Method: open_messagebox_win(...)
@@ -1594,48 +1475,48 @@ module WatirWorks_WinUtilities
   #
   #=============================================================================#
   def open_messagebox_win(sPrompt, sTitle="Windows", iButtons=BUTTONS_OK)
-    
+
     if($VERBOSE == true)
       puts2("Parameters - open_messagebox_win:")
       puts2("  sPrompt: " + sPrompt)
       puts2("  sTitle: " + sTitle)
       puts2("  iButtons: " + iButtons.to_s)
     end
-    
+
     require 'dl'
-    
+
     if(is_win?) # Only run on Windows
-      
+
       # Disallow numbers outside the button index range (0-6)
       if((iButtons < 0) | (iButtons > 6))
         iButtons = BUTTONS_OK
       end
-      
+
       # Access the Window's dynamic linked library user32.dll
       user32dll = DL.dlopen('user32')
-      
+
       # Create a message box object from the dll
       oMsgbox = user32dll['MessageBoxA', 'ILSSI']
-      
+
       # Open the  message box and read the response
       oResponse = oMsgbox.call(0, sPrompt, sTitle, iButtons)
-      
+
       oMyChoice = oResponse[0,1].to_s  # Read the 1st character and convert to a STRING
-      
+
       iMyChoice = oMyChoice.to_i  # Convert STRING to FIXNUM
-      
+
       return iMyChoice
-      
+
     else # Its NOT windows
-      
+
       return -1 # Return error code as this was NOT executed on Windows
-      
-      
+
+
     end # Only run on Windows
-    
+
   end # Method - open_messagebox_win()
-  
-  
+
+
   #=============================================================================#
   #--
   # Method: pause()
@@ -1654,19 +1535,19 @@ module WatirWorks_WinUtilities
   #
   #=============================================================================#
   def pause(sPrompt = "Execition paused. \n\nSelect OK to Continue", sTitle = "Watir Works")
-    
+
     if($VERBOSE == true)
       puts2("Parameters - pause:")
       puts2("  sPrompt: " + sPrompt)
       puts2("  sTitle: " + sTitle)
     end
-    
+
     if(is_win?) # Only run on Windows
       open_messagebox_win(sPrompt, sTitle, BUTTONS_OK)
     end # Only run on Windows
   end # Function - pause()
-  
-  
+
+
   #=============================================================================#
   #--
   # Method: popup_watchpoint(...)
@@ -1692,308 +1573,43 @@ module WatirWorks_WinUtilities
   #
   #=============================================================================#
   def popup_watchpoint(aWatchList = nil, sPrompt = "Watchpoint \n\nSelect Yes to record variables and continue execution \nSelect No to NOT record variables and continue execution \nSelect Cancel to record variables and exit", sTitle = "Ruby Framework")
-    
+
     if(is_win?) # Only run on Windows
-      
+
       # Display the IE Message box and read the user's response
       iUserResponse = open_messagebox_win(sPrompt, sTitle, BUTTONS_YES_NO_CANCEL)
-      
+
       # Perform the operation specified by the user's response
       case iUserResponse
-        
+
         when  SELECTED_YES       # Continue after recording the variables
-        
+
         puts2("Continuing after recording the following variables")
-        
+
         # Continue without recording the variables
         watchlist(aWatchList)
         puts2("")
-        
+
         when SELECTED_NO   # Continue without recording the variables
-        
+
         puts2("Continuing execution")
-        
-        
+
+
       else # Exit after Recording the variables
-        
+
         puts2("Exiting after recording the following variables")
-        
+
         # Record variables
         watchlist(aWatchList)
         puts2("")
-        
+
         exit
-        
+
       end # Case statement
     end # Only run on Windows
   end # Method - popup_watchpoint()
-  
-  
-  #=============================================================================#
-  #--
-  # Method: parse_spreadsheet_xls(...)
-  #++
-  # Deprecated, please use parse_spreadsheet()
-  #
-  # Description: Returns a hashed array containing data read from the
-  #              specified cell range, on the specified spreadsheet, in the
-  #              specified Excel workbook file, in the specified sub-directory.
-  #
-  # Syntax:
-  #         sXLSFilename = Excel workbook's filename
-  #         sSpreadsheet = Spreadsheet (tabsheet) in the Excel workbook
-  #         sRange = Range of cells to read (e.g. A1:AZ99) within the Spreadsheet
-  #                  If set to "" the range will be auto-detected starting at either cell A1 or if specified sLabel
-  #         bRowData = true of data records are by row, false if data records are by column
-  #         sFolderName = name of the sub-directory that holds the workbook file
-  #         sLabel = string of label of the first record to use as starting point of cell range
-  #
-  # Returns: HASH - A hashed array of STRINGS
-  #
-  # Pre-requisites: The XLS data file must exist in the sub-directory DATA_DIR
-  #                 Data must be contained in a contiguous block on one spreadsheet.
-  #                 If Spreadsheet holds records as rows:
-  #                     Data columns must have headings in first row of the range.
-  #                 If Spreadsheet holds records as columns:
-  #                     Data rows must have headings in first column of the range.
-  #=============================================================================#
-  def parse_spreadsheet_xls(sXLSFilename="", sSpreadsheet="", sRange="", bRowData=true, sFolderName=DATA_DIR, sLabel="")
-    
-    if($VERBOSE == true)
-      puts2("Parameters - parse_spreadsheet_xls:")
-      puts2("  sXLSFilename: " + sXLSFilename)
-      puts2("  sSpreadsheet: " + sSpreadsheet)
-      puts2("  sRange: " + sRange)
-      puts2("  bRowData: " + bRowData.to_s)
-      puts2("  sFolderName: " + sFolderName)
-      puts2("  sLabel: " + sLabel)
-    end
-    
-    if(is_win?) # Only run on Windows
-      
-      # The Excel library
-      require "watirworks/Xls.rb"
-      
-      # Find the location of the directory holding the testsuite data
-      sDataDir = find_folder_in_tree(sFolderName)
-      
-      # Define the expected full path to the file
-      sFullPathToXLSFile = File.join(sDataDir, sXLSFilename)
-      
-      # Verify that the file exists in the specified location
-      if(File.exist?(sFullPathToXLSFile))
-        puts2("Reading spreadsheet #{sSpreadsheet} from Excel workbook file found at: #{sFullPathToXLSFile}")
-        
-      else
-        puts2("*** WARNING - Excel workbook file not found: #{sFullPathToXLSFile}", "WARN")
-        
-      end # Verify that the file exists in the specified location
-      
-      begin
-        
-        if($VERBOSE == true)
-          puts2("Opening Excel workbook: " + sFullPathToXLSFile)
-          puts2("sSpreadsheet: " + sSpreadsheet )
-          puts2("sRange: " + sRange.to_s )
-          puts2("bRowData: " + bRowData.to_s )
-          puts2("sLabel: " + sLabel.to_s )
-        end
-        
-        
-        # Define a null array to hold the data
-        aXLSData = nil
-        
-        # Open the PMC Login XLS file and read each record (record=row)
-        sWorkbook = XLS.new(sFullPathToXLSFile)
-        
-        if((sRange == nil) | (sRange = ""))
-          #sRange = sWorkbook.getRangebyLabel(sLabel, sSpreadsheet)  # Deprecated ?
-          sRange = sWorkbook.getRange(sLabel, sSpreadsheet)
-          
-        end
-        
-        if((sRange == nil) | (sRange = ""))
-          #	    puts2("*** WARNING - Unable to auto-find Cell Range", "WARN")
-        end
-        
-        
-        if($VERBOSE == true)
-          puts2("Cell range: " + sRange.to_s)
-        end
-        
-        # Read the data by row or by column
-        if(bRowData)
-          
-          # Read that data from the spreadsheet range by row into a hashed array
-          # with each element of the array = row in the spreadsheet
-          aXLSData = sWorkbook.getRowRecords(sRange, sSpreadsheet)
-          
-        else
-          
-          # Read that data from the spreadsheet range by column into a hashed array
-          # with each element of the array = row in the spreadsheet
-          aXLSData = sWorkbook.getColumnRecords(sRange, sSpreadsheet)
-        end
-        
-        # Close the workbook
-        sWorkbook.close
-        
-        return aXLSData
-        
-      rescue => e
-        
-        # log the error message
-        puts2("*** WARNING - Reading data from Excel failed", "WARN")
-        # Log the backtrace
-        puts2("*** WARNING and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"))
-        
-      end
-    end # Only run on Windows
-  end # Method - parse_spreadsheet_xls()
-  
-  
-  #=============================================================================#
-  #--
-  # Method: parse_workbook_xls(...)
-  #++
-  #
-  # Deprecated, please use parse_spreadsheet()
-  #
-  # Description: Returns a hash of hashes containing data read from the
-  #              specified cell range on the specified spreadsheets from the
-  #              specified Excel workbook file in the specified sub-directory.
-  #
-  #              Data may be assigned to records as rows or columns on the sheets, but all
-  #              sheets must follow the same scheme (either rows or columns).
-  #              Each spreadsheet name is used as the hash key for accessing that sheet's data.
-  #              Within that sheet's data each spreadhseet's headings (for column or row)
-  #              are used as keys for accessing that headings's data.
-  #
-  # Syntax:
-  #         sWorkbook = STRING - Excel workbook's filename
-  #         aSpreadsheet_List = ARRAY - Containing the Spreadsheets (tabsheet) in the Excel workbook to read data from.
-  #                                     These names must be exact matches of the names on the sheet tabs, and can NOT contain spaces!
-  #
-  #         sRange = STRING - Range of cells to read (e.g. A1:AZ99) within the Spreadsheet
-  #                           If set to "" the range will be auto-detected starting at either cell A1 or if specified sLabel
-  #
-  #         bDataInRows = BOOLEAN - true of data records are by row, false if data records are by column
-  #
-  #         sSubDirName = STRING - name of the sub-directory that holds the workbook file
-  #
-  #         sLabel = STRING - (defaults label at A1) string of label of the first record to use as starting point of cell range.
-  #
-  # Returns: HASH - A hash of hashes containing all the data from all of the sheets.
-  #                 Use the sheet name as the key for accessing an individual sheets data hash
-  #                 Within that individual sheets data hash, use the heading as the key for accessing the data in that (row or column)
-  #
-  # Pre-requisites: The XLS data file must exist in the specified data directory
-  #                 Data must be contained in a contiguous block each spreadsheet
-  #
-  #                 Neither the directory name, the workbook, the spreadsheet, nor the headings may contain spaces.
-  #
-  #                 Data on every sheet must be in either rows or in columns, no mixing.
-  #                 If Spreadsheet holds records as rows:
-  #                    Data columns must have headings in first row of the range.
-  #                 If Spreadsheet holds records as columns:
-  #                    Data rows must have headings in first column of the range.
-  #
-  #
-  # Usage example: To Read data from multiple sheets in the workbook:
-  #
-  #                    sDataDirectory = DATA_DIR
-  #                    sWorkbook = "PMC_EditProducer_Data.xls"
-  #                    bDataInRows = true
-  #                    sCellRange = ""
-  #                    sLabel = ""
-  #                    aSpreadsheet_List = ["Search_Control",
-  #                                         "Add_Authorization",
-  #                                         "Add_Contact",
-  #                                         "Add_License",
-  #                                         "Add_Location"
-  #                                         ]
-  #
-  #                     hMy_Hash = sSpreadsheet_Name => parse_workbook_xls(sWorkbook, sSpreadsheet_Name, sCellRange, bDataInRows, sDataDirectory, sLabel)
-  #
-  #=============================================================================#
-  #
-  def parse_workbook_xls(sWorkbook=nil, aSpreadsheet_List=nil, sCellRange="", bDataInRows=true, sDataDirectory=DATA_DIR, sLabel="")
-    
-    if($VERBOSE == true)
-      puts2("Parameters - parse_workbook_xls:")
-      puts2("  sWorkbook: " + sWorkbook)
-      puts2("  sSpreadsheet: " + sSpreadsheet)
-      puts2("  sCellRange: " + sCellRange)
-      puts2("  bDataInRows: " + bDataInRows.to_s)
-      puts2("  sDataDirectory: " + sDataDirectory)
-      puts2("  sLabel: " + sLabel)
-    end
-    
-    if(is_win?) # Only run on Windows
-      
-      begin # BEGIN - Read each spreadsheet's data into a separate hash ###
-        
-        # Define top level hash
-        hWorkbookHash = {}
-        
-        # Loop through the list of spreadsheets, assigning the data from each to a separate array.
-        aSpreadsheet_List.each do |sSpreadsheet_Name|  # BEGIN - Loop to read data from spreadsheets
-          
-          if($VERBOSE == true)
-            puts2("###################################")
-            puts2("Reading data from:")
-            puts2(" Workbook: " + sDataDirectory + "/" + sWorkbook)
-            puts2(" Spreadsheet: " + sSpreadsheet_Name)
-            puts2(" Cell Range: " + sCellRange)
-            puts2(" Records by Row: " + bDataInRows.to_s)
-          end
-          
-          # Define unique name for each hash
-          hSpreadsheetHash = sSpreadsheet_Name
-          
-          # Read in the data file
-          hSpreadsheetHash = {sSpreadsheet_Name => parse_spreadsheet_xls(sWorkbook, sSpreadsheet_Name, sCellRange, bDataInRows, sDataDirectory, sLabel)}
-          
-          if($VERBOSE == true)
-            puts2("")
-            puts2(" Data read from spreadsheet:")
-            puts2("  Sheet = " + sSpreadsheet_Name)
-            puts2("  Data read= " + hSpreadsheetHash[sSpreadsheet_Name].to_s)
-          end
-          
-          
-          # Add the current spreadsheet data hash to the workbook hash
-          hWorkbookHash [sSpreadsheet_Name] = hSpreadsheetHash[sSpreadsheet_Name]
-          
-          if($VERBOSE == true)
-            puts2("")
-            puts2(" Current key = " + sSpreadsheet_Name)
-            puts2(" Current data = " + hWorkbookHash[sSpreadsheet_Name].to_s)
-            
-            puts2("")
-            puts2(" Complete contents of top level hash")
-            hWorkbookHash.each {|hKey,hData| puts2("    Spreadsheet Key: = #{hKey} \n    Spreadsheet DataHash: #{hData} \n")}
-          end
-          
-        end # END - Loop to read data from spreadsheets
-        
-      rescue => e
-        
-        puts2("*** WARNING - Reading Data", "WARN")
-        puts2("*** WARNING and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"))
-        
-        # Raise the error with a custom message after the rest of the rescue actions
-        raise("*** METHOD - parse_workbook_xls(...)")
-        
-      ensure
-        
-        return hWorkbookHash
-        
-      end # END - Read each spreadsheet's data into a separate hash
-    end # Only run on Windows
-  end # Method - parse_workbook_xls()
-  
-  
+
+
   #=============================================================================#
   #--
   # Method: save_screencapture_win(...)
@@ -2040,7 +1656,7 @@ module WatirWorks_WinUtilities
   #
   #=======================================================================#
   def save_screencapture_win(sFileNamePrefix="Image", bActiveWindowOnly=true, bSaveAsJpg=true, sOutputDir="")
-    
+
     if($VERBOSE == true)
       puts2("Parameters - save_screencapture_win:")
       puts2("  sFileNamePrefix: " + sFileNamePrefix)
@@ -2048,20 +1664,20 @@ module WatirWorks_WinUtilities
       puts2("  bSaveAsJpg: " + bSaveAsJpg.to_s)
       puts2("  sOutputDir: " + sOutputDir)
     end
-    
+
     if(is_win?) # Only run on Windows
-      
+
       # Require the Watir screen capture method files
       require 'watir/screen_capture'
-      
+
       # Save original Global variable's setting
       bHIDE_IE_ORIG = $HIDE_IE
-      
+
       # Find a location on the local Windows filesystem that will allow this unit test to write a file
       if(sOutputDir == "")
         # Use the OS's default Temporary directory
         # sOutputDir = find_tmp_dir()
-        
+
         # Save to the results directory if a logger is running
         if($sLoggerResultsDir.nil?)
           # Use the OS's default Temporary directory
@@ -2069,16 +1685,16 @@ module WatirWorks_WinUtilities
         else
           # Correct path for windows (switch and / with \)
           sOutputDir = $sLoggerResultsDir.gsub('/', '\\')
-          
+
         end
-        
+
       end
-      
+
       # Unable to capture the screen if the browser is hidden
       if(($HIDE_IE == true) & (self != nil))
         self.visible = true
       end
-      
+
       # Define file extension
       if bSaveAsJpg
         sFileExt = ".jpg"
@@ -2087,42 +1703,42 @@ module WatirWorks_WinUtilities
         sFileExt = ".bmp"
         bSaveAsBMP = true
       end
-      
-      
+
+
       # Define the region of the capture
       if bActiveWindowOnly
         sScreen_Region = "_window_"
-        
+
         # Minimize the Ruby Console window so it doesn't block the browser window
         minimize_ruby_console()
-        
+
       else
         sScreen_Region = "_desktop_"
       end
-      
+
       # Combine the elements to make a unique file name prefix
       sFilename = sFileNamePrefix + sScreen_Region + Time.now.strftime(DATETIME_FILEFORMAT).to_s + sFileExt
-      
+
       sFullPathToImageFile = sOutputDir + "\\" + sFilename
       #sFullPathToImageFile = File.join(sOutputDir, sFilename)
-      
+
       # Perform the screen capture of the web page
       screen_capture( sFullPathToImageFile , bActiveWindowOnly, bSaveAsBMP )
-      
+
       puts2("Saved image to: #{sFullPathToImageFile}")
-      
+
       # Restore Global variable's original setting
       $HIDE_IE = bHIDE_IE_ORIG
-      
+
       # Return the browser to its original state
       if(($HIDE_IE == true) & (self != nil))
         self.visible = false
       end
-      
+
     end # Only run on Windows
-    
+
   end # Method - save_screencapture_win()
-  
+
 end # END Module - WatirWorks_WinUtilities
 
 
@@ -2138,7 +1754,7 @@ end # END Module - WatirWorks_WinUtilities
 #++
 #=============================================================================#
 class Watir::Element
-  
+
   #=============================================================================#
   #--
   # Method: set_no_wait(...)
@@ -2179,7 +1795,7 @@ class Watir::Element
     @page_container.eval_in_spawned_process(object + ".set")
     highlight(:clear)
   end
-  
+
 end # Class Watir::Element
 
 
@@ -2202,56 +1818,8 @@ end # Class Watir::Element
 #++
 #=============================================================================#
 class Watir::IE
-  
-  
-  #=============================================================================#
-  #--
-  # Method: brand()
-  #
-  #++
-  #
-  # Description: Returns the brand of the current browser (IE, Firefox, Chrome, Safari)
-  #              Uses a JavaScript object method that is recognized by most browsers.
-  #              Based on info at: http://www.w3schools.com/js/js_browser.asp
-  #              To debug browse this URL: javascript:alert(window.navigator.userAgent);
-  #
-  # Usage Examples: To verify that the current browser is a Firefox browser:
-  #                    sBrand = browser.brand()
-  #                    assert(sBrand == "Firefox")
-  #
-  #=============================================================================#
-  def brand()
-    
-    if($bUseWebDriver == false)
-      sRawType = self.execute_script("window.navigator.userAgent")
-    else
-      sRawType = self.execute_script("return window.navigator.userAgent")
-    end
-    
-    if($VERBOSE == true)
-      puts2(sRawType)
-    end
-    
-    if(sRawType =~ /MSIE \d/)
-      sBrand = "IE"
-    elsif(sRawType =~ /Firefox\//)
-      sBrand = "Firefox"
-    elsif(sRawType =~ /Chrome\//)
-      sBrand = "Chrome"
-    elsif(sRawType =~ /Safari\/\d\.\d/)
-      sBrand = "Safari"
-    elsif(sRawType =~ /Opera\//)
-      sBrand = "Opera"
-    else
-      sBrand = "Unknown"
-    end
-    
-    # puts2(sBrand)
-    
-    return sBrand
-    
-  end # Method - brand()
-  
+
+
   #=============================================================================#
   #--
   # Method: moveBy(...)
@@ -2278,11 +1846,11 @@ class Watir::IE
   #
   #=============================================================================#
   def moveBy(iXPos=0, iYPos=0)
-    
+
     self.goto("javascript:window.moveBy(#{iXPos},#{iYPos})")
   end # moveBy()
-  
-  
+
+
   #=============================================================================#
   #--
   # Method: moveTo(...)
@@ -2309,18 +1877,18 @@ class Watir::IE
   #
   #=============================================================================#
   def moveTo(iXPos=0, iYPos=0)
-    
+
     if(iXPos <0)
       iXPos = 0
     end
     if(iYPos <0)
       iYPos = 0
     end
-    
+
     self.goto("javascript:window.moveTo(#{iXPos},#{iYPos})")
   end # moveTo()
-  
-  
+
+
   #=============================================================================#
   #--
   # Method: resizeBy(...)
@@ -2345,11 +1913,11 @@ class Watir::IE
   #
   #=============================================================================#
   def resizeBy(iHeight=0, iWidth=0)
-    
+
     self.goto("javascript:window.resizeBy(#{iHeight},#{iWidth})")
   end # resizeTo()
-  
-  
+
+
   #=============================================================================#
   #--
   # Method: resizeTo(...)
@@ -2374,18 +1942,18 @@ class Watir::IE
   #
   #=============================================================================#
   def resizeTo(iHeight=640, iWidth=480)
-    
+
     if(iHeight <1)
       iHeight = 1
     end
     if(iWidth <1)
       iWidth = 1
     end
-    
+
     self.goto("javascript:window.resizeTo(#{iHeight},#{iWidth})")
   end # resizeTo()
-  
-  
+
+
   #=============================================================================#
   #--
   # Method: restart(...)
@@ -2412,46 +1980,46 @@ class Watir::IE
   #
   #=============================================================================#
   def restart(sURL ="", bClearCache = false)
-    
+
     if($VERBOSE == true)
       puts2("Parameters - restart:")
       puts2("  sURL: " + sURL)
     end
-    
+
     puts2("Closing the browser...")
-    
+
     if(sURL=="")
       sURL = self.url
     end
-    
+
     self.close
-    
+
     if($browser == self) # If a Global Browser Object exists remove it
       $browser = nil
     end
-    
+
     # Allow time to mourn the passing of the old browser.
     sleep 3  # That's long enough to mourn
-    
+
     if(bClearCache == true)
       clear_cache()
     end
-    
+
     puts2("Starting a new browser object...")
-    
+
     # Create a new browser object using Watir's method directly
     # Can't use start_Browser() as both local and Global Browser's may coexist
     oBrowser = Watir::IE.new
     oBrowser.goto(sURL)
-    
+
     # Allow time to celebrate the birth of the new browser.
     sleep 2  # That's long enough to celebrate
-    
+
     return oBrowser  # Return the new browser.
-    
+
   end # END Method - restart()
-  
-  
+
+
   #=============================================================================#
   #--
   # Method: scrollBy(...)
@@ -2478,10 +2046,10 @@ class Watir::IE
   #
   #=============================================================================#
   def scrollBy(iHorizontal=0, iVertical=0)
-    
+
     self.goto("javascript:window.scrollBy(#{iHorizontal},#{iVertical})")
   end # scrollBy()
-  
+
   #=============================================================================#
   #--
   # Method: title()
@@ -2508,7 +2076,7 @@ class Watir::IE
     end
      (myTitle == "")? title_from_url : myTitle
   end
-  
+
   #=============================================================================#
   #--
   # Method: title_from_url()
@@ -2528,66 +2096,8 @@ class Watir::IE
     loc = url # relies on IE.url to return @ie.locationUrl and not @ie.document.url
      (loc[0,8] == "file:///") ? loc.split("file:///")[1].gsub("/", '\\') : loc
   end
-  
-  
-  #=============================================================================#
-  #--
-  # Method: version()
-  #
-  #++
-  #
-  # Description: Returns the version of the current browser.
-  #              Uses a JavaScript object method that is recognized by most browsers.
-  #              Based on info at: http://www.w3schools.com/js/js_browser.asp
-  #              To debug browse this URL: javascript:alert(window.navigator.userAgent);
-  #
-  # Usage Examples: To verify that the current Firefox browser's version is > 9:
-  #                    sVersion = browser.version()
-  #                    assert(sVersion >= "9")
-  #
-  #=============================================================================#
-  def version()
-    
-    if($bUseWebDriver == false)
-      sRawType = self.execute_script("window.navigator.userAgent")
-    else
-      sRawType = self.execute_script("return window.navigator.userAgent")
-    end
-    
-    if($VERBOSE == true)
-      puts2(sRawType)
-    end
-    
-    if(sRawType =~ /MSIE \d/)
-      # IE 8.0 returns this:
-      #   Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; WOW64; Trident/4.0; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; .NET CLR 3.5.30729; .NET CLR 3.0.30729; .NET4.0C; MS-RTC LM 8)
-      sVersion = sRawType.remove_prefix(";").prefix(";").remove_prefix(" ")
-    elsif(sRawType =~ /Firefox\//)
-      # Firefox 3.6.28 returns this:
-      #   Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.28) Gecko/20120306 Firefox/3.6.28
-      sVersion = sRawType.suffix("/").prefix(" ")
-    elsif(sRawType =~ /Chrome\//)
-      # Chrome 17.0.963.79 returns this:
-      #   Mozilla/5.0 (Windows NT 6.0; WOW64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.79 Safari/535.11
-      sVersion = sRawType.suffix(")").remove_prefix("/").prefix(" ")
-    elsif(sRawType =~ /Safari\/\d\.\d/)
-      # Safari 5.1.4 returns this:
-      #   Mozilla/5.0 (Windows NT 6.0; WOW64) AppleWebKit/534.54.16 (KHTML, like Gecko) Version/5.1.4 Safari/5.3.4.54.16
-      sVersion = sRawType.suffix(")").remove_prefix("/").prefix(" ")
-    elsif(sRawType =~ /Opera\//)
-      # Opera 11.61 returns this:
-      #   Opera/9.80 (Windows NT 6.0; U; en) Presto/2.10.229 Version/11.61
-      sVersion = sRawType.suffix("/")
-    else
-      sVersion = "-1"
-    end
-    
-    # puts2(sVersion)
-    
-    return sVersion
-  end # Method - version()
-  
-  
+
+
 end  # END Class - Watir::IE
 #=end
 
@@ -2606,7 +2116,7 @@ if(is_webdriver? == false)
   #++
   #=============================================================================#
   class Watir::SelectList
-    
+
     #=============================================================================#
     #--
     # Method: wait_until_count(...)
@@ -2634,52 +2144,52 @@ if(is_webdriver? == false)
     #
     #=============================================================================#
     def wait_until_count(iMin, iTimeout=10, iInterval=0.1)
-      
+
       if($VERBOSE == true)
         puts2("Parameters - wait_until_count:")
         puts2("  iMin: " + iMin.to_s)
         puts2("  iTimeout: " + iTimeout.to_s)
         puts2("  iInterval: " + iInterval.to_s)
       end
-      
+
       # Disallow values less that one
       if(iTimeout <= 1)
         iTimeout = 1
       end
-      
+
       if(iInterval <= 0.1)
         iInterval = 0.1
       end
-      
+
       if(iMin <= 0)
         iMin = 0
       end
-      
+
       tStartTime = Time.now
       tElapsedTime = 0
-      
+
       if($VERBOSE == true)
         puts2("Number of select list items: " +     self.options.length.to_s)
       end
-      
+
       # Loop until the select lists's item count
       # reached the specified minimum or timeout is exceeded
       while ((self.options.length < iMin) && (tElapsedTime <= iTimeout)) do
-        
+
         if($VERBOSE == true)
           puts2("Number of select list items: " +     self.options.length.to_s)
         end
-        
+
         sleep iInterval
         tElapsedTime = calc_elapsed_time(tStartTime).to_f
-        
+
       end # Loop
-      
+
       # In case the timeout was reached need to check once more to set the return status
       return(self.options.length >= iMin)
-      
+
     end # Method - wait_until_count(...)
-    
+
     #=============================================================================#
     #--
     # Method: wait_until_text(...)
@@ -2707,48 +2217,45 @@ if(is_webdriver? == false)
     #
     #=============================================================================#
     def wait_until_text(sString="", iTimeout=10, iInterval=0.1)
-      
+
       if($VERBOSE == true)
         puts2("Parameters - wait_until_text:")
         puts2("  sString: " + sString.to_s)
         puts2("  iTimeout: " + iTimeout.to_s)
         puts2("  iInterval: " + iInterval.to_s)
       end
-      
+
       # Disallow values less that one
       if(iTimeout <= 1)
         iTimeout = 1
       end
-      
+
       if(iInterval <= 0.1)
         iInterval = 0.1
       end
-      
+
       tStartTime = Time.now
       tElapsedTime = 0
-      
+
       # Loop until the select list contains the specified text
       # or timeout is exceeded
       while ((self.include?(/#{sString}/) == false) && (tElapsedTime <= iTimeout)) do
-        
+
         if($VERBOSE == true)
           puts2("Select list text: " + self.options.to_s)
         end
-        
+
         sleep iInterval
         tElapsedTime = calc_elapsed_time(tStartTime).to_f
-        
+
       end # Loop
-      
+
       # In case the timeout was reached need to check once more to set the return status
       return (self.include?(/#{sString}/))
-      
+
     end # Method - wait_until_text(...)
-    
+
   end # Class Watir::SelectList
 end  # Skip if using webdriver
-
-
-
 
 # END File - watirworks_win-utilities.rb

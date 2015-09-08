@@ -20,6 +20,8 @@
 #=============================================================================#
 require 'rubygems'
 
+$bUseWebDriver = true
+
 if($bUseWebDriver == nil)
   $bUseWebDriver = false
 end
@@ -129,6 +131,8 @@ class UnitTest_WinDialogs < Test::Unit::TestCase
     puts2("#######################")
     puts2("Testcase: test_WinDialogs_001_WinMessageBox")
     puts2("#######################")
+
+    $VERBOSE = true
 
     if(is_win? == false)
 	    puts2("Only supported in Windows")

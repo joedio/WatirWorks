@@ -3,7 +3,7 @@
 # File: watirworks_browser_unittest.rb
 #
 #
-#  Copyright (c) 2008-2012, Joe DiMauro
+#  Copyright (c) 2008-2010, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for WatirWorks methods using the Internet Explorer, Firefox & Chrome browser's:
@@ -11,8 +11,9 @@
 #                          display_watir_env()
 #                          start_browser(..)
 #                          is_chrome?(...)
-#                          is_ie?(...)
 #                          is_firefox?(...)
+#                          is_ie?(...)
+#                          is_opera?(...)
 #                          wait_until_status(..)
 #                          kill_browsers()
 #                          is_maximized?(...)
@@ -31,9 +32,10 @@
 #=============================================================================#
 require 'rubygems'
 
+$bUseWebDriver = true
+
 if($bUseWebDriver == nil)
   $bUseWebDriver = false
-  #$bUseWebDriver = true
 end
 
 # WatirWorks
@@ -169,9 +171,10 @@ class Unittest_Browser < Test::Unit::TestCase
   #                   Displays info on the browser, url, and the HTML document each is displaying.
   #
   #  Test methods: start_browser(...)
-  #                       is _chrome(?...)
-  #                       is_ie?(...)
+  #                       is_chrome?(...)
   #                       is_firefox?(...)
+  #                       is_ie?(...)
+  #                       is_opera(...)?
   #                       wait_until_status(...)
   #                       kill_browsers()
   #===========================================================================#
@@ -208,39 +211,24 @@ class Unittest_Browser < Test::Unit::TestCase
 
       puts2("\nIs a Global browser running: " + is_global_browser_running?.to_s + "\n\n")
 
-      puts2("Browser brand: " + oLocalBrowser_1.brand)
-      puts2("Browser version: " + oLocalBrowser_1.version)
-
       sCurrentURL = oLocalBrowser_1.url
       puts2("Current URL: " + sCurrentURL)
 
       puts2("\nIs it a Android browser?: " + oLocalBrowser_1.is_android?.to_s)
-
       puts2("\nIs it a Chrome browser?: " + oLocalBrowser_1.is_chrome?.to_s)
-      for iVersion in 15..19
-        puts2("Is it an Chrome " + iVersion.to_s + ".x browser?: " + oLocalBrowser_1.is_chrome?(iVersion).to_s)
-      end
-
-      puts2("\nIs it a Firefox browser?: " + oLocalBrowser_1.is_firefox?.to_s)
-      for iVersion in 2..12
-        puts2("Is it an Firefox " + iVersion.to_s + ".x browser?: " + oLocalBrowser_1.is_ff?(iVersion).to_s)
-      end
+      puts2("Is it a Opera browser?: " + oLocalBrowser_1.is_opera?.to_s)
+      puts2("Is it a Safari browser?: " + oLocalBrowser_1.is_safari?.to_s)
 
       puts2("\nIs it an IE browser?: " + oLocalBrowser_1.is_ie?.to_s)
-      for iVersion in 6..11
-        puts2("Is it an IE " + iVersion.to_s + ".x browser?: " + oLocalBrowser_1.is_ie?(iVersion).to_s)
-      end
+      puts2("Is it an IE 9.x browser?: " + oLocalBrowser_1.is_ie?(9).to_s)
+      puts2("Is it an IE 10.x browser?: " + oLocalBrowser_1.is_ie?(10).to_s)
+      puts2("Is it an IE 11.x browser?: " + oLocalBrowser_1.is_ie?(11).to_s)
 
-      puts2("\nIs it a Opera browser?: " + oLocalBrowser_1.is_opera?.to_s)
-      for iVersion in 10..13
-        puts2("Is it an Opera " + iVersion.to_s + ".x browser?: " + oLocalBrowser_1.is_opera?(iVersion).to_s)
-      end
-
-      puts2("\nIs it a Safari browser?: " + oLocalBrowser_1.is_safari?.to_s)
-      for iVersion in 4..6
-        puts2("Is it an Safari " + iVersion.to_s + ".x browser?: " + oLocalBrowser_1.is_safari?(iVersion).to_s)
-      end
-
+      puts2("\nIs it a Firefox browser?: " + oLocalBrowser_1.is_firefox?.to_s)
+      puts2("Is it a Firefox 39.x browser?: " + oLocalBrowser_1.is_firefox?(39).to_s)
+      puts2("Is it a Firefox 40.x browser?: " + oLocalBrowser_1.is_firefox?(40).to_s)
+      puts2("Is it a Firefox 41.x browser?: " + oLocalBrowser_1.is_firefox?(41).to_s)
+      puts2("Is it a Firefox 42.x browser?: " + oLocalBrowser_1.is_firefox?(42).to_s)
 
       puts2("\nBrowser's status text = " + oLocalBrowser_1.status)
 
@@ -303,8 +291,6 @@ class Unittest_Browser < Test::Unit::TestCase
       raise("*** TESTCASE - test_Browser_003_LocalBrowsers")
 
     ensure
-
-
 
     end # Start local browsers
 

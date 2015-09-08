@@ -1,6 +1,4 @@
-=begin rdoc
-
-:title:WatirWorks Rdoc
+WatirWorks
 
 Copyright (c) 2008-2012, Joe DiMauro. All rights reserved.
 
@@ -164,7 +162,7 @@ From the Console type the following commands:
 * These Gem dependencies should Download and install with WatirWorks. They are listed here in case you want to manually install them:
      gem install ffi -v1.0.9
      gem install roo -v10.0.1
-     
+
 * Download and install WatirWorks
 
   If all is working up to this point proceed to the WatirWorks installation.
@@ -260,5 +258,3 @@ Acknowledgments:
       Zeljko Filipin  - Thanks for assistance on how to pass methods as variables.
 
    Thanks for your ideas and support!
-
-=end

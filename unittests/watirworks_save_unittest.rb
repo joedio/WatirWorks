@@ -17,6 +17,8 @@
 #=============================================================================#
 require 'rubygems'
 
+$bUseWebDriver = true
+
 if($bUseWebDriver == nil)
   $bUseWebDriver = false
 end
