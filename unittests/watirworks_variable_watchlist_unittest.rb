@@ -1,8 +1,8 @@
 #--
 #=============================================================================#
-# File: watirworks_watchlist_unittest.rb
+# File: watirworks_variable_watchlist_unittest.rb
 #
-#  Copyright (c) 2008-2010, Joe DiMauro
+#  Copyright (c) 2008-2015, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for WatirWorks methods:

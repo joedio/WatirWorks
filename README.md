@@ -1,15 +1,15 @@
 WatirWorks
 
-Copyright (c) 2008-2012, Joe DiMauro. All rights reserved.
+Copyright (c) 2008-2015, Joe DiMauro. All rights reserved.
 
 = Welcome to WatirWorks!
 
 == Introduction
 
-WatirWorks is a test toolkit for Ruby, Watir, FireWatir, Watir-webdriver.
+WatirWorks is a test toolkit for Ruby, and  Watir-webdriver.
 
 Its a collection of information and utilities written in Ruby and Watir for developing and executing automated tests.
-Its focused at testers who are just starting to use Ruby/Watir. As such it is highly documented to help get folks on board. While
+Its focused at testers who are just starting to use Ruby/WatirWebdriver. As such it is highly documented to help get folks on board. While
 Ruby and Watir to some extent are more of a programming language than a toolkit WatirWorks aims to provide several tools for your
 toolkit.
 
@@ -30,12 +30,12 @@ WatirWorks also contains:
   * Mexico State abbreviations (per www.iowa.gov/tax/forms/84055.pdf)
   * Country Codes recognized by the United Nations
   * A list of Top-Level-Domains (per http://icann.org)
-* A dictionary file (dictionary_en.txt) and methods to access it
-* Web utilities for testing of GUI based applications via Watir's supported web browsers (Internet Explorer, FireFox)
+* A dictionary file (english.dictionary) for use with Eclipse, and methods to access it
+* Web utilities for testing of GUI based applications via WatirWebdriver's supported web browsers (Internet Explorer, FireFox, Chrome, Safari)
 * Full RDoc documentation
 * Open Source libraries to access Microsoft Excel workbooks by liujunjun (Xls.rb) http://code.google.com/p/wwatf/source/browse/#svn/trunk/util
   and David Brown   http://wiki.openqa.org/display/WTR/Excel+interface+class
-* Methods that add or extend the abilities of Ruby and Watir:
+* Methods that add or extend the abilities of Ruby and WatirWebdriver:
   * General Utilities (watirworks_utilities.rb)
   * Web Application Utilities (watirworks_web-utilities.rb)
   * Windows Utilities (watirworks_win-utilities.rb)
@@ -47,12 +47,12 @@ WatirWorks also contains:
   * TestWise - A Watir Development Environment with a recorder
   * RDE - The Ruby Development Environment
   * FreeRIDE - A Ruby IDE written in Ruby
-  * Aptana Studio 2 - Aptana Studio with a plug-in for the Ruby on Rails Development Environment
+  * Eelipse - With the Ruby Development Environment plugin
 * Unit tests and Example files for WatirWorks
 
-WatirWorks runs on the Windows platforms supported by Ruby and Watir, and under the IE and Firefox web browsers supported by Watir.
+WatirWorks runs on the Windows platforms supported by Ruby and WatirWebdriver, and under the web browsers supported by WatirWebdriver.
 It has been tested on Linux using both Ubuntu 10.04 and Debian 5.04, with Firefox 3.6.x.
-Sorry but it doesn't support SafariWatir, OperaWatir, ChormeWatir or FlashWatir gems.
+Sorry but it doesn't support the Watir gems (Watir, SafariWatir, OperaWatir, ChormeWatir or FlashWatir).
 
 = WatirWorks Examples
 

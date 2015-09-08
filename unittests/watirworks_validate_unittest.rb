@@ -1,6 +1,6 @@
 #--
 #=============================================================================#
-# File: watirworks_isvalid_unittest.rb
+# File: watirworks_validate_unittest.rb
 #
 #  Copyright (c) 2008-2010, Joe DiMauro
 #  All rights reserved.
