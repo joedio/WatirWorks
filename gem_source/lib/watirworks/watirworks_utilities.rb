@@ -776,7 +776,7 @@ module WatirWorks_Utilities
     display_ruby_loaded_files()
 
     # Ruby Global Variables  #failing
-    #display_ruby_global_variables()
+    display_ruby_global_variables()
 
   end # Method - display_ruby_environment()
 
@@ -809,13 +809,30 @@ module WatirWorks_Utilities
 
     # Variables
     puts2("\nRuby Global Variables: ")
+
     aRubyGlobalVars = global_variables()  # Populate array with the Ruby Global variables
+
+    if($VERBOSE == true)
+	     puts("aRubyGlobalVars.class = " + aRubyGlobalVars.class.to_s) #  array
+	     puts("aRubyGlobalVars = " + aRubyGlobalVars.to_s)  # array of symbols
+    end
+
     aRubyGlobalVars.each do |key|  # Loop through the Ruby Global variables
-      if(eval(key).class.to_s == "String")  # TypeError: can't convert Symbol into String
-        puts2("  #{key.to_s} = \""  + eval(key).to_s  + "\",\t  Class: "  + eval(key).class.to_s)
-      else
-        puts2("  #{key.to_s} = "  + eval(key).to_s  + ",\t  Class: "  + eval(key).class.to_s)
+
+      if ($VERBOSE == true)
+          puts2("key.class = " + key.class.to_s)
+	  puts2("key = " + key.to_s)
       end
+
+      # Display the name of the Global variables
+      puts2(key.to_s)
+
+      # This does not work to display the name of the Global variables along with the value of each
+      #if(eval(key).class.to_s == "String")  # TypeError: can't convert Symbol into String
+      #  puts2("  #{key.to_s} = \""  + eval(key).to_s  + "\",\t  Class: "  + eval(key).class.to_s)
+      #else
+      #  puts2("  #{key.to_s} = "  + eval(key).to_s  + ",\t  Class: "  + eval(key).class.to_s)
+      #end
     end # End of Variables loop
 
   end # Method - display_ruby_global_variables()
@@ -2141,6 +2158,7 @@ module WatirWorks_Utilities
       sPathToDataDir = File.join(sGemInstallPath, sDataDirectory)
 
       sFullPathToFile = File.join(sPathToDataDir, sFilename)
+      #sFullPathToFile = File.join(sGemInstallPath, sFilename)
 
       if($VERBOSE == true)
 	      puts2("sFullPathToFile = " + sFullPathToFile)
@@ -2188,7 +2206,7 @@ module WatirWorks_Utilities
 
       # Require the roo library in the script
       require 'roo' # Gem for reading Workbooks/spreadsheets for Excel (.xlsx), OpenOffice (.ods), and Google
-      include Roo::CSV
+      #include Roo::CSV
 
       # The CSV library
       require 'csv'
@@ -2527,7 +2545,7 @@ module WatirWorks_Utilities
           hSpreadsheetHash = sSpreadsheet_Name
 
           # Read in the data file
-          hSpreadsheetHash = {sSpreadsheet_Name => parse_spreadsheet(sWorkbookFile, sSpreadsheet_Name, bStopAtEmptyRow, sDataDirectory)}
+          hSpreadsheetHash = {sSpreadsheet_Name => parse_spreadsheet(sWorkbookFile, sSpreadsheet_Name, sDataDirectory, bStopAtEmptyRow)}
 
           if($VERBOSE == true)
             puts2("")

@@ -130,7 +130,7 @@ class UnitTest_Enviroment < Test::Unit::TestCase
     # Record info on the Ruby Environment
     display_ruby_env()  # Record output
 
-    #puts2("\n\nTest - display_ruby_environment")
+    puts2("\n\nTest - display_ruby_environment")
     display_ruby_environment()
 
     puts2("\n\nTest - display_watir_env")
