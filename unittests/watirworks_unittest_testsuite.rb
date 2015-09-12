@@ -2,7 +2,7 @@
 #=============================================================================#
 # File: watirworks_unittest_testsuite.rb
 #
-#  Copyright (c) 2008-2010, Joe DiMauro
+#  Copyright (c) 2008-2015, Joe DiMauro
 #  All rights reserved.
 #
 #
@@ -154,20 +154,26 @@ Find.find('./') do |path|
   # Convert the relative paths to full path names
   path = File.expand_path(path)
 
-  # Save the grep'd file path string in the array
-  aTemp = (path.grep(/_unittest.rb$/)).to_s
+
+  # Convert Enumerable to string
+  sPath = File.path(path)
+  if ($VERBOSE== true)
+     puts2("Current Path = " + sPath)
+  end
 
   # Append each valid test file that's found to the array
-  if(aTemp != "")
-    aMyTestList << aTemp
-  end
+   if (sPath.include?("_test.rb"))
+      aMyTestList << sPath
+   end
 
 end # END - Loop through the directory and sub-directories
 
 # Sort the list (A-Z)
 aMyTestList.sort!
 
+#=======================================================#
 # Determine if file list needs to be pruned
+#=======================================================#
 if((sRun_TestType != "") | (iRun_TestLevel != 0))
 
   # Display the number of test files
@@ -178,7 +184,7 @@ if((sRun_TestType != "") | (iRun_TestLevel != 0))
   puts2("")
 
 else
-  puts2("WatirWorks ignoring settings for: sRun_TestType and iRun_TestLevel")
+  puts2("Ignoring settings for: sRun_TestType and iRun_TestLevel")
 end
 
 

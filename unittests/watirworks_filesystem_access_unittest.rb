@@ -104,7 +104,7 @@ class UnitTest_FileSytem < Test::Unit::TestCase
     puts2("#######################")
 
     # For additional output during this test activate Ruby's Verbose flag
-    #$VERBOSE = true
+    $VERBOSE = true
 
     puts2("\nSearch for parent or sub-folders from the location: \n " + Dir.getwd)
 
@@ -339,9 +339,14 @@ class UnitTest_FileSytem < Test::Unit::TestCase
     puts2("Testcase: test_FileSystem_004_parse_dictionary")
     puts2("#######################")
 
-    $VERBOSE = true
+    #$VERBOSE = true
 
     aDictionaryContents = parse_dictionary("english.dictionary")
+
+    if ($VERBOSE == true)
+	puts2("aDictionaryContents.class = " + aDictionaryContents.class.to_s)
+	#puts2("aDictionaryContents = " + aDictionaryContents.to_s)
+    end
 
     # NoMethodError: undefined method `[]' for #<Enumerator:0x34ccae8>
     puts2("First word in dictionary: " + aDictionaryContents[0])

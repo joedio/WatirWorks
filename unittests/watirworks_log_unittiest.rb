@@ -3,7 +3,7 @@
 # File: watirworks_log_unittest.rb
 #
 #
-#  Copyright (c) 2008-2010, Joe DiMauro
+#  Copyright (c) 2008-2015, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for the IE browser using WatirWorks methods:

@@ -1137,15 +1137,31 @@ module WatirWorks_Utilities
 
         # Define an array to hold the results of the search
         aMyDirList = []
+	aTemp =""
 
         # Search the directory and sub-directories using the find command to collect
         # the list of directories. Need to weed out the numerous
         # pathnames that don't end with the subdirectory.
         Find.find('./') do |path|
 
-          aTemp = path.grep(/#{sFolderName}$/) # save the grep'd file path string in the array
-	  # NoMethodError: undefined method `grep' for "./":String
+	# Convert the relative paths to full path names
+	  path = File.expand_path(path)
 
+	  # Convert Enumerable to string
+	  sPath = File.path(path)
+	  if ($VERBOSE== true)
+	     puts2("Found folder = " + sPath)
+	  end
+
+	  # Append each valid file that's found to the array
+	  # if (sPath.include?(sFolderName))
+	   ##if (sPath.include?(/#{sFolderName}$/))
+	    #  aTemp << sPath
+          #end
+
+	   aTemp = (sPath.include?(sFolderName))
+          #aTemp = path.grep(/#{sFolderName}$/) # save the grep'd file path string in the array
+	  # NoMethodError: undefined method `grep' for "./":String
 
           if aTemp.to_s != "" # Determine if its a valid folder
             if($VERBOSE == true)
@@ -2114,7 +2130,12 @@ module WatirWorks_Utilities
       end # Perform some basic checks on the file
 
       # Access the file (read-only) and populate an array with its contents, line by line
-      aFileContents = File.open(sFullPathToFile, "r").collect
+      aFileContents = File.open(sFullPathToFile, "r").readlines
+
+      if ($VERBOSE == true)
+	      puts2("aFileContents.class = " + aFileContents.class.to_s)
+	      #puts2("aFileContents = " + aFileContents.to_s)
+	end
 
       return aFileContents
 
@@ -2137,7 +2158,7 @@ module WatirWorks_Utilities
     # Usage Examples: To read the words in the dictionary into an array
     #                      aDictionaryContents =  parse_dictionary()
     #=============================================================================#
-    def parse_dictionary(sFilename="english.dictionary", sDataDirectory = DATA_DIR)
+    def parse_dictionary(sFilename="english.dictionary", sDataDirectory = "data")
 
       if($VERBOSE == true)
 	      puts2("Parameters - parse_dictionary")
@@ -2147,9 +2168,6 @@ module WatirWorks_Utilities
 
       # Define default return value
       aDictionaryContents = []
-
-      # Name of the WatirWorks dictionary file
-      #sFile = "english.dictionary"
 
       # Determine where in the filesystem that WatirWorks is installed
       sGemInstallPath = get_watirworks_install_path()
