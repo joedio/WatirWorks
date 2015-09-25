@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>WatirWorks</name>
-	<comment></comment>
+	<comment>A Ruby 2.2.2 project</comment>
 	<projects>
 	</projects>
 	<buildSpec>
