@@ -9,5 +9,5 @@
 		<name>org.eclipse.dltk.core.scriptbuilder</name>
 		<arguments></arguments></buildCommand></buildSpec>
 	<natures>
-	<natures>org.eclipse.dltk.ruby.core.nature</natures></natures>
+	<nature>org.eclipse.dltk.ruby.core.nature</nature></natures>
 </projectDescription>
