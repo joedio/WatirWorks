@@ -79,15 +79,8 @@ if($sDefaultBrowser == nil)
   #$sDefaultBrowser = "chrome"
   #$sDefaultBrowser = "opera"
   #$sDefaultBrowser = "safari"
-  #$sDefaultBrowser = "android"
-  #$sDefaultBrowser = "iphone"
-  #$sDefaultBrowser = "remote"
+  #$sDefaultBrowser = "edge"
 end
-
-
-#if(is_webdriver? != true)
-#  Watir.options[:browser => $sDefaultBrowser]
-#end
 
 #=============================================================================#
 
@@ -155,12 +148,8 @@ class Unittest_Browser < Test::Unit::TestCase
     puts2("Testcase: test_Browser_001_DisplayWatirEnv")
     puts2("#######################")
 
-
     puts2("\n\nTest - display_watir_env")
     display_watir_env()
-
-
-    #puts2("END")
 
   end # END Testcase - test_Browser_001_DisplayWatirEnv
 
@@ -293,8 +282,6 @@ class Unittest_Browser < Test::Unit::TestCase
     ensure
 
     end # Start local browsers
-
-    #puts2("END")
 
   end # End of test method - test_Browser_002_LocalBrowsers
 

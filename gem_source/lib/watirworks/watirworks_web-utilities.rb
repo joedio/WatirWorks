@@ -42,6 +42,7 @@ require 'rubygems'
 
 # WatirWorks
 require 'watirworks'  # The WatirWorks library loader
+
 include WatirWorks_Utilities  # The WatirWorks Utilities Library
 
 # Watir-WebDriver
@@ -146,10 +147,8 @@ module WatirWorks_WebUtilities
 
   #  Define the WatirWorks Global browser variable to suppress messages when $VERBOSE is true
   $browser = nil
-
   # The URL to open in a new browser
   #DEFAULT_URL = "about:blank"
-
   #=============================================================================#
   #--
   # Method: clear_cache()
@@ -188,15 +187,15 @@ module WatirWorks_WebUtilities
     # Under Windows reports "mswin". under Linux it reports "linux", under Mac/OSX reports "dawrin"
     case RUBY_PLATFORM.downcase
 
-      when (/mswin|window|mingw/)
+    when (/mswin|window|mingw/)
       #include _watir_works__win_utilities
       clear_cache_win()
 
-      when /linux/
+    when /linux/
       #include _watir_works__linux_utilities
       clear_cache_linux()
 
-      when /darwin/
+    when /darwin/
       #include _watir_works__mac_utilities
       clear_cache_mac()
 
@@ -277,17 +276,17 @@ module WatirWorks_WebUtilities
     # Determine the object type
     case
 
-      when oElementToCount.class.to_s == "String"
+    when oElementToCount.class.to_s == "String"
 
       # Populate array with the string of the single HTML element to count
       aElementsToCount = [oElementToCount]
 
-      when oElementToCount.class.to_s == "Array"
+    when oElementToCount.class.to_s == "Array"
 
       # Populate array with the array of the single or multiple HTML elements to count
       aElementsToCount = oElementToCount
 
-      when oElementToCount.class.to_s == "NilClass"
+    when oElementToCount.class.to_s == "NilClass"
 
       # Populate array with the array of the string "All" to count all HTML elements
       aElementsToCount = ["All"]
@@ -305,7 +304,6 @@ module WatirWorks_WebUtilities
       puts2(aElementsToCount)
     end
 
-
     if(aElementsToCount[0].downcase == "all")
       aElementsToCount = aAllWatirElements
     end
@@ -315,80 +313,80 @@ module WatirWorks_WebUtilities
 
       # Select the proper count method to use
       case sElementToCount.to_s.downcase
-        when  "area"
+      when  "area"
         iArea = self.areas.length
         hObjectsFound.store("area", iArea)
-        when  "button"
+      when  "button"
         iButton = self.buttons.length
         hObjectsFound.store("button", iButton)
-        when  "checkbox"
+      when  "checkbox"
         iCheckbox = self.checkboxes.length
         hObjectsFound.store("checkbox", iCheckbox)
-        when  "dd"
+      when  "dd"
         iDd = self.dds.length
         hObjectsFound.store("dd", iDd)
-        when  "div"
+      when  "div"
         iDiv = self.divs.length
         hObjectsFound.store("div", iDiv)
-        when  "dl"
+      when  "dl"
         iDl = self.dls.length
         hObjectsFound.store("dl", iDl)
-        when  "dt"
+      when  "dt"
         iDt = self.dts.length
         hObjectsFound.store("dt", iDt)
-        when  "em"
+      when  "em"
         iEm = self.ems.length
         hObjectsFound.store("em", iEm)
-        when  "file_field"
+      when  "file_field"
         iFile_field = self.file_fields.length
         hObjectsFound.store("file_field", iFile_field)
-        when  "form"
+      when  "form"
         if(is_firefox?)
           iForm = -1  # FireWatir is missing a forms method, so it is set to -1 as a flag indicating that the forms element was NOT counted.
         else  # Watir supports forms so count them
           iForm = self.forms.length
         end
         hObjectsFound.store("form", iForm)
-        when  "hidden"
+      when  "hidden"
         iHidden = self.hiddens.length
         hObjectsFound.store("hidden", iHidden)
-        when  "image"
+      when  "image"
         iImage = self.images.length
         hObjectsFound.store("image", iImage)
-        when  "label"
+      when  "label"
         iLabel = self.labels.length
         hObjectsFound.store("label", iLabel)
-        when  "link"
+      when  "link"
         iLink = self.links.length
         hObjectsFound.store("link", iLink)
-        when  "li"
+      when  "li"
         iLi = self.lis.length
         hObjectsFound.store("li", iLi)
-        when  "map"
+      when  "map"
         iMap = self.maps.length
         hObjectsFound.store("map", iMap)
-        when  "pre"
+      when  "pre"
         iPre = self.pres.length
         hObjectsFound.store("pre", iPre)
-        when  "p"
+      when  "p"
         iP = self.ps.length
         hObjectsFound.store("p", iP)
-        when  "radio"
+      when  "radio"
         iRadio = self.radios.length
         hObjectsFound.store("radio", iRadio)
-        when  "select_list"
+      when  "select_list"
         iSelect_list = self.select_lists.length
         hObjectsFound.store("select_list", iSelect_list)
-        when  "strong"
+      when  "strong"
         iStrong = self.strongs.length
         hObjectsFound.store("strong", iStrong)
-        when  "span"
+      when  "span"
         iSpan = self.spans.length
         hObjectsFound.store("span", iSpan)
-        when  "table"
+      when  "table"
         iTable = self.tables.length
         hObjectsFound.store("table", iTable)
-        when  "text_field"
+      when  "text_field"
         iText_field = self.text_fields.length
         hObjectsFound.store("text_field", iText_field)
       end
@@ -397,7 +395,6 @@ module WatirWorks_WebUtilities
     return  hObjectsFound
 
   end # END Method - count_html_tags()
-
 
   #=============================================================================#
   #--
@@ -450,7 +447,6 @@ module WatirWorks_WebUtilities
 
   end # END method - createXMLTags()
 
-
   #=============================================================================#
   #--
   # Method: exit_browsers()
@@ -490,17 +486,17 @@ module WatirWorks_WebUtilities
       # Determine the object type
       case
 
-        when oBrowsersToClose.class.to_s == "String"
+      when oBrowsersToClose.class.to_s == "String"
 
         # Populate array with the string of the single browser type to close
         aBrowsersToClose = [oBrowsersToClose]
 
-        when oBrowsersToClose.class.to_s == "Array"
+      when oBrowsersToClose.class.to_s == "Array"
 
         # Populate array with the array of the single or multiple browser types to close
         aBrowsersToClose = oBrowsersToClose
 
-        when oBrowsersToClose.class.to_s == "NilClass"
+      when oBrowsersToClose.class.to_s == "NilClass"
 
         # Populate array with the array of the string "All" to close all browser types
         aBrowsersToClose = ["all"]
@@ -522,7 +518,7 @@ module WatirWorks_WebUtilities
 
         # Select the proper close method to use
         case sBrowserType.to_s.downcase.strip
-          when  ("ie" or "internet explorer")
+        when  ("ie" or "internet explorer")
           sClass = "IEFrame"
           # Create an rAutomation object
           oWindow = RAutomation::Window.new(:class => sClass)
@@ -532,7 +528,7 @@ module WatirWorks_WebUtilities
             sleep(0.1)
           end
 
-          when  ("ff" or "firefox")
+        when  ("ff" or "firefox")
           sClass = "MozillaUIWindowClass"
           # Create an rAutomation object
           oWindow = RAutomation::Window.new(:class => sClass)
@@ -542,7 +538,7 @@ module WatirWorks_WebUtilities
             sleep(0.1)
           end
 
-          when  "opera"
+        when  "opera"
           sClass = "OperaWindowClass" # AutoIt identified as "[CLASS:OperaWindowClass]"
           # Create an rAutomation object
           oWindow = RAutomation::Window.new(:class => sClass)
@@ -552,7 +548,7 @@ module WatirWorks_WebUtilities
             sleep(0.1)
           end
 
-          when  ("chrome" or "google chrome")
+        when  ("chrome" or "google chrome")
           sClass = "Chrome_WidgetWin_0"
           oWindow = RAutomation::Window.new(:class => sClass)
           until oWindow.exists? == false
@@ -561,7 +557,7 @@ module WatirWorks_WebUtilities
             sleep(0.1)
           end
 
-          when  "safari"
+        when  "safari"
           sClass = "{1C03B488-D53B-4a81-97F8-754559640193}"
           # Create an rAutomation object
           oWindow = RAutomation::Window.new(:class => sClass)
@@ -653,7 +649,6 @@ module WatirWorks_WebUtilities
 
     end # Determine if there are divs on the page
 
-
     # BEGIN - Loop through the divs starting with the highest indexed div
     while iCurrentIndex > 0 do
 
@@ -687,7 +682,6 @@ module WatirWorks_WebUtilities
     return [iDivIndex, sDivTextFound]
 
   end # find_string_in_div(...)
-
 
   #=============================================================================#
   #--
@@ -758,7 +752,6 @@ module WatirWorks_WebUtilities
 
     end # Determine if there are spans on the page
 
-
     # BEGIN - Loop through the spans starting with the highest indexed span
     while iCurrentIndex > 0 do
 
@@ -792,7 +785,6 @@ module WatirWorks_WebUtilities
     return [iSpanIndex, sSpanTextFound]
 
   end # find_string_in_span(...)
-
 
   #=============================================================================#
   #--
@@ -875,7 +867,6 @@ module WatirWorks_WebUtilities
         # Find the total rows in the current table
         iTotalRows = self.table(:index, iTableIndex.adjust_index).row_count.to_i
       end
-
 
       if($VERBOSE == true)
         puts2("   Table #{iTableIndex.to_s} contains #{iTotalRows.to_s} rows")
@@ -979,7 +970,6 @@ module WatirWorks_WebUtilities
     return iFoundTextInTable, iFoundTextInRow,  aRowText.to_s.strip
 
   end # find_string_in_table(...)
-
 
   #=============================================================================#
   #--
@@ -1223,7 +1213,6 @@ module WatirWorks_WebUtilities
 
   end # END Method - find_strings_in_table(...)
 
-
   #=============================================================================#
   #--
   # Method: generate_testcode_html_tag_attributes(...)
@@ -1348,7 +1337,6 @@ module WatirWorks_WebUtilities
     aAttribs_radio = ["type", "id", "name", "title", "value", "enabled?", "visible?", "set?"]
     aAttribs_select_list = ["type", "id", "name", "title", "value", "selected_options", "options", "text", "enabled?", "visible?"]
 
-
     aAttribs_span = ["type", "id", "name", "title", "value", "class_name", "enabled?", "visible?"]
     aAttribs_strong = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_table = ["type", "id", "name", "title", "value", "row_count_excluding_nested_tables", "enabled?", "visible?"]
@@ -1357,17 +1345,17 @@ module WatirWorks_WebUtilities
     # Determine the object type
     case
 
-      when oElementsToCheck.class.to_s == "String"
+    when oElementsToCheck.class.to_s == "String"
 
       # Populate array with the string of the single HTML element to count
       aElements = [oElementsToCheck]
 
-      when oElementsToCheck.class.to_s == "Array"
+    when oElementsToCheck.class.to_s == "Array"
 
       # Populate array with the array of the single or multiple HTML elements to count
       aElements = oElementsToCheck
 
-      when oElementsToCheck.class.to_s == "NilClass"
+    when oElementsToCheck.class.to_s == "NilClass"
 
       # Populate array with the array of the string "All" to count all HTML elements
       aElements = aSupportedHTMLElementNames
@@ -1419,57 +1407,56 @@ module WatirWorks_WebUtilities
     # Loop for HTML Element types
     aElements.each do | sElement|
 
-
       # Define the proper attributes based on the type of HTML Element
       case sElement.to_s.downcase
 
-        when "area"
+      when "area"
         aAttributes = aAttribs_area
-        when "button"
+      when "button"
         aAttributes = aAttribs_button
-        when "checkbox"
+      when "checkbox"
         aAttributes = aAttribs_checkbox
-        when "dd"
+      when "dd"
         aAttributes = aAttribs_dd
-        when "div"
+      when "div"
         aAttributes = aAttribs_div
-        when "dl"
+      when "dl"
         aAttributes = aAttribs_dl
-        when "dt"
+      when "dt"
         aAttributes = aAttribs_dt
-        when "em"
+      when "em"
         aAttributes = aAttribs_em
-        when "file_field"
+      when "file_field"
         aAttributes = aAttribs_file_field
-        when "form"
+      when "form"
         aAttributes = aAttribs_form
-        when "hidden"
+      when "hidden"
         aAttributes = aAttribs_hidden
-        when "image"
+      when "image"
         aAttributes = aAttribs_image
-        when "label"
+      when "label"
         aAttributes = aAttribs_label
-        when "link"
+      when "link"
         aAttributes = aAttribs_link
-        when "li"
+      when "li"
         aAttributes = aAttribs_li
-        when "map"
+      when "map"
         aAttributes = aAttribs_map
-        when "pre"
+      when "pre"
         aAttributes = aAttribs_pre
-        when "p"
+      when "p"
         aAttributes = aAttribs_p
-        when "radio"
+      when "radio"
         aAttributes = aAttribs_radio
-        when "select_list"
+      when "select_list"
         aAttributes = aAttribs_select_list
-        when "span"
+      when "span"
         aAttributes = aAttribs_span
-        when "strong"
+      when "strong"
         aAttributes = aAttribs_strong
-        when "table"
+      when "table"
         aAttributes = aAttribs_table
-        when "text_field"
+      when "text_field"
         aAttributes = aAttribs_text_field
       end # Define the proper attributes based on the type of HTML Element
 
@@ -1547,7 +1534,6 @@ module WatirWorks_WebUtilities
 
   end # Method - generate_testcode_html_tag_attributes()
 
-
   #=============================================================================#
   #--
   # Method: generate_testcode_html_tag_counts(...)
@@ -1623,7 +1609,6 @@ module WatirWorks_WebUtilities
   #=======================================================================#
   def generate_testcode_html_tag_counts(oElementToCount=nil, sBrowserName="$browser")
 
-
     hCountedHTMLTags = self.count_html_tags(oElementToCount)
     hCountedHTMLTags.sort.each do | sElement, iCount|
 
@@ -1640,7 +1625,6 @@ module WatirWorks_WebUtilities
     end
 
   end
-
 
   #=============================================================================#
   #--
@@ -1666,8 +1650,6 @@ module WatirWorks_WebUtilities
   #
   #=============================================================================#
   def get_doc_app_version()
-
-
 
     sVersionNumber = "N/A"
 
@@ -1704,7 +1686,6 @@ module WatirWorks_WebUtilities
     return  sVersionNumber
 
   end # Method - get_doc_app_version()
-
 
   #=============================================================================#
   #--
@@ -1759,7 +1740,6 @@ module WatirWorks_WebUtilities
       return "N/A"
     end
   end # Function - get_ie_version
-
 
   #=============================================================================#
   #--
@@ -1833,7 +1813,6 @@ module WatirWorks_WebUtilities
     end # Only continue if the JS-Dialog exists
 
   end # Method: get_hwnd_js_dialog
-
 
   #=============================================================================#
   #--
@@ -1985,7 +1964,6 @@ module WatirWorks_WebUtilities
 
   end # END method - getMultipleXMLTagValues()
 
-
   #=============================================================================#
   #--
   # Function: getXMLTagValue(...)
@@ -2089,7 +2067,6 @@ module WatirWorks_WebUtilities
     return sXMLTagValue
 
   end # END method - getXMLTagValue()
-
 
   #=============================================================================#
   #--
@@ -2246,7 +2223,6 @@ module WatirWorks_WebUtilities
 
   end
 
-
   #=============================================================================#
   #--
   # Method: is_chrome?()
@@ -2381,7 +2357,6 @@ module WatirWorks_WebUtilities
 
   alias is_ff? is_firefox?
 
-
   #=============================================================================#
   #--
   # Method: is_firefox_installed?(...)
@@ -2417,7 +2392,6 @@ module WatirWorks_WebUtilities
   end # Method - is_firefox_installed?(...)
 
   alias is_ff_installed?   is_firefox_installed?
-
 
   #=============================================================================#
   #--
@@ -2467,7 +2441,6 @@ module WatirWorks_WebUtilities
     end
 
   end # Method - is_ie?(...)
-
 
   #=============================================================================#
   #--
@@ -2551,7 +2524,6 @@ module WatirWorks_WebUtilities
 
   end # Method - is_opera?(...)
 
-
   #=============================================================================#
   #--
   # Method: is_opera_installed?(...)
@@ -2585,7 +2557,6 @@ module WatirWorks_WebUtilities
     end
 
   end # Method - is_opera_installed?(...)
-
 
   #=============================================================================#
   #--
@@ -2635,7 +2606,6 @@ module WatirWorks_WebUtilities
     end
 
   end # Method - is_safari?...)
-
 
   #=============================================================================#
   #--
@@ -2708,9 +2678,9 @@ module WatirWorks_WebUtilities
     sBrowserType = "firefox"
 
     case sBrowserType.downcase
-      when "firefox"
+    when "firefox"
       sClassString = "FireWatir::Firefox"
-      when "safari"
+    when "safari"
       sClassString = "Watir::Safari"
     else
       sClassString = "Watir::IE"
@@ -2740,7 +2710,6 @@ module WatirWorks_WebUtilities
     return false
 
   end # Method - is_global_browser_running?()
-
 
   #=============================================================================#
   #--
@@ -2836,11 +2805,9 @@ module WatirWorks_WebUtilities
       bFound = true
     end
 
-
     return bFound
 
   end # Method - isTagInXML?()
-
 
   #=============================================================================#
   #--
@@ -3023,7 +2990,6 @@ module WatirWorks_WebUtilities
 
   end # Method - isTextIn_DivID?
 
-
   #=============================================================================#
   #--
   # Method: isTextIn_DivIndex?(...)
@@ -3119,7 +3085,6 @@ module WatirWorks_WebUtilities
     return bStatus
 
   end # Method - isTextIn_DivIndex?
-
 
   #=============================================================================#
   #--
@@ -3392,7 +3357,6 @@ module WatirWorks_WebUtilities
 
   end # Method - isTextIn_SpanID?
 
-
   #=============================================================================#
   #--
   # Method: isTextIn_SpanIndex?(...)
@@ -3488,7 +3452,6 @@ module WatirWorks_WebUtilities
 
   end # Method - isTextIn_SpanIndex?
 
-
   #=============================================================================#
   #--
   # Method: isTextIn_SpanXpath?(...)
@@ -3579,8 +3542,6 @@ module WatirWorks_WebUtilities
 
   end # Method - isTextIn_SpanXpath?
 
-
-
   #=============================================================================#
   #--
   # Method: isTextIn_TableClass?(...)
@@ -3670,7 +3631,6 @@ module WatirWorks_WebUtilities
     return bStatus
 
   end # Method - isTextIn_TableClass?
-
 
   #=============================================================================#
   #--
@@ -4004,7 +3964,6 @@ module WatirWorks_WebUtilities
 
   end # Method - is_url_accessible?()
 
-
   #=============================================================================#
   #--
   # Method: kill_browsers(...)
@@ -4037,31 +3996,30 @@ module WatirWorks_WebUtilities
 
       # Force any open browsers to exit (im=image, f=force, t=process tree)
       case sBrowserType
-        when "chrome"
+      when "chrome"
         system("taskkill /im chrome.exe /f /t >nul 2>&1")
-        when "firefox"
+      when "firefox"
         system("taskkill /im firefox.exe /f /t >nul 2>&1")
-        when "ie"
+      when "ie"
         system("taskkill /im iexplore.exe /f /t >nul 2>&1")
-        when "opera"
+      when "opera"
         system("taskkill /im opera.exe /f /t >nul 2>&1")
       end
     end # Kill process for windows
-
 
     if(is_linux?) # Kill process for linux
 
       # Force any open browsers to exit
       case sBrowserType
-        when "chrome"
+      when "chrome"
         #system("kill -f {ps -aef | grep chrome.exe | grep -v grep | cut -f1 -d" " | head -1}")
-        when "firefox"
+      when "firefox"
         #system("kill -f {ps -aef | grep firefox.exe | grep -v grep | cut -f1 -d" " | head -1}")
-        when "ie"
+      when "ie"
         #system("kill -f {ps -aef | grep iexplore.exe | grep -v grep | cut -f1 -d" " | head -1}")
-        when "opera"
+      when "opera"
         #system("kill -f {ps -aef | grep opera.exe | grep -v grep | cut -f1 -d" " | head -1}")
-        when "safari"
+      when "safari"
         #system("kill -f {ps -aef | grep safari.exe | grep -v grep | cut -f1 -d" " | head -1}")
       end
     end
@@ -4070,15 +4028,15 @@ module WatirWorks_WebUtilities
 
       # Force any open browsers to exit
       case sBrowserType
-        when "chrome"
+      when "chrome"
         #system("kill -f {ps -aef | grep chrome.exe | grep -v grep | cut -f1 -d" " | head -1}")
-        when "firefox"
+      when "firefox"
         #system("kill -f {ps -aef | grep firefox.exe | grep -v grep | cut -f1 -d" " | head -1}")
-        when "ie"
+      when "ie"
         #system("kill -f {ps -aef | grep iexplore.exe | grep -v grep | cut -f1 -d" " | head -1}")
-        when "opera"
+      when "opera"
         #system("kill -f {ps -aef | grep opera.exe | grep -v grep | cut -f1 -d" " | head -1}")
-        when "safari"
+      when "safari"
         #system("kill -f {ps -aef | grep safari.exe | grep -v grep | cut -f1 -d" " | head -1}")
       end
     end
@@ -4087,7 +4045,6 @@ module WatirWorks_WebUtilities
     $browser=nil
 
   end # Method - kill_browsers()
-
 
   #=============================================================================#
   #--
@@ -4150,7 +4107,6 @@ module WatirWorks_WebUtilities
       if(iFirstRow < 1)
         iFirstRow = 1
       end
-
 
       if(iLastRow < 0) # No last row was specified to determine how many rows are in the table
 
@@ -4220,7 +4176,6 @@ module WatirWorks_WebUtilities
     end # Read the table contents into an array row-by-row
 
   end # Method - parse_table_by_row
-
 
   #=============================================================================#
   #--
@@ -4353,7 +4308,6 @@ module WatirWorks_WebUtilities
 
   end # Method - restart_browser()
 
-
   #=============================================================================#
   #--
   # Method: save_html(...)
@@ -4417,7 +4371,6 @@ module WatirWorks_WebUtilities
 
   end # Method - save_html()
 
-
   #=============================================================================#
   #--
   # Method: save_screencapture(...)
@@ -4458,13 +4411,13 @@ module WatirWorks_WebUtilities
       # Under Windows reports "mswin". under Linux it reports "linux", under Mac/OSX reports "dawrin"
       case RUBY_PLATFORM.downcase
 
-        when (/mswin|window|mingw/)
+      when (/mswin|window|mingw/)
         self.save_screencapture_win(sFileNamePrefix, bActiveWindowOnly, bSaveAsJpg, sOutputDir)
 
-        when /linux/
+      when /linux/
         self.save_screencapture_linux(sFileNamePrefix, bActiveWindowOnly, bSaveAsJpg, sOutputDir)
 
-        when /darwin/
+      when /darwin/
         self.save_screencapture_mac(sFileNamePrefix, bActiveWindowOnly, bSaveAsJpg, sOutputDir)
 
       end # case
@@ -4474,7 +4427,6 @@ module WatirWorks_WebUtilities
     end # Is this Watir / Firewatir or WatirWebDriver
 
   end # Method - save_screencapture()
-
 
   #=============================================================================#
   #--
@@ -4517,8 +4469,7 @@ module WatirWorks_WebUtilities
 
       case sElement.downcase
 
-
-        when "button"
+      when "button"
         if(bScrollDown)
           # Scroll the last button on web page into view
           if((self.buttons.length) > 0)
@@ -4531,7 +4482,7 @@ module WatirWorks_WebUtilities
           end
         end # button
 
-        when "checkbox"
+      when "checkbox"
         if(bScrollDown)
           # Scroll the last checkbox on web page into view
           if((self.checkboxes.length) > 0)
@@ -4544,7 +4495,7 @@ module WatirWorks_WebUtilities
           end
         end # checkbox
 
-        when "file_field"
+      when "file_field"
         if(bScrollDown)
           # Scroll the last file_field on web page into view
           if((self.file_fields.length) > 0)
@@ -4557,7 +4508,7 @@ module WatirWorks_WebUtilities
           end
         end # file_field
 
-        when "image"
+      when "image"
         if(bScrollDown)
           # Scroll the last link on web page into view
           if((self.images.length) > 0)
@@ -4570,7 +4521,7 @@ module WatirWorks_WebUtilities
           end
         end # image
 
-        when  "link"
+      when  "link"
         if(bScrollDown)
           # Scroll the last link on web page into view
           if((self.links.length) > 0)
@@ -4583,7 +4534,7 @@ module WatirWorks_WebUtilities
           end
         end # link
 
-        when "map"
+      when "map"
         if(bScrollDown)
           # Scroll the last map on web page into view
           if((self.maps.length) > 0)
@@ -4596,7 +4547,7 @@ module WatirWorks_WebUtilities
           end
         end # map
 
-        when "radio"
+      when "radio"
         if(bScrollDown)
           # Scroll the last radio on web page into view
           if((self.radios.length) > 0)
@@ -4609,7 +4560,7 @@ module WatirWorks_WebUtilities
           end
         end # select_list
 
-        when "select_list"
+      when "select_list"
         if(bScrollDown)
           # Scroll the last select_list on web page into view
           if((self.select_lists.length) > 0)
@@ -4622,7 +4573,7 @@ module WatirWorks_WebUtilities
           end
         end # select_list
 
-        when "text_field"
+      when "text_field"
 
         if(bScrollDown)
           # Scroll the last text_field on web page into view
@@ -4645,8 +4596,6 @@ module WatirWorks_WebUtilities
     elsif(self.is_firefox?)
       return false
     end # Only works with IE, not Firefox
-
-
 
   end # Method - scroll_element_intoview()
 
@@ -4721,7 +4670,6 @@ module WatirWorks_WebUtilities
 
   end # Method - set_multiselect_list_by_name?()
 
-
   #=============================================================================#
   #--
   # Method: set_multiselect_list_by_id?(...)
@@ -4792,7 +4740,6 @@ module WatirWorks_WebUtilities
     return bReturnValue
 
   end # Method - set_multiselect_list_by_id?()
-
 
   #=============================================================================#
   #--
@@ -4917,7 +4864,6 @@ module WatirWorks_WebUtilities
 
     end # Only continue of select list name and value are not nil
 
-
     # Only continue if the select list exists
     if((self.select_list(:name, sSelectListName).exists?) == false)
 
@@ -4925,7 +4871,6 @@ module WatirWorks_WebUtilities
       return false
 
     end # Only continue if the select list exists
-
 
     # Clear or set the current selection
     if((sSelectValue.to_s.upcase == "CLEAR") || (sSelectValue.to_s.upcase == ""))
@@ -4964,7 +4909,6 @@ module WatirWorks_WebUtilities
     return bReturnValue
 
   end # Method - set_select_list_by_name?()
-
 
   #=============================================================================#
   #--
@@ -5015,7 +4959,6 @@ module WatirWorks_WebUtilities
 
     end # Only continue of select list name and value are not nil
 
-
     # Only continue if the select list exists
     if((self.select_list(:id, sSelectListID).exists?) == false)
 
@@ -5023,7 +4966,6 @@ module WatirWorks_WebUtilities
       return false
 
     end # Only continue if the select list exists
-
 
     # Clear or set the current selection
     if((sSelectValue.to_s.upcase == "CLEAR") || (sSelectValue.to_s.upcase == ""))
@@ -5064,8 +5006,6 @@ module WatirWorks_WebUtilities
     return bReturnValue
 
   end # Method - set_select_list_by_id?()
-
-
 
   #=============================================================================#
   #--
@@ -5118,7 +5058,6 @@ module WatirWorks_WebUtilities
 
     end # Only continue of select list name and value are not nil
 
-
     # Only continue if the select list exists
     if((self.select_list(:index, iSelectListIndex.adjust_index).exists?) == false)
 
@@ -5126,7 +5065,6 @@ module WatirWorks_WebUtilities
       return false
 
     end # Only continue if the select list exists
-
 
     # Clear or set the current selection
     if((sSelectValue.to_s.upcase == "CLEAR") || (sSelectValue.to_s.upcase == ""))
@@ -5166,8 +5104,6 @@ module WatirWorks_WebUtilities
     return bReturnValue
 
   end # Method - set_select_list_by_index?()
-
-
 
   #=============================================================================#
   #--
@@ -5262,20 +5198,20 @@ module WatirWorks_WebUtilities
 
     # Define the elements to check
     aSupportedHTMLElementNames = ["area", "button",
-        "checkbox", "dd", "div", "dl", "dt", "em", "form",
-        "file_field", "hidden", "image", "label",
-		    "link",  "li", "map", "pre", "p",
-        "radio", "select_list", "strong",  "span",
-		    "table", "text_field" ]
+      "checkbox", "dd", "div", "dl", "dt", "em", "form",
+      "file_field", "hidden", "image", "label",
+      "link",  "li", "map", "pre", "p",
+      "radio", "select_list", "strong",  "span",
+      "table", "text_field" ]
 
     # Define the element attributes to collect
     aAttributes = ["exists?", "type", "id", "name", "title",
       "value", "enabled?", "visible?", "loaded?", "src",
-		  "height", "width", "file_size", "alt", "class",
-		  "action", "method", "set?", "text",
-		  "href", "selected_options", "options",
-		  "class_name", "row_count_excluding_nested_tables",
-		  "size", "maxLength"]
+      "height", "width", "file_size", "alt", "class",
+      "action", "method", "set?", "text",
+      "href", "selected_options", "options",
+      "class_name", "row_count_excluding_nested_tables",
+      "size", "maxLength"]
 
     # Sort the attributes
     aAttributes = aAttributes.sort!
@@ -5283,17 +5219,17 @@ module WatirWorks_WebUtilities
     # Determine the object type
     case
 
-      when oElementsToShow.class.to_s == "String"
+    when oElementsToShow.class.to_s == "String"
 
       # Populate array with the string of the single HTML element to count
       aElements = [oElementsToShow]
 
-      when oElementsToShow.class.to_s == "Array"
+    when oElementsToShow.class.to_s == "Array"
 
       # Populate array with the array of the single or multiple HTML elements to count
       aElements = oElementsToShow
 
-      when oElementsToShow.class.to_s == "NilClass"
+    when oElementsToShow.class.to_s == "NilClass"
 
       # Populate array with the array of the string "All" to count all HTML elements
       aElements = aSupportedHTMLElementNames
@@ -5334,7 +5270,6 @@ module WatirWorks_WebUtilities
     puts2("\n###############")
     puts2("# Page title: \"" + self.title + "\"")
     puts2("###############")
-
 
     # Loop for HTML Element types
     aElements.each do | sElement|
@@ -5411,33 +5346,43 @@ module WatirWorks_WebUtilities
   #
   # Description: Starts and returns a browser object. Can Create a local or Global Browser Object.
   #
-  #              Only one Global Browser Object named $browser may exist,  but
+  #              Only one Global Browser Object (GBO) named $browser may exist, but
   #              multiple local browser objects with different names can coexist.
   #
   #              Once the Global Browser Object named $browser exists, no other Global or local browsers
-  #              can be started.  In that case remove the GBO (e.g. $browser = nil) prior to calling this
-  #              function, so  a new local or Global Browser Object can be created.
+  #              can be started. Delete any GBO (e.g. $browser = nil) prior to calling this
+  #              function, so a new local or Global Browser Object can be created.
   #
   #              No Global Browser Object is created if the Global Browser Object named $browser pre-exists.
   #
-  #              The type of browser object started (e.g. IE, FF, etc.) is determined by Watir.
-  #
   # Returns: Browser object
   #
-  # Syntax: sBrowserType = STRING - For watir-webdriver one of the following: android, chrome, firefox (default) ,ie, iphone, opera, remote, safari
-  #                                                   For Watir and Firewatir one of the following: firefox, ie
+  # Syntax: sBrowserType = STRING - For watir-webdriver one of the following: chrome, edge, firefox (default), ie, opera, safari
   #
-  #             sURL = STRING - A URL for the browser to load. Default is to open a blank browser page "about:blank"
-  #
-  #            sBrowserProfile = STRING - For watir-webdriver use to specify the Firefox profile to use
-  #
-  #    There are two ways to select which browser will be started (IE or FF):
+  #         sURL = STRING - A URL for the browser to load. Default is to open a blank browser page "about:blank"
   #
   #
   # Prerequisites: The Global Browser Object must be named $browser
-  #                     Watir 1.6.5 or later must be installed
-  #                             or
-  #                     WatirWebDriver must be installed
+  #                WatirWebDriver must be installed along with the proper server:
+  #
+  #                 For Firefox, Safari, Opera no server is needed.
+  #
+  #                 For Chrome: Download the server from http://chromedriver.storage.googleapis.com/index.html
+  #                             and place the executable on your PATH (e.g. Ruby2.x/bin/).
+  #
+  #                 For Internet Explorer: Download the IEDriverServer from http://selenium-release.storage.googleapis.com/index.html
+  #                              and place the executable on your PATH, (e.g. Ruby2.x/bin/)
+  #
+  #                 For Edge:  For security reasons, WebDriver is disabled by default in Microsoft Edge.
+  #                            To enable it, you need to install the MicrosoftWebDriver server (see below)
+  #                            in the location of your test respository. With that, WebDriver in Microsoft Edge
+  #                            should work just like it does with other supporting browsers.
+  #                            To use WebDriver with Microsoft Edge, you'll need to do the following:
+  #                                Install Windows 10
+  #                                Download the MicrosoftWebDriver server.
+  #                                Download a WebDriver language binding of your choice.
+  #                                Currently C# and Java Selenium language bindings are supported.
+  #
   #
   # Usage Examples: To create a pair of local browser objects:
   #                                          myFirstLocalBrowser = start_browser()
@@ -5446,132 +5391,94 @@ module WatirWorks_WebUtilities
   #                              To create a single Global Browser Object:
   #                                          $browser = start_browser()
   #
-  #                              To create a single Global Browser Object: fro watir-webdriver
+  #                              To create a single Global Browser Object: for watir-webdriver
   #                                          $browser = start_browser("firefox")
   #
   #=============================================================================#
-  def start_browser(sBrowserType = "firefox", sURL="about:blank", sBrowserProfile = nil)
+  def start_browser(sBrowserType = "firefox", sURL="about:blank")
 
     if($VERBOSE == true)
       puts2("Parameters - start_browser:")
       puts2("  sURL: " + sURL)
       puts2("  sBrowserType: " + sBrowserType.to_s)
-      puts2("  sBrowserProfile: " + sBrowserProfile.to_s)
     end
-
-    # Define a browser to use when the one specified  is incompatible
-    sFallbackBrowser = "firefox"
 
     # Cleanup the specified value
     sBrowserType = sBrowserType.to_s.downcase
 
     if($browser != nil) # If current Browser object is a Global Browser Object don't start an new one
-      puts2(" Global browser object already started.")
+      puts2("  Global browser object already started.")
       return $browser
     end
 
-    # aSupportedBrowsers = ["ie", "firefox", "chrome", "safari"]    # new[:firefox, :ie, :chrome, :remote, Selenium::WebDriver]
+    # Start the specified browser
+    case sBrowserType
 
-    # Determine if a specified browser type is supported on current OS
-    if(sBrowserType == "ie" and is_win? == false)
-      puts2(" Internet Explorer not supported on this platform. Switching to the Firefox browser")
-      sBrowserType = sFallbackBrowser
-    end
-
-    # Determine if a specified browser type is supported on current OS
-    if(sBrowserType == "safari" and is_osx? == false)
-      puts2(" Safari not supported on this platform. Switching to the Firefox browser")
-      sBrowserType = sFallbackBrowser
-    end
-
-
-    # Run with WatirWebDriver or Watir / Firewatir
-    if(is_webdriver? == true)
-      case sBrowserType
-
-        when /android/
-
-        puts2("Starting Android browser")
-        oBrowser = Watir::Browser.new(:android)
-        $bStartedBrowser = true
-
-        when /chrome/
-
-        puts2("Starting Chrome browser")
-
-        sChromePath = ENV["CHROMEDRIVER_HOME"]
-        sChromePath = sChromePath.gsub(/\\/, "/")
-        puts2("\t Chrome driver = " + sChromePath)
-        setenv("PATH", sChromePath)
-
-        oBrowser = Watir::Browser.new(:chrome)
-        $bStartedBrowser = true
-
-        when /ie| internet_explorer | internet explorer/
-
-        puts2("Starting Internet Explorer browser")
-        oBrowser = Watir::Browser.new(:ie)
-        $bStartedBrowser = true
-
-        when /iphone/
-
-        puts2("Starting iphone browser")
-        oBrowser = Watir::Browser.new(:iphone)
-        $bStartedBrowser = true
-        when /opera/
-
-        puts2("Starting Opera browser")
-        oBrowser = Watir::Browser.new(:opera)
-        $bStartedBrowser = true
-
-        when /remote/
-
-        puts2("Starting Remote browser")
-        oBrowser = Watir::Browser.new(:remote)
-        $bStartedBrowser = true
-
-        when /safari/
-
-        puts2("Starting Safari browser")
-        oBrowser = Watir::Browser.new(:safari)
-        $bStartedBrowser = true
-
+    when /c.*/
+      if (is_win? == true)
+        puts2("  Starting Chrome on Windows...")
       else
-        if(sBrowserProfile != nil)
-          puts2("Starting Firefox browser with profile: " + sBrowserProfile.to_s)
-          oBrowser = Watir::Browser.new(:firefox, :profile => sBrowserProfile.to_s)
-        else
-          puts2("Starting Firefox browser without profile")
-          oBrowser = Watir::Browser.new(:firefox)
-          $bStartedBrowser = true
-        end # default to firefox
+        puts2("  Starting Chrome on OSX...")
+      end
+      oBrowser = Watir::Browser.new :chrome
+      $bStartedBrowser = true
 
-      end # Case
-
-    else # Only run with Watir / Firewatir / SafariWatir
-
-      case sBrowserType.downcase.strip
-        when /ie| internet_explorer | internet explorer/
-        oBrowser =  Watir::IE.new
+    when /e.*/
+      if (is_win?(10) == true)
+        puts2("  Starting Edge on Windows...")
+        oBrowser = Watir::Browser.new :edge
         $bStartedBrowser = true
-        when /firefox/
-        oBrowser =  FireWatir::Firefox.new
+      else
+        puts2("  Edge is not supported on this OS")
+      end
+
+    when  /f.*/
+      if (is_win? == true)
+        Selenium::WebDriver::Firefox::Binary.path = "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe"
+        puts2("  Starting Firefox on Windows...")
+      else
+        Selenium::WebDriver::Firefox::Binary.path = "/Applications/Firefox.app/Contents/MacOS/firefox"
+        puts2("  Starting Firefox on OSX...")
+      end
+
+      # Don't think this is needed any more 
+      #
+      #sChromePath = ENV["CHROMEDRIVER_HOME"]
+      #sChromePath = sChromePath.gsub(/\\/, "/")
+      #puts2("\t Chrome driver = " + sChromePath)
+      #setenv("PATH", sChromePath)
+
+      oBrowser = Watir::Browser.new :firefox
+      $bStartedBrowser = true
+
+    when  /i.*/
+      if (is_win? == true)
+        oBrowser = Watir::Browser.new :ie
         $bStartedBrowser = true
-        when /safari/
-        oBrowser =  Watir::Safari.new
+        puts2("  Starting Internet Explorer on Windows...")
+      else
+        puts2("  Internet Explorer is not supported on this OS")
+      end
+
+    when /o.*/
+      if (is_win? == true)
+        puts2("  Starting Opera on Windows")
+      else
+        puts2("  Starting Opera on OSX...")
+      end
+      oBrowser = Watir::Browser.new :opera
+      $bStartedBrowser = true
+
+    when /s.*/
+      if (is_win? == true)
+        puts2("  Safari is not supported on this OS")
+      else
+        puts2("  Starting Safari on OSX...")
+        oBrowser = Watir::Browser.new :safari
         $bStartedBrowser = true
       end
-=begin
-      # Determine which type of browser is set as the current default
-      #sBrowserType = Watir.options[:browser]
 
-      puts2(" Starting a new " + sBrowserType + " browser object.")
-      oBrowser = Watir::Browser.new # Create new local browser object
-      $bStartedBrowser = true
-=end
-
-    end # Run with WatirWebDriver or Watir / Firewatir
-
+    end  # Start the specified browser
 
     oBrowser.goto(sURL) # Load the URL
 
@@ -5584,7 +5491,6 @@ module WatirWorks_WebUtilities
     return oBrowser  # Return the browse object and let the caller decide it to assign it to local or Global Object
 
   end # Method - start_browser()
-
 
   #=============================================================================#
   #--
@@ -5647,623 +5553,605 @@ module WatirWorks_WebUtilities
 
     # Loop until the status bar text to changes back to "Done" or the timeout is exceeded
     while((self.status != sStatusText) && (tElapsedTime <= iTimeout)) do
-        if($VERBOSE == true)
-          puts2("Browser's status text: " +	self.status)
-        end
+      if($VERBOSE == true)
+        puts2("Browser's status text: " +	self.status)
+      end
 
-        sleep iInterval
-        tElapsedTime = calc_elapsed_time(tStartTime).to_f
+      sleep iInterval
+      tElapsedTime = calc_elapsed_time(tStartTime).to_f
 
     end
 
-      # In case the timeout was reached need to check once more to set the return status
-      if(self.status == sStatusText)
-        return true
-      else
-        return false
-      end
-
+    # In case the timeout was reached need to check once more to set the return status
+    if(self.status == sStatusText)
+      return true
+    else
+      return false
+    end
 
   end # Method - wait_until_status()
 
-
 end # Module - WatirWorks_WebUtilities
 
-    #=============================================================================#
-    # Class: Watir::Browser
-    #
-    # Description: Extends the Watir::Browser class in Watir-WebDriver with additional methods
-    #              This class is is supported if using Watir_WebDriver
-    #
-    #--
-    # Methods:
-    #          moveBy(...)
-    #          moveTo(...)
-    #          resizeBy(...)
-    #          resizeTo(...)
-    #          restart(...)
-    #          scrollBy(...)
-    #++
-    #=============================================================================#
-    class Watir::Browser
-
-
-      #=============================================================================#
-      #--
-      # Method: moveBy(...)
-      #
-      #++
-      #
-      # Description: Move the Browser window relative to its current location
-      #              Per: http://www.w3schools.com/jsref/obj_window.asp
-      #                   The moveBy() method is supported in all major browsers,
-      #
-      # Returns: BOOLEAN - true if successful, otherwise false
-      #
-      # Syntax: iXPos = INTEGER - The X-coordinate in pixels to re-position the top left
-      #                           corner of the browser window
-      #                           Default value = 0
-      #
-      #         iYPos = INTEGER - The Y-coordinate  in pixels to re-position the top left
-      #                           corner of the browser window
-      #                           Default value = 0
-      #
-      # Usage Examples:
-      #                To reposition the browser relative to its current location by 10, -20
-      #                     browser.moveBY(10, -20)
-      #
-      #=============================================================================#
-      def moveBy(iXPos=0, iYPos=0)
-
-        self.execute_script("window.moveBy(#{iXPos},#{iYPos})")
-      end # moveBy()
-
-
-      #=============================================================================#
-      #--
-      # Method: moveTo(...)
-      #
-      #++
-      #
-      # Description: Move the current Browser window to the specified location
-      #                    Per: http://www.w3schools.com/jsref/obj_window.asp
-      #                   The moveTo() method is supported in all major browsers.
-      #
-      # Returns: BOOLEAN - true if successful, otherwise false
-      #
-      # Syntax: iXPos = INTEGER - The X-coordinate in pixels to position the top left
-      #                           corner of the browser window
-      #                           Default value = 0
-      #
-      #         iYPos = INTEGER - The Y-coordinate  in pixels to position the top left
-      #                           corner of the browser window
-      #                           Default value = 0
-      #
-      # Usage Examples:
-      #                To move the browser to 100, 200
-      #                     browser.moveTo(100,200)
-      #
-      #=============================================================================#
-      def moveTo(iXPos=0, iYPos=0)
-
-        if(iXPos <0)
-          iXPos = 0
-        end
-        if(iYPos <0)
-          iYPos = 0
-        end
-
-        self.execute_script("window.moveTo(#{iXPos},#{iYPos})")
-      end # moveTo()
-
-
-      #=============================================================================#
-      #--
-      # Method: resizeBy(...)
-      #
-      #++
-      #
-      # Description: Resize the Browser window relative to its current size (in pixels)
-      #              Per: http://www.w3schools.com/jsref/obj_window.asp
-      #                   The resizeBy() method is supported in all major browsers, except Opera and Chrome.
-      #
-      # Returns: BOOLEAN - true if successful, otherwise false
-      #
-      # Syntax: iHeight = INTEGER - The width in pixels to resize the browser window
-      #                             Default value = 0
-      #
-      #         iWidth = INTEGER - The height in pixels to resize the browser window
-      #                            Default value = 0
-      #
-      # Usage Examples:
-      #                To size the browser by an additional 100, 200
-      #                     browser.resizeTo(100, 200)
-      #
-      #=============================================================================#
-      def resizeBy(iHeight=0, iWidth=0)
-
-        self.execute_script("window.resizeBy(#{iHeight},#{iWidth})")
-      end # resizeTo()
-
-
-      #=============================================================================#
-      #--
-      # Method: resizeTo(...)
-      #
-      #++
-      #
-      # Description: Move the Browser window to the specified location (in pixels)
-      #              Per: http://www.w3schools.com/jsref/obj_window.asp
-      #                   The resizeTo() method is supported in all major browsers, except Opera and Chrome
-      #
-      # Returns: BOOLEAN - true if successful, otherwise false
-      #
-      # Syntax: iHeight = INTEGER - The width in pixels to resize the browser window
-      #                             Default value = 640
-      #
-      #         iWidth = INTEGER - The height in pixels to resize the browser window
-      #                            Default value = 480
-      #
-      # Usage Examples:
-      #                To size the browser to 100, 200
-      #                     browser.resizeTo(1024,756)
-      #
-      #=============================================================================#
-      def resizeTo(iHeight=640, iWidth=480)
-
-        if(iHeight <1)
-          iHeight = 1
-        end
-        if(iWidth <1)
-          iWidth = 1
-        end
-
-        self.execute_script("window.resizeTo(#{iHeight},#{iWidth})")
-      end # resizeTo()
-
-
-      #=============================================================================#
-      #--
-      # Method: restart(...)
-      #
-      #++
-      #
-      # Description: Close the current Firefox browser object, pause,
-      #              then create and return a new Firefox browser object.
-      #
-      # Returns: BROWSER object
-      #
-      # Syntax: sURL = STRING - The URL to load in the new browser, defaults to the currently loaded URL
-      #         bClearCache = BOOLEAN - true - clear the cache and cookies after the old browser closes, but before the new browser starts
-      #                                 false - don't clear the cache & cookies
-      #
-      # Usage Examples:
-      #            To restart Global Browser Object with the same URL loaded:
-      #                $browser = $browser.restart()
-      #
-      #            To restart local browser object (e.g. myCurrentBrowser) with a different url:
-      #                myRestartedBrowser = myCurrentBrowser.restart("www.myNewURL.com")
-      #
-      #=============================================================================#
-      def restart(sURL="", bClearCache=false)
-
-        if($VERBOSE == true)
-          puts2("Parameters - restart:")
-          puts2("  sURL: " + sURL)
-          puts2("  bClearCache: " + bClearCache.to_s)
-        end
-
-        puts2("Closing the Firefox browser...")
-
-        if(sURL=="")
-          sURL = self.url
-        end
-
-        self.close
-
-        if($browser == self) # If a Global Browser Object exists remove it
-          $browser = nil
-        end
-
-        # Allow time to mourn the passing of the old browser.
-        sleep 3  # That's long enough to mourn
-
-        if(bClearCache == true)
-          clear_cache()
-        end
-
-        puts2("Starting a new Firefox browser object...")
-
-        # Create a new browser object using Watir's method directly
-        # Can't use start_Browser() as both local and Global Browser's may coexist
-        oBrowser = FireWatir::Firefox.new()
-        oBrowser.goto(sURL)
-
-        # Allow time to celebrate the birth of the new browser.
-        sleep 2  # That's long enough to celebrate
-
-        return oBrowser  # Return the new browser.
-
-      end # END Method - restart_browser()
-
-
-      #=============================================================================#
-      #--
-      # Method: scrollBy(...)
-      #
-      #++
-      #
-      # Description: Scroll the current Browser window (in pixels)
-      #              Per: http://www.w3schools.com/jsref/obj_window.asp
-      #                   The ScrollBy() method is supported in all major browsers.
-      #
-      # Returns: BOOLEAN - true if successful, otherwise false
-      #
-      # Syntax: iHorizontal = INTEGER - How many pixels to scroll by, along the x-axis (horizontal)
-      #                                 Positive values move scroll left, Negative values move scroll right
-      #                                 Default value = 0
-      #
-      #         iVertical= INTEGER - How many pixels to scroll by, along the y-axis (vertical)
-      #                              Positive values move scroll down, Negative values move scroll up
-      #                              Default value = 0
-      #
-      # Usage Examples:
-      #                To scroll the browser vertically by  100 pixels
-      #                     browser.scrollBy(0, 100)
-      #
-      #=============================================================================#
-      def scrollBy(iHorizontal=0, iVertical=0)
-
-        self.execute_script("window.scrollBy(#{iHorizontal},#{iVertical})")
-      end # scrollBy()
-
-
-    end  # END Class - Watir::Browser
-
-
+#=============================================================================#
+# Class: Watir::Browser
+#
+# Description: Extends the Watir::Browser class in Watir-WebDriver with additional methods
+#              This class is is supported if using Watir_WebDriver
+#
+#--
+# Methods:
+#          moveBy(...)
+#          moveTo(...)
+#          resizeBy(...)
+#          resizeTo(...)
+#          restart(...)
+#          scrollBy(...)
+#++
+#=============================================================================#
+class Watir::Browser
   #=============================================================================#
-  # Class: Fixnum
+  #--
+  # Method: moveBy(...)
   #
-  # Description: Extends the Ruby Fixnum class with additional methods
-  #
-  #              For backwards compatibility with Watir/WatirWorks
-  #
-  #      Based on info at: http://stackoverflow.com/questions/6550179/does-watir-webdriver-resolve-the-difference-in-indexing-bases-between-watir-and-f   #--
-  # Methods: adjust_index()
   #++
+  #
+  # Description: Move the Browser window relative to its current location
+  #              Per: http://www.w3schools.com/jsref/obj_window.asp
+  #                   The moveBy() method is supported in all major browsers,
+  #
+  # Returns: BOOLEAN - true if successful, otherwise false
+  #
+  # Syntax: iXPos = INTEGER - The X-coordinate in pixels to re-position the top left
+  #                           corner of the browser window
+  #                           Default value = 0
+  #
+  #         iYPos = INTEGER - The Y-coordinate  in pixels to re-position the top left
+  #                           corner of the browser window
+  #                           Default value = 0
+  #
+  # Usage Examples:
+  #                To reposition the browser relative to its current location by 10, -20
+  #                     browser.moveBY(10, -20)
+  #
   #=============================================================================#
-  class Fixnum
+  def moveBy(iXPos=0, iYPos=0)
 
-    #=============================================================================#
-    #--
-    # Method: adjust_index()
-    #
-    #++
-    #
-    # Description: Provide compatibility between Watir-Webdriver and Watir
-    #              Watir supports one based indexing, while
-    #              Watir-WebDriver supports zero based indexing
-    #
-    #             This allows the specification all indexes as 1 based.
-    #             Which is also used with self.length values in Watir-WebDriver.
-    #
-    # Returns: INT - The adjusted index
-    #
-    # Syntax: N/A
-    #
-    # Usage Examples:
-    #                To adjust the index number if running under WatirWebDriver
-    #                    The first div:
-    #                     browser.div(:index => 1.adjust_index)
-    #                    The last div:
-    #                     browser.div(:index => divs.length.adjust_index)
-    #
-    #=============================================================================#
-    def adjust_index()
-      #Config.webdriver? ? self - 1 : self
-      if(is_webdriver? == true)
-        return self - 1
-      else
-        return self
+    self.execute_script("window.moveBy(#{iXPos},#{iYPos})")
+  end # moveBy()
+
+  #=============================================================================#
+  #--
+  # Method: moveTo(...)
+  #
+  #++
+  #
+  # Description: Move the current Browser window to the specified location
+  #                    Per: http://www.w3schools.com/jsref/obj_window.asp
+  #                   The moveTo() method is supported in all major browsers.
+  #
+  # Returns: BOOLEAN - true if successful, otherwise false
+  #
+  # Syntax: iXPos = INTEGER - The X-coordinate in pixels to position the top left
+  #                           corner of the browser window
+  #                           Default value = 0
+  #
+  #         iYPos = INTEGER - The Y-coordinate  in pixels to position the top left
+  #                           corner of the browser window
+  #                           Default value = 0
+  #
+  # Usage Examples:
+  #                To move the browser to 100, 200
+  #                     browser.moveTo(100,200)
+  #
+  #=============================================================================#
+  def moveTo(iXPos=0, iYPos=0)
+
+    if(iXPos <0)
+      iXPos = 0
+    end
+    if(iYPos <0)
+      iYPos = 0
+    end
+
+    self.execute_script("window.moveTo(#{iXPos},#{iYPos})")
+  end # moveTo()
+
+  #=============================================================================#
+  #--
+  # Method: resizeBy(...)
+  #
+  #++
+  #
+  # Description: Resize the Browser window relative to its current size (in pixels)
+  #              Per: http://www.w3schools.com/jsref/obj_window.asp
+  #                   The resizeBy() method is supported in all major browsers, except Opera and Chrome.
+  #
+  # Returns: BOOLEAN - true if successful, otherwise false
+  #
+  # Syntax: iHeight = INTEGER - The width in pixels to resize the browser window
+  #                             Default value = 0
+  #
+  #         iWidth = INTEGER - The height in pixels to resize the browser window
+  #                            Default value = 0
+  #
+  # Usage Examples:
+  #                To size the browser by an additional 100, 200
+  #                     browser.resizeTo(100, 200)
+  #
+  #=============================================================================#
+  def resizeBy(iHeight=0, iWidth=0)
+
+    self.execute_script("window.resizeBy(#{iHeight},#{iWidth})")
+  end # resizeTo()
+
+  #=============================================================================#
+  #--
+  # Method: resizeTo(...)
+  #
+  #++
+  #
+  # Description: Move the Browser window to the specified location (in pixels)
+  #              Per: http://www.w3schools.com/jsref/obj_window.asp
+  #                   The resizeTo() method is supported in all major browsers, except Opera and Chrome
+  #
+  # Returns: BOOLEAN - true if successful, otherwise false
+  #
+  # Syntax: iHeight = INTEGER - The width in pixels to resize the browser window
+  #                             Default value = 640
+  #
+  #         iWidth = INTEGER - The height in pixels to resize the browser window
+  #                            Default value = 480
+  #
+  # Usage Examples:
+  #                To size the browser to 100, 200
+  #                     browser.resizeTo(1024,756)
+  #
+  #=============================================================================#
+  def resizeTo(iHeight=640, iWidth=480)
+
+    if(iHeight <1)
+      iHeight = 1
+    end
+    if(iWidth <1)
+      iWidth = 1
+    end
+
+    self.execute_script("window.resizeTo(#{iHeight},#{iWidth})")
+  end # resizeTo()
+
+  #=============================================================================#
+  #--
+  # Method: restart(...)
+  #
+  #++
+  #
+  # Description: Close the current Firefox browser object, pause,
+  #              then create and return a new Firefox browser object.
+  #
+  # Returns: BROWSER object
+  #
+  # Syntax: sURL = STRING - The URL to load in the new browser, defaults to the currently loaded URL
+  #         bClearCache = BOOLEAN - true - clear the cache and cookies after the old browser closes, but before the new browser starts
+  #                                 false - don't clear the cache & cookies
+  #
+  # Usage Examples:
+  #            To restart Global Browser Object with the same URL loaded:
+  #                $browser = $browser.restart()
+  #
+  #            To restart local browser object (e.g. myCurrentBrowser) with a different url:
+  #                myRestartedBrowser = myCurrentBrowser.restart("www.myNewURL.com")
+  #
+  #=============================================================================#
+  def restart(sURL="", bClearCache=false)
+
+    if($VERBOSE == true)
+      puts2("Parameters - restart:")
+      puts2("  sURL: " + sURL)
+      puts2("  bClearCache: " + bClearCache.to_s)
+    end
+
+    puts2("Closing the Firefox browser...")
+
+    if(sURL=="")
+      sURL = self.url
+    end
+
+    self.close
+
+    if($browser == self) # If a Global Browser Object exists remove it
+      $browser = nil
+    end
+
+    # Allow time to mourn the passing of the old browser.
+    sleep 3  # That's long enough to mourn
+
+    if(bClearCache == true)
+      clear_cache()
+    end
+
+    puts2("Starting a new Firefox browser object...")
+
+    # Create a new browser object using Watir's method directly
+    # Can't use start_Browser() as both local and Global Browser's may coexist
+    oBrowser = FireWatir::Firefox.new()
+    oBrowser.goto(sURL)
+
+    # Allow time to celebrate the birth of the new browser.
+    sleep 2  # That's long enough to celebrate
+
+    return oBrowser  # Return the new browser.
+
+  end # END Method - restart_browser()
+
+  #=============================================================================#
+  #--
+  # Method: scrollBy(...)
+  #
+  #++
+  #
+  # Description: Scroll the current Browser window (in pixels)
+  #              Per: http://www.w3schools.com/jsref/obj_window.asp
+  #                   The ScrollBy() method is supported in all major browsers.
+  #
+  # Returns: BOOLEAN - true if successful, otherwise false
+  #
+  # Syntax: iHorizontal = INTEGER - How many pixels to scroll by, along the x-axis (horizontal)
+  #                                 Positive values move scroll left, Negative values move scroll right
+  #                                 Default value = 0
+  #
+  #         iVertical= INTEGER - How many pixels to scroll by, along the y-axis (vertical)
+  #                              Positive values move scroll down, Negative values move scroll up
+  #                              Default value = 0
+  #
+  # Usage Examples:
+  #                To scroll the browser vertically by  100 pixels
+  #                     browser.scrollBy(0, 100)
+  #
+  #=============================================================================#
+  def scrollBy(iHorizontal=0, iVertical=0)
+
+    self.execute_script("window.scrollBy(#{iHorizontal},#{iVertical})")
+  end # scrollBy()
+
+end  # END Class - Watir::Browser
+
+#=============================================================================#
+# Class: Fixnum
+#
+# Description: Extends the Ruby Fixnum class with additional methods
+#
+#              For backwards compatibility with Watir/WatirWorks
+#
+#      Based on info at: http://stackoverflow.com/questions/6550179/does-watir-webdriver-resolve-the-difference-in-indexing-bases-between-watir-and-f   #--
+# Methods: adjust_index()
+#++
+#=============================================================================#
+class Fixnum
+  #=============================================================================#
+  #--
+  # Method: adjust_index()
+  #
+  #++
+  #
+  # Description: Provide compatibility between Watir-Webdriver and Watir
+  #              Watir supports one based indexing, while
+  #              Watir-WebDriver supports zero based indexing
+  #
+  #             This allows the specification all indexes as 1 based.
+  #             Which is also used with self.length values in Watir-WebDriver.
+  #
+  # Returns: INT - The adjusted index
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:
+  #                To adjust the index number if running under WatirWebDriver
+  #                    The first div:
+  #                     browser.div(:index => 1.adjust_index)
+  #                    The last div:
+  #                     browser.div(:index => divs.length.adjust_index)
+  #
+  #=============================================================================#
+  def adjust_index()
+    #Config.webdriver? ? self - 1 : self
+    if(is_webdriver? == true)
+      return self - 1
+    else
+      return self
+    end
+
+  end # adjust_index
+end # Class Fixnum
+
+#=============================================================================#
+# Class: Watir::Table
+#
+# Description: Extends the Watir::Table class in Watir-WebDriver with additional methods
+#              This class is is only supported if using Watir_WebDriver
+#
+#              For backwards compatibility with Watir/WatirWorks
+#
+#      Based on info at: http://stackoverflow.com/questions/5963606/watir-webdriver-checking-table-size-rows-and-columns-count
+#--
+# Methods: row_count()
+#++
+#=============================================================================#
+class Watir::Table
+  #=============================================================================#
+  #--
+  # Method: column_count()
+  #
+  #++
+  #
+  # Description: Provide backwards compatibility in Watir-Webdriver to Watir
+  #
+  #
+  # Returns: INT - Number of columns in a table's first row
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:
+  #                To count the number of columns
+  #                     iNumber_of_columns = browser.table(:how, what).row(:how, what).column_count
+  #
+  #=============================================================================#
+  def column_count()
+    return self.row.cells.length
+  end
+
+  #=============================================================================#
+  #--
+  # Method: row_count()
+  #
+  #++
+  #
+  # Description: Provide backwards compatibility in Watir-Webdriver to Watir
+  #
+  #
+  # Returns: INT - Number of rows in a table
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:
+  #                To count the number of rows:
+  #                     iNumber_of_rows = browser.table(:how, what).row_count
+  #
+  #=============================================================================#
+  def row_count()
+    return self.rows.length
+  end
+
+  #=============================================================================#
+  #--
+  # Method: row_values()
+  #
+  #++
+  #
+  # Description: Provide backwards compatibility in Watir-Webdriver to Watir
+  #
+  #
+  # Returns: ARRAY of STRINGS - All the strings in the specified row.
+  #          Raises an UnknownObjectException if the table doesnï¿½t exist
+  #
+  # Syntax: iRowNumber = INTEGER - Index of the Row
+  #
+  # Usage Examples:
+  #                To get all the strings within row 2:
+  #                     aText_in_rows = browser.table(:how, what).row_values(2)
+  #
+  #=============================================================================#
+  def row_values(iRowNumber)
+
+    #return self.row(:index => iRowNumber.adjust_index).to_a
+
+    #return (1..column_count()).collect {|i| self.row[iRowNumber][i].text}
+    #return (1..column_count(iRowNumber)).collect {|i| self.row[iRowNumber][i].text}
+
+    aStrings = []
+    iColumnCount = self.row(:index => iRowNumber.adjust_index).column_count
+    iLast_column = iColumnCount - 1
+    iCurrent_column = 0
+
+    while iCurrent_column < iLast_column do
+      aStrings << self.row(:index => iRowNumber.adjust_index).cell(:index => iCurrent_column.adjust_index).text
+      iCurrent_column = iCurrent_column + 1
+    end
+
+    return aStrings
+
+  end # Method row_values
+
+end # Class Watir::Table
+
+#=============================================================================#
+# Class: Watir::TableRow
+#
+# Description: Extends the Watir::TableRow class in Watir-WebDriver with additional methods
+#              This class is is only supported if using Watir_WebDriver
+#
+#              For backwards compatibility with Watir/WatirWorks
+#
+#      Based on info at: http://stackoverflow.com/questions/5963606/watir-webdriver-checking-table-size-rows-and-columns-count
+#--
+# Methods: column_count()
+#++
+#=============================================================================#
+class Watir::TableRow
+  #=============================================================================#
+  #--
+  # Method: column_count()
+  #
+  #++
+  #
+  # Description: Provide backwards compatibility in Watir-Webdriver to Watir
+  #
+  #
+  # Returns: INT - Number of columns in a table's row
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:
+  #                To count the number of columns
+  #                     iNumber_of_columns = browser.table(:how, what).row(:how, what).column_count
+  #
+  #=============================================================================#
+  def column_count()
+    return self.cells.length
+  end
+
+end # Class Watir::Table
+
+#=============================================================================#
+# Class: Watir::Select
+#
+# Description: Extends the Watir::Select class in Watir-WebDriver with additional methods
+#              This class is is only supported if using Watir_WebDriver
+#
+#--
+# Methods: wait_until_count()
+#          wait_until_text()
+#++
+#=============================================================================#
+class Watir::Select
+  #=============================================================================#
+  #--
+  # Method: wait_until_count(...)
+  #
+  #++
+  #
+  # Description: Checks a select list to verify that it contains the specified number of items.
+  #              If the select list does not contain the specified number of items it loops and
+  #              continues to loops once each specified Interval until the Timeout is exceeded.
+  #
+  # HINT: Use with auto-populated select lists that take a period of time before they are complete
+  #
+  #
+  # Returns: BOOLEAN - true if number of items in select list meets or exceeds the specific minimum
+  #                    otherwise false if timed out
+  #
+  # Syntax: iMin = INTEGER - The Minimum number of items in the select list
+  #         iInterval = INTEGER - The number of second to wait between loops
+  #         iTimeout = INTEGER -  Number of seconds to wait for the event to occur
+  #
+  # Usage Examples:
+  #                To verify the the select list is populated with as least 4 items,
+  #                waiting up to 10 seconds checking every 2 seconds:
+  #                     browser.select_list(:how, what).wait_until_count(4, 10, 1)
+  #
+  #=============================================================================#
+  def wait_until_count(iMin, iTimeout=10, iInterval=0.1)
+
+    if($VERBOSE == true)
+      puts2("Parameters - wait_until_count:")
+      puts2("  iMin: " + iMin.to_s)
+      puts2("  iTimeout: " + iTimeout.to_s)
+      puts2("  iInterval: " + iInterval.to_s)
+    end
+
+    # Disallow values less that one
+    if(iTimeout <= 1)
+      iTimeout = 1
+    end
+
+    if(iInterval <= 0.1)
+      iInterval = 0.1
+    end
+
+    if(iMin <= 0)
+      iMin = 0
+    end
+
+    tStartTime = Time.now
+    tElapsedTime = 0
+
+    if($VERBOSE == true)
+      puts2("Number of select list items: " +     self.options.length.to_s)
+    end
+
+    # Loop until the select lists's item count
+    # reached the specified minimum or timeout is exceeded
+    while ((self.options.length < iMin) && (tElapsedTime <= iTimeout)) do
+
+      if($VERBOSE == true)
+        puts2("Number of select list items: " +     self.options.length.to_s)
       end
 
-    end # adjust_index
-  end # Class Fixnum
+      sleep iInterval
+      tElapsedTime = calc_elapsed_time(tStartTime).to_f
 
-    #=============================================================================#
-    # Class: Watir::Table
-    #
-    # Description: Extends the Watir::Table class in Watir-WebDriver with additional methods
-    #              This class is is only supported if using Watir_WebDriver
-    #
-    #              For backwards compatibility with Watir/WatirWorks
-    #
-    #      Based on info at: http://stackoverflow.com/questions/5963606/watir-webdriver-checking-table-size-rows-and-columns-count
-    #--
-    # Methods: row_count()
-    #++
-    #=============================================================================#
-    class Watir::Table
+    end # Loop
 
-      #=============================================================================#
-      #--
-      # Method: column_count()
-      #
-      #++
-      #
-      # Description: Provide backwards compatibility in Watir-Webdriver to Watir
-      #
-      #
-      # Returns: INT - Number of columns in a table's first row
-      #
-      # Syntax: N/A
-      #
-      # Usage Examples:
-      #                To count the number of columns
-      #                     iNumber_of_columns = browser.table(:how, what).row(:how, what).column_count
-      #
-      #=============================================================================#
-      def column_count()
-        return self.row.cells.length
+    # In case the timeout was reached need to check once more to set the return status
+    return(self.options.length >= iMin)
+
+  end # Method - wait_until_count(...)
+
+  #=============================================================================#
+  #--
+  # Method: wait_until_text(...)
+  #
+  #++
+  #
+  # Description: Checks a select list to verify that it contains the specified text.
+  #              If the select list does not contain the specified text it loops and
+  #              continues to loops once each specified Interval until the Timeout is exceeded.
+  #
+  # HINT: Use with auto-populated select lists that take a period of time before they are complete
+  #
+  #
+  # Returns: BOOLEAN - true if text in select list it found
+  #                    otherwise false if timed out
+  #
+  # Syntax: sString = STRING - The text to find in the select list's contents
+  #         iInterval = INTEGER - The number of second to wait between loops
+  #         iTimeout = INTEGER -  Number of seconds to wait for the event to occur
+  #
+  # Usage Examples:
+  #                To verify the the select list is populated with a value of "All the above",
+  #                waiting up to 10 seconds checking every 2 seconds:
+  #                     browser.select_list(:how, what).wait_until_text("All the above", 10, 1)
+  #
+  #=============================================================================#
+  def wait_until_text(sString="", iTimeout=10, iInterval=0.1)
+
+    if($VERBOSE == true)
+      puts2("Parameters - wait_until_text:")
+      puts2("  sString: " + sString.to_s)
+      puts2("  iTimeout: " + iTimeout.to_s)
+      puts2("  iInterval: " + iInterval.to_s)
+    end
+
+    # Disallow values less that one
+    if(iTimeout <= 1)
+      iTimeout = 1
+    end
+
+    if(iInterval <= 0.1)
+      iInterval = 0.1
+    end
+
+    tStartTime = Time.now
+    tElapsedTime = 0
+
+    # Loop until the select list contains the specified text
+    # or timeout is exceeded
+    while ((self.include?(/#{sString}/) == false) && (tElapsedTime <= iTimeout)) do
+
+      if($VERBOSE == true)
+        puts2("Select list text: " + self.options.to_s)
       end
 
-      #=============================================================================#
-      #--
-      # Method: row_count()
-      #
-      #++
-      #
-      # Description: Provide backwards compatibility in Watir-Webdriver to Watir
-      #
-      #
-      # Returns: INT - Number of rows in a table
-      #
-      # Syntax: N/A
-      #
-      # Usage Examples:
-      #                To count the number of rows:
-      #                     iNumber_of_rows = browser.table(:how, what).row_count
-      #
-      #=============================================================================#
-      def row_count()
-        return self.rows.length
-      end
+      sleep iInterval
+      tElapsedTime = calc_elapsed_time(tStartTime).to_f
 
+    end # Loop
 
-      #=============================================================================#
-      #--
-      # Method: row_values()
-      #
-      #++
-      #
-      # Description: Provide backwards compatibility in Watir-Webdriver to Watir
-      #
-      #
-      # Returns: ARRAY of STRINGS - All the strings in the specified row.
-      #          Raises an UnknownObjectException if the table doesn‘t exist
-      #
-      # Syntax: iRowNumber = INTEGER - Index of the Row
-      #
-      # Usage Examples:
-      #                To get all the strings within row 2:
-      #                     aText_in_rows = browser.table(:how, what).row_values(2)
-      #
-      #=============================================================================#
-      def row_values(iRowNumber)
+    # In case the timeout was reached need to check once more to set the return status
+    return (self.include?(/#{sString}/))
 
-        #return self.row(:index => iRowNumber.adjust_index).to_a
+  end # Method - wait_until_text(...)
 
-        #return (1..column_count()).collect {|i| self.row[iRowNumber][i].text}
-        #return (1..column_count(iRowNumber)).collect {|i| self.row[iRowNumber][i].text}
+end # Class Watir::Select
 
-        aStrings = []
-        iColumnCount = self.row(:index => iRowNumber.adjust_index).column_count
-        iLast_column = iColumnCount - 1
-        iCurrent_column = 0
-
-        while iCurrent_column < iLast_column do
-          aStrings << self.row(:index => iRowNumber.adjust_index).cell(:index => iCurrent_column.adjust_index).text
-          iCurrent_column = iCurrent_column + 1
-        end
-
-        return aStrings
-
-      end # Method row_values
-
-    end # Class Watir::Table
-
-    #=============================================================================#
-    # Class: Watir::TableRow
-    #
-    # Description: Extends the Watir::TableRow class in Watir-WebDriver with additional methods
-    #              This class is is only supported if using Watir_WebDriver
-    #
-    #              For backwards compatibility with Watir/WatirWorks
-    #
-    #      Based on info at: http://stackoverflow.com/questions/5963606/watir-webdriver-checking-table-size-rows-and-columns-count
-    #--
-    # Methods: column_count()
-    #++
-    #=============================================================================#
-    class Watir::TableRow
-
-      #=============================================================================#
-      #--
-      # Method: column_count()
-      #
-      #++
-      #
-      # Description: Provide backwards compatibility in Watir-Webdriver to Watir
-      #
-      #
-      # Returns: INT - Number of columns in a table's row
-      #
-      # Syntax: N/A
-      #
-      # Usage Examples:
-      #                To count the number of columns
-      #                     iNumber_of_columns = browser.table(:how, what).row(:how, what).column_count
-      #
-      #=============================================================================#
-      def column_count()
-        return self.cells.length
-      end
-
-    end # Class Watir::Table
-
-
-    #=============================================================================#
-    # Class: Watir::Select
-    #
-    # Description: Extends the Watir::Select class in Watir-WebDriver with additional methods
-    #              This class is is only supported if using Watir_WebDriver
-    #
-    #--
-    # Methods: wait_until_count()
-    #          wait_until_text()
-    #++
-    #=============================================================================#
-    class Watir::Select
-
-      #=============================================================================#
-      #--
-      # Method: wait_until_count(...)
-      #
-      #++
-      #
-      # Description: Checks a select list to verify that it contains the specified number of items.
-      #              If the select list does not contain the specified number of items it loops and
-      #              continues to loops once each specified Interval until the Timeout is exceeded.
-      #
-      # HINT: Use with auto-populated select lists that take a period of time before they are complete
-      #
-      #
-      # Returns: BOOLEAN - true if number of items in select list meets or exceeds the specific minimum
-      #                    otherwise false if timed out
-      #
-      # Syntax: iMin = INTEGER - The Minimum number of items in the select list
-      #         iInterval = INTEGER - The number of second to wait between loops
-      #         iTimeout = INTEGER -  Number of seconds to wait for the event to occur
-      #
-      # Usage Examples:
-      #                To verify the the select list is populated with as least 4 items,
-      #                waiting up to 10 seconds checking every 2 seconds:
-      #                     browser.select_list(:how, what).wait_until_count(4, 10, 1)
-      #
-      #=============================================================================#
-      def wait_until_count(iMin, iTimeout=10, iInterval=0.1)
-
-        if($VERBOSE == true)
-          puts2("Parameters - wait_until_count:")
-          puts2("  iMin: " + iMin.to_s)
-          puts2("  iTimeout: " + iTimeout.to_s)
-          puts2("  iInterval: " + iInterval.to_s)
-        end
-
-        # Disallow values less that one
-        if(iTimeout <= 1)
-          iTimeout = 1
-        end
-
-        if(iInterval <= 0.1)
-          iInterval = 0.1
-        end
-
-        if(iMin <= 0)
-          iMin = 0
-        end
-
-        tStartTime = Time.now
-        tElapsedTime = 0
-
-        if($VERBOSE == true)
-          puts2("Number of select list items: " +     self.options.length.to_s)
-        end
-
-        # Loop until the select lists's item count
-        # reached the specified minimum or timeout is exceeded
-        while ((self.options.length < iMin) && (tElapsedTime <= iTimeout)) do
-
-          if($VERBOSE == true)
-            puts2("Number of select list items: " +     self.options.length.to_s)
-          end
-
-          sleep iInterval
-          tElapsedTime = calc_elapsed_time(tStartTime).to_f
-
-        end # Loop
-
-        # In case the timeout was reached need to check once more to set the return status
-        return(self.options.length >= iMin)
-
-      end # Method - wait_until_count(...)
-
-      #=============================================================================#
-      #--
-      # Method: wait_until_text(...)
-      #
-      #++
-      #
-      # Description: Checks a select list to verify that it contains the specified text.
-      #              If the select list does not contain the specified text it loops and
-      #              continues to loops once each specified Interval until the Timeout is exceeded.
-      #
-      # HINT: Use with auto-populated select lists that take a period of time before they are complete
-      #
-      #
-      # Returns: BOOLEAN - true if text in select list it found
-      #                    otherwise false if timed out
-      #
-      # Syntax: sString = STRING - The text to find in the select list's contents
-      #         iInterval = INTEGER - The number of second to wait between loops
-      #         iTimeout = INTEGER -  Number of seconds to wait for the event to occur
-      #
-      # Usage Examples:
-      #                To verify the the select list is populated with a value of "All the above",
-      #                waiting up to 10 seconds checking every 2 seconds:
-      #                     browser.select_list(:how, what).wait_until_text("All the above", 10, 1)
-      #
-      #=============================================================================#
-      def wait_until_text(sString="", iTimeout=10, iInterval=0.1)
-
-        if($VERBOSE == true)
-          puts2("Parameters - wait_until_text:")
-          puts2("  sString: " + sString.to_s)
-          puts2("  iTimeout: " + iTimeout.to_s)
-          puts2("  iInterval: " + iInterval.to_s)
-        end
-
-        # Disallow values less that one
-        if(iTimeout <= 1)
-          iTimeout = 1
-        end
-
-        if(iInterval <= 0.1)
-          iInterval = 0.1
-        end
-
-        tStartTime = Time.now
-        tElapsedTime = 0
-
-        # Loop until the select list contains the specified text
-        # or timeout is exceeded
-        while ((self.include?(/#{sString}/) == false) && (tElapsedTime <= iTimeout)) do
-
-          if($VERBOSE == true)
-            puts2("Select list text: " + self.options.to_s)
-          end
-
-          sleep iInterval
-          tElapsedTime = calc_elapsed_time(tStartTime).to_f
-
-        end # Loop
-
-        # In case the timeout was reached need to check once more to set the return status
-        return (self.include?(/#{sString}/))
-
-      end # Method - wait_until_text(...)
-
-    end # Class Watir::Select
-
-
-  # END File: watirworks_web-utilities.rb
+# END File: watirworks_web-utilities.rb
