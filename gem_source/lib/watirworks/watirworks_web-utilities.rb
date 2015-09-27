@@ -5419,7 +5419,7 @@ module WatirWorks_WebUtilities
     # Start the specified browser
     case sBrowserType
 
-    when /c.*/
+    when /^c.*/
       if (is_win? == true)
         puts2("  Starting Chrome on Windows...")
       else
@@ -5429,7 +5429,7 @@ module WatirWorks_WebUtilities
       $bStartedBrowser = true
       
 =begin
-    when /e.*/
+    when /^e.*/
       if (is_win?(10) == true)
         puts2("  Starting Edge on Windows...")
         oBrowser = Watir::Browser.new :edge
@@ -5439,7 +5439,7 @@ module WatirWorks_WebUtilities
       end
 =end
 
-    when  /f.*/
+    when  /^f.*/
       if (is_win? == true)
         Selenium::WebDriver::Firefox::Binary.path = "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe"
         puts2("  Starting Firefox on Windows...")
@@ -5458,7 +5458,7 @@ module WatirWorks_WebUtilities
       oBrowser = Watir::Browser.new :firefox
       $bStartedBrowser = true
 
-    when  /i.*/
+    when  /^i.*/
       if (is_win? == true)
         oBrowser = Watir::Browser.new :ie
         $bStartedBrowser = true
@@ -5467,7 +5467,7 @@ module WatirWorks_WebUtilities
         puts2("  Internet Explorer is not supported on this OS")
       end
 
-    when /o.*/
+    when /^o.*/
       if (is_win? == true)
         puts2("  Starting Opera on Windows")
       else
@@ -5476,7 +5476,7 @@ module WatirWorks_WebUtilities
       oBrowser = Watir::Browser.new :opera
       $bStartedBrowser = true
 
-    when /s.*/
+    when /^s.*/
       if (is_win? == true)
         puts2("  Safari is not supported on this OS")
       else
