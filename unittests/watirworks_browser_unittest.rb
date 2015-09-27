@@ -14,7 +14,6 @@
 #                          is_firefox?(...)
 #                          is_ie?(...)
 #                          is_opera?(...)
-#                          wait_until_status(..)
 #                          kill_browsers()
 #                          is_maximized?(...)
 #                          is_minimized?(...)
@@ -40,6 +39,7 @@ end
 
 # WatirWorks
 require 'watirworks'  # The WatirWorks library loader
+
 include WatirWorks_Utilities    # WatirWorks General Utilities
 include WatirWorks_WebUtilities # WatirWorks Web Utilities
 
@@ -65,7 +65,6 @@ end
 # Watir global variables
 #
 
-
 # WatirWorks global variables
 #
 sRun_TestType = "browser"
@@ -84,7 +83,6 @@ end
 
 #=============================================================================#
 
-
 #=============================================================================#
 # Class: Unittest_Browser
 #
@@ -93,7 +91,6 @@ end
 #
 #=============================================================================#
 class Unittest_Browser < Test::Unit::TestCase
-
   #===========================================================================#
   # Method: setup
   #
@@ -154,120 +151,167 @@ class Unittest_Browser < Test::Unit::TestCase
   end # END Testcase - test_Browser_001_DisplayWatirEnv
 
   #===========================================================================#
-  # Testcase method: test_Browser_003_LocalBrowsers
+  # Testcase method: test_Browser_003_BrowserTypes
   #
-  # Description: Opens multiple local browsers and manipulates each one.
-  #                   Displays info on the browser, url, and the HTML document each is displaying.
+  # Description: Opens multiple browsers and manipulates each one.
+  #                   Displays info on the browser, url, etc.
   #
   #  Test methods: start_browser(...)
   #                       is_chrome?(...)
   #                       is_firefox?(...)
   #                       is_ie?(...)
-  #                       is_opera(...)?
-  #                       wait_until_status(...)
+  #                       is_opera?(...)
   #                       kill_browsers()
   #===========================================================================#
-  def test_Browser_003_LocalBrowsers
+  def test_Browser_003_BrowserTypes
 
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_Browser_003_LocalBrowsers")
+    puts2("Testcase: test_Browser_003_BrowserTypes")
     puts2("#######################")
 
     #$VERBOSE = true
     #$DEBUG = true
 
-    sAskURL = "http://ask.com"
+    #sAskURL = "http://ask.com"
     sBingURL = "http://www.bing.com"
     sGoogleURL = "http://google.com"
-    sBlankURL = "about:blank"
+    #sBlankURL = "about:blank"
 
-    #    if(is_webdriver? != true)  # watir-webdriver - missing method - options
-    #       # Determine which type of browser is set as the current default
-    #      sBrowserType = Watir.options[:browser]
-    #  else
-    sBrowserType = $sDefaultBrowser
-    #   end
+    # Define an empty array
+    aSupportedBrowsers =[]
 
-    puts2("\nBrowser Type: " + sBrowserType)
+    # Determine the currnet OS
+    sCurrentOS =""
+    if (is_win? == true)
+	    sCurrentOS = "windows"
+	    puts2("OS = Windows")
+    elsif(is_osx? == true)
+	    sCurrentOS = "osx"
+	    puts2("OS = OSX")
+    else
+	    sCurrentOS = "linux"
+	     puts2("OS = Linux")
+    end
 
-    begin # Start local browsers
+    # Populate array based on OS (presume that each browser and its Server are installed)
+    case sCurrentOS
 
-      puts2("\nIs a Global browser running: " + is_global_browser_running?.to_s + "\n\n")
+    when(sCurrentOS == /w.*/)
+      aSupportedBrowsers = ["Firefox", "Internet Explorer", "Chrome"]
+    when(sCurrentOS == /o.*/)
+      aSupportedBrowsers = ["Firefox", "Safari", "Chrome"]
+    else
+      aSupportedBrowsers = ["Firefox", "Chrome"]
+      aSupportedBrowsers = ["Firefox", "Chrome", "Internet Explorer"]
+    end # case sCurrentOS
 
-      puts2("Create a new local Browser Object with no URL specified")
-      oLocalBrowser_1 = start_browser(sBrowserType)
+    # Loop thru each browser
+    aSupportedBrowsers.each { |sBrowserName|
 
-      puts2("\nIs a Global browser running: " + is_global_browser_running?.to_s + "\n\n")
+      # Start a browser
+      oBrowser = start_browser(sBrowserName)
 
-      sCurrentURL = oLocalBrowser_1.url
+      #puts2("\nIs a Global browser running: " + is_global_browser_running?.to_s + "\n\n")
+
+      sCurrentURL = oBrowser.url
       puts2("Current URL: " + sCurrentURL)
 
-      puts2("\nIs it a Android browser?: " + oLocalBrowser_1.is_android?.to_s)
-      puts2("\nIs it a Chrome browser?: " + oLocalBrowser_1.is_chrome?.to_s)
-      puts2("Is it a Opera browser?: " + oLocalBrowser_1.is_opera?.to_s)
-      puts2("Is it a Safari browser?: " + oLocalBrowser_1.is_safari?.to_s)
+=begin
+      # Watir-webdriver appears to not support self.version which is use by all these methods.
+      puts2("\nFirefox browser?: " + oBrowser.is_firefox?.to_s)
+      puts2("Firefox 39.x browser?: " + oBrowser.is_firefox?(39).to_s)
+      puts2("Firefox 40.x browser?: " + oBrowser.is_firefox?(40).to_s)
+      puts2("Firefox 41.x browser?: " + oBrowser.is_firefox?(41).to_s)
+      puts2("Firefox 42.x browser?: " + oBrowser.is_firefox?(42).to_s)
 
-      puts2("\nIs it an IE browser?: " + oLocalBrowser_1.is_ie?.to_s)
-      puts2("Is it an IE 9.x browser?: " + oLocalBrowser_1.is_ie?(9).to_s)
-      puts2("Is it an IE 10.x browser?: " + oLocalBrowser_1.is_ie?(10).to_s)
-      puts2("Is it an IE 11.x browser?: " + oLocalBrowser_1.is_ie?(11).to_s)
+      puts2("\nChrome browser?: " + oBrowser.is_chrome?.to_s)
+      puts2("Opera browser?: " + oBrowser.is_opera?.to_s)
+      puts2("Safari browser?: " + oBrowser.is_safari?.to_s)
 
-      puts2("\nIs it a Firefox browser?: " + oLocalBrowser_1.is_firefox?.to_s)
-      puts2("Is it a Firefox 39.x browser?: " + oLocalBrowser_1.is_firefox?(39).to_s)
-      puts2("Is it a Firefox 40.x browser?: " + oLocalBrowser_1.is_firefox?(40).to_s)
-      puts2("Is it a Firefox 41.x browser?: " + oLocalBrowser_1.is_firefox?(41).to_s)
-      puts2("Is it a Firefox 42.x browser?: " + oLocalBrowser_1.is_firefox?(42).to_s)
-
-      puts2("\nBrowser's status text = " + oLocalBrowser_1.status)
-
-      # Verify that the browser is ready
-      if(oLocalBrowser_1.wait_until_status("Done", 10, 1) == true)
-        puts2("Found expected Browser's status text = " + oLocalBrowser_1.status)
-      else
-        puts2("Found unexpected Browser's status text = " + oLocalBrowser_1.status)
-      end
-
-      # Can't run this until a browser exists.
-      # Once a URL is loaded an IE 8 browser may down-rev to emulate an IE 6 or IE 7 browser.
-      # Thus a browser may report IE 8 before a page is loaded and IE 6 or IE 7 after a page loads.
-
+      puts2("\nIE browser?: " + oBrowser.is_ie?.to_s)
+      puts2("IE 9.x browser?: " + oBrowser.is_ie?(9).to_s)
+      puts2("IE 10.x browser?: " + oBrowser.is_ie?(10).to_s)
+      puts2("IE 11.x browser?: " + oBrowser.is_ie?(11).to_s)
+=end
       # Access a URL
-      puts2("\nBrowser 1 - Set URL = " + sAskURL)
-      oLocalBrowser_1.goto(sAskURL)
-      puts2("Current URL: " + oLocalBrowser_1.url)
+      puts2("\nBrowser - Set URL = " + sBingURL)
+      oBrowser.goto(sBingURL)
+      sleep(10) # Placeholder delay to figure out why a new IE fails at this point, and what can be waited on.
+      puts2("  URL = " + oBrowser.url)
+      puts2("  Browser name = " + oBrowser.name.to_s)
 
-      puts2("\nCreate a 2nd local Browser Object, and load the URL " + sBingURL)
-      oLocalBrowser_2 = start_browser(sBrowserType, sBingURL)
-      puts2("Current URL: " + oLocalBrowser_2.url)
+      puts2("Misc. browser methods...")
+      puts2("  Browser status = " + oBrowser.status.to_s)
+      puts2("  Browser ready_state = " + oBrowser.ready_state.to_s)
+      puts2("  Window current = " + oBrowser.window.current?.to_s)
+      puts2("  Browse refresh...")
+      oBrowser.refresh
 
-      sleep(2)
+      # Start with browser in it's current size
+      puts2("\Browser is at it's initial size.")
+      puts2("  Window size = " + oBrowser.window.size.to_s)
+      #puts2("Minimized? = " + (oBrowser.is_minimized?).to_s)
+      #puts2("Maximized? = " + (oBrowser.is_maximized?).to_s)
 
-      puts2("\nCreate a 3rd local Browser Object,and load the URL " + sBlankURL)
-      oLocalBrowser_3 = start_browser(sBrowserType, sBlankURL)
-      puts2("Current URL: " + oLocalBrowser_3.url)
+      ######  watir-webdriver - missing method - minimize
+      #puts2("\nMimimized browser")
+      #oBrowser.minimize
+      #puts2("Window size = " + oBrowser.window.size.to_s)
+      #puts2("Minimized? = " + (oBrowser.is_minimized?).to_s)
+      #puts2("Maximized? = " + (oBrowser.is_maximized?).to_s)
 
-      puts2("\nAccess a different URL with 2nd browser: " + sBlankURL)
-      oLocalBrowser_2.goto(sBlankURL)
-      puts2("Current URL: " + oLocalBrowser_2.url)
+      puts2("\nMaximize browser")
+      oBrowser.window.maximize
+      puts2("  Window size = " + oBrowser.window.size.to_s)
+      #puts2("Minimized? = " + (oBrowser.is_minimized?).to_s)
+      #puts2("Maximized? = " + (oBrowser.is_maximized?).to_s)
 
-      puts2("\nAccess a different URL with the 1st browser: " + sGoogleURL)
-      oLocalBrowser_1.goto(sGoogleURL)
-      puts2("Current URL: " + oLocalBrowser_1.url)
+      puts2("Resize the window to 640x480")
+      oBrowser.window.resize_to(640,480)
+      #oBrowser.reset!
+      puts2("  Window size = " + oBrowser.window.size.to_s)
+      puts2("  Window position = " + oBrowser.window.position.to_s)
 
-      # Close the browsers
-      puts2("\nClose the 3rd browser...")
-      oLocalBrowser_3.close
-      puts2("3rd browser CLOSED")
+      puts2("Move the window to 100x100")
+      oBrowser.window.move_to(100,100)
+      #oBrowser.reset!
+      puts2("  Window size = " + oBrowser.window.size.to_s)
+      puts2("  Window position = " + oBrowser.window.position.to_s)
 
-      puts2("Close 1st browser...")
-      oLocalBrowser_1.close
-      puts2("1st local browser CLOSED")
+      #puts2("Move the window by 10x10 and resize by 10x10")
+      #oBrowser.moveBy(10,10)
+      #oBrowser.resizeBy(10,10)
+      #oBrowser.reset!
+      #puts2("  Window size = " + oBrowser.window.size.to_s)
+      #puts2("  Window position = " + oBrowser.window.position.to_s)
 
-      puts2("Close 2nd browser using - kill_browsers()...")
-      #oLocalBrowser_2.close
-      kill_browsers()
-      puts2("2nd local browser CLOSED")
+      puts2("\nLoad a different URL " + sGoogleURL)
+      oBrowser.goto(sGoogleURL)
+      puts("  URL = " + oBrowser.url)
+      puts("  Title = " + oBrowser.title)
+
+      puts2("Use the browser's 'back' button...")
+      oBrowser.back
+      puts("  URL = " + oBrowser.url)
+      puts("  Title = " + oBrowser.title)
+
+      puts2("Use the browser's 'forward' button...")
+      oBrowser.forward
+      puts("  URL = " + oBrowser.url)
+      puts("  Title = " + oBrowser.title)
+
+      puts2("\nAbout to close the current browser")
+      puts2("  Does browser exist? = " + oBrowser.exists?.to_s)
+      puts2("  Does window exist? = " + oBrowser.window.exists?.to_s)
+      puts2("Close the browser...")
+      oBrowser.close
+      puts2("  Does browser exist? = " + oBrowser.exists?.to_s)
+      #puts2("  Does window exist? = " + oBrowser.window.exists?.to_s)  # Can't check on window if its closed.
+
+      puts2("\n##### Next browser...")
+
+    }   # END - Loop thru each browser
 
     rescue => e
 
@@ -281,290 +325,8 @@ class Unittest_Browser < Test::Unit::TestCase
 
     ensure
 
-    end # Start local browsers
+    #end # Start browser types
 
-  end # End of test method - test_Browser_002_LocalBrowsers
-
-  #===========================================================================#
-  # Testcase method: test_Browser_004_GlobalAndLocalBrowsers
-  #
-  # Description: Starts local and global browser objects which run concurrently
-  #
-  # Tests methods:  start_browser()
-  #                        watchlist(...)
-  #                        kill_browsers()
-  #===========================================================================#
-  def test_Browser_004_GlobalAndLocalBrowsers
-
-    puts2("")
-    puts2("#######################")
-    puts2("Testcase: test_Browser_004_GlobalAndLocalBrowsers")
-    puts2("#######################")
-
-=begin  watir-webdriver - missing method - options
-    # Determine which type of browser is set as the current default
-    sBrowserType = Watir.options[:browser]
-=end
-    sBrowserType = $sDefaultBrowser
-
-    puts2("\nBrowser Type = " + sBrowserType)
-
-    watchlist(["$browser"])
-
-    sAskURL = "http://ask.com"
-    sBingURL = "http://www.bing.com"
-    sGoogleURL = "http://google.com"
-    #sBlankURL = "about:blank"
-
-    begin # Global browsers
-
-      puts2("\nIs a Global browser running: " + is_global_browser_running?.to_s + "\n\n")
-
-      puts2("Create a local browser object and load the URL: " + sGoogleURL)
-      myLocalBrowser = start_browser(sBrowserType, sGoogleURL)
-      puts2("Current URL: " + myLocalBrowser.url)
-
-      puts2("\nCreate a Global browser object and load the URL " + sAskURL)
-      $browser = start_browser(sBrowserType, sAskURL)
-
-      puts2("Is a Global browser running: " + is_global_browser_running?.to_s)
-
-      sCurrentURL = $browser.url
-      puts2("Current URL: " + sCurrentURL)
-
-      puts2("\nAccess a different URL with the Global browser: " + sBingURL)
-      $browser.goto(sBingURL)
-      puts2("Current URL: " + $browser.url)
-
-      puts2("Close the local browser")
-      myLocalBrowser.close
-      puts2("Local browser CLOSED")
-
-      puts2("Is a Global browser running: " + is_global_browser_running?.to_s)
-
-      # Close the Global browsers
-      puts2("\nClose the Global browser")
-      $browser.close
-      puts2("Global browser CLOSED")
-      puts2("Is a Global browser running: " + is_global_browser_running?.to_s + "\n\n")
-
-      puts2("Remove the global browser's Global varaible, closing the browser does not remove its Global varaible")
-      $browser=nil
-      puts2("Is a Global browser running: " + is_global_browser_running?.to_s + "\n\n")
-
-      # Force any open browsers to exit
-      kill_browsers()
-
-    rescue => e
-
-      puts2("Error and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"), "ERROR")
-
-      # Force any open browsers to exit
-      kill_browsers()
-
-      # Raise the error with a custom message after the rest of the rescue actions
-      raise("*** TESTCASE - test_Browser_003_GlobalAndLocalBrowsers")
-
-    ensure
-
-    end # Global browsers
-
-    #puts2("END")
-
-  end # Testcase -  test_Browser_004_GlobalAndLocalBrowsers
-
-
-  #===========================================================================#
-  # Testcase method: test_Browser_005_BrowserStatus
-  #
-  # Description: Starts local browser an determines their status.
-  #
-  # Tests methods: is_maximized?(...)
-  #                is_minimized?(...)
-  #===========================================================================#
-  def test_Browser_005_BrowserStatus
-
-    puts2("")
-    puts2("#######################")
-    puts2("Testcase: test_Browser_005_BrowserStatus")
-    puts2("#######################")
-
-    sGoogleURL = "http://google.com"
-    #sBlankURL = "about:blank"
-    sURL = sGoogleURL
-
-    sBrowserType = $sDefaultBrowser
-
-    begin # MinMax browsers
-
-      if(is_win?) # Only run on windows
-
-        browser = start_browser(sBrowserType)
-        browser.goto(sURL)
-        puts2("Current URL: " + browser.url)
-
-=begin  watir-webdriver - missing method - minimize
-        puts2("\nNormal sized browser")
-        puts2("Minimized? = " + (browser.is_minimized?).to_s)
-        puts2("Maximized? = " + (browser.is_maximized?).to_s)
-
-        puts2("\nMimimized browser")
-        browser.minimize
-        puts2("Minimized? = " + (browser.is_minimized?).to_s)
-        puts2("Maximized? = " + (browser.is_maximized?).to_s)
-
-
-        puts2("\nMaximized browser")
-        browser.maximize
-        puts2("Minimized? = " + (browser.is_minimized?).to_s)
-        puts2("Maximized? = " + (browser.is_maximized?).to_s)
-=end
-
-        if(browser.is_ie?) # Firewatir 1.6.5 lacks a restore method
-
-=begin  watir-webdriver - missing method - minimize
-          puts2("\nRestored normal sized browser")
-          browser.restore
-          puts2("Minimized? = " + (browser.is_minimized?).to_s)
-          puts2("Maximized? = " + (browser.is_maximized?).to_s)
-=end
-        end
-
-        # Force any open browsers to exit
-        kill_browsers()
-
-      else # Not running on windows
-        puts2("Skipping test - incompatible OS")
-      end # Only run on windows
-
-    rescue => e
-
-      puts2("Error and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"), "ERROR")
-
-      # Force any open browsers to exit
-      kill_browsers()
-
-      # Raise the error with a custom message after the rest of the rescue actions
-      raise("*** TESTCASE - test_Browser_005_BrowserStatus")
-
-    ensure
-
-    end # MinMax browsers
-
-    #puts2("END")
-
-  end # Testcase -  test_Browser_005_BrowserStatus
-
-
-
-  #===========================================================================#
-  # Testcase method: test_Browser_006_SizeAndPosition
-  #
-  # Description: Starts local browser an determines their status.
-  #
-  # Tests methods: is_maximized?(...)
-  #                is_minimized?(...)
-  #===========================================================================#
-  def test_Browser_006_SizeAndPosition
-
-    $VERBOSE = true
-
-    puts2("")
-    puts2("#######################")
-    puts2("Testcase: test_Browser_006_SizeAndPosition")
-    puts2("#######################")
-
-    #sGoogleURL = "http://google.com"
-    sBlankURL = "about:blank"
-    sURL = sBlankURL
-
-    sBrowserType = $sDefaultBrowser
-
-    begin # Resize browser
-
-      #$browser = Watir::Browser.new
-      $browser = start_browser(sBrowserType)
-
-      $browser.goto(sURL)
-      puts2("Current URL: " + $browser.url)
-
-      # These tests hang with Watir::IE,
-      # They run OK with WebDriver with any of the browser types.
-      if(($browser.is_ie? == true) and (is_webdriver? == false))
-        puts2("Skipping test incompatible browser")
-      else
-        puts2("\n ReSize browser to 640 x 680")
-        $browser.resizeTo(640,480)
-        #sleep 3 # Delay so you can see the new sized browser window
-
-        puts2("\n ReSize browser to 1024 x 756")
-        $browser.resizeTo(1024,756)
-        #sleep 3 # Delay so you can see the new sized browser window
-
-        puts2("\n ReSize browser to 100 x 200")
-        $browser.resizeTo(100,200)
-        #sleep 3 # Delay so you can see the new sized browser window
-
-        puts2("\n Move browser to x = 100, y = 200")
-        $browser.moveTo(100,200)
-        #sleep 3 # Delay so you can see the repositioned browser window
-
-        puts2("\n Move browser to x = 10, y = 20")
-        $browser.moveTo(10,20)
-        #sleep 3 # Delay so you can see the repositioned browser window
-
-      end # Only run these tests on firefox, hands on IE
-
-      # Force any open browsers to exit
-      kill_browsers()
-
-
-    rescue => e
-
-      puts2("Error and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"), "ERROR")
-
-      # Force any open browsers to exit
-      kill_browsers()
-
-      # Raise the error with a custom message after the rest of the rescue actions
-      raise("*** TESTCASE - test_Browser_006_SizeAndPosition")
-
-    ensure
-
-    end # Resize browsers
-
-  end # END Testcase - test_Browser_006_SizeAndPosition
-
-  #===========================================================================#
-  # Testcase method: test_Browser_999_ClearCacheAndCookies
-  #
-  # Description: Test the method clear_Cache(...) which in turns
-  #                calls one of the following platform specific methods:
-  #                                clear_Win_Cache(...)
-  #                                clear_Linux_Cache(...)
-  #                                clear_Mac_Cache(...)
-  #
-  #===========================================================================#
-  def test_Browser_999_ClearCacheAndCookies
-
-    puts2("")
-    puts2("#######################")
-    puts2("Testcase: test_Browser_999_ClearCacheAndCookies")
-    puts2("#######################")
-
-    begin
-
-      puts2("Clear the Cache and Cookies")
-      clear_cache()
-
-    rescue => e
-
-      puts2("*** ERROR and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"), "ERROR")
-
-    ensure
-
-    end
-
-  end # END Testcase - test_Browser_999_ClearCacheAndCookies
+  end # End of test method - test_Browser_003_BrowserTypes
 
 end # end of Class - Unittest_Browser

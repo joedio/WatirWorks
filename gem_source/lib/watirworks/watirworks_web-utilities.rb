@@ -91,7 +91,7 @@ require 'watir-webdriver'
 #    getMultipleXMLTagValues(...)
 #    getXMLTagValue(...)
 #    handle_js_dialog(...)   # NOT working with Watir1.6.5.  See issue with click_no_wait()
-#    is_android?()
+#    is_android?() # All the is_os methods are FAILING due to inablility to read Ruby GLobal Var settings.
 #    is_android_installed?()
 #    is_firefox?(...)
 #    is_firefox_installed?(...)
@@ -2322,12 +2322,13 @@ module WatirWorks_WebUtilities
   #                      # Execute Firefox specific code
   #                  end
   #
+  # TODO: Failing due to inability to read Ruby global var settings
   #=============================================================================#
   def is_firefox?(iVersion = nil)
 
     if($VERBOSE == true)
       puts2("Parameters - is_firefox?")
-      puts2("  iVersion " + iVersion.to_s)
+      puts2("  iVersion = " + iVersion.to_s)
     end
 
     if(iVersion == nil)
@@ -2409,6 +2410,7 @@ module WatirWorks_WebUtilities
   #                      # Execute IE specific code
   #                  end
   #
+  # TODO: Failing due to inability to read Ruby global var settings
   #=============================================================================#
   def is_ie?(iVersion = nil)
 
@@ -2492,6 +2494,7 @@ module WatirWorks_WebUtilities
   #                      # Execute your Opera specific code
   #                  end
   #
+  # TODO: Failing due to inability to read Ruby global var settings
   #=============================================================================#
   def is_opera?(iVersion = nil)
 
@@ -2574,6 +2577,7 @@ module WatirWorks_WebUtilities
   #                      # Execute your Safari specific code
   #                  end
   #
+  # TODO: Failing due to inability to read Ruby global var settings
   #=============================================================================#
   def is_safari?(iVersion = nil)
 
@@ -2668,6 +2672,7 @@ module WatirWorks_WebUtilities
   #                     end
   #
   #
+  # TODO: Why is this FAILING ?
   #=============================================================================#
   def is_global_browser_running?()
 
@@ -5441,7 +5446,7 @@ module WatirWorks_WebUtilities
         puts2("  Starting Firefox on OSX...")
       end
 
-      # Don't think this is needed any more 
+      # Don't think this is needed any more
       #
       #sChromePath = ENV["CHROMEDRIVER_HOME"]
       #sChromePath = sChromePath.gsub(/\\/, "/")
@@ -5582,9 +5587,7 @@ end # Module - WatirWorks_WebUtilities
 #--
 # Methods:
 #          moveBy(...)
-#          moveTo(...)
 #          resizeBy(...)
-#          resizeTo(...)
 #          restart(...)
 #          scrollBy(...)
 #++
@@ -5622,43 +5625,6 @@ class Watir::Browser
 
   #=============================================================================#
   #--
-  # Method: moveTo(...)
-  #
-  #++
-  #
-  # Description: Move the current Browser window to the specified location
-  #                    Per: http://www.w3schools.com/jsref/obj_window.asp
-  #                   The moveTo() method is supported in all major browsers.
-  #
-  # Returns: BOOLEAN - true if successful, otherwise false
-  #
-  # Syntax: iXPos = INTEGER - The X-coordinate in pixels to position the top left
-  #                           corner of the browser window
-  #                           Default value = 0
-  #
-  #         iYPos = INTEGER - The Y-coordinate  in pixels to position the top left
-  #                           corner of the browser window
-  #                           Default value = 0
-  #
-  # Usage Examples:
-  #                To move the browser to 100, 200
-  #                     browser.moveTo(100,200)
-  #
-  #=============================================================================#
-  def moveTo(iXPos=0, iYPos=0)
-
-    if(iXPos <0)
-      iXPos = 0
-    end
-    if(iYPos <0)
-      iYPos = 0
-    end
-
-    self.execute_script("window.moveTo(#{iXPos},#{iYPos})")
-  end # moveTo()
-
-  #=============================================================================#
-  #--
   # Method: resizeBy(...)
   #
   #++
@@ -5683,41 +5649,6 @@ class Watir::Browser
   def resizeBy(iHeight=0, iWidth=0)
 
     self.execute_script("window.resizeBy(#{iHeight},#{iWidth})")
-  end # resizeTo()
-
-  #=============================================================================#
-  #--
-  # Method: resizeTo(...)
-  #
-  #++
-  #
-  # Description: Move the Browser window to the specified location (in pixels)
-  #              Per: http://www.w3schools.com/jsref/obj_window.asp
-  #                   The resizeTo() method is supported in all major browsers, except Opera and Chrome
-  #
-  # Returns: BOOLEAN - true if successful, otherwise false
-  #
-  # Syntax: iHeight = INTEGER - The width in pixels to resize the browser window
-  #                             Default value = 640
-  #
-  #         iWidth = INTEGER - The height in pixels to resize the browser window
-  #                            Default value = 480
-  #
-  # Usage Examples:
-  #                To size the browser to 100, 200
-  #                     browser.resizeTo(1024,756)
-  #
-  #=============================================================================#
-  def resizeTo(iHeight=640, iWidth=480)
-
-    if(iHeight <1)
-      iHeight = 1
-    end
-    if(iWidth <1)
-      iWidth = 1
-    end
-
-    self.execute_script("window.resizeTo(#{iHeight},#{iWidth})")
   end # resizeTo()
 
   #=============================================================================#
