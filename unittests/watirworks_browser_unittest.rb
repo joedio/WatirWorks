@@ -179,32 +179,25 @@ class Unittest_Browser < Test::Unit::TestCase
     #sBlankURL = "about:blank"
 
     # Define an empty array
-    aSupportedBrowsers =[]
+    aSupportedBrowsers = []
 
-    # Determine the currnet OS
-    sCurrentOS =""
-    if (is_win? == true)
-	    sCurrentOS = "windows"
-	    puts2("OS = Windows")
-    elsif(is_osx? == true)
-	    sCurrentOS = "osx"
-	    puts2("OS = OSX")
-    else
-	    sCurrentOS = "linux"
-	     puts2("OS = Linux")
+    # Determine the current OS
+    sCurrentOS = ""
+    if(is_win?)
+      #sCurrentOS = "windows"
+      puts2("OS = Windows")
+      aSupportedBrowsers = ["Firefox", "Chrome", "Internet Explorer"]
+    elsif(is_osx?)
+      #sCurrentOS = "osx"
+      puts2("OS = OSX")
+      aSupportedBrowsers = ["Firefox", "Chrome", "Safari"]
+    elsif(is_linux?)
+      #sCurrentOS = "linux"
+      puts2("OS = Linux")
+      aSupportedBrowsers = ["Firefox", "Chrome"]
     end
 
-    # Populate array based on OS (presume that each browser and its Server are installed)
-    case sCurrentOS
-
-    when(sCurrentOS == /w.*/)
-      aSupportedBrowsers = ["Firefox", "Internet Explorer", "Chrome"]
-    when(sCurrentOS == /o.*/)
-      aSupportedBrowsers = ["Firefox", "Safari", "Chrome"]
-    else
-      aSupportedBrowsers = ["Firefox", "Chrome"]
-      aSupportedBrowsers = ["Firefox", "Chrome", "Internet Explorer"]
-    end # case sCurrentOS
+    puts2("Supported browsers = " + aSupportedBrowsers.to_s)
 
     # Loop thru each browser
     aSupportedBrowsers.each { |sBrowserName|
@@ -217,23 +210,22 @@ class Unittest_Browser < Test::Unit::TestCase
       sCurrentURL = oBrowser.url
       puts2("Current URL: " + sCurrentURL)
 
-=begin
       # Watir-webdriver appears to not support self.version which is use by all these methods.
       puts2("\nFirefox browser?: " + oBrowser.is_firefox?.to_s)
-      puts2("Firefox 39.x browser?: " + oBrowser.is_firefox?(39).to_s)
-      puts2("Firefox 40.x browser?: " + oBrowser.is_firefox?(40).to_s)
-      puts2("Firefox 41.x browser?: " + oBrowser.is_firefox?(41).to_s)
-      puts2("Firefox 42.x browser?: " + oBrowser.is_firefox?(42).to_s)
+      #puts2("Firefox 39.x browser?: " + oBrowser.is_firefox?(39).to_s)
+      #puts2("Firefox 40.x browser?: " + oBrowser.is_firefox?(40).to_s)
+      #puts2("Firefox 41.x browser?: " + oBrowser.is_firefox?(41).to_s)
+      #puts2("Firefox 42.x browser?: " + oBrowser.is_firefox?(42).to_s)
 
-      puts2("\nChrome browser?: " + oBrowser.is_chrome?.to_s)
+      puts2("Chrome browser?: " + oBrowser.is_chrome?.to_s)
       puts2("Opera browser?: " + oBrowser.is_opera?.to_s)
       puts2("Safari browser?: " + oBrowser.is_safari?.to_s)
 
-      puts2("\nIE browser?: " + oBrowser.is_ie?.to_s)
-      puts2("IE 9.x browser?: " + oBrowser.is_ie?(9).to_s)
-      puts2("IE 10.x browser?: " + oBrowser.is_ie?(10).to_s)
-      puts2("IE 11.x browser?: " + oBrowser.is_ie?(11).to_s)
-=end
+      puts2("IE browser?: " + oBrowser.is_ie?.to_s)
+      #puts2("IE 9.x browser?: " + oBrowser.is_ie?(9).to_s)
+      #puts2("IE 10.x browser?: " + oBrowser.is_ie?(10).to_s)
+      #puts2("IE 11.x browser?: " + oBrowser.is_ie?(11).to_s)
+
       # Access a URL
       puts2("\nBrowser - Set URL = " + sBingURL)
       oBrowser.goto(sBingURL)
@@ -313,17 +305,17 @@ class Unittest_Browser < Test::Unit::TestCase
 
     }   # END - Loop thru each browser
 
-    rescue => e
+  rescue => e
 
-      puts2("*** ERROR and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"), "ERROR")
+    puts2("*** ERROR and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"), "ERROR")
 
-      # Force any open browsers to exit
-      kill_browsers()
+    # Force any open browsers to exit
+    kill_browsers()
 
-      # Raise the error with a custom message after the rest of the rescue actions
-      raise("*** TESTCASE - test_Browser_003_LocalBrowsers")
+    # Raise the error with a custom message after the rest of the rescue actions
+    raise("*** TESTCASE - test_Browser_003_LocalBrowsers")
 
-    ensure
+  ensure
 
     #end # Start browser types
 

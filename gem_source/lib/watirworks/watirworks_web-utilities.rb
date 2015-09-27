@@ -5427,7 +5427,8 @@ module WatirWorks_WebUtilities
       end
       oBrowser = Watir::Browser.new :chrome
       $bStartedBrowser = true
-
+      
+=begin
     when /e.*/
       if (is_win?(10) == true)
         puts2("  Starting Edge on Windows...")
@@ -5436,6 +5437,7 @@ module WatirWorks_WebUtilities
       else
         puts2("  Edge is not supported on this OS")
       end
+=end
 
     when  /f.*/
       if (is_win? == true)
