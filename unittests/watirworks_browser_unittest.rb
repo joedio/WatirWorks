@@ -210,21 +210,42 @@ class Unittest_Browser < Test::Unit::TestCase
       sCurrentURL = oBrowser.url
       puts2("Current URL: " + sCurrentURL)
 
-      # Watir-webdriver appears to not support self.version which is use by all these methods.
-      puts2("\nFirefox browser?: " + oBrowser.is_firefox?.to_s)
-      #puts2("Firefox 39.x browser?: " + oBrowser.is_firefox?(39).to_s)
-      #puts2("Firefox 40.x browser?: " + oBrowser.is_firefox?(40).to_s)
-      #puts2("Firefox 41.x browser?: " + oBrowser.is_firefox?(41).to_s)
-      #puts2("Firefox 42.x browser?: " + oBrowser.is_firefox?(42).to_s)
-
-      puts2("Chrome browser?: " + oBrowser.is_chrome?.to_s)
+      puts2("\nChrome browser?: " + oBrowser.is_chrome?.to_s)
+      puts2("Firefox browser?: " + oBrowser.is_firefox?.to_s)
+      puts2("IE browser?: " + oBrowser.is_ie?.to_s)
       puts2("Opera browser?: " + oBrowser.is_opera?.to_s)
       puts2("Safari browser?: " + oBrowser.is_safari?.to_s)
 
-      puts2("IE browser?: " + oBrowser.is_ie?.to_s)
-      #puts2("IE 9.x browser?: " + oBrowser.is_ie?(9).to_s)
-      #puts2("IE 10.x browser?: " + oBrowser.is_ie?(10).to_s)
-      #puts2("IE 11.x browser?: " + oBrowser.is_ie?(11).to_s)
+      sBrowserVersion = oBrowser.version.to_s
+      puts2("Browser's full version = " + sBrowserVersion)
+      sBrowserMajorVersion = sBrowserVersion.prefix(".")
+      puts2("Browser's major version = " + sBrowserMajorVersion)
+
+      if(oBrowser.is_chrome?)
+        puts2("Chrome " + (sBrowserMajorVersion.to_i - 1).to_s + ".x browser?: " + oBrowser.is_chrome?((sBrowserMajorVersion.to_i - 1)).to_s)
+        puts2("Chrome " + sBrowserMajorVersion + ".x browser?: " + oBrowser.is_chrome?(sBrowserMajorVersion.to_i).to_s)
+        puts2("Chrome " + (sBrowserMajorVersion.to_i + 1).to_s + ".x browser?: " + oBrowser.is_chrome?((sBrowserMajorVersion.to_i + 1)).to_s)
+      end
+      if(oBrowser.is_firefox?)
+        puts2("Firefox " + (sBrowserMajorVersion.to_i - 1).to_s + ".x browser?: " + oBrowser.is_firefox?((sBrowserMajorVersion.to_i - 1)).to_s)
+        puts2("Firefox " + sBrowserMajorVersion + ".x browser?: " + oBrowser.is_firefox?(sBrowserMajorVersion.to_i).to_s)
+        puts2("Firefox " + (sBrowserMajorVersion.to_i + 1).to_s + ".x browser?: " + oBrowser.is_firefox?((sBrowserMajorVersion.to_i + 1)).to_s)
+      end
+      if(oBrowser.is_ie?)
+        puts2("IE " + (sBrowserMajorVersion.to_i - 1).to_s + ".x browser?: " + oBrowser.is_ie?((sBrowserMajorVersion.to_i - 1)).to_s)
+        puts2("IE " + sBrowserMajorVersion + ".x browser?: " + oBrowser.is_ie?(sBrowserMajorVersion.to_i).to_s)
+        puts2("IE " + (sBrowserMajorVersion.to_i + 1).to_s + ".x browser?: " + oBrowser.is_ie?((sBrowserMajorVersion.to_i + 1)).to_s)
+      end
+      if(oBrowser.is_opera?)
+        puts2("Opera " + (sBrowserMajorVersion.to_i - 1).to_s + ".x browser?: " + oBrowser.is_opera?((sBrowserMajorVersion.to_i - 1)).to_s)
+        puts2("Opera " + sBrowserMajorVersion + ".x browser?: " + oBrowser.is_opera?(sBrowserMajorVersion.to_i).to_s)
+        puts2("Opera " + (sBrowserMajorVersion.to_i + 1).to_s + ".x browser?: " + oBrowser.is_opera?((sBrowserMajorVersion.to_i + 1)).to_s)
+      end
+      if(oBrowser.is_safari?)
+        puts2("Safari " + (sBrowserMajorVersion.to_i - 1).to_s + ".x browser?: " + oBrowser.is_safari?((sBrowserMajorVersion.to_i - 1)).to_s)
+        puts2("Safari " + sBrowserMajorVersion + ".x browser?: " + oBrowser.is_safari?(sBrowserMajorVersion.to_i).to_s)
+        puts2("Safari " + (sBrowserMajorVersion.to_i + 1).to_s + ".x browser?: " + oBrowser.is_safari?((sBrowserMajorVersion.to_i + 1)).to_s)
+      end
 
       # Access a URL
       puts2("\nBrowser - Set URL = " + sBingURL)

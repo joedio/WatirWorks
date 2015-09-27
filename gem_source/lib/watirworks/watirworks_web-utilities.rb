@@ -91,15 +91,10 @@ require 'watir-webdriver'
 #    getMultipleXMLTagValues(...)
 #    getXMLTagValue(...)
 #    handle_js_dialog(...)   # NOT working with Watir1.6.5.  See issue with click_no_wait()
-#    is_android?() # All the is_os methods are FAILING due to inablility to read Ruby GLobal Var settings.
 #    is_android_installed?()
-#    is_firefox?(...)
 #    is_firefox_installed?(...)
-#    is_ie?(...)
 #    is_ie_installed?(...)
-#    is_opera?(...)
 #    is_opera_installed?(...)
-#    is_safari?(...)
 #    is_safari_installed?(...)
 #    is_global_browser_running?()
 #    isTagInXML?(..)
@@ -2171,109 +2166,6 @@ module WatirWorks_WebUtilities
 
   #=============================================================================#
   #--
-  # Method: is_android?()
-  #
-  #++
-  #
-  # Description: Identifies if running a android browser
-  #
-  # Returns: BOOLEAN - true if browser is android, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_android?)
-  #                      # Execute your android specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_android?()
-
-    if(is_webdriver? == true)
-      return (self.driver.browser.to_s.downcase == "android")
-    else
-      return false
-    end
-
-  end
-
-  #=============================================================================#
-  #--
-  # Method: is_celerity?()
-  #
-  #++
-  #
-  # Description: Identifies if running a Celerity browser
-  #
-  # Returns: BOOLEAN - true if browser is Celerity, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_celerity?)
-  #                      # Execute your Celerity specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_celerity?()
-
-    if(is_webdriver? == true)
-      return false
-    else
-      return (self.class.to_s == "Celerity::Browser")
-    end
-
-  end
-
-  #=============================================================================#
-  #--
-  # Method: is_chrome?()
-  #
-  #++
-  #
-  # Description: Identifies if running a Chrome browser
-  #
-  # Returns: BOOLEAN - true if browser is Chrome, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_chrome?)
-  #                      # Execute your Chrome specific code
-  #                  end
-  #
-  #=============================================================================#
-  def is_chrome?(iVersion = nil)
-
-    if($VERBOSE == true)
-      puts2("Parameters - is_chrome?")
-      puts2("  iVersion " + iVersion.to_s)
-    end
-
-    if(iVersion == nil)
-      if(is_webdriver? == true)
-        return (self.driver.browser.to_s.downcase == "chrome")
-      else
-        return (self.class.to_s == "ChromeWatir::Browser")
-      end
-
-    elsif(iVersion >= 10)
-
-      # Get the major release number of current browser
-      sAcutalBrowserVersion = self.version.prefix(".")
-      sAcutalBrowserBrand = self.brand.downcase
-
-      if((iVersion == sAcutalBrowserVersion.to_i) and (sAcutalBrowserBrand == "chrome"))
-        return true
-      else
-        return false
-      end
-
-    else # Not nil and not >=10
-      return false
-    end
-
-  end # Method - is_chrome?(...)
-
-  #=============================================================================#
-  #--
   # Method: is_chrome_installed?(...)
   #
   #++
@@ -2305,58 +2197,6 @@ module WatirWorks_WebUtilities
     end
 
   end # Method - is_chrome_installed?(...)
-
-  #=============================================================================#
-  #--
-  # Method: is_firefox?()
-  #
-  #++
-  #
-  # Description: Identifies if running a Firefox browser
-  #
-  # Returns: BOOLEAN - true if browser is Firefox, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_firefox?())
-  #                      # Execute Firefox specific code
-  #                  end
-  #
-  # TODO: Failing due to inability to read Ruby global var settings
-  #=============================================================================#
-  def is_firefox?(iVersion = nil)
-
-    if($VERBOSE == true)
-      puts2("Parameters - is_firefox?")
-      puts2("  iVersion = " + iVersion.to_s)
-    end
-
-    if(iVersion == nil)
-      if(is_webdriver? == true)
-        return (self.driver.browser.to_s.downcase == "firefox")
-      else
-        return (self.class.to_s == "FireWatir::Firefox")
-      end
-
-    elsif(iVersion >= 2)
-
-      # Get the major release number of current browser
-      sAcutalBrowserVersion = self.version.prefix(".")
-      sAcutalBrowserBrand = self.brand.downcase
-
-      if((iVersion == sAcutalBrowserVersion.to_i) and (sAcutalBrowserBrand == "firefox"))
-        return true
-      else
-        return false
-      end
-
-    else # Not nil and not >=2
-      return false
-    end
-
-  end # Method - is_firefox?(...)
-
-  alias is_ff? is_firefox?
 
   #=============================================================================#
   #--
@@ -2396,56 +2236,6 @@ module WatirWorks_WebUtilities
 
   #=============================================================================#
   #--
-  # Method: is_ie?(...)
-  #
-  #++
-  #
-  # Description: Identifies if running a Internet Explorer browser
-  #
-  # Returns: BOOLEAN - true if browser is Internet Explorer, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_ie?)
-  #                      # Execute IE specific code
-  #                  end
-  #
-  # TODO: Failing due to inability to read Ruby global var settings
-  #=============================================================================#
-  def is_ie?(iVersion = nil)
-
-    if($VERBOSE == true)
-      puts2("Parameters - is_ie?")
-      puts2("  iVersion " + iVersion.to_s)
-    end
-
-    if(iVersion == nil)
-      if(is_webdriver? == true)
-        return (self.driver.browser.to_s.downcase == "internet_explorer")
-      else
-        return (self.class.to_s == "Watir::IE")
-      end
-
-    elsif(iVersion >= 6)
-
-      # Get the major release number of current browser
-      sAcutalBrowserVersion = self.version.prefix(".")
-      sAcutalBrowserBrand = self.brand.downcase
-
-      if((iVersion == sAcutalBrowserVersion.to_i) and (sAcutalBrowserBrand == "ie"))
-        return true
-      else
-        return false
-      end
-
-    else # Not nil and not >=6
-      return false
-    end
-
-  end # Method - is_ie?(...)
-
-  #=============================================================================#
-  #--
   # Method: is_ie_installed?(...)
   #
   #++
@@ -2480,55 +2270,6 @@ module WatirWorks_WebUtilities
 
   #=============================================================================#
   #--
-  # Method: is_opera?(...)
-  #
-  #++
-  #
-  # Description: Identifies if running a Opera browser
-  #
-  # Returns: BOOLEAN - true if browser is Opera, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_is_opera?)
-  #                      # Execute your Opera specific code
-  #                  end
-  #
-  # TODO: Failing due to inability to read Ruby global var settings
-  #=============================================================================#
-  def is_opera?(iVersion = nil)
-
-    if($VERBOSE == true)
-      puts2("Parameters - is_opera?")
-      puts2("  iVersion " + iVersion.to_s)
-    end
-
-    if(iVersion == nil)
-      if(is_webdriver? == true)
-        return (self.driver.browser.to_s.downcase == "opera")
-      else
-        return false
-      end
-    elsif(iVersion >= 8)
-
-      # Get the major release number of current browser
-      sAcutalBrowserVersion = self.version.prefix(".")
-      sAcutalBrowserBrand = self.brand.downcase
-
-      if((iVersion == sAcutalBrowserVersion.to_i) and (sAcutalBrowserBrand == "opera"))
-        return true
-      else
-        return false
-      end
-
-    else # Not nil and not >= 8
-      return false
-    end
-
-  end # Method - is_opera?(...)
-
-  #=============================================================================#
-  #--
   # Method: is_opera_installed?(...)
   #
   #++
@@ -2560,56 +2301,6 @@ module WatirWorks_WebUtilities
     end
 
   end # Method - is_opera_installed?(...)
-
-  #=============================================================================#
-  #--
-  # Method: is_safari?()
-  #
-  #++
-  #
-  # Description: Identifies if running a Safari browser
-  #
-  # Returns: BOOLEAN - true if browser is Safari, otherwise false
-  #
-  # Syntax: N/A
-  #
-  # Usage Examples:  if(browser.is_safari?)
-  #                      # Execute your Safari specific code
-  #                  end
-  #
-  # TODO: Failing due to inability to read Ruby global var settings
-  #=============================================================================#
-  def is_safari?(iVersion = nil)
-
-    if($VERBOSE == true)
-      puts2("Parameters - is_safari?")
-      puts2("  iVersion " + iVersion.to_s)
-    end
-
-    if(iVersion == nil)
-      if(is_webdriver? == true)
-        return (self.driver.browser.to_s.downcase == "safari")
-      else
-        return (self.class.to_s == "Watir::Safari")
-      end
-
-    elsif(iVersion >= 4)
-
-      # Get the major release number of current browser
-      sAcutalBrowserVersion = self.version.prefix(".")
-      sAcutalBrowserBrand = self.brand.downcase
-
-      if((iVersion == sAcutalBrowserVersion.to_i) and (sAcutalBrowserBrand == "safari"))
-        return true
-      else
-        return false
-      end
-
-    else # Not nil and not >= 4
-      return false
-    end
-
-  end # Method - is_safari?...)
 
   #=============================================================================#
   #--
@@ -5427,7 +5118,7 @@ module WatirWorks_WebUtilities
       end
       oBrowser = Watir::Browser.new :chrome
       $bStartedBrowser = true
-      
+
 =begin
     when /^e.*/
       if (is_win?(10) == true)
@@ -5588,6 +5279,13 @@ end # Module - WatirWorks_WebUtilities
 #
 #--
 # Methods:
+#          is_andriod?(...)
+#          is_celerity?(...)
+#          is_chrome?(...)
+#          is_firefox?(...)
+#          is_opera?(...)
+#          is_ie?(...)
+#          is_safari?(...)
 #          moveBy(...)
 #          resizeBy(...)
 #          restart(...)
@@ -5595,6 +5293,280 @@ end # Module - WatirWorks_WebUtilities
 #++
 #=============================================================================#
 class Watir::Browser
+  #=============================================================================#
+  #--
+  # Method: is_android?()
+  #
+  #++
+  #
+  # Description: Identifies if running a android browser
+  #
+  # Returns: BOOLEAN - true if browser is android, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_android?)
+  #                      # Execute your android specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_android?()
+    return (self.driver.browser.to_s.downcase == "android")
+  end
+
+  #=============================================================================#
+  #--
+  # Method: is_celerity?()
+  #
+  #++
+  #
+  # Description: Identifies if running a Celerity browser
+  #
+  # Returns: BOOLEAN - true if browser is Celerity, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_celerity?)
+  #                      # Execute your Celerity specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_celerity?()
+
+    if(is_webdriver? == true)
+      return false
+    else
+      return (self.class.to_s == "Celerity::Browser")
+    end
+
+  end
+
+  #=============================================================================#
+  #--
+  # Method: is_chrome?()
+  #
+  #++
+  #
+  # Description: Identifies if running a Chrome browser
+  #
+  # Returns: BOOLEAN - true if browser is Chrome, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_chrome?)
+  #                      # Execute your Chrome specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_chrome?(iVersion = nil)
+
+    if($VERBOSE == true)
+      puts2("Parameters - is_chrome?")
+      puts2("  iVersion " + iVersion.to_s)
+    end
+
+    if(iVersion == nil)
+      return (self.driver.browser.to_s.downcase == "chrome")
+    elsif(iVersion >= 10)
+
+      # Get the major release number of current browser
+      sAcutalBrowserVersion = self.driver.capabilities[:version].prefix(".")
+      sAcutalBrowserBrand = self.name.to_s
+
+      if((iVersion == sAcutalBrowserVersion.to_i) and (sAcutalBrowserBrand == "chrome"))
+        return true
+      else
+        return false
+      end
+
+    else # Not nil and not >=10
+      return false
+    end
+
+  end # Method - is_chrome?(...)
+
+  #=============================================================================#
+  #--
+  # Method: is_firefox?()
+  #
+  #++
+  #
+  # Description: Identifies if running a Firefox browser
+  #
+  # Returns: BOOLEAN - true if browser is Firefox, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_firefox?())
+  #                      # Execute Firefox specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_firefox?(iVersion = nil)
+
+    if($VERBOSE == true)
+      puts2("Parameters - is_firefox?")
+      puts2("  iVersion = " + iVersion.to_s)
+    end
+
+    if(iVersion == nil)
+      return (self.driver.browser.to_s.downcase == "firefox")
+    elsif(iVersion >= 2)
+
+      # Get the major release number of current browser
+      if($VERBOSE == true)
+        puts("self.driver = " + self.driver.capabilities[:version].to_s)
+      end
+      sAcutalBrowserVersion = self.driver.capabilities[:version].prefix(".")
+      sAcutalBrowserBrand = self.name.to_s
+
+      if((iVersion == sAcutalBrowserVersion.to_i) and (sAcutalBrowserBrand == "firefox"))
+        return true
+      else
+        return false
+      end
+
+    else # Not nil and not >=2
+      return false
+    end
+
+  end # Method - is_firefox?(...)
+
+  alias is_ff? is_firefox?
+
+  #=============================================================================#
+  #--
+  # Method: is_opera?(...)
+  #
+  #++
+  #
+  # Description: Identifies if running a Opera browser
+  #
+  # Returns: BOOLEAN - true if browser is Opera, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_is_opera?)
+  #                      # Execute your Opera specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_opera?(iVersion = nil)
+
+    if($VERBOSE == true)
+      puts2("Parameters - is_opera?")
+      puts2("  iVersion " + iVersion.to_s)
+    end
+
+    if(iVersion == nil)
+      return (self.driver.browser.to_s.downcase == "opera")
+    elsif(iVersion >= 8)
+
+      # Get the major release number of current browser
+      sAcutalBrowserVersion = self.driver.capabilities[:version].prefix(".")
+      sAcutalBrowserBrand = self.name.to_s
+
+      if((iVersion == sAcutalBrowserVersion.to_i) and (sAcutalBrowserBrand == "opera"))
+        return true
+      else
+        return false
+      end
+
+    else # Not nil and not >= 8
+      return false
+    end
+
+  end # Method - is_opera?(...)
+
+  #=============================================================================#
+  #--
+  # Method: is_ie?(...)
+  #
+  #++
+  #
+  # Description: Identifies if running a Internet Explorer browser
+  #
+  # Returns: BOOLEAN - true if browser is Internet Explorer, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_ie?)
+  #                      # Execute IE specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_ie?(iVersion = nil)
+
+    if($VERBOSE == true)
+      puts2("Parameters - is_ie?")
+      puts2("  iVersion " + iVersion.to_s)
+    end
+
+    if(iVersion == nil)
+      return (self.driver.browser.to_s.downcase == "internet_explorer")
+    elsif(iVersion >= 6)
+
+      # Get the major release number of current browser
+      sAcutalBrowserVersion = self.driver.capabilities[:version]
+      #sAcutalBrowserVersion = self.driver.capabilities[:version].prefix(".")
+      sAcutalBrowserBrand = self.name.to_s
+
+      if((iVersion == sAcutalBrowserVersion.to_i) and (sAcutalBrowserBrand == "internet_explorer"))
+        return true
+      else
+        return false
+      end
+
+    else # Not nil and not >=6
+      return false
+    end
+
+  end # Method - is_ie?(...)
+
+  #=============================================================================#
+  #--
+  # Method: is_safari?()
+  #
+  #++
+  #
+  # Description: Identifies if running a Safari browser
+  #
+  # Returns: BOOLEAN - true if browser is Safari, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_safari?)
+  #                      # Execute your Safari specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_safari?(iVersion = nil)
+
+    if($VERBOSE == true)
+      puts2("Parameters - is_safari?")
+      puts2("  iVersion " + iVersion.to_s)
+    end
+
+    if(iVersion == nil)
+      return (self.driver.browser.to_s.downcase == "safari")
+    elsif(iVersion >= 4)
+
+      # Get the major release number of current browser
+      sAcutalBrowserVersion = self.driver.capabilities[:version].prefix(".")
+      sAcutalBrowserBrand = self.name.to_s
+
+      if((iVersion == sAcutalBrowserVersion.to_i) and (sAcutalBrowserBrand == "safari"))
+        return true
+      else
+        return false
+      end
+
+    else # Not nil and not >= 4
+      return false
+    end
+
+  end # Method - is_safari?...)
+
   #=============================================================================#
   #--
   # Method: moveBy(...)
@@ -5746,6 +5718,30 @@ class Watir::Browser
 
     self.execute_script("window.scrollBy(#{iHorizontal},#{iVertical})")
   end # scrollBy()
+
+  #=============================================================================#
+  #--
+  # Method: version()
+  #
+  #++
+  #
+  # Description: Identifies the version number of the current browser
+  #
+  # Returns: STRING - string representation of the currnet browser's version
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.version == /^40.*/)
+  #                      # Execute your version 40.xx specific code
+  #                  end
+  #
+  #=============================================================================#
+  def version()
+
+    # Get the major release number of current browser
+    return self.driver.capabilities[:version]
+
+  end # Method - version...)
 
 end  # END Class - Watir::Browser
 
