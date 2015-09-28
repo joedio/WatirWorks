@@ -2,7 +2,7 @@
 #=============================================================================#
 # File: watirworks_environment_unittest.rb
 #
-#  Copyright (c) 2008-2010, Joe DiMauro
+#  Copyright (c) 2008-2015, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for WatirWorks methods:
@@ -152,13 +152,6 @@ class UnitTest_Enviroment < Test::Unit::TestCase
   #                is_linux?()
   #                is_java?()
   #                is_osx?()
-  #                get_registered_ie_version()
-  #                is_ie6_registered?()
-  #                is_ie7_registered?()
-  #                is_ie8_registered?()
-  #                get_registered_firefox_version()
-  #                is_firefox2_registered?()
-  #                is_firefox3_registered?()
   #
   #===========================================================================#
   def test_Enviroment_002_isPlatform
@@ -174,28 +167,6 @@ class UnitTest_Enviroment < Test::Unit::TestCase
     puts2("Running Ruby for Linux: " + is_linux?.to_s)
     puts2("Running Ruby for OS/X: " + is_osx?.to_s)
     puts2("Running on JRuby: " + is_java?.to_s)
-
-    if(is_win?)
-
-      puts2("\nRegistered IE version: " + get_registered_ie_version)
-      puts2("Is IE6: " + is_ie_installed?(6).to_s)
-      puts2("Is IE7: " + is_ie_installed?(7).to_s)
-      puts2("Is IE8: " + is_ie_installed?(8).to_s)
-      puts2("Is IE9: " + is_ie_installed?(9).to_s)
-      puts2("Is IE10: " + is_ie_installed?(10).to_s)
-      puts2("Is IE11: " + is_ie_installed?(11).to_s)
-
-      puts2("\nRegistered Firefox version: " + get_registered_firefox_version)
-      puts2("Is FF39: " + is_firefox_installed?(39).to_s)
-      puts2("Is FF40: " + is_firefox_installed?(40).to_s)
-      puts2("Is FF41: " + is_firefox_installed?(41).to_s)
-      puts2("Is FF42: " + is_firefox_installed?(42).to_s)
-
-    end
-
-    puts2("\n Platform independant installed version methods:")
-      puts2("IE version: " + get_ie_version.to_s)
-      puts2("Firefox version: " + get_firefox_version.to_s)
 
   end # Unit test - test_Enviroment_002_isPlatform
 
