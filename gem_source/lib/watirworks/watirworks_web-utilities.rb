@@ -144,8 +144,6 @@ module WatirWorks_WebUtilities
   $browser = nil
   # The URL to open in a new browser
   #DEFAULT_URL = "about:blank"
-  
-
   #=============================================================================#
   #--
   # Method: count_html_tags()
@@ -4953,6 +4951,9 @@ module WatirWorks_WebUtilities
       end
 
     end  # Start the specified browser
+
+    Watir::Wait.until{$browser.exists?}
+    puts2("  Browser version = " + oBrowser.version.to_s)
 
     oBrowser.goto(sURL) # Load the URL
 
