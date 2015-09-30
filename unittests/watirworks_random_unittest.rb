@@ -20,6 +20,7 @@ require 'rubygems'
 
 # WatirWorks
 require 'watirworks'  # The WatirWorks library loader
+
 include WatirWorks_Utilities    #  WatirWorks General Utilities
 #=============================================================================#
 
@@ -33,7 +34,6 @@ include WatirWorks_Utilities    #  WatirWorks General Utilities
 
 # Watir global variables
 #
-
 
 # WatirWorks global variables
 #
@@ -51,7 +51,6 @@ iRun_TestLevel = 0
 #
 #=============================================================================#
 class UnitTest_Random < Test::Unit::TestCase
-
   #===========================================================================#
   # Method: setup
   #
@@ -88,7 +87,6 @@ class UnitTest_Random < Test::Unit::TestCase
     $Dictionary  = @@Dictionary
 
   end # end of teardown
-
 
   #===========================================================================#
   # Testcase method: test_String_001_RandomNumber
@@ -133,7 +131,6 @@ class UnitTest_Random < Test::Unit::TestCase
     }
 
   end # End of test method - test_Random_002_RandomBoolean
-
 
   #===========================================================================#
   # Testcase method: test_Random_003_RandomAlphaNumeric
@@ -279,9 +276,7 @@ class UnitTest_Random < Test::Unit::TestCase
     puts2(random_paragraph(7, 10, 10))
     puts2(random_paragraph(random_number(3,5), random_number(4,6), random_number(5,7)))
 
-
   end # End of test method - test_Random_007_RandomParagraph
-
 
   #===========================================================================#
   # Testcase method: test_Random_008_RandomWord
@@ -292,7 +287,11 @@ class UnitTest_Random < Test::Unit::TestCase
   #===========================================================================#
   def test_Random_008_RandomWord
 
-    $VERBOSE = true
+    #$VERBOSE = true
+
+    if($VERBOSE ==true)
+      puts2("$Dictionary = " + $Dictionary.to_s)
+    end
 
     puts2("")
     puts2("#######################")
@@ -308,7 +307,6 @@ class UnitTest_Random < Test::Unit::TestCase
     20.times {
       puts2("Word: " + random_word(true))
     }
-
 
   end # End of test method - test_Random_008_RandomWord
 

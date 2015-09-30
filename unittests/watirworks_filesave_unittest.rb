@@ -29,6 +29,7 @@ end
 
 # WatirWorks
 require 'watirworks'  # The WatirWorks library loader
+
 include WatirWorks_Utilities    # WatirWorks General Utilities
 include WatirWorks_WebUtilities # WatirWorks Web Utilities
 
@@ -54,13 +55,11 @@ end
 # Watir global variables
 #
 
-
 # WatirWorks global variables
 #
 sRun_TestType = "browser"
 iRun_TestLevel = 0
 #=============================================================================#
-
 
 #=============================================================================#
 # Class: UnitTest_Save
@@ -70,7 +69,6 @@ iRun_TestLevel = 0
 #
 #=============================================================================#
 class UnitTest_Save < Test::Unit::TestCase
-
   #===========================================================================#
   # Method: setup
   #
@@ -141,7 +139,7 @@ class UnitTest_Save < Test::Unit::TestCase
       puts2("\nFiles created by this unit test will be saved in: " + sOutputDir + "\n")
 
       puts2("Create a new local Browser Object")
-      browser = start_browser(sGoogleURL)
+      browser = start_browser("firefox", sGoogleURL)
       sleep 2
 
       sCurrentURL = browser.url
@@ -262,7 +260,5 @@ class UnitTest_Save < Test::Unit::TestCase
     end # Start local browsers
 
   end # End of test method - test_Save_002_SaveScreenCapture_win
-
-
 
 end # end of Class - UnitTest_Save

@@ -43,6 +43,7 @@ end
 
 # WatirWorks
 require 'watirworks'  # The WatirWorks library loader
+
 include WatirWorks_Utilities    # WatirWorks General Utilities
 include WatirWorks_WebUtilities # WatirWorks Web Utilities
 
@@ -68,7 +69,6 @@ end
 # Watir global variables
 #
 
-
 # WatirWorks global variables
 #
 sRun_TestType = "browser"
@@ -93,7 +93,6 @@ end
 #
 #=============================================================================#
 class UnitTest_HTMLText < Test::Unit::TestCase
-
   #===========================================================================#
   # Method: setup
   #
@@ -153,19 +152,19 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     # Define components of  the URL
     sProtocol = "file:///"
-    sRootURL = get_watirworks_install_path
-    sPage = "unittests/data/html/html_tags.html"
+    sRootURL = Dir.pwd
+    sPage = "data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
 
     # Array of trial data with the Expected Text, the Class Name, and the Save file prefix
     aSearchCriteria = [
-    ["Text in First Div", "first", false, "isTextIn_DivClass_Trial_1"],
-    ["Second Div", "second", false, "isTextIn_DivClass_Trial_2"],
-    ["in Second", "third", false, "isTextIn_DivClass_Trial_3"],
-    ["in Fifth", "fifth", false, "isTextIn_DivClass_Trial_4"],
-    ["no such text", "first", true, "isTextIn_DivClass_Trial_5"]
+      ["Text in First Div", "first", false, "isTextIn_DivClass_Trial_1"],
+      ["Second Div", "second", false, "isTextIn_DivClass_Trial_2"],
+      ["in Second", "third", false, "isTextIn_DivClass_Trial_3"],
+      ["in Fifth", "fifth", false, "isTextIn_DivClass_Trial_4"],
+      ["no such text", "first", true, "isTextIn_DivClass_Trial_5"]
     ]
 
     begin # Test the method
@@ -244,20 +243,21 @@ class UnitTest_HTMLText < Test::Unit::TestCase
     iDelay = 2
 
     # Define components of  the URL
+    # Define components of  the URL
     sProtocol = "file:///"
-    sRootURL = get_watirworks_install_path
-    sPage = "unittests/data/html/html_tags.html"
+    sRootURL = Dir.pwd
+    sPage = "data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
 
     # Array of trial data with the Expected Text, the Class Name, and the Save file prefix
     aSearchCriteria = [
-    ["Text in First Div", "div_1", false, "isTextIn_DivID_Trial_1"],
-    ["Second Div", "div_2", false, "isTextIn_DivID_Trial_2"],
-    ["in Second", "div_3", false, "isTextIn_DivID_Trial_3"],
-    ["in Fifth", "div_5", false, "isTextIn_DivID_Trial_4"],
-    ["no such text", "div_1", true, "isTextIn_DivID_Trial_5"]
+      ["Text in First Div", "div_1", false, "isTextIn_DivID_Trial_1"],
+      ["Second Div", "div_2", false, "isTextIn_DivID_Trial_2"],
+      ["in Second", "div_3", false, "isTextIn_DivID_Trial_3"],
+      ["in Fifth", "div_5", false, "isTextIn_DivID_Trial_4"],
+      ["no such text", "div_1", true, "isTextIn_DivID_Trial_5"]
     ]
 
     begin # Test the method
@@ -318,7 +318,6 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
   end # END TestCase - test_HTMLText_002_isTextIn_DivID
 
-
   #===========================================================================#
   # Testcase method: test_HTMLText_003_isTextIn_DivIndex
   #
@@ -338,8 +337,8 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     # Define components of  the URL
     sProtocol = "file:///"
-    sRootURL = get_watirworks_install_path
-    sPage = "unittests/data/html/html_tags.html"
+    sRootURL = Dir.pwd
+    sPage = "data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
@@ -356,11 +355,11 @@ class UnitTest_HTMLText < Test::Unit::TestCase
     #  ]
     #else
     aSearchCriteria = [
-    ["Text in First Div", 5, false, "isTextIn_DivID_Trial_1"],
-    ["Second Div", 6, false, "isTextIn_DivID_Trial_2"],
-    ["in Second", 7, false, "isTextIn_DivID_Trial_3"],
-    ["in Fifth", 9, false, "isTextIn_DivID_Trial_4"],
-    ["no such text", 5, true, "isTextIn_DivID_Trial_5"]
+      ["Text in First Div", 5, false, "isTextIn_DivID_Trial_1"],
+      ["Second Div", 6, false, "isTextIn_DivID_Trial_2"],
+      ["in Second", 7, false, "isTextIn_DivID_Trial_3"],
+      ["in Fifth", 9, false, "isTextIn_DivID_Trial_4"],
+      ["no such text", 5, true, "isTextIn_DivID_Trial_5"]
     ]
     #end
 
@@ -422,7 +421,6 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
   end # END TestCase - test_HTMLText_003_isTextIn_DivIndex
 
-
   #===========================================================================#
   # Testcase method: test_HTMLText_004_isTextIn_SpanClass
   #
@@ -442,19 +440,19 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     # Define components of  the URL
     sProtocol = "file:///"
-    sRootURL = get_watirworks_install_path
-    sPage = "unittests/data/html/html_tags.html"
+    sRootURL = Dir.pwd
+    sPage = "data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
 
     # Array of trial data with the Expected Text, the Class Name, and the Save file prefix
     aSearchCriteria = [
-    ["Text in First Span", "first", false, "isTextIn_SpanClass_Trial_1"],
-    ["Second Span", "second", false, "isTextIn_SpanClass_Trial_2"],
-    ["in Second", "third", false, "isTextIn_SpanClass_Trial_3"],
-    ["in Fifth", "fifth", false, "isTextIn_SpanClass_Trial_4"],
-    ["no such text", "first", true, "isTextIn_SpanClass_Trial_5"]
+      ["Text in First Span", "first", false, "isTextIn_SpanClass_Trial_1"],
+      ["Second Span", "second", false, "isTextIn_SpanClass_Trial_2"],
+      ["in Second", "third", false, "isTextIn_SpanClass_Trial_3"],
+      ["in Fifth", "fifth", false, "isTextIn_SpanClass_Trial_4"],
+      ["no such text", "first", true, "isTextIn_SpanClass_Trial_5"]
     ]
 
     begin # Test the method
@@ -534,19 +532,19 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     # Define components of  the URL
     sProtocol = "file:///"
-    sRootURL = get_watirworks_install_path
-    sPage = "unittests/data/html/html_tags.html"
+    sRootURL = Dir.pwd
+    sPage = "data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
 
     # Array of trial data with the Expected Text, the Class Name, and the Save file prefix
     aSearchCriteria = [
-    ["Text in First Span", "span_1", false, "isTextIn_SpanID_Trial_1"],
-    ["Second Span", "span_2", false, "isTextIn_SpanID_Trial_2"],
-    ["in Second", "span_3", false, "isTextIn_SpanID_Trial_3"],
-    ["in Fifth", "span_5", false, "isTextIn_SpanID_Trial_4"],
-    ["no such text", "span_1", true, "isTextIn_SpanID_Trial_5"]
+      ["Text in First Span", "span_1", false, "isTextIn_SpanID_Trial_1"],
+      ["Second Span", "span_2", false, "isTextIn_SpanID_Trial_2"],
+      ["in Second", "span_3", false, "isTextIn_SpanID_Trial_3"],
+      ["in Fifth", "span_5", false, "isTextIn_SpanID_Trial_4"],
+      ["no such text", "span_1", true, "isTextIn_SpanID_Trial_5"]
     ]
 
     begin # Test the method
@@ -607,8 +605,6 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
   end # END TestCase - test_HTMLText_005_isTextIn_SpanID
 
-
-
   #===========================================================================#
   # Testcase method: test_HTMLText_006_isTextIn_SpanIndex
   #
@@ -628,8 +624,8 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     # Define components of  the URL
     sProtocol = "file:///"
-    sRootURL = get_watirworks_install_path
-    sPage = "unittests/data/html/html_tags.html"
+    sRootURL = Dir.pwd
+    sPage = "data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
@@ -646,11 +642,11 @@ class UnitTest_HTMLText < Test::Unit::TestCase
     #  ]
     #else
     aSearchCriteria = [
-    ["Text in First Span", 1, false, "isTextIn_SpanID_Trial_1"],
-    ["Second Span", 2, false, "isTextIn_SpanID_Trial_2"],
-    ["in Second", 3, false, "isTextIn_SpanID_Trial_3"],
-    ["in Fifth", 5, false, "isTextIn_SpanID_Trial_4"],
-    ["no such text", 1, true, "isTextIn_SpanID_Trial_5"]
+      ["Text in First Span", 1, false, "isTextIn_SpanID_Trial_1"],
+      ["Second Span", 2, false, "isTextIn_SpanID_Trial_2"],
+      ["in Second", 3, false, "isTextIn_SpanID_Trial_3"],
+      ["in Fifth", 5, false, "isTextIn_SpanID_Trial_4"],
+      ["no such text", 1, true, "isTextIn_SpanID_Trial_5"]
     ]
     #end
 
@@ -712,8 +708,6 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
   end # END TestCase - test_HTMLText_006_isTextIn_SpanIndex
 
-
-
   #===========================================================================#
   # Testcase method: test_HTMLText_007_isTextIn_TableClass
   #
@@ -733,18 +727,18 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     # Define components of  the URL
     sProtocol = "file:///"
-    sRootURL = get_watirworks_install_path
-    sPage = "unittests/data/html/html_tags.html"
+    sRootURL = Dir.pwd
+    sPage = "data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
 
     # Array of trial data with the Expected Text, the Class Name, and the Save file prefix
     aSearchCriteria = [
-    ["Bonzo", "music", false, "isTextIn_TableClass_Trial_1"],
-    ["Parent Row 1 Cell 1", "second", false, "isTextIn_TableClass_Trial_2"],
-    ["Nested row_2", "third", false, "isTextIn_TableClass_Trial_3"],
-    ["no such text", "second", true, "isTextIn_TableClass_Trial_4"]
+      ["Bonzo", "music", false, "isTextIn_TableClass_Trial_1"],
+      ["Parent Row 1 Cell 1", "second", false, "isTextIn_TableClass_Trial_2"],
+      ["Nested row_2", "third", false, "isTextIn_TableClass_Trial_3"],
+      ["no such text", "second", true, "isTextIn_TableClass_Trial_4"]
     ]
 
     begin # Test the method
@@ -824,18 +818,18 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     # Define components of  the URL
     sProtocol = "file:///"
-    sRootURL = get_watirworks_install_path
-    sPage = "unittests/data/html/html_tags.html"
+    sRootURL = Dir.pwd
+    sPage = "data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
 
     # Array of trial data with the Expected Text, the Class Name, and the Save file prefix
     aSearchCriteria = [
-    ["Bonzo", "zeppelin", false, "isTextIn_TableID_Trial_1"],
-    ["Parent Row 1 Cell 1", "parent", false, "isTextIn_TableID_Trial_2"],
-    ["Nested row_2", "child", false, "isTextIn_TableID_Trial_3"],
-    ["no such text", "zeppelin", true, "isTextIn_TableID_Trial_5"]
+      ["Bonzo", "zeppelin", false, "isTextIn_TableID_Trial_1"],
+      ["Parent Row 1 Cell 1", "parent", false, "isTextIn_TableID_Trial_2"],
+      ["Nested row_2", "child", false, "isTextIn_TableID_Trial_3"],
+      ["no such text", "zeppelin", true, "isTextIn_TableID_Trial_5"]
     ]
 
     begin # Test the method
@@ -896,7 +890,6 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
   end # END TestCase - test_HTMLText_008_isTextIn_TableID
 
-
   #===========================================================================#
   # Testcase method: test_HTMLText_009_isTextIn_TableIndex
   #
@@ -916,8 +909,8 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     # Define components of  the URL
     sProtocol = "file:///"
-    sRootURL = get_watirworks_install_path
-    sPage = "unittests/data/html/html_tags.html"
+    sRootURL = Dir.pwd
+    sPage = "data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
@@ -933,10 +926,10 @@ class UnitTest_HTMLText < Test::Unit::TestCase
     #  ]
     #else
     aSearchCriteria = [
-    ["Bonzo", 6, false, "isTextIn_TableIndex_Trial_1"],
-    ["Parent Row 1 Cell 1", 7, false, "isTextIn_TableIndex_Trial_2"],
-    ["Nested row_2", 8, false, "isTextIn_TableIndex_Trial_3"],
-    ["no such text", 6, true, "isTextIn_TableIndex_Trial_5"]
+      ["Bonzo", 6, false, "isTextIn_TableIndex_Trial_1"],
+      ["Parent Row 1 Cell 1", 7, false, "isTextIn_TableIndex_Trial_2"],
+      ["Nested row_2", 8, false, "isTextIn_TableIndex_Trial_3"],
+      ["no such text", 6, true, "isTextIn_TableIndex_Trial_5"]
     ]
     #end
 
@@ -998,7 +991,6 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
   end # END TestCase - test_HTMLText_009_isTextIn_TableIndex
 
-
   #===========================================================================#
   # Testcase method: test_HTMLText_010_isTextIn_TableName
   #
@@ -1018,18 +1010,18 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     # Define components of  the URL
     sProtocol = "file:///"
-    sRootURL = get_watirworks_install_path
-    sPage = "unittests/data/html/html_tags.html"
+    sRootURL = Dir.pwd
+    sPage = "data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
 
     # Array of trial data with the Expected Text, the Name Name, and the Save file prefix
     aSearchCriteria = [
-    ["Bonzo", "zep", false, "isTextIn_TableName_Trial_1"],
-    ["Parent Row 1 Cell 1", "nested_blue", false, "isTextIn_TableName_Trial_2"],
-    ["Nested row_2", "nested_red", false, "isTextIn_TableName_Trial_3"],
-    ["no such text", "zep", true, "isTextIn_TableName_Trial_4"]
+      ["Bonzo", "zep", false, "isTextIn_TableName_Trial_1"],
+      ["Parent Row 1 Cell 1", "nested_blue", false, "isTextIn_TableName_Trial_2"],
+      ["Nested row_2", "nested_red", false, "isTextIn_TableName_Trial_3"],
+      ["no such text", "zep", true, "isTextIn_TableName_Trial_4"]
     ]
 
     begin # Test the method
@@ -1090,7 +1082,6 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
   end # END TestCase - test_HTMLText_010_isTextIn_TableName
 
-
   #===========================================================================#
   # Testcase method: test_HTMLText_011_parse_table_by_row
   #
@@ -1110,8 +1101,8 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     # Define components of  the URL
     sProtocol = "file:///"
-    sRootURL = get_watirworks_install_path
-    sPage = "unittests/data/html/html_tags.html"
+    sRootURL = Dir.pwd
+    sPage = "data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
@@ -1199,16 +1190,16 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     # Define components of  the URL
     sProtocol = "file:///"
-    sRootURL = get_watirworks_install_path
-    sPage = "unittests/data/html/html_tags.html"
+    sRootURL = Dir.pwd
+    sPage = "data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
 
     aStringsToSerchFor = [
-    "in First",
-    "in Fourth",
-    "in Fifth Div"
+      "in First",
+      "in Fourth",
+      "in Fifth Div"
     ]
 
     begin # Start local browsers
@@ -1259,8 +1250,6 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
   end # End of test method - test_HTMLText_012_IE_find_string_in_div
 
-
-
   #===========================================================================#
   # Testcase method: test_HTMLText_012_IE_find_string_in_span
   #
@@ -1279,16 +1268,16 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     # Define components of  the URL
     sProtocol = "file:///"
-    sRootURL = get_watirworks_install_path
-    sPage = "unittests/data/html/html_tags.html"
+    sRootURL = Dir.pwd
+    sPage = "data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
 
     aStringsToSerchFor = [
-    "in First",
-    "in Fourth",
-    "in Fifth Span"
+      "in First",
+      "in Fourth",
+      "in Fifth Span"
     ]
 
     begin # Start local browsers
@@ -1339,8 +1328,6 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
   end # End of test method - test_HTMLText_012_IE_find_string_in_span
 
-
-
   #===========================================================================#
   # Testcase method: test_HTMLText_014_IE_find_string_in_table
   #
@@ -1359,22 +1346,22 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     # Define components of  the URL
     sProtocol = "file:///"
-    sRootURL = get_watirworks_install_path
-    sPage = "unittests/data/html/html_tags.html"
+    sRootURL = Dir.pwd
+    sPage = "data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
 
     aStringsToSerchFor = [
-    "WatirWorks - Text Tags",
-    "WatirWorks - Interactive Tags",
-    "WatirWorks - Layout Tags",
-    "is equal to the",
-    "Checkboxes",
-    "Keith Richards",
-    "We the People of the United States",
-    "Nested row_2 cell_1",
-    "Parent Row_4 Cell_3 "
+      "WatirWorks - Text Tags",
+      "WatirWorks - Interactive Tags",
+      "WatirWorks - Layout Tags",
+      "is equal to the",
+      "Checkboxes",
+      "Keith Richards",
+      "We the People of the United States",
+      "Nested row_2 cell_1",
+      "Parent Row_4 Cell_3 "
     ]
 
     begin # Start local browsers
@@ -1426,7 +1413,6 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
   end # End of test method - test_HTMLText_014_IE_find_string_in_table
 
-
   #===========================================================================#
   # Testcase method: test_HTMLText_015_IE_find_strings_in_table
   #
@@ -1445,8 +1431,8 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
     # Define components of  the URL
     sProtocol = "file:///"
-    sRootURL = get_watirworks_install_path
-    sPage = "unittests/data/html/html_tags.html"
+    sRootURL = Dir.pwd
+    sPage = "data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
@@ -1455,7 +1441,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
     begin # Trial 1 -  Text in a table's row contains search string multiple times
 
       aStringsToSearchFor = [
-    "Nested"
+        "Nested"
       ]
 
       # Start a browser,
@@ -1516,7 +1502,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
     begin # Trial 2 - Exact match for all text in a table's row
 
       aStringsToSearchFor = [
-    "John", "Paul", "Jones"
+        "John", "Paul", "Jones"
       ]
 
       # Start a browser,
@@ -1574,6 +1560,5 @@ class UnitTest_HTMLText < Test::Unit::TestCase
     #========================================================#
 
   end # End of test method - test_HTMLText_015_IE_find_strings_in_table
-
 
 end # END Class - UnitTest_HTMLText

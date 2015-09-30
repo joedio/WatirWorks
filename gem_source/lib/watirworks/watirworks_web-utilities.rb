@@ -1231,6 +1231,8 @@ module WatirWorks_WebUtilities
   #           To generate testcode for only IMAGE  and LINK objects on the page in the current web browser:
   #                 $browser.generate_testcode_html_tag_attributes(["image", "link"])
   #
+  #
+  # TODO - image : NotImplementedError: not currently supported by WebDriver
   #=============================================================================#
   def generate_testcode_html_tag_attributes(oElementsToCheck="all", sBrowserName="$browser")
 
@@ -1268,7 +1270,8 @@ module WatirWorks_WebUtilities
     aAttribs_file_field = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_form = ["class", "id", "name", "action", "method", "visible?"]
     aAttribs_hidden = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_image = ["type", "id", "name", "title", "value", "src", "height", "width", "file_size", "file_created_date", "alt", "enabled?", "visible?", "loaded?"]
+    # removed "file_size",  "file_created_date", from image : NotImplementedError: not currently supported by WebDriver
+    aAttribs_image = ["type", "id", "name", "title", "value", "src", "height", "width", "alt", "enabled?", "visible?", "loaded?"]
     aAttribs_label = ["type", "id", "name", "title", "value", "text", "enabled?", "visible?"]
     aAttribs_link = ["type", "id", "name", "title", "value", "href", "text", "src","enabled?", "visible?"]
     aAttribs_li = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
@@ -2355,7 +2358,7 @@ module WatirWorks_WebUtilities
 
         if(bSaveIssues)
           # Save an image capture of the current web page window as a BMP
-          seelf.save_screencapture(sCaptureFileNamePrefix )
+          self.save_screencapture(sCaptureFileNamePrefix )
 
           # Save the HTML contents of the current web page to a file
           self.save_html(sCaptureFileNamePrefix)
@@ -4674,10 +4677,10 @@ module WatirWorks_WebUtilities
       "radio", "select_list", "strong",  "span",
       "table", "text_field" ]
 
-    # Define the element attributes to collect
+    # Define the element attributes to collect  # removed "file_size" : NotImplementedError: not currently supported by WebDriver
     aAttributes = ["exists?", "type", "id", "name", "title",
       "value", "enabled?", "visible?", "loaded?", "src",
-      "height", "width", "file_size", "alt", "class",
+      "height", "width",  "alt", "class",
       "action", "method", "set?", "text",
       "href", "selected_options", "options",
       "class_name", "row_count_excluding_nested_tables",
@@ -4952,7 +4955,7 @@ module WatirWorks_WebUtilities
 
     end  # Start the specified browser
 
-    Watir::Wait.until{$browser.exists?}
+    Watir::Wait.until{oBrowser.exists?}
     puts2("  Browser version = " + oBrowser.version.to_s)
 
     oBrowser.goto(sURL) # Load the URL

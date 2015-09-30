@@ -25,6 +25,7 @@ end
 
 # WatirWorks
 require 'watirworks'  # The WatirWorks library loader
+
 include WatirWorks_Utilities    #  WatirWorks General Utilities
 include WatirWorks_WebUtilities    #  WatirWorks Web Utilities
 
@@ -73,7 +74,6 @@ end
 #
 #=============================================================================#
 class UnitTest_JSDialogs < Test::Unit::TestCase
-
   #===========================================================================#
   # Method: setup
   #
@@ -130,7 +130,6 @@ class UnitTest_JSDialogs < Test::Unit::TestCase
       return
     end
 
-
     # Only run on windows
     if(is_win?() == true)
 
@@ -143,8 +142,8 @@ class UnitTest_JSDialogs < Test::Unit::TestCase
 
       # Define components of  the URL
       sProtocol = "file:///"
-      sRootURL = get_watirworks_install_path
-      sPage = "unittests/data/html/jsdialogs.html"
+      sRootURL = Dir.pwd
+      sPage = "data/html/jsdialogs.html"
 
       # Construct the URL
       sURL = sProtocol  + sRootURL + "/" + sPage
@@ -231,8 +230,8 @@ class UnitTest_JSDialogs < Test::Unit::TestCase
 
       # Define components of  the URL
       sProtocol = "file:///"
-      sRootURL = get_watirworks_install_path
-      sPage = "unittests/data/html/jsdialogs.html"
+      sRootURL =Dir.pwd
+      sPage = "data/html/jsdialogs.html"
 
       # Construct the URL
       sURL = sProtocol  + sRootURL + "/" + sPage
@@ -271,7 +270,6 @@ class UnitTest_JSDialogs < Test::Unit::TestCase
         puts2("Dismissing JS Confirmation dialog via the #{sControlID} button...")
         browser.handle_win_dialog_generic_modal(sDialogTitle, sControlID)
 
-
         #
         # Do it again but dismiss the JS dialog by selecting the other button
         #
@@ -309,7 +307,6 @@ class UnitTest_JSDialogs < Test::Unit::TestCase
 
       end # Confirmation Dialog
 
-
     else
       puts2("*** Skipping - Non-Windows platform")
     end # Only run on windows
@@ -342,8 +339,8 @@ class UnitTest_JSDialogs < Test::Unit::TestCase
 
       # Define components of  the URL
       sProtocol = "file:///"
-      sRootURL = get_watirworks_install_path
-      sPage = "unittests/data/html/jsdialogs.html"
+      sRootURL =Dir.pwd
+      sPage = "data/html/jsdialogs.html"
 
       # Construct the URL
       sURL = sProtocol  + sRootURL + "/" + sPage
@@ -422,7 +419,6 @@ class UnitTest_JSDialogs < Test::Unit::TestCase
         browser.close()
 
       end # Confirmation Dialog
-
 
     else
       puts2("*** Skipping - Non-Windows platform")

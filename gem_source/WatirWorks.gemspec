@@ -9,7 +9,8 @@ spec = Gem::Specification.new do |s|
   s.rubyforge_project =''
   s.summary = "WatirWorks is a testing framework and toolkit for WatirWebdriver."
   s.description = "WatirWorks is a collection of cross-platform, cross-browser tools to enhance and expand Ruby when used with WatirWebdriver."
-  s.files = Dir.glob("**/**/**")
+  #s.files = Dir.glob("**/**/**")
+  s.files = Dir['lib/**/**'] + Dir['data/**/**']
   #s.has_rdoc = true
   #s.test_files = Dir.glob("unittests/*.rb")
   s.required_ruby_version = '>= 1.9.3'
