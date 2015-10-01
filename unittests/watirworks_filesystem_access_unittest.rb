@@ -6,7 +6,7 @@
 #  All rights reserved.
 #
 # Description: Unit tests for WatirWorks methods:
-#                     find_folder(...)
+#                     find_folder_in_tree(...)  # Needs rework to run from unitest dir, not gem folder
 #                     compare_files(...)
 #                     parse_dictionary()
 #                     get_watirworks_install_path()

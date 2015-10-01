@@ -7,7 +7,7 @@
 #
 # Description: Unit tests for WatirWorks methods:
 #                display_ruby_env()
-#                display_ruby_environment()
+#                display_ruby_environment() # Commented out failing response inmethod for Ruby Global vars.
 #                display_watir_env()
 #                find_tmp_dir()
 #                is_win?()

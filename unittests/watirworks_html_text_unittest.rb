@@ -3,7 +3,7 @@
 # File: watirworks_html_text_unittest.rb
 #
 #
-#  Copyright (c) 2008-2010, Joe DiMauro
+#  Copyright (c) 2008-2015, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for the HTML text using WatirWorks methods:
@@ -16,12 +16,12 @@
 #                isTextIn_TableClass?(...)
 #                isTextIn_TableID?(...)
 #                isTextIn_TableIndex?(...)
-#                isTextIn_TableName?(...)
-#                parse_table_by_row(...)
+#                isTextIn_TableName?(...) # Watir::Element tag attribute :name - Not supported in Watir WebDriver
+#                parse_table_by_row(...) # Watir method Watir::Table.row_values not supported by Watir WebDriver
 #                find_string_in_div(...)
 #                find_string_in_span(...)
-#                find_string_in_table(...)
-#                find_strings_in_table(...)
+#                find_string_in_table(...)  #Watir method Watir::Table.row_values not supported by Watir WebDriver
+#                find_strings_in_table(...)  # Watir method Watir::Table.row_values not supported by Watir WebDriver
 #
 #
 #=============================================================================#
@@ -996,6 +996,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
   #
   # Description: Test the method: isTextIn_TableName?(...)
   #
+  # TODO -  Watir::Element tag attribute :name - Not supported in Watir WebDriver
   #===========================================================================#
   def test_HTMLText_010_isTextIn_TableName
 
@@ -1087,6 +1088,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
   #
   # Description: Test the method: parse_table_by_row(...)
   #
+  # TODO - Watir method Watir::Table.row_values not supported by Watir WebDriver
   #===========================================================================#
   def test_HTMLText_011_parse_table_by_row
 
@@ -1332,6 +1334,8 @@ class UnitTest_HTMLText < Test::Unit::TestCase
   # Testcase method: test_HTMLText_014_IE_find_string_in_table
   #
   # Description: Test methods: find_string_in_table(...)
+  #
+  # TODO - Watir method Watir::Table.row_values not supported by Watir WebDriver
   #===========================================================================#
   def test_HTMLText_014_IE_find_string_in_table
 
@@ -1417,6 +1421,8 @@ class UnitTest_HTMLText < Test::Unit::TestCase
   # Testcase method: test_HTMLText_015_IE_find_strings_in_table
   #
   # Description: Test methods: find_strings_in_table(...)
+  #
+  # TODO - Watir method Watir::Table.row_values not supported by Watir WebDriver
   #===========================================================================#
   def test_HTMLText_015_IE_find_strings_in_table
 
