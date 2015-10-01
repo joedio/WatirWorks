@@ -3,7 +3,7 @@
 # File: watirworks_webpage_unittest.rb
 #
 #
-#  Copyright (c) 2008-2010, Joe DiMauro
+#  Copyright (c) 2008-2015, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for the Web pages using WatirWorks methods:
@@ -357,18 +357,15 @@ class Unittest_WebPage < Test::Unit::TestCase
 
         # Display the contents of the select list
         if(browser.select_list(:name, sListName).exists?)
-=begin # watir-wedriver missing method 'getAllContents" use "options" instead
-          sSelections = browser.select_list(:name, sListName).getAllContents
-=end
 
           aSelections = browser.select_list(:name, sListName).options.map
 
           # Display options
-          puts2("\n Number of options in select list: " + aSelections.length.to_s)
+          puts2("\n Number of options in select list: " + aSelections.count.to_s)
           puts2("\t Options in select list:")
           aSelections.each do | sSelection |
             if(is_webdriver? == false)
-              puts2("\t " +sSelection.to_s)
+              puts2("\t " + sSelection.to_s)
             else
               puts2("\t " + sSelection.text)
             end
@@ -386,9 +383,6 @@ class Unittest_WebPage < Test::Unit::TestCase
 
         if(browser.select_list(:name, sListName).exists?)
 
-=begin # watir-wedriver missing method 'getSelectedItems" use "selected_options" instead
-          puts2("* Current selection: " + browser.select_list(:name, sListName).getSelectedItems.to_s)
-=end
           puts2("* Current selection: " + browser.select_list(:name, sListName).selected_options.to_s)
         end
 
@@ -455,19 +449,14 @@ class Unittest_WebPage < Test::Unit::TestCase
       # Display the contents of the select list
       if(browser.select_list(:name, sListName).exists?)
 
-=begin # watir-wedriver missing method 'getAllContents" use "options" instead
-
-        sSelections = browser.select_list(:name, sListName).getAllContents
-=end
-
         aSelections = browser.select_list(:name, sListName).options
 
         # Display options
-        puts2("\n Number of options in select list: " + aSelections.length.to_s)
+        puts2("\n Number of options in select list: " + aSelections.count.to_s)
         puts2("\t Options in select list:")
         aSelections.each do | sSelection |
           if(is_webdriver? == false)
-            puts2("\t " +sSelection.to_s)
+            puts2("\t " + sSelection.to_s)
           else
             puts2("\t " + sSelection.text)
           end
@@ -485,9 +474,6 @@ class Unittest_WebPage < Test::Unit::TestCase
       if(browser.select_list(:name, sListName).exists?)
         puts2("* Current option: ")
 
-=begin # watir-wedriver missing method 'getSelectedItems" use "selected_options" instead
-        puts(browser.select_list(:name, sListName).getSelectedItems)
-=end
         puts(browser.select_list(:name, sListName).selected_options)
       end
 
@@ -559,17 +545,15 @@ class Unittest_WebPage < Test::Unit::TestCase
 
         # Display the contents of the select list
         if(browser.select_list(:id, sListName).exists?)
-=begin # watir-wedriver missing method 'getAllContents" use "options" instead
-          sSelections = browser.select_list(:id, sListName).getAllContents
-=end
+
           aSelections = browser.select_list(:id, sListName).options
 
           # Display options
-          puts2("\n Number of options in select list: " + aSelections.length.to_s)
+          puts2("\n Number of options in select list: " + aSelections.count.to_s)
           puts2("\t Options in select list:")
           aSelections.each do | sSelection |
             if(is_webdriver? == false)
-              puts2("\t " +sSelection.to_s)
+              puts2("\t " + sSelection.to_s)
             else
               puts2("\t " + sSelection.text)
             end
@@ -587,9 +571,6 @@ class Unittest_WebPage < Test::Unit::TestCase
 
         if(browser.select_list(:id, sListName).exists?)
 
-=begin # watir-wedriver missing method 'getSelectedItems" use "selected_options" instead
-          puts2("* Current selection: " + browser.select_list(:id, sListName).getSelectedItems.to_s)
-=end
           puts2("* Current selection: " + browser.select_list(:id, sListName).selected_options.to_s)
 
         end
@@ -660,17 +641,14 @@ class Unittest_WebPage < Test::Unit::TestCase
       # Display the contents of the select list
       if(browser.select_list(:id, sListName).exists?)
 
-=begin # watir-wedriver missing method 'getAllContents" use "options" instead
-        sSelections = browser.select_list(:id, sListName).getAllContents
-=end
         aSelections = browser.select_list(:id, sListName).options
 
         # Display options
-        puts2("\n Number of options in select list: " + aSelections.length.to_s)
+        puts2("\n Number of options in select list: " + aSelections.count.to_s)
         puts2("\t Options in select list:")
         aSelections.each do | sSelection |
           if(is_webdriver? == false)
-            puts2("\t " +sSelection.to_s)
+            puts2("\t " + sSelection.to_s)
           else
             puts2("\t " + sSelection.text)
           end
@@ -687,10 +665,6 @@ class Unittest_WebPage < Test::Unit::TestCase
 
       if(browser.select_list(:id, sListName).exists?)
         puts2("* Current selection: ")
-
-=begin # watir-wedriver missing method 'getSelectedItems" use "selected_options" instead
-        puts(browser.select_list(:id, sListName).getSelectedItems)
-=end
 
         puts(browser.select_list(:id, sListName).selected_options)
 
@@ -762,18 +736,15 @@ class Unittest_WebPage < Test::Unit::TestCase
 
         # Display the contents of the select list
         if(browser.select_list(:index, iSelectList_Index.adjust_index).exists?)
-=begin # watir-wedriver missing method 'getAllContents" use "options" instead
-          sSelections = browser.select_list(:index, iSelectList_Index.adjust_index).getAllContents
-=end
 
           aSelections = browser.select_list(:index, iSelectList_Index.adjust_index).options
 
           # Display options
-          puts2("\n Number of options in select list: " + aSelections.length.to_s)
+          puts2("\n Number of options in select list: " + aSelections.count.to_s)
           puts2("\t Options in select list:")
           aSelections.each do | sSelection |
             if(is_webdriver? == false)
-              puts2("\t " +sSelection.to_s)
+              puts2("\t " + sSelection.to_s)
             else
               puts2("\t " + sSelection.text)
             end
@@ -791,9 +762,6 @@ class Unittest_WebPage < Test::Unit::TestCase
 
         if(browser.select_list(:index, iSelectList_Index.adjust_index).exists?)
 
-=begin # watir-wedriver missing method 'getSelectedItems" use "selected_options" instead
-          puts2("* Current selection: " + browser.select_list(:index, iSelectList_Index.adjust_index).getSelectedItems.to_s)
-=end
           puts2("* Current selection: " + browser.select_list(:index, iSelectList_Index.adjust_index).selected_options.to_s)
 
         end
@@ -864,17 +832,14 @@ class Unittest_WebPage < Test::Unit::TestCase
       # Display the contents of the select list
       if(browser.select_list(:index, iSelectList_Index.adjust_index).exists?)
 
-=begin # watir-webdriver missing method 'getAllContents" use "options" instead
-        sSelections = browser.select_list(:index, iSelectList_Index.adjust_index).getAllContents
-=end
         aSelections = browser.select_list(:index, iSelectList_Index.adjust_index).options
 
         # Display options
-        puts2("\n Number of options in select list: " + aSelections.length.to_s)
+        puts2("\n Number of options in select list: " + aSelections.count.to_s)
         puts2("\t Options in select list:")
         aSelections.each do | sSelection |
           if(is_webdriver? == false)
-            puts2("\t " +sSelection.to_s)
+            puts2("\t " + sSelection.to_s)
           else
             puts2("\t " + sSelection.text)
           end
@@ -892,9 +857,6 @@ class Unittest_WebPage < Test::Unit::TestCase
       if(browser.select_list(:index, iSelectList_Index.adjust_index).exists?)
         puts2("* Current selection: ")
 
-=begin # watir-wedriver missing method 'getSelectedItems" use "selected_options" instead
-        puts(browser.select_list(:index, iSelectList_Index.adjust_index).getSelectedItems)
-=end
         puts(browser.select_list(:index, iSelectList_Index.adjust_index).selected_options)
 
       end
@@ -1049,7 +1011,7 @@ class Unittest_WebPage < Test::Unit::TestCase
           puts2("Did NOT find at least #{iItemCountInList} items in the list")
         end
 
-        iItemCountInList = iItemCountInList +1
+        iItemCountInList = iItemCountInList + 1
 
       end # Loop
 
