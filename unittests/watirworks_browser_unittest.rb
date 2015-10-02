@@ -255,49 +255,78 @@ class Unittest_Browser < Test::Unit::TestCase
       puts2("  Browser name = " + oBrowser.name.to_s)
 
       puts2("Misc. browser methods...")
-      puts2("  Browser status = " + oBrowser.status.to_s)
+      puts2("  Browser status = '" + oBrowser.status.to_s + "'")
       puts2("  Browser ready_state = " + oBrowser.ready_state.to_s)
       puts2("  Window current = " + oBrowser.window.current?.to_s)
       puts2("  Browse refresh...")
       oBrowser.refresh
 
       # Start with browser in it's current size
-      puts2("\Browser is at it's initial size.")
+      puts2("\Browser is at it's initial size & position")
       puts2("  Window size = " + oBrowser.window.size.to_s)
+      puts2("  window.size.height = " + oBrowser.window.size.height.to_s)
+      puts2("  window.size.width = " + oBrowser.window.size.width.to_s)
+      #puts2("  Window position = " + oBrowser.window.position.to_s)
+      puts2("  Window position.x = " + oBrowser.window.position.x.to_s)
+      puts2("  Window position.y = " + oBrowser.window.position.y.to_s)
       #puts2("Minimized? = " + (oBrowser.is_minimized?).to_s)
       #puts2("Maximized? = " + (oBrowser.is_maximized?).to_s)
 
       ######  watir-webdriver - missing method - minimize
       #puts2("\nMimimized browser")
       #oBrowser.minimize
-      #puts2("Window size = " + oBrowser.window.size.to_s)
       #puts2("Minimized? = " + (oBrowser.is_minimized?).to_s)
       #puts2("Maximized? = " + (oBrowser.is_maximized?).to_s)
 
       puts2("\nMaximize browser")
       oBrowser.window.maximize
-      puts2("  Window size = " + oBrowser.window.size.to_s)
+      #puts2("  window.size.class = " + oBrowser.window.size.class.to_s) = => DIMENTION
+      puts2("  window.size.height = " + oBrowser.window.size.height.to_s)
+      #puts2("  window.size.height.class = " + oBrowser.window.size.height.class.to_s) # => FIXNUM
+      puts2("  window.size.width = " + oBrowser.window.size.width.to_s)
       #puts2("Minimized? = " + (oBrowser.is_minimized?).to_s)
       #puts2("Maximized? = " + (oBrowser.is_maximized?).to_s)
 
       puts2("Resize the window to 640x480")
       oBrowser.window.resize_to(640,480)
-      #oBrowser.reset!
-      puts2("  Window size = " + oBrowser.window.size.to_s)
-      puts2("  Window position = " + oBrowser.window.position.to_s)
+      #oBrowser.reset!  # Not very useful from what I've seen thus far, but who knows?
+      #puts2("  Window size = " + oBrowser.window.size.to_s)
+      puts2("  window.size.height = " + oBrowser.window.size.height.to_s)
+      puts2("  window.size.width = " + oBrowser.window.size.width.to_s)
+      puts2("  Window position.x = " + oBrowser.window.position.x.to_s)
+      puts2("  Window position.y = " + oBrowser.window.position.y.to_s)
 
       puts2("Move the window to 100x100")
       oBrowser.window.move_to(100,100)
       #oBrowser.reset!
-      puts2("  Window size = " + oBrowser.window.size.to_s)
-      puts2("  Window position = " + oBrowser.window.position.to_s)
-
-      #puts2("Move the window by 10x10 and resize by 10x10")
-      #oBrowser.moveBy(10,10)
-      #oBrowser.resizeBy(10,10)
-      #oBrowser.reset!
       #puts2("  Window size = " + oBrowser.window.size.to_s)
-      #puts2("  Window position = " + oBrowser.window.position.to_s)
+      puts2("  window.size.height = " + oBrowser.window.size.height.to_s)
+      puts2("  window.size.width = " + oBrowser.window.size.width.to_s)
+      puts2("  window.position.x = " + oBrowser.window.position.x.to_s)
+      puts2("  window.position.y = " + oBrowser.window.position.y.to_s)
+
+      iWindowWidth = 1024
+      puts2("Resize the window to its max height but specified width (" + iWindowWidth.to_s + ")")
+      oBrowser.window.move_to(100,10)  # w,h
+      puts2("  window.size.height = " + oBrowser.window.size.height.to_s)
+      puts2("  window.size.width = " + oBrowser.window.size.width.to_s)
+      puts2("Maximize window...")
+      oBrowser.window.maximize
+      puts2("  window.size.height = " + oBrowser.window.size.height.to_s)
+      puts2("  window.size.width = " + oBrowser.window.size.width.to_s)
+      puts2("Max height & specified width...")
+      iHeight = oBrowser.window.size.height
+      oBrowser.window.resize_to(iWindowWidth,iHeight)
+      puts2("  window.size.height = " + oBrowser.window.size.height.to_s)
+      puts2("  window.size.width = " + oBrowser.window.size.width.to_s)
+      puts2("  window.position.x = " + oBrowser.window.position.x.to_s)
+      puts2("  window.position.y = " + oBrowser.window.position.y.to_s)
+
+      oBrowser.reset!
+      puts2("  window.size.height = " + oBrowser.window.size.height.to_s)
+      puts2("  window.size.width = " + oBrowser.window.size.width.to_s)
+      puts2("  window.position.x = " + oBrowser.window.position.x.to_s)
+      puts2("  window.position.y = " + oBrowser.window.position.y.to_s)
 
       puts2("\nLoad a different URL " + sGoogleURL)
       oBrowser.goto(sGoogleURL)
