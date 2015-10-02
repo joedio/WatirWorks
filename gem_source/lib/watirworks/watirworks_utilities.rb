@@ -113,6 +113,7 @@ include WatirWorks_RefLib #  WatirWorks Reference data module
 #   setenv(...)
 #   start_logger(...)
 #   watchlist(...)
+#   which_os()
 #
 # Pre-requisites:
 # ++
@@ -1346,9 +1347,8 @@ module WatirWorks_Utilities
       puts2("  bSort: " + bSort.to_s)
     end
 
-    
     aFilteredFileList = []
-      
+
     puts2("Removing all files without sIdentifier = " + sIdentifier)
 
     # Loop through the files in the list
@@ -1407,7 +1407,7 @@ module WatirWorks_Utilities
         end
 
         # Determine to keep or drop the file
-        if(sSetting.downcase != sIdentifier)
+        if(sSetting.to_s.downcase != sIdentifier.to_s)
           if($VERBOSE == true)
             puts2(" Dropping test file: " + sFileToParse)
           end
@@ -1532,6 +1532,53 @@ module WatirWorks_Utilities
     return hEnvVars
 
   end # Method - getenv()
+
+  #=============================================================================#
+  #--
+  # Method: get_os_version()
+  #
+  # TODO - Get win & linux cases working
+  #
+  #   INof from http://www.windows-commandline.com/find-windows-os-version-from-command/
+  #        On Win option 1 =  use the ver command:
+  #           WIN7   = Microsoft Windows [Version 6.1.7601]
+  #           WIN8   = Microsoft Windows [Version 6.2.9200]
+  #           WIN8.1 = Microsoft Windows [Version 6.3.9600]
+  #        On Win option 2 =  use the sysinfo command is too slow (2-3 sec)
+  #           c:\>systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
+  #             OS Name:   Microsoft Windows 7 Enterprise
+  #             OS Version: 6.1.7601 Service Pack 1 Build 7601
+  #
+  #++
+  #
+  # Description: Collects the Window's open on the system
+  #
+  # Returns: STRING - The top-level window objects are returned.
+  #
+  # Usage Examples: aAllWindows = get_windows()
+  #                 aAllWindows.each {|oWindow| puts oWindow.hwnd}
+  #
+  #=============================================================================#
+  def get_os_version()
+
+    case which_os()
+    when "windows"
+
+      return "not implimented in WatirWorks"
+
+    when "osx"
+      # Get the key & value hash
+      hVar = getenv("_system_version")
+      return hVar.values().to_s
+
+    when "linux"
+      return "not implimented in WatirWorks"
+
+    else
+      return "unknown"
+    end
+
+  end # Method - get_os_version()
 
   #=============================================================================#
   #--
@@ -2004,6 +2051,7 @@ module WatirWorks_Utilities
   #--
   # Method: is_win?()
   #
+  # TODO - Check out os.gem http://stackoverflow.com/questions/11784109/detecting-operating-systems-in-ruby
   #++
   #
   # Description: Identifies if running on a Windows platform
@@ -3710,6 +3758,37 @@ module WatirWorks_Utilities
     end # Display all the variables
 
   end # Method - watchlist()
+
+  #=============================================================================#
+  #--
+  # Method: which_os()
+  #
+  #++
+  #
+  # Description: Identifies the OS platform
+  #
+  # Returns: STRING - OS type: Windows, osx, or linux
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(which_os == 'windows')
+  #                      # Execute your Windows specific code
+  #                  end
+  #
+  #=============================================================================#
+  def which_os()
+
+    if(is_win == true)
+      return "windows"
+    elsif(is_osx == true)
+      return "osx"
+    elsif(is_linux == true)
+      return "linux"
+    else
+      return "unknownOS"
+    end
+
+  end # Method - which_os()
 
 end # end of module WatirWorks_Utilities
 
@@ -5425,6 +5504,6 @@ class  WatirWorksLogger < Logger
     end
   end # method - log
 
-end # class - TestLogger
+end # Class - TestLogger
 
 # END File - watirworks_utilities.rb
