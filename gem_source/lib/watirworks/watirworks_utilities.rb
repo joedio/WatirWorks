@@ -69,11 +69,13 @@ include WatirWorks_RefLib #  WatirWorks Reference data module
 #   compare_files(...)
 #   compare_strings_in_arrays(...)
 #   convert_date(...)
+#   create_file_list(...)
 #   create_subdirectory(...)
 #   display_ruby_env(...)
 #   display_ruby_environment()
 #   display_watir_env()
 #   display_watirworks_env(...)
+#   filter_file_list(...)
 #   find_folder_in_tree(...)
 #   find_tmp_dir()
 #   format_elapsed_time(...)
@@ -643,6 +645,86 @@ module WatirWorks_Utilities
     end
 
   end  # Method - convert_date()
+
+  #=============================================================================#
+  #--
+  # Method: create_file_list(...)
+  #
+  #++
+  #
+  # Description: Creates an array containging list of files that match the specified
+  #              file identification string. Can be used by a test suite to
+  #              create the list of test files to run.
+  #
+  #
+  # Prerequisite:
+  #           The files may reside at the top level of the file system.
+  #           The files must reside in the same directory or a sub-directory of the calling file.
+  #
+  # Returns: ARRAY of STRINGS = Full path the matching files
+  #
+  # Syntax: sFileIdentifier = STRING -  The partial flie name to add to the list.
+  #         bSort = BOOLEAN = true (default) to sort list a-z, false to leave in order files were found
+  #
+  # Usage Examples: To create a list of test files to run:
+  #        require 'watirworks'
+  #        require 'find'  # Methods to locate OS files.
+  #        include WatirWorks_Utilities    #  WatirWorks General Utilities
+  #        aFileList = create_file_list("_test.rb", true)
+  #
+  #=============================================================================#
+  def create_file_list(sFileIdentifier = "_test.rb", bSort = true)
+
+    if($VERBOSE == true)
+      puts2("Parameters - create_file_list:")
+      puts2("  sFileIdentifier: " + sFileIdentifier.to_s)
+      puts2("  bSort: " + bSort.to_s)
+    end
+
+    # Define the array to hold the list of files
+    aFileList = []
+
+    # Loop through the directory and sub-directories using the find command to collect
+    # the list of files. Weeding out the numerous pathnames that don't end with a
+    # matchng file name (files ending with sFileIdentifier).
+    Find.find('./') do |path|
+
+      # Convert the relative paths to full path names
+      path = File.expand_path(path)
+
+      # Convert Enumerable to string
+      sPath = File.path(path)
+      if($VERBOSE== true)
+        puts2("Current Path = " + sPath)
+      end
+
+      # Append each valid test file that's found to the array
+      if(sPath.include?(sFileIdentifier))
+        aFileList << sPath
+      end
+
+    end # END - Loop through the directory and sub-directories
+
+    if($VERBOSE == true)
+      # Display the unsorted list of test files
+      puts2 aFileList
+      puts2("")
+    end
+
+    if(bSort == true)
+      # Sort the list (A-Z)
+      aFileList.sort!
+    end
+
+    if($VERBOSE == true)
+      # Display the alpha sorted list of test files
+      puts2 aFileList
+      puts2("")
+    end
+
+    return aFileList
+
+  end # Method - create_file_list(...)
 
   #=============================================================================#
   #--
@@ -1224,6 +1306,150 @@ module WatirWorks_Utilities
     end
 
   end # Method - find_tmp_dir
+
+  #=============================================================================#
+  #--
+  # Method: filter_file_list(...)
+  #
+  #++
+  #
+  # Description: Filters an array containging list of files that contain a specified
+  #              variable within a range of line in the file. Can be used by a test suite to
+  #              filter out files from the list of test files to run.
+  #
+  #
+  # Prerequisite:
+  #           The files may reside at the top level of the file system.
+  #           The files must reside in the same directory or a sub-directory of the calling file.
+  #
+  # Returns: ARRAY of STRINGS = Full path the matching files
+  #
+  # Syntax: sFileIdentifier = STRING -  The partial flie name to add to the list.
+  #         bSort = BOOLEAN = true (default) to sort list a-z, false to leave in order files were found
+  #
+  # Usage Examples: To create a list of test files to run:
+  #        require 'watirworks'
+  #        require 'find'  # Methods to locate OS files.
+  #        include WatirWorks_Utilities    #  WatirWorks General Utilities
+  #        aFileList = create_file_list("_test.rb", true)
+  #        aFileList = filter_file_list(aFileList, sIncludeInTestRun, 0, 100)
+  #
+  #=============================================================================#
+  def filter_file_list(aFileList, sIdentifier, iMinLineNumberToParse = 0, iMaxLineNumberToParse = 100, bSort = true)
+
+    if($VERBOSE == true)
+      puts2("Parameters - filter_file_list:")
+      puts2("  aFileList: \n" + aFileList.to_s)
+      puts2("  sIdentifier: " + sIdentifier.to_s)
+      puts2("  iMinLineNumberToParse: " + iMinLineNumberToParse.to_s)
+      puts2("  iMaxLineNumberToParse: " + iMaxLineNumberToParse.to_s)
+      puts2("  bSort: " + bSort.to_s)
+    end
+
+    
+    aFilteredFileList = []
+      
+    puts2("Removing all files without sIdentifier = " + sIdentifier)
+
+    # Loop through the files in the list
+    aFileList.each do | sFileToParse |
+
+      if($VERBOSE == true)
+        puts2("\nChecking file: " + sFileToParse)
+      end
+
+      # Find matches in the current file (only check the range of lines in the file)
+      aFileMatches = get_text_from_file(sIdentifier, sFileToParse, iMinLineNumberToParse, iMaxLineNumberToParse)
+
+      if($VERBOSE == true)
+        puts2("Parasing search results...")
+      end
+
+      # Loop through array of the search results
+      aFileMatches.each do | aMatch |
+
+        if($VERBOSE == true)
+          puts2("Match found: " + aMatch[0].to_s)
+        end
+
+        # Match found
+        if(aMatch[0] != true)
+
+          if($VERBOSE == true)
+            puts2(" Skipping files w/o matching identifier: " + sFileToParse)
+            sLine = "#"
+          end
+
+        else
+
+          # Get the 1st match
+          sLine = aMatch[2].to_s
+
+          if($VERBOSE == true)
+            puts2(" Line: " + sLine)
+          end
+
+        end # Loop through array of the search results
+
+        # Remove any commented out lines
+        sLine = sLine.prefix("#")
+
+        # Cleanup the line
+        sLine = sLine.delete"\"" # Remove double quotes
+        sLine = sLine.delete"\'" # Remove single quotes
+        sLine = sLine.delete" "  # Remove whitespace
+
+        # Save the setting portion of the line
+        sSetting = sLine.suffix("=")
+
+        if($VERBOSE == true)
+          puts2(" Setting: " + sSetting)
+        end
+
+        # Determine to keep or drop the file
+        if(sSetting.downcase != sIdentifier)
+          if($VERBOSE == true)
+            puts2(" Dropping test file: " + sFileToParse)
+          end
+
+        else
+
+          if($VERBOSE == true)
+            puts2(" Keeping test file: " + sFileToParse)
+          end
+
+          # Add file to the list
+          aFilteredFileList << sFileToParse
+
+        end # Determine to keep or drop the file
+
+      end # Match found
+
+      # Re-populate the array with the remaining files
+      aFileList = aFilteredFileList
+
+    end # Loop through the files in the list
+
+    if($VERBOSE == true)
+      # Display the unsorted list of files
+      puts2(aFileList)
+      puts2("")
+    end
+
+    if(bSort == true)
+      # Sort the list (A-Z)
+      aFileList.sort!
+    end
+
+    if($VERBOSE == true)
+      # Display the alpha sorted list of files
+      puts2(aFileList)
+      puts2("")
+    end
+
+    return aFileList
+
+  end # Method - filter_file_list(...)
 
   #=============================================================================#
   #--
