@@ -1349,7 +1349,7 @@ module WatirWorks_Utilities
 
     aFilteredFileList = []
 
-    puts2("Removing all files without sIdentifier = " + sIdentifier)
+    puts2("Removing all files without sIdentifier = " + sIdentifier.to_s)
 
     # Loop through the files in the list
     aFileList.each do | sFileToParse |
