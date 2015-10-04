@@ -3778,11 +3778,11 @@ module WatirWorks_Utilities
   #=============================================================================#
   def which_os()
 
-    if(is_win == true)
+    if(is_win? == true)
       return "windows"
-    elsif(is_osx == true)
+    elsif(is_osx? == true)
       return "osx"
-    elsif(is_linux == true)
+    elsif(is_linux? == true)
       return "linux"
     else
       return "unknownOS"
