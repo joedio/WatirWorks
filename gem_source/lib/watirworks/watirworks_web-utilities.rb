@@ -3783,126 +3783,6 @@ module WatirWorks_WebUtilities
 
   #=============================================================================#
   #--
-  # Method: save_html(...)
-  #
-  #++
-  #
-  # Description: Save the HTML of the current web page to a file.
-  #
-  #              The file name is based on the passed in parameters and the time (dd_mmm_yyyy_hhmmss).
-  #                    For example:
-  #                          Page_4_Jul_2007_123001.htm
-  #
-  # Syntax: sFileNamePrefix = STRING - Text to prepend to the file's name
-  #         sOutputDir = STRING - Path to the directory into which to save the file.
-  #                                            Defaults to saving into the Window's %TEMP% or the Linux /tmp folder.
-  #
-  # Restrictions: The Path to the directory into which to save the file must exist.
-  #
-  # Usage examples: Save the HTML contents of the current web page to the default file name
-  #                   browser.save_html()
-  #
-  #=============================================================================#
-  def save_html(sFileNamePrefix="HTML_", sOutputDir="" )
-
-    if($VERBOSE == true)
-      puts2("Parameters - save_html:")
-      puts2("  sFileNamePrefix: " + sFileNamePrefix)
-      puts2("  sOutputDir: " + sOutputDir)
-    end
-
-    # Don't allow a blank directory
-    if(sOutputDir == "")
-
-      #      # Use the OS's default Temporary directory
-      #       sOutputDir = find_tmp_dir()
-
-      # Save to the results directory if a logger is running
-      if($sLoggerResultsDir.nil?)
-        # Use the OS's default Temporary directory
-        sOutputDir = find_tmp_dir()
-      else
-        if(is_win?)
-          # Correct path for windows (switch and / with \)
-          sOutputDir = $sLoggerResultsDir.gsub('/', '\\')
-        else
-          sOutputDir = $sLoggerResultsDir
-        end
-      end
-
-    end # Don't allow a blank directory
-
-    # Combine the elements of the file name
-    sFilename = sFileNamePrefix + "_" + Time.now.strftime(DATETIME_FILEFORMAT) + ".htm"
-
-    sFullPathToFile = File.join(sOutputDir, sFilename)
-
-    # Perform the HTML capture
-    open(sFullPathToFile , 'w') { |f| f << self.html }
-
-    puts2("Saved HTML to file: #{sFullPathToFile}")
-
-  end # Method - save_html()
-
-  #=============================================================================#
-  #--
-  # Method: save_screencapture(...)
-  #
-  #++
-  #
-  # Description: Wrapper to select and run the proper platform specific method for Windows, Linux or MAC/OSX
-  #
-  # Syntax: sFileNamePrefix = STRING - The left most part of the filename (Defaults to "ScreenShot")
-  #
-  #         bActiveWindowOnly = BOOLEAN - true  = save current window (default)
-  #                                       false = save entire desktop
-  #
-  #         bSaveAsJpg = BOOLEAN - true  = save a  file (JPEG)
-  #                                false = save a bitmap file
-  #
-  #         sOutputDir = STRING -  sub-directory that the file is saved under (Defaults to the user account's temp directory)
-  #
-  #
-  # Usage Examples: To screen capture of the desktop as a JPEG file:
-  #                     browser.save_screencapture()
-  #
-  #
-  #=============================================================================#
-  def save_screencapture(sFileNamePrefix="Image", bActiveWindowOnly=true, bSaveAsJpg=true, sOutputDir="")
-
-    if($VERBOSE == true)
-      puts2("Parameters - save_screencapture:")
-      puts2("  sFileNamePrefix: " + sFileNamePrefix)
-      puts2("  bActiveWindowOnly: " + bActiveWindowOnly.to_s)
-      puts2("  bSaveAsJpg: " + bSaveAsJpg.to_s)
-      puts2("  sOutputDir: " + sOutputDir)
-    end
-
-    # Is this Watir / Firewatir or WatirWebDriver
-    if(is_webdriver? == false)
-      # Use RUBY_PLATFORM to auto-select the proper version based on the operating system
-      # Under Windows reports "mswin". under Linux it reports "linux", under Mac/OSX reports "dawrin"
-      case RUBY_PLATFORM.downcase
-
-      when (/mswin|window|mingw/)
-        self.save_screencapture_win(sFileNamePrefix, bActiveWindowOnly, bSaveAsJpg, sOutputDir)
-
-      when /linux/
-        self.save_screencapture_linux(sFileNamePrefix, bActiveWindowOnly, bSaveAsJpg, sOutputDir)
-
-      when /darwin/
-        self.save_screencapture_mac(sFileNamePrefix, bActiveWindowOnly, bSaveAsJpg, sOutputDir)
-
-      end # case
-    else
-      # puts2("Screen capture currently not available for Watir Web Driver")
-      # TODO: develop screen capture using RAutomation on Windows.
-    end # Is this Watir / Firewatir or WatirWebDriver
-
-  end # Method - save_screencapture()
-
-  #=============================================================================#
-  #--
   # Method scroll_element_intoview(...)
   #
   #++
@@ -5059,6 +4939,7 @@ end # Module - WatirWorks_WebUtilities
 #
 #--
 # Methods:
+#          display_info()
 #          is_andriod?(...)
 #          is_celerity?(...)
 #          is_chrome?(...)
@@ -5073,6 +4954,47 @@ end # Module - WatirWorks_WebUtilities
 #++
 #=============================================================================#
 class Watir::Browser
+  #=============================================================================#
+  #--
+  # Method: display_info()
+  #
+  #++
+  #
+  # Description: Displays information on the current browser:
+  #                       Browser Name and Version
+  #                       Browser Window Size and Position
+  #                       Browser document's Title & URL
+  #
+  #               Basically this is a wrapper around Watir-Webdriver methods
+  #               that collect info.
+  #
+  # HINT: Useful for recording that info to a log file, or for assistance in debugging
+  #
+  # Returns: N/A
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:
+  #                 require 'watirworks'
+  #                 include WatirWorks_Utilities
+  #                 display_info()
+  #
+  #=============================================================================#
+  def display_info()
+    if(self.exists? == true)
+      puts2("\nBrowser info...")
+      puts2("\tName = " + self.name.to_s)
+      puts2("\tVersion = " + self.version.to_s)
+      puts2("\tWindow height = " + self.window.size.height.to_s)
+      puts2("\tWindow width = " + self.window.size.width.to_s)
+      puts2("\tWindow position.x = " + self.window.position.x.to_s)
+      puts2("\tWindow position.y = " + self.window.position.y.to_s)
+      puts2("\tURL = " + self.url )
+      puts2("\tTitle = " + self.title)
+    end
+
+  end # Method - display_info()
+
   #=============================================================================#
   #--
   # Method: is_android?()
@@ -5413,6 +5335,103 @@ class Watir::Browser
 
   #=============================================================================#
   #--
+  # Method: save_html(...)
+  #
+  #++
+  #
+  # Description: Save the HTML of the current web page to a file.
+  #
+  #              The file name is based on the passed in parameters and the time (dd_mmm_yyyy_hhmmss).
+  #                    For example:
+  #                          Page_4_Jul_2007_123001.htm
+  #
+  # Syntax: sFileNamePrefix = STRING - Text to prepend to the file's name
+  #         sOutputDir = STRING - Path to the directory into which to save the file.
+  #                                            Defaults to saving into the Window's %TEMP% or the Linux /tmp folder.
+  #
+  # Restrictions: The Path to the directory into which to save the file must exist.
+  #
+  # Usage examples: Save the HTML contents of the current web page to the default file name
+  #                   browser.save_html()
+  #
+  #=============================================================================#
+  def save_html(sFileNamePrefix="HTML_", sOutputDir="" )
+
+    if($VERBOSE == true)
+      puts2("Parameters - save_html:")
+      puts2("  sFileNamePrefix: " + sFileNamePrefix)
+      puts2("  sOutputDir: " + sOutputDir)
+    end
+
+    # Use the log file's directoy if none was specified
+    if(sOutputDir == "")
+      if(is_win?)
+        # Correct path for windows (switch and / with \)
+        sOutputDir = $sLoggerResultsDir.gsub('/', '\\')
+      else
+        sOutputDir = $sLoggerResultsDir
+      end # is_win?()
+    end # Use the log file's directoy
+
+    # Combine the elements of the file name
+    sFilename = sFileNamePrefix + "_" + Time.now.strftime(DATETIME_FILEFORMAT) + ".htm"
+
+    sFullPathToFile = File.join(sOutputDir, sFilename)
+
+    # Perform the HTML capture
+    open(sFullPathToFile , 'w') { |f| f << self.html }
+
+    puts2("Saved HTML to file: #{sFullPathToFile}")
+
+  end # Method - save_html()
+
+  #=============================================================================#
+  #--
+  # Method: save_screencapture(...)
+  #
+  #++
+  #
+  # Description: Wrapper to select and run the proper platform specific method for Windows, Linux or MAC/OSX
+  #
+  # Syntax: sFileName = STRING - The filename (minus the PNG extension) to save the image as (Defaults to "IMage")
+  #
+  #         sOutputDir = STRING -  sub-directory to save the file to
+  #                               (Defaults to the log file's directory)
+  #
+  #
+  # Usage Examples: To screen capture of the browser's document as a PNG file:
+  #                     browser.save_screencapture()
+  #
+  #
+  #=============================================================================#
+  def save_screencapture(sFileName="Image", sOutputDir="")
+
+    if($VERBOSE == true)
+      puts2("Parameters - save_screencapture:")
+      puts2("  sFileName: " + sFileName)
+      puts2("  sOutputDir: " + sOutputDir)
+    end
+
+    # Use the log file's directoy if none was specified
+    if(sOutputDir == "")
+      if(is_win?)
+        # Correct path for windows (switch and / with \)
+        sOutputDir = $sLoggerResultsDir.gsub('/', '\\')
+      else
+        sOutputDir = $sLoggerResultsDir
+      end  # is_win?
+    end # Use the log file's directoy
+
+    # Save .png file in the output dir with the specified name
+    sFullFileName = ($sOutputDir + File.join("/") + File.join(sFileName) + "_" + Time.now.strftime(DATETIME_FILEFORMAT) + File.join(".png"))
+
+    self.screenshot.save(sFullFileName)
+    puts2("Savied screenshot to: " + sFullFileName)
+
+  end # Method - save_screencapture()
+
+  #=============================================================================#
+  #--
   # Method: scrollBy(...)
   #
   #++
@@ -5440,6 +5459,47 @@ class Watir::Browser
 
     self.execute_script("window.scrollBy(#{iHorizontal},#{iVertical})")
   end # scrollBy()
+
+  #=============================================================================#
+  #--
+  # Method: display_info()
+  #
+  #++
+  #
+  # Description: Displays information on the current browser:
+  #                       Browser Name and Version
+  #                       Browser Window Size and Position
+  #                       Browser document's Title & URL
+  #
+  #               Basically this is a wrapper around Ruby methods that collect info.
+  #               with the added ability to print that info out.
+  #
+  # HINT: Useful for recording that info to a log file, or for assistance in debugging
+  #
+  # Returns: N/A
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:
+  #                 require 'watirworks'
+  #                 include WatirWorks_Utilities
+  #                 display_info()
+  #
+  #=============================================================================#
+  def display_info()
+    if(self.exists? == true)
+      puts2("\nBrowser info...")
+      puts2("\tName = " + self.name.to_s)
+      puts2("\tVersion = " + self.version.to_s)
+      puts2("\tWindow height = " + self.window.size.height.to_s)
+      puts2("\tWindow width = " + self.window.size.width.to_s)
+      puts2("\tWindow position.x = " + self.window.position.x.to_s)
+      puts2("\tWindow position.y = " + self.window.position.y.to_s)
+      puts2("\tURL = " + self.url )
+      puts2("\tTitle = " + self.title)
+    end
+
+  end # Method - display_info()
 
   #=============================================================================#
   #--
