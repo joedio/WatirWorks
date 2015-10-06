@@ -134,10 +134,8 @@ module WatirWorks_WebUtilities
 
   #  Define the WatirWorks Global browser variable to suppress messages when $VERBOSE is true
   $browser = nil
-  
   # The URL to open in a new browser
   #DEFAULT_URL = "about:blank"
-  
   #=============================================================================#
   #--
   # Function: createXMLTags(...)
@@ -954,7 +952,6 @@ module WatirWorks_WebUtilities
     return iFoundMatchInTable, iFoundMatchInRow, iMatchesFound, aMatchingText
 
   end # END Method - find_strings_in_table(...)
-
 
   #=============================================================================#
   #--
@@ -2775,7 +2772,6 @@ module WatirWorks_WebUtilities
 
   end # Method - isTextIn_TableName?
 
-
   #=============================================================================#
   #--
   # Method: kill_browsers(...)
@@ -3819,6 +3815,9 @@ module WatirWorks_WebUtilities
   #
   #         sURL = STRING - A URL for the browser to load. Default is to open a blank browser page "about:blank"
   #
+  #         iDriverTimeout = INT = Number of sec for the driver to wait before timeing out.
+  #                          The "factory default value" of 60 sec. has not been working well on some sites so
+  #                          theis method will default to 3 min (180 sec).
   #
   # Prerequisites: The Global Browser Object must be named $browser
   #                WatirWebDriver must be installed along with the proper server:
@@ -3853,12 +3852,14 @@ module WatirWorks_WebUtilities
   #                                          $browser = start_browser("firefox")
   #
   #=============================================================================#
-  def start_browser(sBrowserType = "firefox", sURL="about:blank")
+  def start_browser(sBrowserType = "firefox", sURL="about:blank", iDriverTimeout = 180)
 
     if($VERBOSE == true)
       puts2("Parameters - start_browser:")
-      puts2("  sURL: " + sURL)
       puts2("  sBrowserType: " + sBrowserType.to_s)
+      puts2("  sURL: " + sURL.to_s)
+      puts2("  iDriverTimeout: " + iDriverTimeout.to_s)
+      
     end
 
     # Cleanup the specified value
@@ -3942,6 +3943,9 @@ module WatirWorks_WebUtilities
 
     Watir::Wait.until{oBrowser.exists?}
     puts2("  Browser version = " + oBrowser.version.to_s)
+
+    # Set a tiemout for the driver that is different then the standard 60 sec.
+    oBrowser.driver.manage.timeouts.implicit_wait = iDriverTimeout
 
     oBrowser.goto(sURL) # Load the URL
 
@@ -4300,422 +4304,421 @@ class Watir::Browser
 
   end # Method - display_info()
 
-
-#=============================================================================#
-#--
-# Method: generate_testcode_html_tag_attributes(...)
-#
-#++
-#
-# Description: Generates assert statements for the attributes of the HTML Tag Elements on the current Web page
-#              The assert statements are displayed to STDOUT and into the global log file (if it exists).
-#              The code can be manually copied and entered into a test case for use as the basis of a regression test.
-#
-#              Example partial output:
-#
-#                  #-------------------------#
-#                  # Attributes of image 1
-#                  #-------------------------#
-#                  assert($browser.image(:index, 1).alt == "Search Google" )
-#                  assert($browser.image(:index, 1).enabled? == "" )
-#                  assert($browser.image(:index, 1).file_size == "4325" )
-#                  assert($browser.image(:index, 1).loaded? == "SyntaxError: syntax error" )
-#                  assert($browser.image(:index, 1).height == "32" )
-#                  assert($browser.image(:index, 1).id == "" )
-#                  assert($browser.image(:index, 1).name == "" )
-#                  assert($browser.image(:index, 1).src == "logo_25wht.gif" )
-#                  assert($browser.image(:index, 1).title == "Search Google" )
-#                  assert($browser.image(:index, 1).type == "" )
-#                  assert($browser.image(:index, 1).value == "" )
-#
-#              Supported HTML Tag Elements are:
-#                area, button, checkbox, dd, div, dl, dt, em, file_field,
-#                hidden, image, label, link, li, map, pre, p, radio,
-#                select_list, strong, span, table, text_field
-#
-#               The forms and form methods are NOT supported.
-#
-#
-# HINT: Run this once against a web page to generate code to subsequently use for testing the web page.
-#
-#       You may NOT need to count all the HTML tags, but only those necessary for use in a regression test
-#       to provide a reasonable sense that the important the HTML tags on the page are unchanged.
-#       Determine what will work for your situation and set the passed parameters accordingly.
-#
-#       Manually Cut 'n Paste the output to a test case for use to subsequently test that web page.
-#
-#       For pages with dynamic content, you may need to edit the generated assert statements.
-#       For example, on a web page which always has at least 20 links, but that can grow to a larger number
-#       the output from this method may generates the code:
-#             assert(browser.links.length == 100) # Number of links
-#
-#       You can modify it in your test case to be:
-#             assert(browser.links.length >= 20) # Number of links
-#
-# Returns: BOOLEAN - true on success, otherwise false
-#
-# Syntax: oElementsToCheck = OBJECT - One of the following object types:
-#
-#                                    nil - All HTML Element attributes
-#
-#                                    STRING - Name of any single HTML Element attribute
-#                                                 i.e. "link"
-#                                               Or "all" for them all.
-#
-#                                    ARRAY of STRINGS - A single or a set of multiple HTML Tag Elements
-#                                                           i.e ["link"] or ["button", "checkbox"]
-#                                                         Or if ["all"] for all the Element's.
-#
-#              sBrowserName = STRING - The name to use in the print statement
-#
-#
-# Examples: To generate testcode for all the HTML Tag Elements on the page in the current web browser:
-#                 myBrowser.generate_testcode_html_tag_attributes("all", "myBrowser")
-#
-#           To generate testcode for only the LINK objects on the page in the current web browser :
-#                 browser.generate_testcode_html_tag_attributes("link", "browser")
-#
-#           To generate testcode for only IMAGE  and LINK objects on the page in the current web browser:
-#                 $browser.generate_testcode_html_tag_attributes(["image", "link"])
-#
-#
-# TODO - image : NotImplementedError: not currently supported by WebDriver
-#=============================================================================#
-def generate_testcode_html_tag_attributes(oElementsToCheck="all", sBrowserName="$browser")
-
-  if($VERBOSE == true)
-    puts2("Parameters - generate_testcode_html_tag_attributes:")
-    puts2("  oElementsToCheck: ")
-    puts2(     oElementsToCheck.to_s)
-  end
-
-  # Define the elements to check
-  aSupportedHTMLElementNames = SUPPORTED_HTML_ELEMENTS
-
-  # Remove the unsupported elements form the supported list
-  if(is_safari? == true)
-    SAFARIWATIR_UNSUPPORTED_HTML_ELEMENTS.each do |sUnsupportedElement |
-      aSupportedHTMLElementNames.delete(sUnsupportedElement)
-    end
-  end # Remove the unsupported elements form the supported list
-
-  # Define the element attributes to collect
-  aAttributes = []
-
-  # Define arrays for each tag and the attributes that apply to each
+  #=============================================================================#
+  #--
+  # Method: generate_testcode_html_tag_attributes(...)
   #
-  # Those attributes that are not listed for a particular element were either tried and
-  #  did NOT appear to be useful (e.g. exists?) or are not supported by that element. in Watir1.6.5/Firewatir1.6.5
-  aAttribs_area = ["type", "id", "name", "title", "value", "alt", "href", "text","enabled?", "visible?"]
-  aAttribs_button = ["type", "id", "name", "title", "value", "src", "enabled?", "visible?"]
-  aAttribs_checkbox = ["type", "id", "name", "title", "value", "enabled?", "visible?", "set?"]
-  aAttribs_dd = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-  aAttribs_div = ["id", "name", "title", "value", "class_name", "enabled?", "visible?"]
-  aAttribs_dl = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-  aAttribs_dt = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-  aAttribs_em = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-  aAttribs_file_field = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-  aAttribs_form = ["class", "id", "name", "action", "method", "visible?"]
-  aAttribs_hidden = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-  # removed "file_size",  "file_created_date", from image : NotImplementedError: not currently supported by WebDriver
-  aAttribs_image = ["type", "id", "name", "title", "value", "src", "height", "width", "alt", "enabled?", "visible?", "loaded?"]
-  aAttribs_label = ["type", "id", "name", "title", "value", "text", "enabled?", "visible?"]
-  aAttribs_link = ["type", "id", "name", "title", "value", "href", "text", "src","enabled?", "visible?"]
-  aAttribs_li = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-  aAttribs_map = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-  aAttribs_pre = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-  aAttribs_p = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-  aAttribs_radio = ["type", "id", "name", "title", "value", "enabled?", "visible?", "set?"]
-  aAttribs_select_list = ["type", "id", "name", "title", "value", "selected_options", "options", "text", "enabled?", "visible?"]
+  #++
+  #
+  # Description: Generates assert statements for the attributes of the HTML Tag Elements on the current Web page
+  #              The assert statements are displayed to STDOUT and into the global log file (if it exists).
+  #              The code can be manually copied and entered into a test case for use as the basis of a regression test.
+  #
+  #              Example partial output:
+  #
+  #                  #-------------------------#
+  #                  # Attributes of image 1
+  #                  #-------------------------#
+  #                  assert($browser.image(:index, 1).alt == "Search Google" )
+  #                  assert($browser.image(:index, 1).enabled? == "" )
+  #                  assert($browser.image(:index, 1).file_size == "4325" )
+  #                  assert($browser.image(:index, 1).loaded? == "SyntaxError: syntax error" )
+  #                  assert($browser.image(:index, 1).height == "32" )
+  #                  assert($browser.image(:index, 1).id == "" )
+  #                  assert($browser.image(:index, 1).name == "" )
+  #                  assert($browser.image(:index, 1).src == "logo_25wht.gif" )
+  #                  assert($browser.image(:index, 1).title == "Search Google" )
+  #                  assert($browser.image(:index, 1).type == "" )
+  #                  assert($browser.image(:index, 1).value == "" )
+  #
+  #              Supported HTML Tag Elements are:
+  #                area, button, checkbox, dd, div, dl, dt, em, file_field,
+  #                hidden, image, label, link, li, map, pre, p, radio,
+  #                select_list, strong, span, table, text_field
+  #
+  #               The forms and form methods are NOT supported.
+  #
+  #
+  # HINT: Run this once against a web page to generate code to subsequently use for testing the web page.
+  #
+  #       You may NOT need to count all the HTML tags, but only those necessary for use in a regression test
+  #       to provide a reasonable sense that the important the HTML tags on the page are unchanged.
+  #       Determine what will work for your situation and set the passed parameters accordingly.
+  #
+  #       Manually Cut 'n Paste the output to a test case for use to subsequently test that web page.
+  #
+  #       For pages with dynamic content, you may need to edit the generated assert statements.
+  #       For example, on a web page which always has at least 20 links, but that can grow to a larger number
+  #       the output from this method may generates the code:
+  #             assert(browser.links.length == 100) # Number of links
+  #
+  #       You can modify it in your test case to be:
+  #             assert(browser.links.length >= 20) # Number of links
+  #
+  # Returns: BOOLEAN - true on success, otherwise false
+  #
+  # Syntax: oElementsToCheck = OBJECT - One of the following object types:
+  #
+  #                                    nil - All HTML Element attributes
+  #
+  #                                    STRING - Name of any single HTML Element attribute
+  #                                                 i.e. "link"
+  #                                               Or "all" for them all.
+  #
+  #                                    ARRAY of STRINGS - A single or a set of multiple HTML Tag Elements
+  #                                                           i.e ["link"] or ["button", "checkbox"]
+  #                                                         Or if ["all"] for all the Element's.
+  #
+  #              sBrowserName = STRING - The name to use in the print statement
+  #
+  #
+  # Examples: To generate testcode for all the HTML Tag Elements on the page in the current web browser:
+  #                 myBrowser.generate_testcode_html_tag_attributes("all", "myBrowser")
+  #
+  #           To generate testcode for only the LINK objects on the page in the current web browser :
+  #                 browser.generate_testcode_html_tag_attributes("link", "browser")
+  #
+  #           To generate testcode for only IMAGE  and LINK objects on the page in the current web browser:
+  #                 $browser.generate_testcode_html_tag_attributes(["image", "link"])
+  #
+  #
+  # TODO - image : NotImplementedError: not currently supported by WebDriver
+  #=============================================================================#
+  def generate_testcode_html_tag_attributes(oElementsToCheck="all", sBrowserName="$browser")
 
-  aAttribs_span = ["type", "id", "name", "title", "value", "class_name", "enabled?", "visible?"]
-  aAttribs_strong = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-  aAttribs_table = ["type", "id", "name", "title", "value", "row_count_excluding_nested_tables", "enabled?", "visible?"]
-  aAttribs_text_field = ["type", "id", "name", "title", "value", "text", "size", "maxLength", "enabled?", "visible?"]
-
-  # Determine the object type
-  case
-
-  when oElementsToCheck.class.to_s == "String"
-
-    # Populate array with the string of the single HTML element to count
-    aElements = [oElementsToCheck]
-
-  when oElementsToCheck.class.to_s == "Array"
-
-    # Populate array with the array of the single or multiple HTML elements to count
-    aElements = oElementsToCheck
-
-  when oElementsToCheck.class.to_s == "NilClass"
-
-    # Populate array with the array of the string "All" to count all HTML elements
-    aElements = aSupportedHTMLElementNames
-
-  else
-    puts2(oElementsToCheck.class.to_s + " class objects are NOT supported. Please use a nil, String or Array of Strings.", "WARN")
-    return  false
-
-  end # Determine the object type
-
-  # If the first string in the array is "All" populate the array with all the supported HTML tags
-  if(aElements[0].to_s.downcase == "all")
-    aElements = aSupportedHTMLElementNames
-  end
-
-  # Remove any Elements that are NOT supported by Firewatir
-  if(self.is_firefox?)
-    #puts2("*** Skipping HTML Element that is NOT supported by Firewatir - form", "WARN")
-    aElements.delete("form")
-  end
-
-  # Remove any Elements that are NOT supported by IE
-  if(self.is_ie?)
-    #puts2("WARNING: Skipping HTML Element that has issues with IE - form")
-    aElements.delete("form")
-  end
-
-  # Validate that the current element is valid
-  aElements.each do | sElement |
-
-    if((aSupportedHTMLElementNames.include?(sElement)) == false)
-      puts2("WARNING: HTML Element  " +  sElement + "  is NOT supported.", "WARN")
-      return false
+    if($VERBOSE == true)
+      puts2("Parameters - generate_testcode_html_tag_attributes:")
+      puts2("  oElementsToCheck: ")
+      puts2(     oElementsToCheck.to_s)
     end
 
-  end # Validate that the current element is valid
+    # Define the elements to check
+    aSupportedHTMLElementNames = SUPPORTED_HTML_ELEMENTS
 
-  #####################
-  # Collect information on Title
-  #####################
-  sTitle = self.title
+    # Remove the unsupported elements form the supported list
+    if(is_safari? == true)
+      SAFARIWATIR_UNSUPPORTED_HTML_ELEMENTS.each do |sUnsupportedElement |
+        aSupportedHTMLElementNames.delete(sUnsupportedElement)
+      end
+    end # Remove the unsupported elements form the supported list
 
-  puts2("\n###############")
-  puts2("# Verify title: ")
-  puts2("###############\n\n")
-  puts2("puts2(\"\t # Verify - title\")")
-  puts2("assert(#{sBrowserName}.title == \"" + sTitle + "\" )")
+    # Define the element attributes to collect
+    aAttributes = []
 
-  # Loop for HTML Element types
-  aElements.each do | sElement|
+    # Define arrays for each tag and the attributes that apply to each
+    #
+    # Those attributes that are not listed for a particular element were either tried and
+    #  did NOT appear to be useful (e.g. exists?) or are not supported by that element. in Watir1.6.5/Firewatir1.6.5
+    aAttribs_area = ["type", "id", "name", "title", "value", "alt", "href", "text","enabled?", "visible?"]
+    aAttribs_button = ["type", "id", "name", "title", "value", "src", "enabled?", "visible?"]
+    aAttribs_checkbox = ["type", "id", "name", "title", "value", "enabled?", "visible?", "set?"]
+    aAttribs_dd = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_div = ["id", "name", "title", "value", "class_name", "enabled?", "visible?"]
+    aAttribs_dl = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_dt = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_em = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_file_field = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_form = ["class", "id", "name", "action", "method", "visible?"]
+    aAttribs_hidden = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    # removed "file_size",  "file_created_date", from image : NotImplementedError: not currently supported by WebDriver
+    aAttribs_image = ["type", "id", "name", "title", "value", "src", "height", "width", "alt", "enabled?", "visible?", "loaded?"]
+    aAttribs_label = ["type", "id", "name", "title", "value", "text", "enabled?", "visible?"]
+    aAttribs_link = ["type", "id", "name", "title", "value", "href", "text", "src","enabled?", "visible?"]
+    aAttribs_li = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_map = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_pre = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_p = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_radio = ["type", "id", "name", "title", "value", "enabled?", "visible?", "set?"]
+    aAttribs_select_list = ["type", "id", "name", "title", "value", "selected_options", "options", "text", "enabled?", "visible?"]
 
-    # Define the proper attributes based on the type of HTML Element
-    case sElement.to_s.downcase
+    aAttribs_span = ["type", "id", "name", "title", "value", "class_name", "enabled?", "visible?"]
+    aAttribs_strong = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_table = ["type", "id", "name", "title", "value", "row_count_excluding_nested_tables", "enabled?", "visible?"]
+    aAttribs_text_field = ["type", "id", "name", "title", "value", "text", "size", "maxLength", "enabled?", "visible?"]
 
-    when "area"
-      aAttributes = aAttribs_area
-    when "button"
-      aAttributes = aAttribs_button
-    when "checkbox"
-      aAttributes = aAttribs_checkbox
-    when "dd"
-      aAttributes = aAttribs_dd
-    when "div"
-      aAttributes = aAttribs_div
-    when "dl"
-      aAttributes = aAttribs_dl
-    when "dt"
-      aAttributes = aAttribs_dt
-    when "em"
-      aAttributes = aAttribs_em
-    when "file_field"
-      aAttributes = aAttribs_file_field
-    when "form"
-      aAttributes = aAttribs_form
-    when "hidden"
-      aAttributes = aAttribs_hidden
-    when "image"
-      aAttributes = aAttribs_image
-    when "label"
-      aAttributes = aAttribs_label
-    when "link"
-      aAttributes = aAttribs_link
-    when "li"
-      aAttributes = aAttribs_li
-    when "map"
-      aAttributes = aAttribs_map
-    when "pre"
-      aAttributes = aAttribs_pre
-    when "p"
-      aAttributes = aAttribs_p
-    when "radio"
-      aAttributes = aAttribs_radio
-    when "select_list"
-      aAttributes = aAttribs_select_list
-    when "span"
-      aAttributes = aAttribs_span
-    when "strong"
-      aAttributes = aAttribs_strong
-    when "table"
-      aAttributes = aAttribs_table
-    when "text_field"
-      aAttributes = aAttribs_text_field
-    end # Define the proper attributes based on the type of HTML Element
+    # Determine the object type
+    case
 
-    # Sort the attributes
-    aAttributes.sort!
+    when oElementsToCheck.class.to_s == "String"
 
-    puts2("\n################")
-    puts2("# Verifying attributes for: #{sElement}")
-    puts2("################\n\n")
-    puts2("puts2(\"\t # Verifying attributes for: #{sElement}\")")
+      # Populate array with the string of the single HTML element to count
+      aElements = [oElementsToCheck]
 
-    # Compose the plural version for the current elements so we can get the count of each element type
-    if(sElement == "checkbox")
-      sElementPlural = "checkboxes"
+    when oElementsToCheck.class.to_s == "Array"
+
+      # Populate array with the array of the single or multiple HTML elements to count
+      aElements = oElementsToCheck
+
+    when oElementsToCheck.class.to_s == "NilClass"
+
+      # Populate array with the array of the string "All" to count all HTML elements
+      aElements = aSupportedHTMLElementNames
+
     else
-      sElementPlural = sElement + "s"
+      puts2(oElementsToCheck.class.to_s + " class objects are NOT supported. Please use a nil, String or Array of Strings.", "WARN")
+      return  false
+
+    end # Determine the object type
+
+    # If the first string in the array is "All" populate the array with all the supported HTML tags
+    if(aElements[0].to_s.downcase == "all")
+      aElements = aSupportedHTMLElementNames
     end
 
-    # Determine the total number of the current Element type
-    iElementCount = self.send(sElementPlural).length
-
-    # Generate the test code for the tag count
-    puts2("assert(#{sBrowserName}.#{sElementPlural}.length == #{iElementCount.to_s}) # Number of #{sElementPlural}")
-
-    # Only check existing elements
-    if(iElementCount > 0)
-
-      iIndex = 1
-
-      while iIndex <= iElementCount
-
-        puts2("\n#-------------------------#")
-        puts2("# Attributes of #{sElement} #{iIndex}")
-        puts2("#-------------------------#")
-
-        aAttributes.each do | sAttribute |
-
-          # Catcher
-          #
-          # Wrap the checks for the attributes in a begin/rescue/end block
-          # Any error for an attribute that is unsupported for the current
-          # Element type will be caught and not stop the test
-          begin
-
-            # Collect the setting of the current HTML element
-            mySetting = self.send(sElement, :index => iIndex.adjust_index).send(sAttribute)
-
-            # To make strings more human readable put parenthesis around the string
-            if(mySetting.class.to_s == "String")
-              mySetting = "\"" + mySetting + "\""
-            end
-
-            # To make arrays more human readable put brackets around its comma separated strings
-            #              if(mySetting.class.to_s == "Array")
-            #                mySetting = "\[\"" + mySetting + "\"\]"
-            #              end
-
-            # puts2("#{sAttribute}  = " + mySetting.to_s)
-            puts2("assert(#{sBrowserName}.#{sElement}(:index, "+ iIndex.adjust_index.to_s + ").#{sAttribute} == #{mySetting} )")
-
-          rescue
-            # Element does not support the current attribute
-            # no harm no foul
-          ensure
-          end # Catcher
-
-        end # Loop for Attribute
-
-        iIndex = iIndex + 1
-      end # while
-
-    end # Only check existing elements
-
-  end # Loop for HTML Element types
-
-end # Method - generate_testcode_html_tag_attributes()
-
-#=============================================================================#
-#--
-# Method: generate_testcode_html_tag_counts(...)
-#
-#++
-#
-# Description: Generates assert statements for the counts of the HTML elements with Watir length methods on the current Web page
-#              The assert statements are displayed to STDOUT and into the global log file (if it exists).
-#              The code can be manually copied and entered into a test case for use as the basis of a regression test.
-#
-#              Example partial output:
-#                  assert($browser.areas.length == 3) # Number of areas
-#                  assert($browser.buttons.length == 16) # Number of buttons
-#                  assert($browser.checkboxes.length == 3) # Number of checkboxes
-#
-#              Supported HTML Tag Elements are:
-#                area, button, checkbox, dd, div, dl, dt, em, file_field,
-#                hidden, image, label, link, li, map, pre, p, radio,
-#                select_list, strong, span, table, text_field
-#
-#               The forms and form methods are NOT supported.
-#
-# HINT: Run this once against a web page to generate code to subsequently use for testing the web page.
-#
-#       You may NOT need to count all the HTML tags, but only those necessary for use in a regression test
-#       to provide a reasonable sense that count of important the HTML tags on the page is unchanged.
-#       Determine what will work for your situation and set the passed parameters accordingly.
-#
-#       Manually Cut 'n Paste the output to a test case for use to subsequently test that web page.
-#
-#       For pages with dynamic content, you may need to edit the generated assert statements.
-#       For example, on a web page which always has at least 20 links, but that can grow to a larger number
-#       the output from this method may generates the code:
-#            assert($browser.links.length == 100) # Number of links
-#
-#       You can modify it in your test case to be:
-#             assert($browser.links.length >= 20) # Number of links
-#
-# Returns: BOOLEAN - true on success, otherwise false
-#
-#
-# Syntax: sBrowserName = STRING - The name to use in the print statement (defaults to "$browser")
-#
-#         oElementToCount = OBJECT - One of the following object types:
-#                                    nil - Count all HTML elements types with Watir length methods
-#
-#                                    STRING - Any single HTML elements type with Watir length method,
-#                                                i.e "link" to only count the link objects
-#                                              Or "all" to count them all.
-#
-#                                    ARRAY of STRINGS - A single or a set of multiple HTML Tag Elements
-#                                                           i.e ["link"] or ["button", "checkbox"]
-#                                                         Or if ["all"] for all the Element's.
-#
-#
-# Usage Examples:
-#                 1) To generate testcode for HTML Counts for ALL of the HTML elements with Watir length methods on the page:
-#                             browser = Watir::Browser.start("http://google.com")
-#                             hMyPageObjects = browser.generate_testcode_html_tag_counts("all", "browser")   #  Also works using: count_html_tags("all")
-#
-#
-#                 2) To generate testcode for HTML Counts for ONLY of the link HTML elements on the page:
-#                             $browser = Watir::Browser.start("http://google.com")
-#                             hMyPageObjects = $browser.generate_testcode_html_tag_counts("link")
-#                                         #=>  assert($browser.links.length == 30) # Number of links
-#
-#                 3) To generate testcode for HTML Counts for ONLY the image and button HTML elements on the page:
-#                             aObjectsToCount = ["image", "button"]
-#                             my_browser = Watir::Browser.start("http://google.com")
-#                             hMyPageObjects = my_browser.generate_testcode_html_tag_counts(aObjectsToCount, "my_browser")
-#                                        #=> assert(my_browser.buttons.length == 2) # Number of buttons
-#                                            assert(my_browser.images.length  = 5) # Number of images
-#=======================================================================#
-def generate_testcode_html_tag_counts(oElementToCount=nil, sBrowserName="$browser")
-
-  hCountedHTMLTags = self.count_html_tags(oElementToCount)
-  hCountedHTMLTags.sort.each do | sElement, iCount|
-
-    # Adjust the Tag name as necessary so that adding an "s" will create the correct plural version
-    if(sElement == "checkbox")
-      sElementPlural = "checkboxes"
-    else
-      sElementPlural = sElement + "s"
-    end
-    if(iCount >= 0) # skip for negative counts, as negative values indicate that the tag count is invalid
-      puts2("assert(#{sBrowserName}.#{sElementPlural}.length == #{iCount.to_s}) # Number of #{sElementPlural}")
+    # Remove any Elements that are NOT supported by Firewatir
+    if(self.is_firefox?)
+      #puts2("*** Skipping HTML Element that is NOT supported by Firewatir - form", "WARN")
+      aElements.delete("form")
     end
 
-  end
+    # Remove any Elements that are NOT supported by IE
+    if(self.is_ie?)
+      #puts2("WARNING: Skipping HTML Element that has issues with IE - form")
+      aElements.delete("form")
+    end
 
-end # Method: generate_testcode_html_tag_counts(...)
+    # Validate that the current element is valid
+    aElements.each do | sElement |
+
+      if((aSupportedHTMLElementNames.include?(sElement)) == false)
+        puts2("WARNING: HTML Element  " +  sElement + "  is NOT supported.", "WARN")
+        return false
+      end
+
+    end # Validate that the current element is valid
+
+    #####################
+    # Collect information on Title
+    #####################
+    sTitle = self.title
+
+    puts2("\n###############")
+    puts2("# Verify title: ")
+    puts2("###############\n\n")
+    puts2("puts2(\"\t # Verify - title\")")
+    puts2("assert(#{sBrowserName}.title == \"" + sTitle + "\" )")
+
+    # Loop for HTML Element types
+    aElements.each do | sElement|
+
+      # Define the proper attributes based on the type of HTML Element
+      case sElement.to_s.downcase
+
+      when "area"
+        aAttributes = aAttribs_area
+      when "button"
+        aAttributes = aAttribs_button
+      when "checkbox"
+        aAttributes = aAttribs_checkbox
+      when "dd"
+        aAttributes = aAttribs_dd
+      when "div"
+        aAttributes = aAttribs_div
+      when "dl"
+        aAttributes = aAttribs_dl
+      when "dt"
+        aAttributes = aAttribs_dt
+      when "em"
+        aAttributes = aAttribs_em
+      when "file_field"
+        aAttributes = aAttribs_file_field
+      when "form"
+        aAttributes = aAttribs_form
+      when "hidden"
+        aAttributes = aAttribs_hidden
+      when "image"
+        aAttributes = aAttribs_image
+      when "label"
+        aAttributes = aAttribs_label
+      when "link"
+        aAttributes = aAttribs_link
+      when "li"
+        aAttributes = aAttribs_li
+      when "map"
+        aAttributes = aAttribs_map
+      when "pre"
+        aAttributes = aAttribs_pre
+      when "p"
+        aAttributes = aAttribs_p
+      when "radio"
+        aAttributes = aAttribs_radio
+      when "select_list"
+        aAttributes = aAttribs_select_list
+      when "span"
+        aAttributes = aAttribs_span
+      when "strong"
+        aAttributes = aAttribs_strong
+      when "table"
+        aAttributes = aAttribs_table
+      when "text_field"
+        aAttributes = aAttribs_text_field
+      end # Define the proper attributes based on the type of HTML Element
+
+      # Sort the attributes
+      aAttributes.sort!
+
+      puts2("\n################")
+      puts2("# Verifying attributes for: #{sElement}")
+      puts2("################\n\n")
+      puts2("puts2(\"\t # Verifying attributes for: #{sElement}\")")
+
+      # Compose the plural version for the current elements so we can get the count of each element type
+      if(sElement == "checkbox")
+        sElementPlural = "checkboxes"
+      else
+        sElementPlural = sElement + "s"
+      end
+
+      # Determine the total number of the current Element type
+      iElementCount = self.send(sElementPlural).length
+
+      # Generate the test code for the tag count
+      puts2("assert(#{sBrowserName}.#{sElementPlural}.length == #{iElementCount.to_s}) # Number of #{sElementPlural}")
+
+      # Only check existing elements
+      if(iElementCount > 0)
+
+        iIndex = 1
+
+        while iIndex <= iElementCount
+
+          puts2("\n#-------------------------#")
+          puts2("# Attributes of #{sElement} #{iIndex}")
+          puts2("#-------------------------#")
+
+          aAttributes.each do | sAttribute |
+
+            # Catcher
+            #
+            # Wrap the checks for the attributes in a begin/rescue/end block
+            # Any error for an attribute that is unsupported for the current
+            # Element type will be caught and not stop the test
+            begin
+
+              # Collect the setting of the current HTML element
+              mySetting = self.send(sElement, :index => iIndex.adjust_index).send(sAttribute)
+
+              # To make strings more human readable put parenthesis around the string
+              if(mySetting.class.to_s == "String")
+                mySetting = "\"" + mySetting + "\""
+              end
+
+              # To make arrays more human readable put brackets around its comma separated strings
+              #              if(mySetting.class.to_s == "Array")
+              #                mySetting = "\[\"" + mySetting + "\"\]"
+              #              end
+
+              # puts2("#{sAttribute}  = " + mySetting.to_s)
+              puts2("assert(#{sBrowserName}.#{sElement}(:index, "+ iIndex.adjust_index.to_s + ").#{sAttribute} == #{mySetting} )")
+
+            rescue
+              # Element does not support the current attribute
+              # no harm no foul
+            ensure
+            end # Catcher
+
+          end # Loop for Attribute
+
+          iIndex = iIndex + 1
+        end # while
+
+      end # Only check existing elements
+
+    end # Loop for HTML Element types
+
+  end # Method - generate_testcode_html_tag_attributes()
+
+  #=============================================================================#
+  #--
+  # Method: generate_testcode_html_tag_counts(...)
+  #
+  #++
+  #
+  # Description: Generates assert statements for the counts of the HTML elements with Watir length methods on the current Web page
+  #              The assert statements are displayed to STDOUT and into the global log file (if it exists).
+  #              The code can be manually copied and entered into a test case for use as the basis of a regression test.
+  #
+  #              Example partial output:
+  #                  assert($browser.areas.length == 3) # Number of areas
+  #                  assert($browser.buttons.length == 16) # Number of buttons
+  #                  assert($browser.checkboxes.length == 3) # Number of checkboxes
+  #
+  #              Supported HTML Tag Elements are:
+  #                area, button, checkbox, dd, div, dl, dt, em, file_field,
+  #                hidden, image, label, link, li, map, pre, p, radio,
+  #                select_list, strong, span, table, text_field
+  #
+  #               The forms and form methods are NOT supported.
+  #
+  # HINT: Run this once against a web page to generate code to subsequently use for testing the web page.
+  #
+  #       You may NOT need to count all the HTML tags, but only those necessary for use in a regression test
+  #       to provide a reasonable sense that count of important the HTML tags on the page is unchanged.
+  #       Determine what will work for your situation and set the passed parameters accordingly.
+  #
+  #       Manually Cut 'n Paste the output to a test case for use to subsequently test that web page.
+  #
+  #       For pages with dynamic content, you may need to edit the generated assert statements.
+  #       For example, on a web page which always has at least 20 links, but that can grow to a larger number
+  #       the output from this method may generates the code:
+  #            assert($browser.links.length == 100) # Number of links
+  #
+  #       You can modify it in your test case to be:
+  #             assert($browser.links.length >= 20) # Number of links
+  #
+  # Returns: BOOLEAN - true on success, otherwise false
+  #
+  #
+  # Syntax: sBrowserName = STRING - The name to use in the print statement (defaults to "$browser")
+  #
+  #         oElementToCount = OBJECT - One of the following object types:
+  #                                    nil - Count all HTML elements types with Watir length methods
+  #
+  #                                    STRING - Any single HTML elements type with Watir length method,
+  #                                                i.e "link" to only count the link objects
+  #                                              Or "all" to count them all.
+  #
+  #                                    ARRAY of STRINGS - A single or a set of multiple HTML Tag Elements
+  #                                                           i.e ["link"] or ["button", "checkbox"]
+  #                                                         Or if ["all"] for all the Element's.
+  #
+  #
+  # Usage Examples:
+  #                 1) To generate testcode for HTML Counts for ALL of the HTML elements with Watir length methods on the page:
+  #                             browser = Watir::Browser.start("http://google.com")
+  #                             hMyPageObjects = browser.generate_testcode_html_tag_counts("all", "browser")   #  Also works using: count_html_tags("all")
+  #
+  #
+  #                 2) To generate testcode for HTML Counts for ONLY of the link HTML elements on the page:
+  #                             $browser = Watir::Browser.start("http://google.com")
+  #                             hMyPageObjects = $browser.generate_testcode_html_tag_counts("link")
+  #                                         #=>  assert($browser.links.length == 30) # Number of links
+  #
+  #                 3) To generate testcode for HTML Counts for ONLY the image and button HTML elements on the page:
+  #                             aObjectsToCount = ["image", "button"]
+  #                             my_browser = Watir::Browser.start("http://google.com")
+  #                             hMyPageObjects = my_browser.generate_testcode_html_tag_counts(aObjectsToCount, "my_browser")
+  #                                        #=> assert(my_browser.buttons.length == 2) # Number of buttons
+  #                                            assert(my_browser.images.length  = 5) # Number of images
+  #=======================================================================#
+  def generate_testcode_html_tag_counts(oElementToCount=nil, sBrowserName="$browser")
+
+    hCountedHTMLTags = self.count_html_tags(oElementToCount)
+    hCountedHTMLTags.sort.each do | sElement, iCount|
+
+      # Adjust the Tag name as necessary so that adding an "s" will create the correct plural version
+      if(sElement == "checkbox")
+        sElementPlural = "checkboxes"
+      else
+        sElementPlural = sElement + "s"
+      end
+      if(iCount >= 0) # skip for negative counts, as negative values indicate that the tag count is invalid
+        puts2("assert(#{sBrowserName}.#{sElementPlural}.length == #{iCount.to_s}) # Number of #{sElementPlural}")
+      end
+
+    end
+
+  end # Method: generate_testcode_html_tag_counts(...)
 
   #=============================================================================#
   #--
@@ -4991,55 +4994,55 @@ end # Method: generate_testcode_html_tag_counts(...)
 
   end # Method - is_safari?...)
 
+  #=============================================================================#
+  #--
+  # Method is_url_accessible?(sURL)
+  #++
+  #
+  # Description: Tries to access a specified URL with the current Global Browser.
+  #              It checks for various http errors, and then closes the Browser
+  #
+  # Returns: BOOLEAN - true if the URL was accessible, otherwise returns false
+  #
+  # Syntax: sURL = STRING - Full URL of the site to be checked for accessibility
+  #
+  # Usage examples:
+  #                  assert(browser.is_url_accessible?("http://google.com"))
+  #=============================================================================#
+  def is_url_accessible?(sURL)
 
-#=============================================================================#
-#--
-# Method is_url_accessible?(sURL)
-#++
-#
-# Description: Tries to access a specified URL with the current Global Browser.
-#              It checks for various http errors, and then closes the Browser
-#
-# Returns: BOOLEAN - true if the URL was accessible, otherwise returns false
-#
-# Syntax: sURL = STRING - Full URL of the site to be checked for accessibility
-#
-# Usage examples:
-#                  assert(browser.is_url_accessible?("http://google.com"))
-#=============================================================================#
-def is_url_accessible?(sURL)
+    begin # Check the URL
 
-  begin # Check the URL
+      # Set the return flag, any failure will clear it
+      bReturnValue = true
 
-    # Set the return flag, any failure will clear it
-    bReturnValue = true
+      # Browse the specified URL
+      self.goto(sURL)
 
-    # Browse the specified URL
-    self.goto(sURL)
+      sleep 2 # Allow time for the page to load
 
-    sleep 2 # Allow time for the page to load
+      if((self.check_for_http_error()) || (self.title.include?('cannot display')) ||(self.text.include?('The page cannot be displayed')) || (self.text.include?("HTTP Status 404")) || (self.text.include?("cannot display the webpage")) || (self.text.include?("Service Temporarily Unavailable")) )
 
-    if((self.check_for_http_error()) || (self.title.include?('cannot display')) ||(self.text.include?('The page cannot be displayed')) || (self.text.include?("HTTP Status 404")) || (self.text.include?("cannot display the webpage")) || (self.text.include?("Service Temporarily Unavailable")) )
+        puts2("Forcing an error condition")
+        # Clear the flag
+        bReturnValue = false
 
-      puts2("Forcing an error condition")
-      # Clear the flag
-      bReturnValue = false
+        return bReturnValue
 
-      return bReturnValue
+      end
 
-    end
+    rescue => e
 
-  rescue => e
+      puts2("*** WARNING and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"), "WARN")
 
-    puts2("*** WARNING and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"), "WARN")
+    ensure
 
-  ensure
+    end # Check the URL
 
-  end # Check the URL
+    return bReturnValue
 
-  return bReturnValue
+  end # Method - is_url_accessible?()
 
-end # Method - is_url_accessible?()
   #=============================================================================#
   #--
   # Method: restart(...)
