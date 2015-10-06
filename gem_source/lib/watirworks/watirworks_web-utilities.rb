@@ -5021,6 +5021,7 @@ def is_url_accessible?(sURL)
 
     if((self.check_for_http_error()) || (self.title.include?('cannot display')) ||(self.text.include?('The page cannot be displayed')) || (self.text.include?("HTTP Status 404")) || (self.text.include?("cannot display the webpage")) || (self.text.include?("Service Temporarily Unavailable")) )
 
+      puts2("Forcing an error condition")
       # Clear the flag
       bReturnValue = false
 
@@ -5196,7 +5197,7 @@ end # Method - is_url_accessible?()
     sFullFileName = ($sOutputDir + File.join("/") + File.join(sFileName) + "_" + Time.now.strftime(DATETIME_FILEFORMAT) + File.join(".png"))
 
     self.screenshot.save(sFullFileName)
-    puts2("Savied screenshot to: " + sFullFileName)
+    puts2("Saved screenshot to: " + sFullFileName)
 
   end # Method - save_screencapture()
 
