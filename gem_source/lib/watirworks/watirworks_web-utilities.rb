@@ -3815,6 +3815,11 @@ module WatirWorks_WebUtilities
   #
   #         sURL = STRING - A URL for the browser to load. Default is to open a blank browser page "about:blank"
   #
+  #         iWidth = INT - The width of the browser window (defaults to 1024)
+  #         iHeigth = INT - The height of the browser window (defaults to 756)
+  #         iXpos = INT - The X Position of the browser window (defaults to 10)
+  #         iYpos = INT - The Y Position of the browser window (defaults to 10)
+  #
   #         iDriverTimeout = INT = Number of sec for the driver to wait before timeing out.
   #                          The "factory default value" of 60 sec. has not been working well on some sites so
   #                          theis method will default to 3 min (180 sec).
@@ -3852,14 +3857,18 @@ module WatirWorks_WebUtilities
   #                                          $browser = start_browser("firefox")
   #
   #=============================================================================#
-  def start_browser(sBrowserType = "firefox", sURL="about:blank", iDriverTimeout = 180)
+  def start_browser(sBrowserType = "firefox", sURL="about:blank", iWidth=1024, iHeight=756, iXpos=10, iYpos=10, iDriverTimeout = 180)
 
     if($VERBOSE == true)
       puts2("Parameters - start_browser:")
       puts2("  sBrowserType: " + sBrowserType.to_s)
       puts2("  sURL: " + sURL.to_s)
+      puts2("  iWidth: " + iWidth.to_s)
+      puts2("  iHeight: " + iHeight.to_s)
+      puts2("  iXpos: " + iXpos.to_s)
+      puts2("  iYpos: " + iYpos.to_s)
       puts2("  iDriverTimeout: " + iDriverTimeout.to_s)
-      
+
     end
 
     # Cleanup the specified value
@@ -3947,7 +3956,12 @@ module WatirWorks_WebUtilities
     # Set a tiemout for the driver that is different then the standard 60 sec.
     oBrowser.driver.manage.timeouts.implicit_wait = iDriverTimeout
 
-    oBrowser.goto(sURL) # Load the URL
+    # Sixe & position the browser window
+    oBrowser.window.move_to(iXpos, iYpos)
+    oBrowser.window.resize_to(iWidth, iHeight)
+
+    # Load the URL
+    oBrowser.goto(sURL)
 
     # Allow time to celebrate the birth of the new browser.
     sleep 2  # That's long enough to celebrate
