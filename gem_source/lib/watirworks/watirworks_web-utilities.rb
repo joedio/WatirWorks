@@ -3820,7 +3820,7 @@ module WatirWorks_WebUtilities
   #         iXpos = INT - The X Position of the browser window (defaults to 10)
   #         iYpos = INT - The Y Position of the browser window (defaults to 10)
   #
-  #         iDriverTimeout = INT = Number of sec for the driver to wait before timeing out.
+  #         NOT SUPPORTED iDriverTimeout = INT = Number of sec for the driver to wait before timeing out.
   #                          The "factory default value" of 60 sec. has not been working well on some sites so
   #                          theis method will default to 3 min (180 sec).
   #
@@ -3953,8 +3953,10 @@ module WatirWorks_WebUtilities
     Watir::Wait.until{oBrowser.exists?}
     puts2("  Browser version = " + oBrowser.version.to_s)
 
+    # TIhs was causing failures in many other nethids so commented it out
+    # until I can degug and figure out a fix, (if any) is possible.
     # Set a tiemout for the driver that is different then the standard 60 sec.
-    oBrowser.driver.manage.timeouts.implicit_wait = iDriverTimeout
+    #oBrowser.driver.manage.timeouts.implicit_wait = iDriverTimeout
 
     # Sixe & position the browser window
     oBrowser.window.move_to(iXpos, iYpos)
