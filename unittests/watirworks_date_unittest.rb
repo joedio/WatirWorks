@@ -35,7 +35,7 @@ include WatirWorks_RefLib      #  WatirWorks Reference data module
 
 
 # WatirWorks global variables
-#
+bIncludeInSuite = true
 sRun_TestType = "nobrowser"
 iRun_TestLevel = 0
 #=============================================================================#

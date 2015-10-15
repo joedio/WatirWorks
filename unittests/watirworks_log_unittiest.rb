@@ -47,7 +47,7 @@ end
 #
 
 # WatirWorks global variables
-#
+bIncludeInSuite = true
 sRun_TestType = "nobrowser"
 iRun_TestLevel = 2
 

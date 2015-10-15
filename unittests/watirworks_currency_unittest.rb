@@ -35,7 +35,7 @@ include WatirWorks_Utilities    #  WatirWorks General Utilities
 
 
 # WatirWorks global variables
-#
+bIncludeInSuite = true
 sRun_TestType = "nobrowser"
 iRun_TestLevel = 0
 #=============================================================================#
@@ -129,19 +129,19 @@ class UnitTest_Currency < Test::Unit::TestCase
 
       puts2("Formatted value = #{sConvertedValue.to_s}")
       ############################
-      sThisTaskName = "1000 to £1.000.00"
+      sThisTaskName = "1000 to ï¿½1.000.00"
       puts2("")
       puts2(" # BEGIN: " + sThisTaskName + " #")
 
-      sConvertedValue = "1000".format_to_currency("£", ".")
+      sConvertedValue = "1000".format_to_currency("ï¿½", ".")
 
       puts2("Formatted value = #{sConvertedValue.to_s}")
       ############################
-      sThisTaskName = "  1000   to €1.000.00"
+      sThisTaskName = "  1000   to ï¿½1.000.00"
       puts2("")
       puts2(" # BEGIN: " + sThisTaskName + " #")
 
-      sConvertedValue = "  1000  ".format_to_currency("€", ".")
+      sConvertedValue = "  1000  ".format_to_currency("ï¿½", ".")
 
       puts2("Formatted value = #{sConvertedValue.to_s}")
       ############################
@@ -202,18 +202,18 @@ class UnitTest_Currency < Test::Unit::TestCase
 
       puts2("Formatted value = #{sConvertedValue.to_s}")
       ############################
-      sThisTaskName = "1000000.99 to £1.000.000.99"
+      sThisTaskName = "1000000.99 to ï¿½1.000.000.99"
       puts2("")
       puts2(" # BEGIN: " + sThisTaskName + " #")
 
-      sConvertedValue = "1000000.99".format_to_currency("£", ".")
+      sConvertedValue = "1000000.99".format_to_currency("ï¿½", ".")
       puts2("Formatted value = #{sConvertedValue.to_s}")
       ############################
-      sThisTaskName = "1000000.999 to ¥1:000:000.99"
+      sThisTaskName = "1000000.999 to ï¿½1:000:000.99"
       puts2("")
       puts2(" # BEGIN: " + sThisTaskName + " #")
 
-      sConvertedValue = "1000000.999".format_to_currency("¥", ":")
+      sConvertedValue = "1000000.999".format_to_currency("ï¿½", ":")
       puts2("Formatted value = #{sConvertedValue.to_s}")
       ############################
 
@@ -266,11 +266,11 @@ class UnitTest_Currency < Test::Unit::TestCase
 
       puts2("Formatted value = #{sConvertedValue.to_s}")
       ############################
-      sThisTaskName = "£1.000.50 to 1000"
+      sThisTaskName = "ï¿½1.000.50 to 1000"
       puts2("")
       puts2(" # BEGIN: " + sThisTaskName + " #")
 
-      sConvertedValue = "£1.000.50".format_from_currency("£", ".", true)
+      sConvertedValue = "ï¿½1.000.50".format_from_currency("ï¿½", ".", true)
 
       puts2("Formatted value = #{sConvertedValue.to_s}")
       ############################
@@ -290,11 +290,11 @@ class UnitTest_Currency < Test::Unit::TestCase
 
       puts2("Formatted value = #{sConvertedValue.to_s}")
       ############################
-      sThisTaskName = "¥1,000,000.5 to 1000000.50"
+      sThisTaskName = "ï¿½1,000,000.5 to 1000000.50"
       puts2("")
       puts2(" # BEGIN: " + sThisTaskName + " #")
 
-      sConvertedValue = "¥1,000,000.5".format_from_currency("¥", ",", false)
+      sConvertedValue = "ï¿½1,000,000.5".format_from_currency("ï¿½", ",", false)
 
       puts2("Formatted value = #{sConvertedValue.to_s}")
       ############################

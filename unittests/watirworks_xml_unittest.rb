@@ -37,7 +37,7 @@ include WatirWorks_WebUtilities # WatirWorks Web Utilities
 #
 
 # WatirWorks global variables
-#
+bIncludeInSuite = true
 sRun_TestType = "nobrowser"  #"wip" 
 iRun_TestLevel = 0
 #=============================================================================#
