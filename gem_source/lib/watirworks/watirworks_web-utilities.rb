@@ -127,7 +127,7 @@ require 'watir-webdriver'
 module WatirWorks_WebUtilities
 
   # Version of this module
-  WW_WEB_UTILITIES_VERSION = "1.2.0"
+  WW_WEB_UTILITIES_VERSION = "1.2.1"
 
   # Flag indicating if a browser was started
   $bBrowserStarted = false
@@ -4146,12 +4146,14 @@ class Watir::Browser
     # Define the array of all currently supported HTML element types with Watir methods to count them
     aAllWatirElements = SUPPORTED_HTML_ELEMENTS
 
+=begin
     # Remove the unsupported elements form the supported list
     if(is_safari? == true)
-      SAFARIWATIR_UNSUPPORTED_HTML_ELEMENTS.each do |sUnsupportedElement |
+    SAFARIWATIR_UNSUPPORTED_HTML_ELEMENTS.each do |sUnsupportedElement |
         aAllWatirElements.delete(sUnsupportedElement)
       end
     end # Remove the unsupported elements form the supported list
+=end
 
     # Define default return value
     hObjectsFound = {}
@@ -4411,12 +4413,14 @@ class Watir::Browser
     # Define the elements to check
     aSupportedHTMLElementNames = SUPPORTED_HTML_ELEMENTS
 
+=begin
     # Remove the unsupported elements form the supported list
     if(is_safari? == true)
       SAFARIWATIR_UNSUPPORTED_HTML_ELEMENTS.each do |sUnsupportedElement |
         aSupportedHTMLElementNames.delete(sUnsupportedElement)
       end
     end # Remove the unsupported elements form the supported list
+=end
 
     # Define the element attributes to collect
     aAttributes = []

@@ -44,7 +44,7 @@ require 'rubygems'
 module WatirWorks_RefLib
 
   # Version of this module
-  WW_REFLIB_VERSION = "1.0.2"
+  WW_REFLIB_VERSION = "1.2.1"
 
   # Format to use when appending a timestamp to file names
   DATETIME_FILEFORMAT="%Y_%m_%d_%H%M%S"
@@ -1174,13 +1174,14 @@ module WatirWorks_RefLib
   #                     end # Remove the unsupported elements form the supported list
   #
   #=============================================================================#
-  SAFARIWATIR_UNSUPPORTED_HTML_ELEMENTS = ["hidden"]
+  #SAFARIWATIR_UNSUPPORTED_HTML_ELEMENTS = ['NONE']
+  #OLD_SAFARIWATIR_UNSUPPORTED_HTML_ELEMENTS = ["hidden"]
 
   #=============================================================================#
   # ObjectName: SUPPORTED_HTML_ELEMENTS
   # Returns: ARRAY
   #
-  # Description: Contains a list of HTML elements that Watir and supports
+  # Description: Contains a list of HTML elements that Watir-Webdriver supports
   #
   # Usage examples:
   #                     #Define the elements to check
@@ -1194,13 +1195,27 @@ module WatirWorks_RefLib
   #                     end # Remove the unsupported elements form the supported list
   #
   #=============================================================================#
-  SUPPORTED_HTML_ELEMENTS = ["area", "button",
+  SUPPORTED_HTML_ELEMENTS = [
+    "a", "area", "br", "base", "body", "button", "caption",
+    "data", "dl", "dialog", "div", "embed", "fieldset",
+    "font", "form", "hr", "head", "header", "html", "iframe", "img",
+    "input", "keygen", "li", "label", "legend", "map", "menu",
+    "menuitem", "meta", "meter", "ol", "object", "optgroup", "option",
+    "output", "p", "param", "pre",
+    "script", "select", "source", "span", "style", "table", "th",
+    "td", "thead", "tfoot", "template", "textarea",
+    "time", "title", "track", "ul"
+  ]
+
+=begin
+  OLD_SUPPORTED_HTML_ELEMENTS = ["area", "button",
     "checkbox", "dd", "div", "dl", "dt", "em",
     "file_field", "form", "hidden", "image", "label",
     "link",  "li", "map", "pre", "p",
     "radio", "select_list", "strong",  "span",
     "table", "text_field" ]
-    
+=end
+
   #=============================================================================#
   # ObjectName: TOP_LEVEL_DOMAINS
   # Returns: ARRAY
