@@ -3960,13 +3960,24 @@ module WatirWorks_WebUtilities
 
     # Sixe & position the browser window
     oBrowser.window.move_to(iXpos, iYpos)
+    #(oBrowser.window.position.x == iXpos).until($iMaxWaitTime)
+    #(oBrowser.window.position.y == iYpos).until($iMaxWaitTime)
+    Watir::Wait.until{oBrowser.window.position.x == iXpos}
+    Watir::Wait.until{oBrowser.window.position.y == iYpos}
+
     oBrowser.window.resize_to(iWidth, iHeight)
+    #(oBrowser.window.size.width == iWidth).until($iMaxWaitTime)
+    #(oBrowser.window.size.height == iHeight).until($iMaxWaitTime)
+    Watir::Wait.until{oBrowser.window.size.height ==  iHeight}
+    Watir::Wait.until{oBrowser.window.size.width == iWidth}
 
     # Load the URL
     oBrowser.goto(sURL)
+    #(oBrowser.url == sUR).until($iMaxWaitTime)
+    Watir::Wait.until{oBrowser.url == sURL}
 
     # Allow time to celebrate the birth of the new browser.
-    sleep 2  # That's long enough to celebrate
+    #sleep 2  # That's long enough to celebrate
 
     # Set global flag for use in various methods or tests to determine if a browser was started
     $bBrowserStarted = true
