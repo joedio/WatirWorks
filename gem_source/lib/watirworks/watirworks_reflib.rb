@@ -1196,15 +1196,22 @@ module WatirWorks_RefLib
   #
   #=============================================================================#
   SUPPORTED_HTML_ELEMENTS = [
-    "a", "area", "br", "base", "body", "button", "caption",
-    "data", "dl", "dialog", "div", "embed", "fieldset",
-    "font", "form", "hr", "head", "header", "html", "iframe", "img",
-    "input", "keygen", "li", "label", "legend", "map", "menu",
-    "menuitem", "meta", "meter", "ol", "object", "optgroup", "option",
-    "output", "p", "param", "pre",
-    "script", "select", "source", "span", "style", "table", "th",
-    "td", "thead", "tfoot", "template", "textarea",
-    "time", "title", "track", "ul"
+    "a", "area",
+    "br", "base", "body", "button",
+    "caption",
+    "data", "dialog", "div", "dl",
+    "embed",
+    "fieldset","font", "form",
+    "hr", "head", "header", "html",
+    "iframe", "img", "input",
+    "keygen",
+    "label", "legend", "li",
+    "map", "menu", "menuitem", "meta", "meter",
+    "object", "ol", "optgroup", "option", "output",
+    "p", "param", "pre",
+    "script", "select", "source", "span", "style",
+    "table", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "track",
+    "ul"
   ]
 
 =begin

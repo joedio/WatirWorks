@@ -127,7 +127,7 @@ require 'watir-webdriver'
 module WatirWorks_WebUtilities
 
   # Version of this module
-  WW_WEB_UTILITIES_VERSION = "1.2.1"
+  WW_WEB_UTILITIES_VERSION = "1.2.2"
 
   # Flag indicating if a browser was started
   $bBrowserStarted = false
@@ -4198,6 +4198,194 @@ class Watir::Browser
 
       # Select the proper count method to use
       case sElementToCount.to_s.downcase
+      when  "a"
+        iA = self.as.length
+        hObjectsFound.store("a", iA)
+      when  "area"
+        iArea = self.areas.length
+        hObjectsFound.store("area", iArea)
+      when  "br"
+        iBr = self.brs.length
+        hObjectsFound.store("br", iBr)
+      when "base"
+        iBase = self.bases.length
+        hObjectsFound.store("base", iBase)
+      when  "body"
+        iBody = self.bodys.length
+        hObjectsFound.store("body", iBody)
+      when  "button"
+        iButton = self.buttons.length
+        hObjectsFound.store("button", iButton)
+      when "caption"
+        iCaption = self.captions.length
+        hObjectsFound.store("caption", iCaption)
+      when "data"
+        iData = self.datas.length
+        hObjectsFound.store("data", iData)
+      when "dialog"
+        iDialog = self.dialogs.length
+        hObjectsFound.store("dialog", iDialog)
+      when  "div"
+        iDiv = self.divs.length
+        hObjectsFound.store("div", iDiv)
+      when  "dl"
+        iDl = self.dls.length
+        hObjectsFound.store("dl", iDl)
+      when "embed"
+        iEmbed = self.embeds.length
+        hObjectsFound.store("embed", iEmbed)
+      when "fieldset"
+        iFieldset = self.fieldsets.length
+        hObjectsFound.store("fieldset", iFieldset)
+      when "font"
+        iFont = self.fonts.length
+        hObjectsFound.store("font", iFont)
+      when  "form"
+        #if(is_firefox?)
+        #  iForm = -1  # FireWatir is missing a forms method, so it is set to -1 as a flag indicating that the forms element was NOT counted.
+        #else  # Watir supports forms so count them
+        iForm = self.forms.length
+        #end
+        hObjectsFound.store("form", iForm)
+      when "head"
+        iHead = self.heads.length
+        hObjectsFound.store("head", iHead)
+      when "header"
+        iHeader = self.headers.length
+        hObjectsFound.store("header", iHeader)
+      when "html"
+        iHtml = self.htmls.length
+        hObjectsFound.store("html", iHtml)
+      when "hr"
+        iHr = self.hrs.length
+        hObjectsFound.store("hr", iHr)
+      when "iframe"
+        iIframe = self.iframes.length
+        hObjectsFound.store("iframe", iIframe)
+      when  "img"
+        iImg = self.imgs.length
+        hObjectsFound.store("img", iImg)
+      when "input"
+        iInput = self.inputs.length
+        hObjectsFound.store("input", iInput)
+      when "keygen"
+        iKeygen = self.keygens.length
+        hObjectsFound.store("keygen", iKeygen)
+      when  "label"
+        iLabel = self.labels.length
+        hObjectsFound.store("label", iLabel)
+      when  "li"
+        iLi = self.lis.length
+        hObjectsFound.store("li", iLi)
+      when  "legend"
+        iLegend = self.legends.length
+        hObjectsFound.store("legend", iLegend)
+      when  "map"
+        iMap = self.maps.length
+        hObjectsFound.store("map", iMap)
+      when  "menu"
+        iMenu = self.menus.length
+        hObjectsFound.store("menu", iMenu)
+      when  "menuitem"
+        iMenuitem = self.menuitems.length
+        hObjectsFound.store("menuitem", iMenuitem)
+      when  "meta"
+        iMeta = self.metas.length
+        hObjectsFound.store("meta", iMeta)
+      when  "meter"
+        iMeter = self.meters.length
+        hObjectsFound.store("meter", iMeter)
+      when  "object"
+        iObject = self.objects.length
+        hObjectsFound.store("object", iObject)
+      when  "optgroup"
+        iOptgroup = self.optgroups.length
+        hObjectsFound.store("optgroup", iOptgroup)
+      when  "option"
+        iOption = self.options.length
+        hObjectsFound.store("option", iOption)
+      when  "output"
+        iOutput = self.outputs.length
+        hObjectsFound.store("output", iOutput)
+      when  "param"
+        iParam = self.params.length
+        hObjectsFound.store("param", iParam)
+      when "ol"
+        iOl = self.ols.length
+        hObjectsFound.store("ol", iOl)
+      when  "pre"
+        iPre = self.pres.length
+        hObjectsFound.store("pre", iPre)
+      when  "p"
+        iP = self.ps.length
+        hObjectsFound.store("p", iP)
+      when  "radio"
+        iRadio = self.radios.length
+        hObjectsFound.store("radio", iRadio)
+      when  "select"
+        iSelect = self.select.length
+        hObjectsFound.store("select", iSelect)
+      when "script"
+        iScript = self.scripts.length
+        hObjectsFound.store("script", iScript)
+      when "source"
+        iSource = self.sources.length
+        hObjectsFound.store("source", iSource)
+      when "noscript"
+        iNoscript = self.noscripts.length
+        hObjectsFound.store("noscript", iNoscript)
+      when  "strong"
+        iStrong = self.strongs.length
+        hObjectsFound.store("strong", iStrong)
+      when  "span"
+        iSpan = self.spans.length
+        hObjectsFound.store("span", iSpan)
+      when "style"
+        iStyle = self.styles.length
+        hObjectsFound.store("style", iStyle)
+      when  "table"
+        iTable = self.tables.length
+        hObjectsFound.store("table", iTable)
+      when  "th"
+        iTh = self.ths.length
+        hObjectsFound.store("th", iTh)
+      when  "td"
+        iTd = self.tds.length
+        hObjectsFound.store("td", iTd)
+      when  "thead"
+        iThead = self.theads.length
+        hObjectsFound.store("thead", iThead)
+      when  "tfoot"
+        iTfoot = self.tfoots.length
+        hObjectsFound.store("tfoot", iTfoot)
+      when  "template"
+        iTemplate = self.templates.length
+        hObjectsFound.store("template", iTemplate)
+      when  "time"
+        iTime = self.times.length
+        hObjectsFound.store("time", iTime)
+      when  "title"
+        iTitle = self.titles.length
+        hObjectsFound.store("title", iTitle)
+      when  "track"
+        iTrack = self.tracks.length
+        hObjectsFound.store("track", iTrack)
+      when  "ul"
+        iUl = self.uls.length
+        hObjectsFound.store("ul", iUl)
+      when  "textarea"
+        iTextarea = self.textareas.length
+        hObjectsFound.store("textarea", iTextarea)
+      end
+    end
+    return  hObjectsFound
+
+=begin
+    # Loop through the elements to be counted
+    aElementsToCount.each do | sElementToCount |
+
+      # Select the proper count method to use
+      case sElementToCount.to_s.downcase
       when  "area"
         iArea = self.areas.length
         hObjectsFound.store("area", iArea)
@@ -4278,7 +4466,7 @@ class Watir::Browser
     end # Loop through the elements to be counted
 
     return  hObjectsFound
-
+=end
   end # END Method - count_html_tags()
 
   #=============================================================================#
@@ -4425,36 +4613,80 @@ class Watir::Browser
     # Define the element attributes to collect
     aAttributes = []
 
+    # TODO - Update each of the entries with the correct set of attributes
+    #
     # Define arrays for each tag and the attributes that apply to each
     #
     # Those attributes that are not listed for a particular element were either tried and
     #  did NOT appear to be useful (e.g. exists?) or are not supported by that element. in Watir1.6.5/Firewatir1.6.5
+    aAttribs_a = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_area = ["type", "id", "name", "title", "value", "alt", "href", "text","enabled?", "visible?"]
+    aAttribs_br = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_base = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_body = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_button = ["type", "id", "name", "title", "value", "src", "enabled?", "visible?"]
+    aAttribs_caption = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_checkbox = ["type", "id", "name", "title", "value", "enabled?", "visible?", "set?"]
+    aAttribs_data = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_dd = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_dialog = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_div = ["id", "name", "title", "value", "class_name", "enabled?", "visible?"]
     aAttribs_dl = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_dt = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_em = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_embed = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_fieldset = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_file_field = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_font = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_form = ["class", "id", "name", "action", "method", "visible?"]
+    aAttribs_head = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_header = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_hidden = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_hr = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_html = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_iframe = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     # removed "file_size",  "file_created_date", from image : NotImplementedError: not currently supported by WebDriver
+    aAttribs_img = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_image = ["type", "id", "name", "title", "value", "src", "height", "width", "alt", "enabled?", "visible?", "loaded?"]
+    aAttribs_input = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_keygen = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_label = ["type", "id", "name", "title", "value", "text", "enabled?", "visible?"]
+    aAttribs_legend = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_link = ["type", "id", "name", "title", "value", "href", "text", "src","enabled?", "visible?"]
     aAttribs_li = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_map = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_pre = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_menu = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_menuitem = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_meta = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_meter = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_object = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_ol = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_opinion = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_optgroup = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_output = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_p = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_param = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_pre = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_radio = ["type", "id", "name", "title", "value", "enabled?", "visible?", "set?"]
+    aAttribs_script = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_select = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_select_list = ["type", "id", "name", "title", "value", "selected_options", "options", "text", "enabled?", "visible?"]
-
+    aAttribs_source = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_span = ["type", "id", "name", "title", "value", "class_name", "enabled?", "visible?"]
     aAttribs_strong = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_style = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_table = ["type", "id", "name", "title", "value", "row_count_excluding_nested_tables", "enabled?", "visible?"]
+    aAttribs_td = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_th = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_thread = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_tfoot = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_template = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_textarea = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_time = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_title = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+    aAttribs_track = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     aAttribs_text_field = ["type", "id", "name", "title", "value", "text", "size", "maxLength", "enabled?", "visible?"]
+    aAttribs_ul = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
 
     # Determine the object type
     case
@@ -4524,6 +4756,128 @@ class Watir::Browser
       # Define the proper attributes based on the type of HTML Element
       case sElement.to_s.downcase
 
+      when "a"
+        aAttributes = aAttribs_a
+      when "area"
+        aAttributes = aAttribs_area
+      when "br"
+        aAttributes = aAttribs_br
+      when "base"
+        aAttributes = aAttribs_base
+      when "body"
+        aAttributes = aAttribs_body
+      when "button"
+        aAttributes = aAttribs_button
+      when "caption"
+        aAttributes = aAttribs_caption
+      when "data"
+        aAttributes = aAttribs_data
+      when "dialog"
+        aAttributes = aAttribs_dialog
+      when "div"
+        aAttributes = aAttribs_div
+      when "dl"
+        aAttributes = aAttribs_dl
+      when "embed"
+        aAttributes = aAttribs_embed
+      when "fieldset"
+        aAttributes = aAttribs_fieldset
+      when "font"
+        aAttributes = aAttribs_font
+      when "form"
+        aAttributes = aAttribs_form
+      when "head"
+        aAttributes = aAttribs_head
+      when "header"
+        aAttributes = aAttribs_header
+      when "html"
+        aAttributes = aAttribs_html
+      when "hr"
+        aAttributes = aAttribs_hr
+      when "iframe"
+        aAttributes = aAttribs_iframe
+      when "img"
+        aAttributes = aAttribs_img
+      when "input"
+        aAttributes = aAttribs_input
+      when "keygen"
+        aAttributes = aAttribs_keygen
+      when "label"
+        aAttributes = aAttribs_label
+      when "li"
+        aAttributes = aAttribs_li
+      when "legend"
+        aAttributes = aAttribs_legend
+      when "map"
+        aAttributes = aAttribs_map
+      when "menu"
+        aAttributes = aAttribs_menu
+      when "menuitem"
+        aAttributes = aAttribs_menuitem
+      when "meta"
+        aAttributes = aAttribs_meta
+      when "meter"
+        aAttributes = aAttribs_meter
+      when "object"
+        aAttributes = aAttribs_object
+      when "optgroup"
+        aAttributes = aAttribs_optgroup
+      when "option"
+        aAttributes = aAttribs_option
+      when "output"
+        aAttributes = aAttribs_output
+      when "param"
+        aAttributes = aAttribs_param
+      when "ol"
+        aAttributes = aAttribs_ol
+      when "pre"
+        aAttributes = aAttribs_pre
+      when "p"
+        aAttributes = aAttribs_p
+      when "radio"
+        aAttributes = aAttribs_radio
+      when "select"
+        aAttributes = aAttribs_select
+      when "script"
+        aAttributes = aAttribs_script
+      when "source"
+        aAttributes = aAttribs_source
+      when "noscript"
+        aAttributes = aAttribs_noscript
+      when "strong"
+        aAttributes = aAttribs_strong
+      when "span"
+        aAttributes = aAttribs_span
+      when "style"
+        aAttributes = aAttribs_style
+      when "table"
+        aAttributes = aAttribs_table
+      when "th"
+        aAttributes = aAttribs_th
+      when "td"
+        aAttributes = aAttribs_td
+      when "thead"
+        aAttributes = aAttribs_thead
+      when "tfoot"
+        aAttributes = aAttribs_tfoot
+      when "template"
+        aAttributes = aAttribs_template
+      when "time"
+        aAttributes = aAttribs_time
+      when "title"
+        aAttributes = aAttribs_title
+      when "track"
+        aAttributes = aAttribs_track
+      when "ul"
+        aAttributes = aAttribs_ul
+      when "textarea"
+        aAttributes = aAttribs_textarea
+      end # Define the proper attributes based on the type of HTML Element
+
+=begin
+      # Define the proper attributes based on the type of HTML Element
+      case sElement.to_s.downcase
+
       when "area"
         aAttributes = aAttribs_area
       when "button"
@@ -4573,7 +4927,7 @@ class Watir::Browser
       when "text_field"
         aAttributes = aAttribs_text_field
       end # Define the proper attributes based on the type of HTML Element
-
+=end
       # Sort the attributes
       aAttributes.sort!
 
@@ -5345,13 +5699,7 @@ class Watir::Browser
       puts2(     oElementsToShow.to_s)
     end
 
-    # Define the elements to check
-    aSupportedHTMLElementNames = ["area", "button",
-      "checkbox", "dd", "div", "dl", "dt", "em", "form",
-      "file_field", "hidden", "image", "label",
-      "link",  "li", "map", "pre", "p",
-      "radio", "select_list", "strong",  "span",
-      "table", "text_field" ]
+    # The elements to check are in SUPPORTED_HTML_ELEMENTS
 
     # Define the element attributes to collect  # removed "file_size" : NotImplementedError: not currently supported by WebDriver
     aAttributes = ["exists?", "type", "id", "name", "title",
@@ -5381,7 +5729,7 @@ class Watir::Browser
     when oElementsToShow.class.to_s == "NilClass"
 
       # Populate array with the array of the string "All" to count all HTML elements
-      aElements = aSupportedHTMLElementNames
+      aElements = SUPPORTED_HTML_ELEMENTS
 
     else
       puts2(oElementsToShow.class.to_s + " class objects are NOT supported. Please use a nil, String or Array of Strings.", "WARN")
@@ -5391,7 +5739,7 @@ class Watir::Browser
 
     # If the first string in the array is "All" populate the array with all the supported HTML tags
     if(aElements[0].to_s.downcase == "all")
-      aElements = aSupportedHTMLElementNames
+      aElements = SUPPORTED_HTML_ELEMENTS
     end
 
     # Remove any Elements that are NOT supported by Firewatir
@@ -5408,7 +5756,7 @@ class Watir::Browser
 
     # Validate that the current element is valid
     aElements.each do | sElement |
-      if((aSupportedHTMLElementNames.include?(sElement)) == false)
+      if((SUPPORTED_HTML_ELEMENTS.include?(sElement)) == false)
         puts2("WARNING: HTML Element  " +  sElement + "  is NOT supported.", "WARN")
         return false
       end
