@@ -3974,7 +3974,7 @@ module WatirWorks_WebUtilities
     # Load the URL
     oBrowser.goto(sURL)
     #(oBrowser.url == sUR).until($iMaxWaitTime)
-    Watir::Wait.until{oBrowser.url == sURL}
+    #Watir::Wait.until{oBrowser.url == sURL}
 
     # Allow time to celebrate the birth of the new browser.
     #sleep 2  # That's long enough to celebrate
