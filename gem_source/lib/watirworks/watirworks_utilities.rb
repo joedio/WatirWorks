@@ -94,6 +94,7 @@ include WatirWorks_RefLib #  WatirWorks Reference data module
 #   is_webdriver()
 #   minimize_ruby_console()
 #   parse_ascii_file(...)
+#   parse_data_array(...)
 #   parse_dictionary()
 #   parse_csv_file(...)
 #   parse_spreadsheet()
@@ -2385,6 +2386,232 @@ module WatirWorks_Utilities
     return aFileContents
 
   end # Method - parse_ascii_file()
+
+  #=============================================================================#
+  #--
+  # Method: parse_data_array(...)
+  #
+  #++
+  #
+  # Description: Categorizes the provided information and prepares a temporary hash with provided information,
+  #              Uses the temporarily prepared hash to filter down to requested information
+  #              with the help of keys or values
+  #
+  # Returns: Hash (or) Array based on query parameters. Returns an empty Hash on error conditions
+  #
+  # Syntax: aArrayOfStrings = ARRAY - Array of Strings is provided as an input which is output of parse_spreadsheet
+  #                                   (Array can be provided with column header or without)
+  #
+  #   sFilterByRowOn = STRING       - Name of row / column which has to be filtered
+  #                                   (first column of any row is used by row axis filter)
+  #                                   (first row / header row of any column is used by column axis filter)
+  #                                   (Conditional: Set to empty when using index)
+  #
+  #   bFilterByRow = BOOLEAN        - Fetches row / column information based on the provided input
+  #                                   (if true  uses row / else uses column)
+  #                                   (Default value is true)
+  #
+  #   sFilterByValueOn = STRING     - (Optional) Filter value
+  #                                   (default value: nil)
+  #                                   (e.g. Auto, Showcase, Discover)
+  #                                   (if empty, returns Hash)
+  #                                   (Conditional: if sFilterByValue is filled, sFilterByValueOn needs to be entered as well)
+  #
+  #   sFilterByValue = STRING       - (Optional) Filters by one of the list values
+  #                                   (List items: value / key / index / nil)
+  #                                   (default value: nil (or) empty)
+  #                                   (sFilterByValue: value - uses right-most column or bottom most row)
+  #                                   (sFilterByValue: key - uses left-most column or top most row)
+  #                                   (sFilterByValue: index - uses index to locate row and only works for row)
+  #                                   (if empty, returns Hash)
+  #
+  # Sample Calls:
+  # parse_data_array(arArray,"Row2") - Returns Hash of row header and Row2
+  # parse_data_array(arArray,"Column2",false) - Returns Hash of first column and Column2
+  # parse_data_array(arArray,"Row3",true,"value","h") - Returns Array with list of row header whose Row3 values equals 'h'
+  # parse_data_array(arArray,"Column1",false,"key","Row2") - Returns Array with list of rows values whose first column values equals 'Row2'
+  # parse_data_array(arArray,"",true,"index","1") - Returns Hash with row header as keys and first row info as values
+  # parse_data_array(arArray,"",true,"index","2") - Returns Hash with row header as keys and second row info as values
+  #
+  #=============================================================================#
+  def parse_data_array(aArrayOfStrings,sFilterByRowOn,bFilterByRow=true,sFilterByValueOn="",sFilterByValue="")
+
+    hDataHash = {}
+    arDataArray = []
+    method_name = "parse_data_array"
+
+    if($VERBOSE == true)
+      puts2("Parameters - " + method_name + " :")
+      puts2("  aArrayOfStrings: " + aArrayOfStrings.to_s)
+      puts2("  sFilterByRowOn: " + sFilterByRowOn.to_s)
+      puts2("  bFilterByRow: " + bFilterByRow.to_s)
+      puts2("  sFilterByValueOn: " + sFilterByValueOn.to_s)
+      puts2("  sFilterByValue: " + sFilterByValue.to_s)
+    end
+
+    # Don't allow if input is not an array
+    if aArrayOfStrings.class != Array
+      puts2(method_name + " - Input Array <aArrayOfStrings> is not an array","ERROR")
+      return hDataHash
+    end
+
+    # Don't allow if input is an empty array
+    if aArrayOfStrings.empty?
+      puts2(method_name + " - Input Array <aArrayOfStrings> is empty","ERROR")
+      return hDataHash
+    end
+
+    # Shift to lowercase for sFilterByValue
+    sFilterByValue = sFilterByValue.downcase
+
+    # defaults sFilterByValueOn to 1 if not specified when sFilterByValue equals index
+    if (sFilterByValue == "index") && (sFilterByValueOn=="")
+      if($VERBOSE == true)
+        puts2(method_name + " - <sFilterByValue> was set to index but <sFilterByValueOn> was empty hence defaulted to 1","WARN")
+      end
+      sFilterByValueOn = 1
+    end
+
+    # Conditional: if sFilterByValue is non blank, then sFilterByValueOn cannot be blank
+    if (sFilterByValue != "") && (sFilterByValueOn=="")
+      puts2(method_name + " Conditional Error - <sFilterByValue> was not empty but <sFilterByValueOn> was empty","ERROR")
+      return hDataHash
+    end
+
+    # Conditional: if sFilterByValue is index, sFilterByRowOn is defaulted to blank
+    if (sFilterByValue == "index") && (sFilterByRowOn!="")
+      if($VERBOSE == true)
+        puts2(method_name + " - <sFilterByValue> was set to index but <sFilterByRowOn> was not empty hence defaulted to <blank>","WARN")
+      end
+      sFilterByRowOn = ""
+    end
+
+    # Conditional: if sFilterByValue is index, bFilterByRow can only be true
+    if (sFilterByValue == "index") && (bFilterByRow==false)
+      if($VERBOSE == true)
+        puts2(method_name + " - <sFilterByValue> was set to index but <bFilterByRow> was not true so defaulted to true","WARN")
+      end
+      bFilterByRow=true
+    end
+
+    # Adding unstructured information into a Hash with its row and column information
+    hParsedData = Hash.new
+    iOuterCounter = 1
+    iInnerCounter = 1
+    aArrayOfStrings.each do | aRow_ofData |
+      iInnerCounter = 1
+      aRow_ofData.each do |sCell_Data|
+        # creating hash with traceable conventions <row_column>
+        hParsedData[iOuterCounter.to_s + "_" + iInnerCounter.to_s] = sCell_Data.to_s
+        iInnerCounter = iInnerCounter + 1
+      end
+      iOuterCounter = iOuterCounter + 1
+    end
+
+    # Printing useful information for debugging purposes
+    iInnerCounter = iInnerCounter - 1
+    iOuterCounter = iOuterCounter - 1
+    puts2("iInnerCounter = " + iInnerCounter.to_s + " | iOuterCounter = " + iOuterCounter.to_s) if $VERBOSE == true
+
+    # Filtering out a hash based on filter parameters
+    hParsedData_Specific = Hash.new
+    hTempData = Hash.new
+    sRegEx = ""
+    sTemp = ""
+    sMatchKey = ""
+
+    # Segregating non-index scenarios by checking if filter is non blank
+    if sFilterByRowOn != ""
+      # Fetching a small hash by filtering for specific row / column value as specified
+      hTempData = hParsedData.select { |sKey, sValue| /#{sFilterByRowOn}/.match(sValue.to_s) }
+      # Fetching the key of first match for preparing a regular expression in later steps
+      if hTempData.length >= 1
+        sMatchKey = hTempData.keys[0]
+        sTemp = sMatchKey.split("_")
+        # Preparing a regular expression based on row / column
+        if bFilterByRow
+          sInfo = sTemp[0]
+          sRegEx = "(1_\\d+|" + sInfo + "_\\d+)"
+        else
+          sInfo = sTemp[1]
+          sRegEx = "(\\d+_1|\\d+_" + sInfo + ")"
+        end
+      else
+        # Create an error if unable to find a content with provided information
+        puts2(method_name + " - Unable to find row / column with content <" + sFilterByRowOn + ">","ERROR")
+        return hDataHash
+      end
+    else
+      # Eliminating a negative scenario for a non-blank search without index
+      if(sFilterByValue != "index")
+        puts2(method_name + " - Unhandled Scenario: sFilterByRowOn cannot be empty unless sFilterByValue <" + sFilterByValue + "> equals index","ERROR")
+        return hDataHash
+      end
+
+      sFilterByValueOn = (sFilterByValueOn.to_i + 1).to_s
+      # Fetching specific row based on provided index
+      sRegEx = "(1_\\d+|" + sFilterByValueOn + "_\\d+)"
+    end
+
+    puts2("Regular Expression: " + sRegEx.to_s) if $VERBOSE == true
+    hParsedData_Specific = hParsedData.select { |sKey, sValue| /^#{sRegEx}$/.match(sKey.to_s) }
+
+    # Delete non-required keys from the provided list
+    if(sFilterByValue != "index")
+      hParsedData_Specific.delete("1_1")
+      hParsedData_Specific.delete(sMatchKey)
+    end
+
+    # Perform advanced filter if specified
+    arParsedData_Specific = hParsedData_Specific.values
+    iLengthOfParsedData = hParsedData_Specific.length
+    iHalfLength = iLengthOfParsedData / 2
+    iCount = 1
+    aFirstSplit = []
+    aSecondSplit = []
+    if bFilterByRow
+      # Split existing array into equal half in order to prepare return
+      arParsedData_Specific.each_slice(iHalfLength) { |arDataSplit|
+        if iCount == 1
+          aFirstSplit = arDataSplit
+        else
+          aSecondSplit = arDataSplit
+        end
+        iCount = iCount + 1
+      }
+      # Create a hash to forward as return value
+      aFirstSplit.each_index { |iIndexValue|
+        hDataHash[aFirstSplit[iIndexValue]] = aSecondSplit[iIndexValue]
+      }
+    else
+      # For even's slice the hash into two and equally split the values
+      arParsedData_Specific.each_slice(2) { |arDataSplit|
+        hDataHash[arDataSplit[0]] = arDataSplit[1]
+      }
+    end
+
+    puts2("Filtered Information: " + hDataHash.to_s) if $VERBOSE==true
+
+    # Positive Scenario : If the user didn't request further filtering on data, provide back the created hash
+    # Send back data if primary filter is by index
+    if(sFilterByValue == "") || (sFilterByValue == "index")
+      puts2("Return the requested hash since requestor didn't request for further filtering of data") if $VERBOSE == true
+      return hDataHash
+    end
+
+    # Perform secondary filter when sFilterByValue equals value or key
+    if(sFilterByValue == "value")
+      hDataHash.keep_if { |sHashKey,sHashValue| sHashValue == sFilterByValueOn }
+      arDataArray = hDataHash.keys()
+    else
+      hDataHash.keep_if { |sHashKey,sHashValue| sHashKey == sFilterByValueOn }
+      arDataArray = hDataHash.values()
+    end
+
+    puts2("Advanced Filtered Information: " + arDataArray.to_s) if $VERBOSE==true
+    return arDataArray
+
+  end # END Method - parse_data_array()
 
   #=============================================================================#
   #--
