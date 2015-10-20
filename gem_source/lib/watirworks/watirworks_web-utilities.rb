@@ -5087,7 +5087,8 @@ class Watir::Browser
         sElementPlural = sElement + "s"
       end
       if(iCount >= 0) # skip for negative counts, as negative values indicate that the tag count is invalid
-        puts2("assert(#{sBrowserName}.#{sElementPlural}.length == #{iCount.to_s}) # Number of #{sElementPlural}")
+        puts2("assert(#{sBrowserName}.#{sElementPlural}.length == #{iCount.to_s}, 'ERROR - Wrong Tag count for #{sElementPlural}' ) # Number of #{sElementPlural}")
+        #puts2("assert(#{sBrowserName}.#{sElementPlural}.length == #{iCount.to_s}) # Number of #{sElementPlural}")
       end
 
     end
