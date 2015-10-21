@@ -127,7 +127,7 @@ require 'watir-webdriver'
 module WatirWorks_WebUtilities
 
   # Version of this module
-  WW_WEB_UTILITIES_VERSION = "1.2.2"
+  WW_WEB_UTILITIES_VERSION = "1.2.3"
 
   # Flag indicating if a browser was started
   $bBrowserStarted = false
@@ -4733,7 +4733,7 @@ class Watir::Browser
     aElements.each do | sElement |
 
       if((aSupportedHTMLElementNames.include?(sElement)) == false)
-        puts2("WARNING: HTML Element  " +  sElement + "  is NOT supported.", "WARN")
+        puts2("WARNING - HTML Element  " +  sElement + "  is NOT supported.", "WARN")
         return false
       end
 
@@ -4748,7 +4748,7 @@ class Watir::Browser
     puts2("# Verify title: ")
     puts2("###############\n\n")
     puts2("puts2(\"\t # Verify - title\")")
-    puts2("assert(#{sBrowserName}.title == \"" + sTitle + "\" )")
+    puts2("assert(#{sBrowserName}.title == \"" + sTitle + "\" , 'ERROR - Title not found')")
 
     # Loop for HTML Element types
     aElements.each do | sElement|
@@ -4947,7 +4947,7 @@ class Watir::Browser
       iElementCount = self.send(sElementPlural).length
 
       # Generate the test code for the tag count
-      puts2("assert(#{sBrowserName}.#{sElementPlural}.length == #{iElementCount.to_s}) # Number of #{sElementPlural}")
+      puts2("assert(#{sBrowserName}.#{sElementPlural}.length == #{iElementCount.to_s}, 'ERROR - Wrong number of #{sElementPlural}') # Number of #{sElementPlural}")
 
       # Only check existing elements
       if(iElementCount > 0)
@@ -4983,7 +4983,7 @@ class Watir::Browser
               #              end
 
               # puts2("#{sAttribute}  = " + mySetting.to_s)
-              puts2("assert(#{sBrowserName}.#{sElement}(:index, "+ iIndex.adjust_index.to_s + ").#{sAttribute} == #{mySetting} )")
+              puts2("assert(#{sBrowserName}.#{sElement}(:index, "+ iIndex.adjust_index.to_s + ").#{sAttribute} == #{mySetting}, 'ERROR - Wrong attribute setting: #{sAttribute} = #{mySetting}')")
 
             rescue
               # Element does not support the current attribute
@@ -5217,7 +5217,7 @@ class Watir::Browser
 
       # Get the major release number of current browser
       if($VERBOSE == true)
-        puts("self.driver = " + self.driver.capabilities[:version].to_s)
+        puts2("self.driver = " + self.driver.capabilities[:version].to_s)
       end
       sAcutalBrowserVersion = self.driver.capabilities[:version].prefix(".")
       sAcutalBrowserBrand = self.name.to_s
