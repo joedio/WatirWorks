@@ -242,7 +242,7 @@ module WatirWorks_WebUtilities
         aBrowsersToClose = ["all"]
 
       else
-        puts2(oBrowsersToClose.class.to_s + " class objects are NOT supported. Please use a nil, String, or Array of Strings.", "WARN")
+        puts2(oBrowsersToClose.class.to_s + " class objects are NOT supported. Please use a nil, String, or Array of Strings.", 'WARN')
 
         # Return the default value
         return  false
@@ -414,8 +414,8 @@ module WatirWorks_WebUtilities
 
   rescue => e
 
-    puts2("*** WARNING - Searching for String \"#{sSearch_String}\" ", "WARN")
-    puts2("*** WARNING and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"),"WARN")
+    puts2("WARNING - Searching for String \"#{sSearch_String}\" ", 'WARN')
+    puts2("WARNING and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"),'WARN')
 
   ensure
 
@@ -517,8 +517,8 @@ module WatirWorks_WebUtilities
 
   rescue => e
 
-    puts2("*** WARNING - Searching for String \"#{sSearch_String}\" ", "WARN")
-    puts2("*** WARNING and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"),"WARN")
+    puts2("WARNING - Searching for String \"#{sSearch_String}\" ", 'WARN')
+    puts2("WARNING and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"),'WARN')
 
   ensure
 
@@ -637,7 +637,7 @@ module WatirWorks_WebUtilities
           end
 
           #          else # There was a button in the row
-          #            puts2("*** WARNING - Button found - Skipping table #{iTableIndex.to_s}, row #{iRowIndex.to_s}", "WARN")
+          #            puts2("WARNING - Button found - Skipping table #{iTableIndex.to_s}, row #{iRowIndex.to_s}", 'WARN')
           #          end # Collect text if there are no buttons in the row
 
           ########################
@@ -702,8 +702,8 @@ module WatirWorks_WebUtilities
 
   rescue => e
 
-    puts2("*** WARNING - Searching for String \"#{sSearch_String}\" ", "WARN")
-    puts2("*** WARNING and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"),"WARN")
+    puts2("WARNING - Searching for String \"#{sSearch_String}\" ", 'WARN')
+    puts2("WARNING and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"),'WARN')
 
   ensure
 
@@ -888,7 +888,7 @@ module WatirWorks_WebUtilities
           end
 
           #          else # There was a button in the row
-          #            puts2("*** WARNING - Button found - Skipping table #{iTableIndex.to_s}, row #{iRowIndex.to_s}", "WARN")
+          #            puts2("WARNING - Button found - Skipping table #{iTableIndex.to_s}, row #{iRowIndex.to_s}", 'WARN')
           #          end # Collect text if there are no buttons in the row
 
           # Check the strings in the current row for matches
@@ -944,8 +944,8 @@ module WatirWorks_WebUtilities
 
   rescue => e
 
-    puts2("*** WARNING - Searching for Matching Strings", "WARN")
-    puts2("*** WARNING and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"),"WARN")
+    puts2("WARNING - Searching for Matching Strings", 'WARN')
+    puts2("WARNING and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"),'WARN')
 
   ensure
 
@@ -1725,9 +1725,9 @@ module WatirWorks_WebUtilities
 
         else # Text verification failed
 
-          puts2("*** WARNING - Verifying text", "WARN")
-          puts2("     Expected: " + sExpectedText, "WARN")
-          puts2("     Actual:   " + self.div(:class, sObjectIdentifier).text.strip, "WARN")
+          puts2("WARNING - Verifying text", 'WARN')
+          puts2("     Expected: " + sExpectedText, 'WARN')
+          puts2("     Actual:   " + self.div(:class, sObjectIdentifier).text.strip, 'WARN')
 
           if(bSaveIssues)
             # Save the HTML contents of the current web page to a file
@@ -1737,7 +1737,7 @@ module WatirWorks_WebUtilities
         end # Perform verification
       else # Verify the specified object exists on the page
 
-        puts2("*** WARNING - Unable to locate div(:class, \"" + sObjectIdentifier + "\") on page.", "WARNING")
+        puts2("WARNING - Unable to locate div(:class, \"" + sObjectIdentifier + "\") on page.", 'WARN')
 
         if(bSaveIssues)
           # Save an image capture of the current web page window as a BMP
@@ -1816,9 +1816,9 @@ module WatirWorks_WebUtilities
 
         else # Text verification failed
 
-          puts2("*** WARNING - Verifying text", "WARN")
-          puts2("     Expected: " + sExpectedText, "WARN")
-          puts2("     Actual:   " + self.div(:id, sObjectIdentifier).text.strip, "WARN")
+          puts2("WARNING - Verifying text", 'WARN')
+          puts2("     Expected: " + sExpectedText, 'WARN')
+          puts2("     Actual:   " + self.div(:id, sObjectIdentifier).text.strip, 'WARN')
 
           if(bSaveIssues)
             # Save the HTML <body> contents of the current web page to a file
@@ -1828,7 +1828,7 @@ module WatirWorks_WebUtilities
         end # Perform verification
       else # Verify the specified object exists on the page
 
-        puts2("*** WARNING - Unable to locate div(:id, \"" + sObjectIdentifier + "\") on page.", "WARN")
+        puts2("WARNING - Unable to locate div(:id, \"" + sObjectIdentifier + "\") on page.", 'WARN')
 
         if(bSaveIssues)
           # Save an image capture of the current web page window as a BMP
@@ -1912,9 +1912,9 @@ module WatirWorks_WebUtilities
 
         else # Text verification failed
 
-          puts2("*** WARNING - Verifying text", "WARN")
-          puts2("     Expected: " + sExpectedText, "WARN")
-          puts2("     Actual:   " + self.div(:index, iObjectIdentifier.adjust_index).text.strip, "WARN")
+          puts2("WARNING - Verifying text", 'WARN')
+          puts2("     Expected: " + sExpectedText, 'WARN')
+          puts2("     Actual:   " + self.div(:index, iObjectIdentifier.adjust_index).text.strip, 'WARN')
 
           if(bSaveIssues)
             # Save the HTML <body> contents of the current web page to a file
@@ -1924,7 +1924,7 @@ module WatirWorks_WebUtilities
         end # Perform verification
       else # Verify the specified object exists on the page
 
-        puts2("*** WARNING - Unable to locate div(:index, \"" + iObjectIdentifier.adjust_index.to_s + "\") on page.", "WARN")
+        puts2("WARNING - Unable to locate div(:index, \"" + iObjectIdentifier.adjust_index.to_s + "\") on page.", 'WARN')
 
         if(bSaveIssues)
           # Save an image capture of the current web page window as a BMP
@@ -2003,9 +2003,9 @@ module WatirWorks_WebUtilities
 
         else # Text verification failed
 
-          puts2("*** WARNING - Verifying text", "WARN")
-          puts2("     Expected: " + sExpectedText, "WARN")
-          puts2("     Actual:   " + self.div(:xpath, sObjectIdentifier).text.strip, "WARN")
+          puts2("WARNING - Verifying text", 'WARN')
+          puts2("     Expected: " + sExpectedText, 'WARN')
+          puts2("     Actual:   " + self.div(:xpath, sObjectIdentifier).text.strip, 'WARN')
 
           if(bSaveIssues)
             # Save the HTML <body> contents of the current web page to a file
@@ -2015,7 +2015,7 @@ module WatirWorks_WebUtilities
         end # Perform verification
       else # Verify the specified object exists on the page
 
-        puts2("*** WARNING - Unable to locate div(:xpath, \"" + sObjectIdentifier + "\") on page.", "WARN")
+        puts2("WARNING - Unable to locate div(:xpath, \"" + sObjectIdentifier + "\") on page.", 'WARN')
 
         if(bSaveIssues)
           # Save an image capture of the current web page window as a BMP
@@ -2093,9 +2093,9 @@ module WatirWorks_WebUtilities
 
         else # Text verification failed
 
-          puts2("*** WARNING - Verifying text", "WARN")
-          puts2("     Expected: " + sExpectedText, "WARN")
-          puts2("     Actual:   " + self.span(:class, sObjectIdentifier).text.strip, "WARN")
+          puts2("WARNING - Verifying text", 'WARN')
+          puts2("     Expected: " + sExpectedText, 'WARN')
+          puts2("     Actual:   " + self.span(:class, sObjectIdentifier).text.strip, 'WARN')
 
           if(bSaveIssues)
             # Save the HTML <body> contents of the current web page to a file
@@ -2105,7 +2105,7 @@ module WatirWorks_WebUtilities
         end # Perform verification
       else # Verify the specified object exists on the page
 
-        puts2("*** WARNING - Unable to locate span(:class, \"" + sObjectIdentifier + "\") on page.", "WARN")
+        puts2("WARNING - Unable to locate span(:class, \"" + sObjectIdentifier + "\") on page.", 'WARN')
 
         if(bSaveIssues)
           # Save an image capture of the current web page window as a BMP
@@ -2183,9 +2183,9 @@ module WatirWorks_WebUtilities
 
         else # Text verification failed
 
-          puts2("*** WARNING - Verifying text", "WARN")
-          puts2("     Expected: " + sExpectedText, "WARN")
-          puts2("     Actual:   " + self.span(:id, sObjectIdentifier).text.strip, "WARN")
+          puts2("WARNING - Verifying text", 'WARN')
+          puts2("     Expected: " + sExpectedText, 'WARN')
+          puts2("     Actual:   " + self.span(:id, sObjectIdentifier).text.strip, 'WARN')
 
           if(bSaveIssues)
             # Save an image capture of the current web page window as a BMP
@@ -2198,7 +2198,7 @@ module WatirWorks_WebUtilities
         end # Perform verification
       else # Verify the specified object exists on the page
 
-        puts2("*** WARNING - Unable to locate span(:id, \"" + sObjectIdentifier + "\") on page.", "WARN")
+        puts2("WARNING - Unable to locate span(:id, \"" + sObjectIdentifier + "\") on page.", 'WARN')
 
         if(bSaveIssues)
           # Save the HTML contents of the current web page to a file
@@ -2278,9 +2278,9 @@ module WatirWorks_WebUtilities
 
         else # Text verification failed
 
-          puts2("*** WARNING - Verifying text", "WARN")
-          puts2("     Expected: " + sExpectedText, "WARN")
-          puts2("     Actual:   " + self.span(:index, iObjectIdentifier.adjust_index).text.strip, "WARN")
+          puts2("WARNING - Verifying text", 'WARN')
+          puts2("     Expected: " + sExpectedText, 'WARN')
+          puts2("     Actual:   " + self.span(:index, iObjectIdentifier.adjust_index).text.strip, 'WARN')
 
           if(bSaveIssues)
             # Save the HTML <body> contents of the current web page to a file
@@ -2290,7 +2290,7 @@ module WatirWorks_WebUtilities
         end # Perform verification
       else # Verify the specified object exists on the page
 
-        puts2("*** WARNING - Unable to locate span(:index, \"" + iObjectIdentifier.adjust_index.to_s + "\") on page.", "WARN")
+        puts2("WARNING - Unable to locate span(:index, \"" + iObjectIdentifier.adjust_index.to_s + "\") on page.", 'WARN')
 
         if(bSaveIssues)
           # Save an image capture of the current web page window as a BMP
@@ -2368,9 +2368,9 @@ module WatirWorks_WebUtilities
 
         else # Text verification failed
 
-          puts2("*** WARNING - Verifying text", "WARN")
-          puts2("     Expected: " + sExpectedText, "WARN")
-          puts2("     Actual:   " + self.span(:xpath, sObjectIdentifier).text.strip, "WARN")
+          puts2("WARNING - Verifying text", 'WARN')
+          puts2("     Expected: " + sExpectedText, 'WARN')
+          puts2("     Actual:   " + self.span(:xpath, sObjectIdentifier).text.strip, 'WARN')
 
           if(bSaveIssues)
             # Save the HTML <body> contents of the current web page to a file
@@ -2380,7 +2380,7 @@ module WatirWorks_WebUtilities
         end # Perform verification
       else # Verify the specified object exists on the page
 
-        puts2("*** WARNING - Unable to locate span(:xpath, \"" + sObjectIdentifier + "\") on page.", "WARN")
+        puts2("WARNING - Unable to locate span(:xpath, \"" + sObjectIdentifier + "\") on page.", 'WARN')
 
         if(bSaveIssues)
           # Save an image capture of the current web page window as a BMP
@@ -2458,9 +2458,9 @@ module WatirWorks_WebUtilities
 
         else # Text verification failed
 
-          puts2("*** WARNING - Verifying text", "WARN")
-          puts2("     Expected: " + sExpectedText, "WARN")
-          puts2("     Actual:   " + self.table(:class, sObjectIdentifier).text.strip, "WARN")
+          puts2("WARNING - Verifying text", 'WARN')
+          puts2("     Expected: " + sExpectedText, 'WARN')
+          puts2("     Actual:   " + self.table(:class, sObjectIdentifier).text.strip, 'WARN')
 
           if(bSaveIssues)
             # Save the HTML <body> contents of the current web page to a file
@@ -2470,7 +2470,7 @@ module WatirWorks_WebUtilities
         end # Perform verification
       else # Verify the specified object exists on the page
 
-        puts2("*** WARNING - Unable to locate span(:class, \"" + sObjectIdentifier + "\") on page.", "WARN")
+        puts2("WARNING - Unable to locate span(:class, \"" + sObjectIdentifier + "\") on page.", 'WARN')
 
         if(bSaveIssues)
           # Save an image capture of the current web page window as a BMP
@@ -2548,9 +2548,9 @@ module WatirWorks_WebUtilities
 
         else # Text verification failed
 
-          puts2("*** WARNING - Verifying text", "WARN")
-          puts2("     Expected: " + sExpectedText, "WARN")
-          puts2("     Actual:   " + self.table(:id, sObjectIdentifier).text.strip, "WARN")
+          puts2("WARNING - Verifying text", 'WARN')
+          puts2("     Expected: " + sExpectedText, 'WARN')
+          puts2("     Actual:   " + self.table(:id, sObjectIdentifier).text.strip, 'WARN')
 
           if(bSaveIssues)
             # Save the HTML <body> contents of the current web page to a file
@@ -2560,7 +2560,7 @@ module WatirWorks_WebUtilities
         end # Perform verification
       else # Verify the specified object exists on the page
 
-        puts2("*** WARNING - Unable to locate table(:id, \"" + sObjectIdentifier + "\") on page.", "WARN")
+        puts2("WARNING - Unable to locate table(:id, \"" + sObjectIdentifier + "\") on page.", 'WARN')
 
         if(bSaveIssues)
           # Save an image capture of the current web page window as a BMP
@@ -2643,9 +2643,9 @@ module WatirWorks_WebUtilities
 
         else # Text verification failed
 
-          puts2("*** WARNING - Verifying text", "WARN")
-          puts2("     Expected: " + sExpectedText, "WARN")
-          puts2("     Actual:   " + self.table(:index, iObjectIdentifier.adjust_index).text.strip, "WARN")
+          puts2("WARNING - Verifying text", 'WARN')
+          puts2("     Expected: " + sExpectedText, 'WARN')
+          puts2("     Actual:   " + self.table(:index, iObjectIdentifier.adjust_index).text.strip, 'WARN')
 
           if(bSaveIssues)
             # Save the HTML <body> contents of the current web page to a file
@@ -2655,7 +2655,7 @@ module WatirWorks_WebUtilities
         end # Perform verification
       else # Verify the specified object exists on the page
 
-        puts2("*** WARNING - Unable to locate table(:index, \"" + iObjectIdentifier.adjust_index.to_s + "\") on page.", "WARN")
+        puts2("WARNING - Unable to locate table(:index, \"" + iObjectIdentifier.adjust_index.to_s + "\") on page.", 'WARN')
 
         if(bSaveIssues)
           # Save an image capture of the current web page window as a BMP
@@ -2740,10 +2740,10 @@ module WatirWorks_WebUtilities
 
         else # Text verification failed
 
-          puts2("*** WARNING - Verifying text", "WARN")
-          puts2("     Expected: " + sExpectedText, "WARN")
-          #puts2("     Actual:   " + self.table(:tag_name, sObjectIdentifier).text.strip, "WARN")
-          puts2("     Actual:   " + self.table(:name, sObjectIdentifier).text.strip, "WARN")
+          puts2("WARNING - Verifying text", 'WARN')
+          puts2("     Expected: " + sExpectedText, 'WARN')
+          #puts2("     Actual:   " + self.table(:tag_name, sObjectIdentifier).text.strip, 'WARN')
+          puts2("     Actual:   " + self.table(:name, sObjectIdentifier).text.strip, 'WARN')
 
           if(bSaveIssues)
             # Save the HTML <body> contents of the current web page to a file
@@ -2753,8 +2753,8 @@ module WatirWorks_WebUtilities
         end # Perform verification
       else # Verify the specified object exists on the page
 
-        #puts2("*** WARNING - Unable to locate table(:tag_name, \"" + sObjectIdentifier + "\") on page.", "WARN")
-        puts2("*** WARNING - Unable to locate table(:name, \"" + sObjectIdentifier + "\") on page.", "WARN")
+        #puts2("WARNING - Unable to locate table(:tag_name, \"" + sObjectIdentifier + "\") on page.", 'WARN')
+        puts2("WARNING - Unable to locate table(:name, \"" + sObjectIdentifier + "\") on page.", 'WARN')
 
         if(bSaveIssues)
           # Save an image capture of the current web page window as a BMP
@@ -2963,8 +2963,8 @@ module WatirWorks_WebUtilities
 
     rescue => e
 
-      puts2("*** WARNING - Problem reading table data by row", "WARN")
-      puts2("*** WARNING and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"),"WARN")
+      puts2("WARNING - Problem reading table data by row", 'WARN')
+      puts2("WARNING and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"),'WARN')
 
       if(bSaveIssues)
         # Save an image capture of the current web page
@@ -3334,13 +3334,13 @@ module WatirWorks_WebUtilities
 
     # Only continue of select list exists
     if !(self.select_list(:name, sMultiSelectListName).exists?)
-      puts2("*** WARNING - Unable to access multi select_list \"#{sMultiSelectListName.to_s}\"", "WARN")
+      puts2("WARNING - Unable to access multi select_list \"#{sMultiSelectListName.to_s}\"", 'WARN')
       return false
     end
 
     # Only continue of select list value is not nil
     if(aSelectValues == [])
-      puts2("*** WARNING - Unable to access multi select_list \"#{sMultiSelectListName.to_s}\", values \"[]\"", "WARN")
+      puts2("WARNING - Unable to access multi select_list \"#{sMultiSelectListName.to_s}\", values \"[]\"", 'WARN')
       return false
     end
 
@@ -3405,13 +3405,13 @@ module WatirWorks_WebUtilities
 
     # Only continue of select list exists
     if !(self.select_list(:id, sMultiSelectListID).exists?)
-      puts2("*** WARNING - Unable to access multi select_list \"#{sMultiSelectListID.to_s}\"", "WARN")
+      puts2("WARNING - Unable to access multi select_list \"#{sMultiSelectListID.to_s}\"", 'WARN')
       return false
     end
 
     # Only continue of select list value is not nil
     if(aSelectValues == [])
-      puts2("*** WARNING - Unable to access multi select_list \"#{sMultiSelectListID.to_s}\", values \"[]\"", "WARN")
+      puts2("WARNING - Unable to access multi select_list \"#{sMultiSelectListID.to_s}\", values \"[]\"", 'WARN')
       return false
     end
 
@@ -3479,13 +3479,13 @@ module WatirWorks_WebUtilities
 
     # Only continue of select list exists
     if !(self.select_list(:index, iMultiSelectListIndex.adjust_index).exists?)
-      puts2("*** WARNING - Unable to access multi select_list \"#{iMultiSelectListIndex.to_s}\"", "WARN")
+      puts2("WARNING - Unable to access multi select_list \"#{iMultiSelectListIndex.to_s}\"", 'WARN')
       return false
     end
 
     # Only continue of select list value is not nil
     if(aSelectValues == [])
-      puts2("*** WARNING - Unable to access multi select_list \"#{iMultiSelectListIndex.to_s}\", values \"[]\"", "WARN")
+      puts2("WARNING - Unable to access multi select_list \"#{iMultiSelectListIndex.to_s}\", values \"[]\"", 'WARN')
       return false
     end
 
@@ -3547,7 +3547,7 @@ module WatirWorks_WebUtilities
     # Only continue of select list name and value are not nil
     if((sSelectListName.to_s.upcase == "NIL") || (sSelectValue.to_s.upcase == "NIL"))
 
-      puts2("*** WARNING - Unable to access select_list \"#{sSelectListName.to_s}\", value \"#{sSelectValue.to_s}\"", "WARN")
+      puts2("WARNING - Unable to access select_list \"#{sSelectListName.to_s}\", value \"#{sSelectValue.to_s}\"", 'WARN')
       return false
 
     end # Only continue of select list name and value are not nil
@@ -3555,7 +3555,7 @@ module WatirWorks_WebUtilities
     # Only continue if the select list exists
     if((self.select_list(:name, sSelectListName).exists?) == false)
 
-      puts2("*** WARNING - Unable to access select_list #{sSelectListName}", "WARN")
+      puts2("WARNING - Unable to access select_list #{sSelectListName}", 'WARN')
       return false
 
     end # Only continue if the select list exists
@@ -3591,7 +3591,7 @@ module WatirWorks_WebUtilities
 
     else #  Select list value does NOT exist
       bReturnValue = false
-      puts2("*** WARNING - Unable to access value #{sSelectValue}", "WARN")
+      puts2("WARNING - Unable to access value #{sSelectValue}", 'WARN')
     end # Only continue if the select list value exists
 
     return bReturnValue
@@ -3642,7 +3642,7 @@ module WatirWorks_WebUtilities
     # Only continue of select list name and value are not nil
     if((sSelectListID.to_s.upcase == "NIL") || (sSelectValue.to_s.upcase == "NIL"))
 
-      puts2("*** WARNING - Unable to access select_list \"#{sSelectListID.to_s}\", value \"#{sSelectValue.to_s}\"", "WARN")
+      puts2("WARNING - Unable to access select_list \"#{sSelectListID.to_s}\", value \"#{sSelectValue.to_s}\"", 'WARN')
       return false
 
     end # Only continue of select list name and value are not nil
@@ -3650,7 +3650,7 @@ module WatirWorks_WebUtilities
     # Only continue if the select list exists
     if((self.select_list(:id, sSelectListID).exists?) == false)
 
-      puts2("*** WARNING - Unable to access select_list #{sSelectListID}", "WARN")
+      puts2("WARNING - Unable to access select_list #{sSelectListID}", 'WARN')
       return false
 
     end # Only continue if the select list exists
@@ -3688,7 +3688,7 @@ module WatirWorks_WebUtilities
 
     else #  Select list value does NOT exist
       bReturnValue = false
-      puts2("*** WARNING - Unable to access value #{sSelectValue}", "WARN")
+      puts2("WARNING - Unable to access value #{sSelectValue}", 'WARN')
     end # Only continue if the select list value exists
 
     return bReturnValue
@@ -3741,7 +3741,7 @@ module WatirWorks_WebUtilities
     # Only continue of select list name and value are not nil
     if((iSelectListIndex.to_s.upcase == "NIL") || (sSelectValue.to_s.upcase == "NIL"))
 
-      puts2("*** WARNING - Unable to access select_list \"#{iSelectListIndex.to_s}\", value \"#{sSelectValue.to_s}\"", "WARN")
+      puts2("WARNING - Unable to access select_list \"#{iSelectListIndex.to_s}\", value \"#{sSelectValue.to_s}\"", 'WARN')
       return false
 
     end # Only continue of select list name and value are not nil
@@ -3749,7 +3749,7 @@ module WatirWorks_WebUtilities
     # Only continue if the select list exists
     if((self.select_list(:index, iSelectListIndex.adjust_index).exists?) == false)
 
-      puts2("*** WARNING - Unable to access select_list #{iSelectListIndex}", "WARN")
+      puts2("WARNING - Unable to access select_list #{iSelectListIndex}", 'WARN')
       return false
 
     end # Only continue if the select list exists
@@ -3786,7 +3786,7 @@ module WatirWorks_WebUtilities
 
     else #  Select list value does NOT exist
       bReturnValue = false
-      puts2("*** WARNING - Unable to access value #{sSelectValue}", "WARN")
+      puts2("WARNING - Unable to access value #{sSelectValue}", 'WARN')
     end # Only continue if the select list value exists
 
     return bReturnValue
@@ -3888,19 +3888,17 @@ module WatirWorks_WebUtilities
       else
         puts2("  Starting Chrome on OSX...")
       end
-      oBrowser = Watir::Browser.new :chrome
+      oBrowser = Watir::Browser.new :chrome #, :profile => 'default'
       $bStartedBrowser = true
 
-=begin
     when /^e.*/
-      if (is_win?(10) == true)
+      if (is_win?() == true)
         puts2("  Starting Edge on Windows...")
-        oBrowser = Watir::Browser.new :edge
+        oBrowser = Watir::Browser.new :edge #, :profile => 'default'
         $bStartedBrowser = true
       else
-        puts2("  Edge is not supported on this OS")
+        puts2("WARNING - Edge is not supported on this OS", 'WARN')
       end
-=end
 
     when  /^f.*/
       if (is_win? == true)
@@ -3911,23 +3909,16 @@ module WatirWorks_WebUtilities
         puts2("  Starting Firefox on OSX...")
       end
 
-      # Don't think this is needed any more
-      #
-      #sChromePath = ENV["CHROMEDRIVER_HOME"]
-      #sChromePath = sChromePath.gsub(/\\/, "/")
-      #puts2("\t Chrome driver = " + sChromePath)
-      #setenv("PATH", sChromePath)
-
-      oBrowser = Watir::Browser.new :firefox
+      oBrowser = Watir::Browser.new :firefox #, :profile => 'default'
       $bStartedBrowser = true
 
     when  /^i.*/
       if (is_win? == true)
-        oBrowser = Watir::Browser.new :ie
+        oBrowser = Watir::Browser.new :ie #, :profile => 'default'
         $bStartedBrowser = true
         puts2("  Starting Internet Explorer on Windows...")
       else
-        puts2("  Internet Explorer is not supported on this OS")
+        puts2("WARNING - Internet Explorer is not supported on this OS", 'WARN')
       end
 
     when /^o.*/
@@ -3936,15 +3927,15 @@ module WatirWorks_WebUtilities
       else
         puts2("  Starting Opera on OSX...")
       end
-      oBrowser = Watir::Browser.new :opera
+      oBrowser = Watir::Browser.new :opera #, :profile => 'default'
       $bStartedBrowser = true
 
     when /^s.*/
       if (is_win? == true)
-        puts2("  Safari is not supported on this OS")
+        puts2("WARNING - Safari is not supported on this OS", 'WARN')
       else
         puts2("  Starting Safari on OSX...")
-        oBrowser = Watir::Browser.new :safari
+        oBrowser = Watir::Browser.new :safari #, :profile => 'default'
         $bStartedBrowser = true
       end
 
@@ -3953,31 +3944,20 @@ module WatirWorks_WebUtilities
     Watir::Wait.until{oBrowser.exists?}
     puts2("  Browser version = " + oBrowser.version.to_s)
 
-    # TIhs was causing failures in many other nethids so commented it out
-    # until I can degug and figure out a fix, (if any) is possible.
-    # Set a tiemout for the driver that is different then the standard 60 sec.
-    #oBrowser.driver.manage.timeouts.implicit_wait = iDriverTimeout
-
-    # Sixe & position the browser window
+    # Size & position the browser window
     oBrowser.window.move_to(iXpos, iYpos)
-    #(oBrowser.window.position.x == iXpos).until($iMaxWaitTime)
-    #(oBrowser.window.position.y == iYpos).until($iMaxWaitTime)
     Watir::Wait.until{oBrowser.window.position.x == iXpos}
     Watir::Wait.until{oBrowser.window.position.y == iYpos}
 
     oBrowser.window.resize_to(iWidth, iHeight)
-    #(oBrowser.window.size.width == iWidth).until($iMaxWaitTime)
-    #(oBrowser.window.size.height == iHeight).until($iMaxWaitTime)
     Watir::Wait.until{oBrowser.window.size.height ==  iHeight}
     Watir::Wait.until{oBrowser.window.size.width == iWidth}
 
     # Load the URL
     oBrowser.goto(sURL)
-    #(oBrowser.url == sUR).until($iMaxWaitTime)
-    #Watir::Wait.until{oBrowser.url == sURL}
 
     # Allow time to celebrate the birth of the new browser.
-    #sleep 2  # That's long enough to celebrate
+    sleep 2  # That's long enough to celebrate
 
     # Set global flag for use in various methods or tests to determine if a browser was started
     $bBrowserStarted = true
@@ -4188,7 +4168,7 @@ class Watir::Browser
       aElementsToCount = ["All"]
 
     else
-      puts2(oElementToCount.class.to_s + " class objects are NOT supported. Please use a nil, String or Array of Strings.", "WARN")
+      puts2(oElementToCount.class.to_s + " class objects are NOT supported. Please use a nil, String or Array of Strings.", 'WARN')
 
       # Return the default value
       return  hObjectsFound
@@ -4598,8 +4578,6 @@ class Watir::Browser
   #           To generate testcode for only IMAGE  and LINK objects on the page in the current web browser:
   #                 $browser.generate_testcode_html_tag_attributes(["image", "link"])
   #
-  #
-  # TODO - image : NotImplementedError: not currently supported by WebDriver
   #=============================================================================#
   def generate_testcode_html_tag_attributes(oElementsToCheck="all", sBrowserName="$browser")
 
@@ -4611,15 +4589,6 @@ class Watir::Browser
 
     # Define the elements to check
     aSupportedHTMLElementNames = SUPPORTED_HTML_ELEMENTS
-
-=begin
-    # Remove the unsupported elements form the supported list
-    if(is_safari? == true)
-      SAFARIWATIR_UNSUPPORTED_HTML_ELEMENTS.each do |sUnsupportedElement |
-        aSupportedHTMLElementNames.delete(sUnsupportedElement)
-      end
-    end # Remove the unsupported elements form the supported list
-=end
 
     # Define the element attributes to collect
     aAttributes = []
@@ -4707,7 +4676,7 @@ class Watir::Browser
       aElements = aSupportedHTMLElementNames
 
     else
-      puts2(oElementsToCheck.class.to_s + " class objects are NOT supported. Please use a nil, String or Array of Strings.", "WARN")
+      puts2(oElementsToCheck.class.to_s + " class objects are NOT supported. Please use a nil, String or Array of Strings.", 'WARN')
       return  false
 
     end # Determine the object type
@@ -4717,23 +4686,27 @@ class Watir::Browser
       aElements = aSupportedHTMLElementNames
     end
 
+=begin
     # Remove any Elements that are NOT supported by Firewatir
     if(self.is_firefox?)
-      #puts2("*** Skipping HTML Element that is NOT supported by Firewatir - form", "WARN")
+      #puts2("WARNING - Skipping HTML Element that is NOT supported by Firewatir - form", 'WARN')
       aElements.delete("form")
     end
+=end
 
+=begin
     # Remove any Elements that are NOT supported by IE
     if(self.is_ie?)
-      #puts2("WARNING: Skipping HTML Element that has issues with IE - form")
+      #puts2("WARNING -Skipping HTML Element that has issues with IE - form", 'WARN')
       aElements.delete("form")
     end
+=end
 
     # Validate that the current element is valid
     aElements.each do | sElement |
 
       if((aSupportedHTMLElementNames.include?(sElement)) == false)
-        puts2("WARNING - HTML Element  " +  sElement + "  is NOT supported.", "WARN")
+        puts2("WARNING - HTML Element  " +  sElement + "  is NOT supported.", 'WARN')
         return false
       end
 
@@ -4748,7 +4721,7 @@ class Watir::Browser
     puts2("# Verify title: ")
     puts2("###############\n\n")
     puts2("puts2(\"\t # Verify - title\")")
-    puts2("assert(#{sBrowserName}.title == \"" + sTitle + "\" , 'ERROR - Title not found')")
+    puts2("assert(#{sBrowserName}.title == \"" + sTitle + "\" , 'WARNING - Title not found')", 'WARN')
 
     # Loop for HTML Element types
     aElements.each do | sElement|
@@ -4947,7 +4920,7 @@ class Watir::Browser
       iElementCount = self.send(sElementPlural).length
 
       # Generate the test code for the tag count
-      puts2("assert(#{sBrowserName}.#{sElementPlural}.length == #{iElementCount.to_s}, 'ERROR - Wrong number of #{sElementPlural}') # Number of #{sElementPlural}")
+      puts2("assert(#{sBrowserName}.#{sElementPlural}.length == #{iElementCount.to_s}, 'WARNING - Wrong number of #{sElementPlural}') # Number of #{sElementPlural}", 'WARN')
 
       # Only check existing elements
       if(iElementCount > 0)
@@ -4983,7 +4956,7 @@ class Watir::Browser
               #              end
 
               # puts2("#{sAttribute}  = " + mySetting.to_s)
-              puts2("assert(#{sBrowserName}.#{sElement}(:index, "+ iIndex.adjust_index.to_s + ").#{sAttribute} == #{mySetting}, 'ERROR - Wrong attribute setting: #{sAttribute} = #{mySetting}')")
+              puts2("assert(#{sBrowserName}.#{sElement}(:index, "+ iIndex.adjust_index.to_s + ").#{sAttribute} == #{mySetting}, 'WARNING - Wrong attribute setting: #{sAttribute} = #{mySetting}'), 'WARN'")
 
             rescue
               # Element does not support the current attribute
@@ -5087,8 +5060,7 @@ class Watir::Browser
         sElementPlural = sElement + "s"
       end
       if(iCount >= 0) # skip for negative counts, as negative values indicate that the tag count is invalid
-        puts2("assert(#{sBrowserName}.#{sElementPlural}.length == #{iCount.to_s}, 'ERROR - Wrong Tag count for #{sElementPlural}' ) # Number of #{sElementPlural}")
-        #puts2("assert(#{sBrowserName}.#{sElementPlural}.length == #{iCount.to_s}) # Number of #{sElementPlural}")
+        puts2("assert(#{sBrowserName}.#{sElementPlural}.length == #{iCount.to_s}, 'WARNING - Wrong Tag count for #{sElementPlural}') # Number of #{sElementPlural}", 'WARN')
       end
 
     end
@@ -5408,7 +5380,7 @@ class Watir::Browser
 
     rescue => e
 
-      puts2("*** WARNING and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"), "WARN")
+      puts2("WARNING and Backtrace: " + e.message + "\n" + e.backtrace.join("\n"), 'WARN')
 
     ensure
 
@@ -5733,7 +5705,7 @@ class Watir::Browser
       aElements = SUPPORTED_HTML_ELEMENTS
 
     else
-      puts2(oElementsToShow.class.to_s + " class objects are NOT supported. Please use a nil, String or Array of Strings.", "WARN")
+      puts2(oElementsToShow.class.to_s + " class objects are NOT supported. Please use a nil, String or Array of Strings.", 'WARN')
       return  false
 
     end # Determine the object type
@@ -5745,20 +5717,20 @@ class Watir::Browser
 
     # Remove any Elements that are NOT supported by Firewatir
     if(self.is_firefox?)
-      #puts2("*** Skipping HTML Element that is NOT supported by Firewatir - form", "WARN")
+      #puts2("*** Skipping HTML Element that is NOT supported by Firewatir - form", 'WARN')
       aElements.delete("form")
     end
 
     # Remove any Elements that are NOT supported by IE
     if(self.is_ie?)
-      #puts2("WARNING: Skipping HTML Element that has issues with IE - form", "WARN")
+      #puts2("WARNING - Skipping HTML Element that has issues with IE - form", 'WARN')
       aElements.delete("form")
     end
 
     # Validate that the current element is valid
     aElements.each do | sElement |
       if((SUPPORTED_HTML_ELEMENTS.include?(sElement)) == false)
-        puts2("WARNING: HTML Element  " +  sElement + "  is NOT supported.", "WARN")
+        puts2("WARNING - HTML Element  " +  sElement + "  is NOT supported.", 'WARN')
         return false
       end
 
