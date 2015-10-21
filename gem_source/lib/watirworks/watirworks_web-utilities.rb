@@ -3946,12 +3946,12 @@ module WatirWorks_WebUtilities
 
     # Size & position the browser window
     oBrowser.window.move_to(iXpos, iYpos)
-    Watir::Wait.until{oBrowser.window.position.x == iXpos}
-    Watir::Wait.until{oBrowser.window.position.y == iYpos}
+    #Watir::Wait.until{oBrowser.window.position.x == iXpos}
+    #Watir::Wait.until{oBrowser.window.position.y == iYpos}
 
     oBrowser.window.resize_to(iWidth, iHeight)
-    Watir::Wait.until{oBrowser.window.size.height ==  iHeight}
-    Watir::Wait.until{oBrowser.window.size.width == iWidth}
+    #Watir::Wait.until{oBrowser.window.size.height ==  iHeight}
+    #Watir::Wait.until{oBrowser.window.size.width == iWidth}
 
     # Load the URL
     oBrowser.goto(sURL)
