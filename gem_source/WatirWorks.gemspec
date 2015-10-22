@@ -14,6 +14,7 @@ spec = Gem::Specification.new do |s|
   #s.has_rdoc = true
   #s.test_files = Dir.glob("unittests/*.rb")
   s.required_ruby_version = '>= 1.9.3'
+  s.add_runtime_dependency 'test-unit', '~> 3.1', '>= 3.1.5'
   s.add_runtime_dependency 'roo', '~> 2.1', '>= 2.1.1'
   s.add_runtime_dependency 'roo-xls', '~> 1.0', '>= 1.0.0'
   s.add_runtime_dependency 'rautomation', '~> 0.17', '>= 0.17.0'
