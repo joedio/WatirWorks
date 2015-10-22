@@ -5480,8 +5480,8 @@ class Watir::Browser
 
     if($VERBOSE == true)
       puts2("Parameters - save_html:")
-      puts2("  sFileNamePrefix: " + sFileNamePrefix)
-      puts2("  sOutputDir: " + sOutputDir)
+      puts2("  sFileNamePrefix: " + sFileNamePrefix.to_s)
+      puts2("  sOutputDir: " + sOutputDir.to_s)
     end
 
     # Use the log file's directoy if none was specified
@@ -5529,8 +5529,8 @@ class Watir::Browser
 
     if($VERBOSE == true)
       puts2("Parameters - save_screencapture:")
-      puts2("  sFileName: " + sFileName)
-      puts2("  sOutputDir: " + sOutputDir)
+      puts2("  sFileName: " + sFileName.to_s)
+      puts2("  sOutputDir: " + sOutputDir.to_s)
     end
 
     # Use the log file's directoy if none was specified
@@ -5544,7 +5544,7 @@ class Watir::Browser
     end # Use the log file's directoy
 
     # Save .png file in the output dir with the specified name
-    sFullFileName = ($sOutputDir + File.join("/") + File.join(sFileName) + "_" + Time.now.strftime(DATETIME_FILEFORMAT) + File.join(".png"))
+    sFullFileName = (sOutputDir + File.join("/") + File.join(sFileName) + "_" + Time.now.strftime(DATETIME_FILEFORMAT) + File.join(".png"))
 
     self.screenshot.save(sFullFileName)
     puts2("Saved screenshot to: " + sFullFileName)
