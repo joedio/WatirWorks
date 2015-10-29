@@ -127,7 +127,7 @@ require 'watir-webdriver'
 module WatirWorks_WebUtilities
 
   # Version of this module
-  WW_WEB_UTILITIES_VERSION = "1.2.3"
+  WW_WEB_UTILITIES_VERSION = "1.2.4"
 
   # Flag indicating if a browser was started
   $bBrowserStarted = false
@@ -3884,16 +3884,16 @@ module WatirWorks_WebUtilities
 
     when /^c.*/
       if (is_win? == true)
-        puts2("\n\tStarting Chrome on Windows...")
+        puts2("\nStarting Chrome on Windows...")
       else
-        puts2("\n\tStarting Chrome on OSX...")
+        puts2("\nStarting Chrome on OSX...")
       end
       oBrowser = Watir::Browser.new :chrome #, :profile => 'default'
       $bStartedBrowser = true
 
     when /^e.*/
       if (is_win?() == true)
-        puts2("\n\tStarting Edge on Windows...")
+        puts2("\nStarting Edge on Windows...")
         oBrowser = Watir::Browser.new :edge #, :profile => 'default'
         $bStartedBrowser = true
       else
@@ -3903,10 +3903,10 @@ module WatirWorks_WebUtilities
     when  /^f.*/
       if (is_win? == true)
         Selenium::WebDriver::Firefox::Binary.path = "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe"
-        puts2("\n\tStarting Firefox on Windows...")
+        puts2("\nStarting Firefox on Windows...")
       else
         Selenium::WebDriver::Firefox::Binary.path = "/Applications/Firefox.app/Contents/MacOS/firefox"
-        puts2("\n\tStarting Firefox on OSX...")
+        puts2("\nStarting Firefox on OSX...")
       end
 
       oBrowser = Watir::Browser.new :firefox #, :profile => 'default'
@@ -3916,16 +3916,16 @@ module WatirWorks_WebUtilities
       if (is_win? == true)
         oBrowser = Watir::Browser.new :ie #, :profile => 'default'
         $bStartedBrowser = true
-        puts2("\n\tStarting Internet Explorer on Windows...")
+        puts2("\nStarting Internet Explorer on Windows...")
       else
         puts2("WARNING - Internet Explorer is not supported on this OS", 'WARN')
       end
 
     when /^o.*/
       if (is_win? == true)
-        puts2("\n\tStarting Opera on Windows")
+        puts2("\nStarting Opera on Windows")
       else
-        puts2("\n\tStarting Opera on OSX...")
+        puts2("\nStarting Opera on OSX...")
       end
       oBrowser = Watir::Browser.new :opera #, :profile => 'default'
       $bStartedBrowser = true
@@ -3934,7 +3934,7 @@ module WatirWorks_WebUtilities
       if (is_win? == true)
         puts2("WARNING - Safari is not supported on this OS", 'WARN')
       else
-        puts2("\n\tStarting Safari on OSX...")
+        puts2("\nStarting Safari on OSX...")
         oBrowser = Watir::Browser.new :safari #, :profile => 'default'
         $bStartedBrowser = true
       end
@@ -3942,7 +3942,7 @@ module WatirWorks_WebUtilities
     end  # Start the specified browser
 
     Watir::Wait.until{oBrowser.exists?}
-    puts2(" \tBrowser version = " + oBrowser.version.to_s)
+    puts2("\tBrowser version = " + oBrowser.version.to_s)
 
     # Size & position the browser window
     oBrowser.window.move_to(iXpos, iYpos)
