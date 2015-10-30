@@ -309,6 +309,18 @@ class Unittest_Browser < Test::Unit::TestCase
       puts("  URL = " + oBrowser.url)
       puts("  Title = " + oBrowser.title)
 
+      puts2("Focus the cursor on 1st div...")
+      oBrowser.div(:id, "searchform").focus
+      sleep(1)
+
+      puts2("Hover the cursor on 1st div...")
+      oBrowser.div(:id, "searchform").hover
+      sleep(1)
+
+      puts2("Click the cursor on 1st div...")
+      oBrowser.div(:id, "searchform").click
+      sleep(1)
+
       puts2("\nAbout to close the current browser")
       puts2("  Does browser exist? = " + oBrowser.exists?.to_s)
       puts2("  Does window exist? = " + oBrowser.window.exists?.to_s)
