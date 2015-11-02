@@ -3888,7 +3888,8 @@ module WatirWorks_WebUtilities
       else
         puts2("\nStarting Chrome on OSX...")
       end
-      oBrowser = Watir::Browser.new :chrome #, :profile => 'default'
+
+      oBrowser = Watir::Browser.new :chrome, :switches => %w[--test-type --allow-running-insecure-content] #, :profile => 'default'
       $bStartedBrowser = true
 
     when /^e.*/
