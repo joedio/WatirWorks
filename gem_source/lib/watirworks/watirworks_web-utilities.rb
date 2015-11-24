@@ -3863,6 +3863,7 @@ module WatirWorks_WebUtilities
       puts2("  iHeight: " + iHeight.to_s)
       puts2("  iXpos: " + iXpos.to_s)
       puts2("  iYpos: " + iYpos.to_s)
+      #puts2("  sProfile: " + sProfile.to_s)
       puts2("  iDriverTimeout: " + iDriverTimeout.to_s)
 
     end
@@ -3871,7 +3872,7 @@ module WatirWorks_WebUtilities
     sBrowserType = sBrowserType.to_s.downcase
 
     if($browser != nil) # If current Browser object is a Global Browser Object don't start an new one
-      puts2("  Global browser object already started.")
+      puts2("WARNING - Global browser object already started.",'WARN')
       return $browser
     end
 
@@ -3883,28 +3884,35 @@ module WatirWorks_WebUtilities
         puts2("\nStarting Chrome on Windows...")
       else
         puts2("\nStarting Chrome on OSX...")
-      end
+      end # when Chrome
 
       oBrowser = Watir::Browser.new :chrome, :switches => %w[--test-type --allow-running-insecure-content] #, :profile => 'default'
       $bStartedBrowser = true
 
     when /^e.*/
-      if (is_win?() == true)
+      if(is_win?() == true)
         puts2("\nStarting Edge on Windows...")
         oBrowser = Watir::Browser.new :edge #, :profile => 'default'
         $bStartedBrowser = true
       else
         puts2("WARNING - Edge is not supported on this OS", 'WARN')
-      end
+      end # when Edge
 
     when  /^f.*/
-      if (is_win? == true)
-        Selenium::WebDriver::Firefox::Binary.path = "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe"
-        puts2("\nStarting Firefox on Windows...")
+      if(is_win? == true)
+        # The 32-bit Firefox browser installs in different folder on Win32 vs. Win64 bit OS's
+        if(is_win32?() == true)
+          Selenium::WebDriver::Firefox::Binary.path = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
+          puts2("\nStarting Firefox on Windows(32-bit)...")
+        else
+          Selenium::WebDriver::Firefox::Binary.path = "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe"
+          puts2("\nStarting Firefox on Windows(64-bit)...")
+        end
+
       else
         Selenium::WebDriver::Firefox::Binary.path = "/Applications/Firefox.app/Contents/MacOS/firefox"
         puts2("\nStarting Firefox on OSX...")
-      end
+      end # when firefox
 
       oBrowser = Watir::Browser.new :firefox #, :profile => 'default'
       $bStartedBrowser = true
@@ -3916,14 +3924,14 @@ module WatirWorks_WebUtilities
         puts2("\nStarting Internet Explorer on Windows...")
       else
         puts2("WARNING - Internet Explorer is not supported on this OS", 'WARN')
-      end
+      end # when IE
 
     when /^o.*/
       if (is_win? == true)
         puts2("\nStarting Opera on Windows")
       else
         puts2("\nStarting Opera on OSX...")
-      end
+      end # When Opera
       oBrowser = Watir::Browser.new :opera #, :profile => 'default'
       $bStartedBrowser = true
 
@@ -3934,7 +3942,7 @@ module WatirWorks_WebUtilities
         puts2("\nStarting Safari on OSX...")
         oBrowser = Watir::Browser.new :safari #, :profile => 'default'
         $bStartedBrowser = true
-      end
+      end # when Safair
 
     end  # Start the specified browser
 
