@@ -3901,10 +3901,10 @@ module WatirWorks_WebUtilities
     when  /^f.*/
       if(is_win? == true)
         # The 32-bit Firefox browser installs in different folder on Win32 vs. Win64 bit OS's
-        if(is_win32?() == true)
-          Selenium::WebDriver::Firefox::Binary.path = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
-          puts2("\nStarting Firefox on Windows(32-bit)...")
-        else
+        #if(is_win32?() == true)
+        #  Selenium::WebDriver::Firefox::Binary.path = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
+        #  puts2("\nStarting Firefox on Windows(32-bit)...")
+        #else
           Selenium::WebDriver::Firefox::Binary.path = "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe"
           puts2("\nStarting Firefox on Windows(64-bit)...")
         end
