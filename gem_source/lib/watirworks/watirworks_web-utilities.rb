@@ -3907,7 +3907,7 @@ module WatirWorks_WebUtilities
         #else
           Selenium::WebDriver::Firefox::Binary.path = "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe"
           puts2("\nStarting Firefox on Windows(64-bit)...")
-        end
+        #end
 
       else
         Selenium::WebDriver::Firefox::Binary.path = "/Applications/Firefox.app/Contents/MacOS/firefox"
