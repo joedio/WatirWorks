@@ -228,6 +228,25 @@ class UnitTest_Windows < Test::Unit::TestCase
 
   end # end Testcase - test_Windows_003_getWindowsVersion
 
+  #===========================================================================#
+  # Testcase method: test_Windows_004_displayOSVersion
+  #
+  # Description: Test methods:
+  #                 displayOSVersion()
+  #
+  #===========================================================================#
+  def test_Windows_004_displayOSVersion
+
+    puts2("")
+    puts2("#######################")
+    puts2("Testcase: test_Windows_004_displayOSVersion")
+    puts2("#######################")
+
+    # Display the OS Version
+    displayOSVersion()
+
+  end # end Testcase - test_Windows_004_displayOSVersion
+
   #=============================================================================#
   #--
   # Method: parseWinRegistryKey(...)
@@ -402,7 +421,7 @@ class UnitTest_Windows < Test::Unit::TestCase
   # Syntax: N/A
   #
   # Usage:
-  #          sWinVersion = getWindowsVersion()   # => '8.1'
+  #          sWinVersion = getWindowsVersion()   # => 'Windows 8.1 Enterprise'
   #=============================================================================#
   def getWindowsVersion()
 
@@ -435,9 +454,42 @@ class UnitTest_Windows < Test::Unit::TestCase
       puts2("\tFound:  " + sRegFullpath.to_s + " = " + sKeyValue.to_s)
     end
 
-    # Strip
-    return sKeyValue
+    return sKeyValue.to_s
 
-  end # Method - getWindowsVersion(...)
+  end # Method - getWindowsVersion()
+
+  #=============================================================================#
+  #--
+  # Method: displayOSVersion()
+  #
+  # TODO - Move to watirworks_utilities.rb
+  #++
+  #
+  # Description: Outputs the OS version
+  #
+  # HINT: Save to a log file along with the results of the test.
+  #
+  # Returns: N/A
+  # Syntax: N/A
+  #
+  # Usage: displayOSVersion()
+  #=============================================================================#
+  def displayOSVersion()
+
+    if(is_win? == true)
+      sOSVersion = getWindowsVersion()
+    end
+
+    if(is_osx? == true)
+      sOSVersion = 'OSX'
+    end
+
+    if(is_linux? == true)
+      sOSVersion = 'Linux'
+    end
+
+    puts2("\nOS = " + sOSVersion.to_s)
+
+  end # Method - displayOSVersion()
 
 end # end of Class - UnitTest_Windows
