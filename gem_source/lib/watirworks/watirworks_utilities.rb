@@ -75,6 +75,7 @@ include WatirWorks_RefLib #  WatirWorks Reference data module
 #   display_ruby_environment()
 #   display_watir_env()
 #   display_watirworks_env(...)
+#   display_OSVersion()
 #   filter_file_list(...)
 #   find_folder_in_tree(...)
 #   find_tmp_dir()
@@ -122,7 +123,7 @@ include WatirWorks_RefLib #  WatirWorks Reference data module
 module WatirWorks_Utilities
 
   # Version of this module
-  WW_UTILITIES_VERSION =  "1.0.13"
+  WW_UTILITIES_VERSION =  "1.0.14"
 
   # Format to use when appending a timestamp to file names
   DATETIME_FILEFORMAT="%Y_%m_%d_%H%M%S"
@@ -979,6 +980,39 @@ module WatirWorks_Utilities
     end # End of O/S loop
 
   end # Method - display_os_environment()
+
+  #=============================================================================#
+  #--
+  # Method: display_OSVersion()
+  #
+  #++
+  #
+  # Description: Outputs the OS version
+  #
+  # HINT: Save to a log file along with the results of the test.
+  #
+  # Returns: N/A
+  # Syntax: N/A
+  #
+  # Usage: display_OSVersion()
+  #=============================================================================#
+  def display_OSVersion()
+
+    if(is_win? == true)
+      sOSVersion = getWindowsVersion()
+    end
+
+    if(is_osx? == true)
+      sOSVersion = 'OSX'
+    end
+
+    if(is_linux? == true)
+      sOSVersion = 'Linux'
+    end
+
+    puts2("\nOS = " + sOSVersion.to_s)
+
+  end # Method - display_OSVersion()
 
   #=============================================================================#
   #--

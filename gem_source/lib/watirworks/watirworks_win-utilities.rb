@@ -38,6 +38,7 @@ require 'rubygems'
 
 # WatirWorks
 require 'watirworks'  # The WatirWorks library loader
+
 include WatirWorks_Utilities  # The WatirWorks Utilities Library
 
 # Watir-WebDriver
@@ -70,6 +71,7 @@ require 'watir-webdriver'
 #
 # Methods:
 #    exit_browsers_win(...)
+#    getWindowsVersion(...)
 #    get_windows()
 #    handle_win_dialog_confirm_saveas(...)
 #    handle_win_dialog_download_complete(...)
@@ -78,7 +80,8 @@ require 'watir-webdriver'
 #    is_minimized?(...)
 #    is_maximized?(...)
 #    open_messagebox_win(...)
-#    pause(...
+#    pause(...)
+#    parseWinRegistryKey(...)
 #    parse_spreadsheet()
 #    parse_workbook()
 #    save_screencapture_win(...)
@@ -89,7 +92,7 @@ require 'watir-webdriver'
 module WatirWorks_WinUtilities
 
   # Version of this module
-  WW_WIN_UTILITIES_VERSION =  "1.0.3"
+  WW_WIN_UTILITIES_VERSION =  "1.0.4"
 
   #===============================
   # Button codes for Window's Message box
@@ -112,7 +115,6 @@ module WatirWorks_WinUtilities
   SELECTED_IGNORE = 5
   SELECTED_YES = 6
   SELECTED_NO = 7
-
   #=============================================================================#
   #--
   # Method: exit_browsers_win()
@@ -147,6 +149,56 @@ module WatirWorks_WinUtilities
     return exit_browsers(oBrowsersToClose)
 
   end # End Function - exit_browsers_win
+
+  #=============================================================================#
+  #--
+  # Method: getWindowsVersion()
+  #
+  #++
+  #
+  # Description: Returns the Windows version from the Registry
+  #
+  # Returns: STRING - Value read from the Registry
+  #
+  # Syntax: N/A
+  #
+  # Usage:
+  #          sWinVersion = getWindowsVersion()   # => 'Windows 8.1 Enterprise'
+  #=============================================================================#
+  def getWindowsVersion()
+
+    #$VERBOSE = true
+
+    if($VERBOSE == true)
+      puts2("Parameters - getWindowsVersion:")
+      #puts2("  sXXX= " + sXXX.to_s)
+    end
+
+    # Define a Windows Registry key to be read
+    sRegHive = 'HKEY_LOCAL_MACHINE'
+    sRegPath = 'SOFTWARE\Microsoft\Windows NT\CurrentVersion'
+    sRegKeyName = 'ProductName'
+
+    if($VERBOSE == true)
+      puts2("Key's to read = " + hRegKeyNames.to_s)
+    end
+
+    sRegFullpath = sRegHive + "\\" + sRegPath + "\\" + sRegKeyName
+    if($VERBOSE == true)
+      puts2("\tParsing " + sRegFullpath)
+    end
+
+    # Read the key's value
+    sKeyValue = parseWinRegistryKey(sRegHive, sRegPath, sRegKeyName)
+
+    if($VERBOSE == true)
+      # Display the key's value
+      puts2("\tFound:  " + sRegFullpath.to_s + " = " + sKeyValue.to_s)
+    end
+
+    return sKeyValue.to_s
+
+  end # Method - getWindowsVersion()
 
   #=============================================================================#
   #--
@@ -204,7 +256,7 @@ module WatirWorks_WinUtilities
 
         # Determine which action to take
         case sChoice.downcase.strip
-          when /yes/
+        when /yes/
 
           # Identify the control using its - text
           sControlID = "&Yes"
@@ -216,7 +268,7 @@ module WatirWorks_WinUtilities
           # Focus on and select the choice
           oDialog.button(:text => sControlID).click()
 
-          when /no/
+        when /no/
 
           # Identify the control using its - text
           sControlID = "&No"
@@ -241,7 +293,6 @@ module WatirWorks_WinUtilities
     end  # Only run on Windows
 
   end # Method - handle_win_dialog_confirm_saveas()
-
 
   #=============================================================================#
   #--
@@ -307,7 +358,7 @@ module WatirWorks_WinUtilities
 
           # Determine which action to take
           case sChoice.downcase.strip
-            when /close/
+          when /close/
 
             # Identify the control using its - text
             sControlID = "Close"
@@ -319,7 +370,7 @@ module WatirWorks_WinUtilities
             # Focus on and select the choice
             oDialog.button(:text => sControlID).click()
 
-            when /run/
+          when /run/
 
             # Identify the control using its - text
             sControlID = "Run"
@@ -331,7 +382,7 @@ module WatirWorks_WinUtilities
             # Focus on and select the choice
             oDialog.button(:text => sControlID).click()
 
-            when /open folder/
+          when /open folder/
 
             # Identify the control using its - text
             sControlID = "Open &Folder"
@@ -343,7 +394,7 @@ module WatirWorks_WinUtilities
             # Focus on and select the choice
             oDialog.button(:text => sControlID).click()
 
-            when "open"
+          when "open"
 
             # Identify the control using its - text
             sControlID = "&Open"
@@ -387,7 +438,7 @@ module WatirWorks_WinUtilities
           # Determine which action to take
           case sChoice.downcase.strip
 
-            when /clear/
+          when /clear/
 
             # Identify the control using its - text
             sControlID = "Clear List"
@@ -573,7 +624,6 @@ module WatirWorks_WinUtilities
 
   end # Method - handle_win_dialog_generic_modal
 
-
   #=============================================================================#
   #--
   # Method: handle_win_dialog_saveas(...)
@@ -642,7 +692,6 @@ module WatirWorks_WinUtilities
         # Determine if the dialog exists
         if(oDialog.exists?())
 
-
           # Bring dialog to the top
           oDialog.activate()
 
@@ -652,7 +701,7 @@ module WatirWorks_WinUtilities
 
           # Determine which action to take
           case sChoice.downcase.strip
-            when /save/
+          when /save/
 
             # Determine to use the default value or enter a user specified value
             if(sFullFilePath != "")
@@ -682,7 +731,7 @@ module WatirWorks_WinUtilities
             # Focus on and select the choice
             oDialog.button(:text => sControlID).click()
 
-            when /cancel/
+          when /cancel/
 
             # Identify the control using its - text
             sControlID = "Cancel"
@@ -704,18 +753,15 @@ module WatirWorks_WinUtilities
         end # Determine if the dialog exists
       end # Deal with IE dialog
 
-
       # Determine if the Confirm Save As dialog exists
       #  which only opens if the specified file pre-existed
       if(RAutomation::Window.new(:title => "Confirm Save As").exists?())
         self.handle_win_dialog_confirm_saveas(sConfirmChoice, 5)
       end
 
-
     end  # Only run on Windows
 
   end # Method - handle_win_dialog_saveas
-
 
   #=============================================================================#
   #--
@@ -779,7 +825,7 @@ module WatirWorks_WinUtilities
 
         # Determine which action to take
         case sChoice.downcase.strip
-          when /yes/
+        when /yes/
 
           # Identify the control using its - text
           sControlID = "&Yes"
@@ -791,7 +837,7 @@ module WatirWorks_WinUtilities
           # Focus on and select the choice
           oDialog.button(:text => sControlID).click()
 
-          when /no/
+        when /no/
 
           # Identify the control using its - text
           sControlID = "&No"
@@ -803,7 +849,7 @@ module WatirWorks_WinUtilities
           # Focus on and select the choice
           oDialog.button(:text => sControlID).click()
 
-          when /view/
+        when /view/
 
           # Identify the control using its - text
           sControlID = "&View Certificate"
@@ -823,13 +869,11 @@ module WatirWorks_WinUtilities
 
         end # Determine which action to take
 
-
       end # Determine if the dialog exists
 
     end  # Only run on Windows
 
   end # Method - handle_win_dialog_security_alert
-
 
   #=============================================================================#
   #--
@@ -894,7 +938,7 @@ module WatirWorks_WinUtilities
 
         # Determine which action to take
         case sChoice.downcase.strip
-          when /yes/
+        when /yes/
 
           # Identify the control using its - text
           sControlID = "&Yes"
@@ -906,7 +950,7 @@ module WatirWorks_WinUtilities
           # Focus on and select the choice
           oDialog.button(:text => sControlID).click()
 
-          when /no/
+        when /no/
 
           # Identify the control using its - text
           sControlID = "&No"
@@ -918,7 +962,7 @@ module WatirWorks_WinUtilities
           # Focus on and select the choice
           oDialog.button(:text => sControlID).click()
 
-          when /more info/
+        when /more info/
 
           # Identify the control using its - text
           sControlID = "&More Info"
@@ -938,14 +982,11 @@ module WatirWorks_WinUtilities
 
         end # Determine which action to take
 
-
       end # Determine if the dialog exists
 
     end  # Only run on Windows
 
   end # Method - handle_win_dialog_security_information
-
-
 
   #=============================================================================#
   #--
@@ -1053,7 +1094,6 @@ module WatirWorks_WinUtilities
       end
     end # Only run on Windows
   end  # Method - is_maximized?()
-
 
   #=============================================================================#
   #--
@@ -1168,11 +1208,168 @@ module WatirWorks_WinUtilities
 
       return -1 # Return error code as this was NOT executed on Windows
 
-
     end # Only run on Windows
 
   end # Method - open_messagebox_win()
 
+  #=============================================================================#
+  #--
+  # Method: parseWinRegistryKey(...)
+  #
+  #++
+  #
+  # Description: Parses the Windows Registry for the specified key value
+  #
+  # Returns: STRING - Value read from the Reg Key
+  #
+  # Syntax: sRegHive = STRING - One of the Windows Registry Hives:
+  #                              HKEY_CLASSES_ROOT
+  #                              HKEY_CURRENT_USER
+  #                              HKEY_LOCAL_MACHINE
+  #                              HKEY_USERS
+  #                              HKEY_CURRENT_CONFIG
+  #
+  #         sRegPath = STRING - The Registry path, without the Hive or Key name
+  #         sRegKeyName = STRING - The Registry Key's name that cntains a String value
+  #
+  # Usage:
+  #          sRegHive = 'HKEY_LOCAL_MACHINE'
+  #          sRegPath = 'SOFTWARE\Microsoft\Windows NT\CurrentVersion'
+  #          sRegKeyName = 'ProductName'
+  #          sKeyValue = parseWinRegistryKey(sRegHive, sRegPath, sRegKeyName)
+  #=============================================================================#
+  def parseWinRegistryKey(sRegHive, sRegPath, sRegKeyName)
+
+    require 'win32/registry'
+
+    #$VERBOSE = true
+
+    if($VERBOSE == true)
+      puts2("Parameters - parseWinRegistryKey:")
+      puts2("  sRegHive = " + sRegHive.to_s)
+      puts2("  sRegPath = " + sRegPath.to_s)
+      puts2("  sRegKeyName = " + sRegKeyName.to_s)
+    end
+
+    # Pick the Hive
+    case sRegHive
+
+    when 'HKEY_CLASSES_ROOT'
+
+      sRegFullpath = sRegHive + "\\" + sRegPath + "\\" + sRegKeyName
+
+      if($VERBOSE == true)
+        puts2("\tReading " + sRegFullpath)
+      end
+
+      # Read the key's value
+      Win32::Registry::HKEY_CLASSES_ROOT.open(sRegPath) do |reg|
+
+        sKeyValue = reg[sRegKeyName, Win32::Registry::REG_SZ]
+
+        sRegFullpath = sRegHive + "\\" + sRegPath + "\\" + sRegKeyName
+
+        # Display the key's value
+        if($VERBOSE == true)
+          puts2("\tFound:  " + sRegFullpath.to_s + " = " + sKeyValue.to_s)
+        end
+
+        return sKeyValue
+      end # Read the key's value
+
+    when 'HKEY_CURRENT_USER'
+      sRegFullpath = sRegHive + "\\" + sRegPath + "\\" + sRegKeyName
+
+      if($VERBOSE == true)
+        puts2("\tReading " + sRegFullpath)
+      end
+
+      # Read the key's value
+      Win32::Registry::HKEY_CURRENT_USER.open(sRegPath) do |reg|
+
+        sKeyValue = reg[sRegKeyName, Win32::Registry::REG_SZ]
+
+        sRegFullpath = sRegHive + "\\" + sRegPath + "\\" + sRegKeyName
+
+        # Display the key's value
+        if($VERBOSE == true)
+          puts2("\tFound:  " + sRegFullpath.to_s + " = " + sKeyValue.to_s)
+        end
+
+        return sKeyValue
+      end # Read the key's value
+
+    when "HKEY_LOCAL_MACHINE"
+
+      sRegFullpath = sRegHive + "\\" + sRegPath + "\\" + sRegKeyName
+
+      if($VERBOSE == true)
+        puts2("\tReading " + sRegFullpath)
+      end
+
+      # Read the key's value
+      Win32::Registry::HKEY_LOCAL_MACHINE.open(sRegPath) do |reg|
+
+        sKeyValue = reg[sRegKeyName, Win32::Registry::REG_SZ]
+
+        sRegFullpath = sRegHive + "\\" + sRegPath + "\\" + sRegKeyName
+
+        # Display the key's value
+        if($VERBOSE == true)
+          puts2("\tFound:  " + sRegFullpath.to_s + " = " + sKeyValue.to_s)
+        end
+
+        return sKeyValue
+
+      end # Read the key's value
+
+    when "HKEY_USERS"
+      sRegFullpath = sRegHive + "\\" + sRegPath + "\\" + sRegKeyName
+
+      if($VERBOSE == true)
+        puts2("\tReading " + sRegFullpath)
+      end
+
+      # Read the key's value
+      Win32::Registry::HKEY_USERS.open(sRegPath) do |reg|
+
+        sKeyValue = reg[sRegKeyName, Win32::Registry::REG_SZ]
+
+        sRegFullpath = sRegHive + "\\" + sRegPath + "\\" + sRegKeyName
+
+        # Display the key's value
+        if($VERBOSE == true)
+          puts2("\tFound:  " + sRegFullpath.to_s + " = " + sKeyValue.to_s)
+        end
+
+        return sKeyValue
+      end # Read the key's value
+
+    when "HKEY_CURRENT_CONFIG"
+      sRegFullpath = sRegHive + "\\" + sRegPath + "\\" + sRegKeyName
+
+      if($VERBOSE == true)
+        puts2("\tReading " + sRegFullpath)
+      end
+      # Read the key's value
+      Win32::Registry::HKEY_CURRENT_CONFIG.open(sRegPath) do |reg|
+
+        sKeyValue = reg[sRegKeyName, Win32::Registry::REG_SZ]
+
+        sRegFullpath = sRegHive + "\\" + sRegPath + "\\" + sRegKeyName
+
+        # Display the key's value
+        if($VERBOSE == true)
+          puts2("\tFound:  " + sRegFullpath.to_s + " = " + sKeyValue.to_s)
+        end
+
+        return sKeyValue
+
+      end # Read the key's value
+
+    end # # Pick the Hive
+
+  end # Method - parseWinRegistryKey(...)
 
   #=============================================================================#
   #--
@@ -1203,7 +1400,6 @@ module WatirWorks_WinUtilities
       open_messagebox_win(sPrompt, sTitle, BUTTONS_OK)
     end # Only run on Windows
   end # Function - pause()
-
 
   #=============================================================================#
   #--
@@ -1239,7 +1435,7 @@ module WatirWorks_WinUtilities
       # Perform the operation specified by the user's response
       case iUserResponse
 
-        when  SELECTED_YES       # Continue after recording the variables
+      when  SELECTED_YES       # Continue after recording the variables
 
         puts2("Continuing after recording the following variables")
 
@@ -1247,10 +1443,9 @@ module WatirWorks_WinUtilities
         watchlist(aWatchList)
         puts2("")
 
-        when SELECTED_NO   # Continue without recording the variables
+      when SELECTED_NO   # Continue without recording the variables
 
         puts2("Continuing execution")
-
 
       else # Exit after Recording the variables
 
@@ -1265,7 +1460,6 @@ module WatirWorks_WinUtilities
       end # Case statement
     end # Only run on Windows
   end # Method - popup_watchpoint()
-
 
   #=============================================================================#
   #--
@@ -1361,7 +1555,6 @@ module WatirWorks_WinUtilities
         bSaveAsBMP = true
       end
 
-
       # Define the region of the capture
       if bActiveWindowOnly
         sScreen_Region = "_window_"
@@ -1398,7 +1591,6 @@ module WatirWorks_WinUtilities
 
 end # END Module - WatirWorks_WinUtilities
 
-
 #=begin
 
 #=============================================================================#
@@ -1411,7 +1603,6 @@ end # END Module - WatirWorks_WinUtilities
 #++
 #=============================================================================#
 class Watir::Element
-
   #=============================================================================#
   #--
   # Method: set_no_wait(...)
@@ -1455,7 +1646,6 @@ class Watir::Element
 
 end # Class Watir::Element
 
-
 #=============================================================================#
 # Class: Watir::IE
 #
@@ -1475,7 +1665,6 @@ end # Class Watir::Element
 #++
 #=============================================================================#
 class Watir::IE
-
   #=============================================================================#
   #--
   # Method: restart(...)
@@ -1541,7 +1730,6 @@ class Watir::IE
 
   end # END Method - restart()
 
-
   #=============================================================================#
   #--
   # Method: scrollBy(...)
@@ -1594,9 +1782,9 @@ class Watir::IE
       @ie.document.title
     rescue WIN32OLERuntimeError => e #unknown property 'title'
       log "WIN32OLERuntimeError: #{e}"
-        "" #return empty string for title value empty
+      "" #return empty string for title value empty
     end
-     (myTitle == "")? title_from_url : myTitle
+    (myTitle == "")? title_from_url : myTitle
   end
 
   #=============================================================================#
@@ -1616,13 +1804,12 @@ class Watir::IE
   #=============================================================================#
   def title_from_url
     loc = url # relies on IE.url to return @ie.locationUrl and not @ie.document.url
-     (loc[0,8] == "file:///") ? loc.split("file:///")[1].gsub("/", '\\') : loc
+    (loc[0,8] == "file:///") ? loc.split("file:///")[1].gsub("/", '\\') : loc
   end
 
-
 end  # END Class - Watir::IE
-#=end
 
+#=end
 
 # Skip if using webdriver
 if(is_webdriver? == false)
@@ -1638,7 +1825,6 @@ if(is_webdriver? == false)
   #++
   #=============================================================================#
   class Watir::SelectList
-
     #=============================================================================#
     #--
     # Method: wait_until_count(...)
