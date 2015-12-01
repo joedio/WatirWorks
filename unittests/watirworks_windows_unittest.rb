@@ -21,14 +21,12 @@ $bUseWebDriver = true
 # WatirWorks
 require 'watirworks'               # The WatirWorks library loader
 
-require 'win32/registry'
-
 include WatirWorks_Utilities       #  WatirWorks General Utilities
 include WatirWorks_WebUtilities    #  WatirWorks Web Utilities
-#include Win32::Registry
 
 # Include the platform specific modules
 if(is_win?)
+  require 'win32/registry'
   include WatirWorks_WinUtilities # WatirWorks Windows Utilities
 else
   puts2("*** ERROR - These tests are not supported on this platform")
