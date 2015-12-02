@@ -53,6 +53,7 @@ require 'rubygems'
 #
 # Methods:
 #
+#    getOSXVersion()
 #    save_screencapture_mac(...)
 #
 # Pre-requisites:
@@ -61,9 +62,46 @@ require 'rubygems'
 module WatirWorks_MacUtilities
 
   # Version of this module
-  WW_MAC_UTILITIES_VERSION =  "0.0.3"
+  WW_MAC_UTILITIES_VERSION =  "0.0.4"
 
 
+
+  #=============================================================================#
+  #--
+  # Method: getOSXVersion()
+  #
+  #++
+  #
+  # Description: Returns the OSX version from environment variables
+  #
+  # Returns: STRING - Value read from the environment variable
+  #
+  # Syntax: N/A
+  #
+  # Usage:
+  #          sOSXVersion = getOSXVersion()   # => '10.11'
+  #=============================================================================#
+  def getOSXVersion()
+
+    #$VERBOSE = true
+
+    if($VERBOSE == true)
+      puts2("Parameters - getOSXVersion:")
+      #puts2("  sXXX= " + sXXX.to_s)
+    end
+
+    hOSVersion = getenv('_system_version')
+
+    if($VERBOSE == true)
+      puts2('hOSVersion.class = ' + hOSVersion.class.to_s)
+    end
+
+    sOSVersion = hOSVersion['_system_version']
+
+    return sOSVersion.to_s
+
+  end # Method - getOSXVersion()
+  
   #=============================================================================#
   #--
   # Method: save_screencapture_mac()

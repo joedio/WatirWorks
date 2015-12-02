@@ -1003,11 +1003,11 @@ module WatirWorks_Utilities
     end
 
     if(is_osx? == true)
-      sOSVersion = 'OSX'
+      sOSVersion = 'OSX ' + getOSXVersion.to_s
     end
 
     if(is_linux? == true)
-      sOSVersion = 'Linux'
+      sOSVersion = 'Linux' #+ getLinuxVersion.to_s
     end
 
     puts2("\nOS = " + sOSVersion.to_s)
