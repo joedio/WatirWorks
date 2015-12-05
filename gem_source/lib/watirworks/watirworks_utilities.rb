@@ -123,7 +123,7 @@ include WatirWorks_RefLib #  WatirWorks Reference data module
 module WatirWorks_Utilities
 
   # Version of this module
-  WW_UTILITIES_VERSION =  "1.0.14"
+  WW_UTILITIES_VERSION =  "1.0.15"
 
   # Format to use when appending a timestamp to file names
   DATETIME_FILEFORMAT="%Y_%m_%d_%H%M%S"
@@ -1384,7 +1384,7 @@ module WatirWorks_Utilities
 
     aFilteredFileList = []
 
-    puts2("Removing all files without sIdentifier = " + sIdentifier.to_s)
+    puts2("Removing all files without sIdentifier '" + sIdentifier.to_s + "'")
 
     # Loop through the files in the list
     aFileList.each do | sFileToParse |
@@ -1442,7 +1442,7 @@ module WatirWorks_Utilities
         end
 
         # Determine to keep or drop the file
-        if(sSetting.to_s.downcase != sIdentifier.to_s)
+        if(sSetting.to_s.downcase == true)
           if($VERBOSE == true)
             puts2(" Dropping test file: " + sFileToParse)
           end
@@ -1857,11 +1857,20 @@ module WatirWorks_Utilities
           puts2(" Searching Line Number: " + iStart.to_s)
         end
 
-        sCurrentLineContents = aFileContents[iStart]
+        sCurrentLineContents = aFileContents[iStart].strip
+        
+        if($VERBOSE == true)
+          puts2("sCurrentLineContents: '" + sCurrentLineContents.strip + "'")
+          puts2("sSearchString       : '" + sSearchString + "'")
+        end
 
         # Record info if a match is found
-        if(sCurrentLineContents =~ /#{sSearchString}/)
+        if(sCurrentLineContents =~ /.*#{sSearchString}.*/)
 
+          if($VERBOSE == true)
+            puts2("### Found a Match")
+          end
+          
           # Record line number
           #iLineNumberWithMatch = aFileContents.lineno
 
