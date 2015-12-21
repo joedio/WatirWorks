@@ -77,6 +77,7 @@ require 'watir-webdriver'
 #    handle_win_dialog_download_complete(...)
 #    handle_win_dialog_generic_modal(...)
 #    handle_win_dialog_saveas(...)
+#    is_chrome64_installed_win?()
 #    is_minimized?(...)
 #    is_maximized?(...)
 #    open_messagebox_win(...)
@@ -92,7 +93,7 @@ require 'watir-webdriver'
 module WatirWorks_WinUtilities
 
   # Version of this module
-  WW_WIN_UTILITIES_VERSION =  "1.0.4"
+  WW_WIN_UTILITIES_VERSION =  "1.0.5"
 
   #===============================
   # Button codes for Window's Message box
@@ -988,6 +989,93 @@ module WatirWorks_WinUtilities
 
   end # Method - handle_win_dialog_security_information
 
+  #=============================================================================#
+  #--
+  # Method: is_chrome64_installed_win?()
+  #
+  #++
+  #
+  # Description: Determines if the 64 bit Chrome browser is installed
+  #              by lookg at the two possible install paths.
+  #                Chrome 32 path = C:\Program Files\Google\Chrome\Application\chrome.exe
+  #                Chrome 64 path = C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+  #
+  # Returns: BOOLEAN - true if installed, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:      if(is_chrome64_installed_win? == true)
+  #                         # Put your code here
+  #                      end
+  #
+  #=============================================================================#
+  def is_chrome64_installed_win?()
+
+    if($VERBOSE == true)
+      puts2("Parameters - is_chrome64_installed_win?:")
+      #puts2("  sX: " + sX.to_s)
+    end
+
+    bReturnStatus = false
+
+    sChrome32Path = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
+    sChrome64Path = 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'
+    
+    bChrome32PathExists = File.exist?(sChrome32Path)
+    bChrome64PathExists = File.exist?(sChrome64Path)
+    
+    if(bChrome32PathExists == false && bChrome64PathExists == true)
+      bReturnStatus = true
+    end
+
+    return bReturnStatus
+
+  end # Method - is_chrome64_installed_win?()
+
+
+  #=============================================================================#
+  #--
+  # Method: is_firefox64_installed_win?()
+  #
+  #++
+  #
+  # Description: Determines if the 64 bit Firefox browser is installed
+  #              by lookg at the two possible install paths.
+  #                Firefox 32 path = C:\\Program Files\\Mozilla Firefox\\firefox.exe
+  #                Firefox 64 path = C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe
+  #
+  # Returns: BOOLEAN - true if installed, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:      if(is_firefox64_installed_win? == true)
+  #                         # Put your code here
+  #                      end
+  #
+  #=============================================================================#
+  def is_firefox64_installed_win?()
+
+    if($VERBOSE == true)
+      puts2("Parameters - is_firefox64_installed_win?:")
+      #puts2("  sX: " + sX.to_s)
+    end
+
+    bReturnStatus = false
+
+    sFirefox32Path = 'C:\\Program Files\\Mozilla Firefox\\firefox.exe'
+    sFirefox64Path = 'C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe'
+    
+    bFirefox32PathExists = File.exist?(sFirefox32Path)
+    bFirefox64PathExists = File.exist?(sFirefox64Path)
+    
+    if(bFirefox32PathExists == false && bFirefox64PathExists == true)
+      bReturnStatus = true
+    end
+
+    return bReturnStatus
+
+  end # Method - is_firefox64_installed_win?()
+  
   #=============================================================================#
   #--
   # Method: is_minimized?(...)

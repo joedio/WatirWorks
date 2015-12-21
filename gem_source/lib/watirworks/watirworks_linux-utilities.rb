@@ -52,6 +52,8 @@ require 'rubygems'
 #  Key:   () = No parameters,  (...) = parameters required
 #
 # Methods:
+#   is_chrome64_installed_linux?()
+#   is_firefox64_installed_linux?()
 #   save_screencapture_linux(...)
 #
 # Pre-requisites:
@@ -60,7 +62,88 @@ require 'rubygems'
 module WatirWorks_LinuxUtilities
 
   # Version of this module
-  WW_LINUX_UTILITIES_VERSION =  "0.0.4"
+  WW_LINUX_UTILITIES_VERSION =  "0.0.5"
+  #=============================================================================#
+  #--
+  # Method: is_chrome64_installed_linux?()
+  #
+  # TODO - Determine how it tell if Chrome is 32 or 64 bit.
+  #++
+  #
+  # Description: Determines if the 64 bit Chrome browser is installed
+  #
+  #              This method currently presumes that it is installed
+  #              and is hard coded to return true.
+  #
+  # Returns: BOOLEAN - true if installed, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:      if(is_chrome64_installed_linux? == true)
+  #                         # Put your code here
+  #                      end
+  #
+  #=============================================================================#
+  def is_chrome64_installed_linux?()
+
+    if($VERBOSE == true)
+      puts2("Parameters - is_chrome64_installed_linux?:")
+      #puts2("  sX: " + sX.to_s)
+    end
+
+    bReturnStatus = false
+
+    bChrome32PathExists = false # File.exist?(sChrome32Path)
+    bChrome64PathExists = true # File.exist?(sChrome64Path)
+
+    if(bChrome32PathExists == false && bChrome64PathExists == true)
+      bReturnStatus = true
+    end
+
+    return bReturnStatus
+
+  end # Method - is_chrome64_installed_linux?()
+
+  #=============================================================================#
+  #--
+  # Method: is_firefox64_installed_linux?()
+  #
+  # TODO - Determine how it tell if Firefox is 32 or 64 bit.
+  #++
+  #
+  # Description: Determines if the 64 bit Firefox browser is installed
+  #
+  #              This method currently presumes that its is installed
+  #              and is hard coded to return true.
+  #
+  # Returns: BOOLEAN - true if installed, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:      if(is_firefox64_installed_linux? == true)
+  #                         # Put your code here
+  #                      end
+  #
+  #=============================================================================#
+  def is_firefox64_installed_linux?()
+
+    if($VERBOSE == true)
+      puts2("Parameters - is_firefox64_installed_linux?:")
+      #puts2("  sX: " + sX.to_s)
+    end
+
+    bReturnStatus = false
+
+    bFirefox32PathExists = false # File.exist?(sFirefox32Path)
+    bFirefox64PathExists = true  # File.exist?(sFirefox64Path)
+
+    if(bFirefox32PathExists == false && bFirefox64PathExists == true)
+      bReturnStatus = true
+    end
+
+    return bReturnStatus
+
+  end # Method - is_firefox64_installed_linux?()
 
   #=============================================================================#
   #--

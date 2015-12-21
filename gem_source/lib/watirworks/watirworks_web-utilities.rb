@@ -84,6 +84,8 @@ require 'watir-webdriver'
 #    getXMLTagValue(...)
 #    handle_js_dialog(...)   # NOT working with Watir1.6.5.  See issue with click_no_wait()
 #    is_android_installed?()
+#    is_chrome64_installed?()
+#    is_firefox64_installed?()
 #    is_firefox_installed?(...)
 #    is_ie_installed?(...)
 #    is_opera_installed?(...)
@@ -1562,6 +1564,88 @@ module WatirWorks_WebUtilities
     return false
 
   end # Method - is_global_browser_running?()
+
+  #=============================================================================#
+  #--
+  # Method: is_chrome64_installed?()
+  #
+  #++
+  #
+  # Description: Determines if the 64 bit CHrome browser is installed
+  #              This is basically a wrapper for the OS specific methods
+  #
+  # Returns: BOOLEAN - true if installed, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:      if(is_chrome64_installed? == true)
+  #                         # Put your code here
+  #                      end
+  #
+  #=============================================================================#
+  def is_chrome64_installed?()
+
+    if($VERBOSE == true)
+      puts2("Parameters - is_chrome64_installed?:")
+      #puts2("  sX: " + sX.to_s)
+    end
+
+    bReturnStatus = false
+
+    if(is_win?)
+      bReturnStatus = is_chrome64_installed_win?()
+    end
+    if(is_osx?)
+      bReturnStatus = is_chrome64_installed_osx?()
+    end
+    if(is_linux?)
+      bReturnStatus = is_chrome64_installed_linux?()
+    end
+
+    return bReturnStatus
+
+  end # Method - is_chrome64_installed?()
+
+  #=============================================================================#
+  #--
+  # Method: is_firefox64_installed?()
+  #
+  #++
+  #
+  # Description: Determines if the 64 bit Firefox browser is installed
+  #              This is basically a wrapper for the OS specific methods
+  #
+  # Returns: BOOLEAN - true if installed, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:      if(is_firefox64_installed? == true)
+  #                         # Put your code here
+  #                      end
+  #
+  #=============================================================================#
+  def is_firefox64_installed?()
+
+    if($VERBOSE == true)
+      puts2("Parameters - is_firefox64_installed?:")
+      #puts2("  sX: " + sX.to_s)
+    end
+
+    bReturnStatus = false
+
+    if(is_win?)
+      bReturnStatus = is_firefox64_installed_win?()
+    end
+    if(is_osx?)
+      bReturnStatus = is_firefox64_installed_osx?()
+    end
+    if(is_linux?)
+      bReturnStatus = is_firefox64_installed_linux?()
+    end
+
+    return bReturnStatus
+
+  end # Method - is_firefox64_installed?()
 
   #=============================================================================#
   #--
@@ -3880,10 +3964,18 @@ module WatirWorks_WebUtilities
     case sBrowserType
 
     when /^c.*/
-      if (is_win? == true)
-        puts2("\nStarting Chrome on Windows...")
+      if(is_win? == true)
+        if(is_chrome64_installed? == false)
+          puts2("\nStarting Chrome 32-bit on Windows...")
+        else
+          puts2("\nStarting Chrome 64-bit on Windows...")
+        end
       else
-        puts2("\nStarting Chrome on OSX...")
+        if(is_chrome64_installed? == false)
+          puts2("\nStarting Chrome 32-biton OSX...")
+        else
+          puts2("\nStarting Chrome 64-bit on OSX...")
+        end
       end # when Chrome
 
       oBrowser = Watir::Browser.new :chrome, :switches => %w[--test-type --allow-running-insecure-content] #, :profile => 'default'
@@ -3901,13 +3993,13 @@ module WatirWorks_WebUtilities
     when  /^f.*/
       if(is_win? == true)
         # The 32-bit Firefox browser installs in different folder on Win32 vs. Win64 bit OS's
-        #if(is_win32?() == true)
-        #  Selenium::WebDriver::Firefox::Binary.path = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
-        #  puts2("\nStarting Firefox on Windows(32-bit)...")
-        #else
+        if(is_firefox64_installed?() == false)
+          Selenium::WebDriver::Firefox::Binary.path = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
+          puts2("\nStarting Firefox on Windows(32-bit)...")
+        else
           Selenium::WebDriver::Firefox::Binary.path = "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe"
           puts2("\nStarting Firefox on Windows(64-bit)...")
-        #end
+        end
 
       else
         Selenium::WebDriver::Firefox::Binary.path = "/Applications/Firefox.app/Contents/MacOS/firefox"

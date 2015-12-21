@@ -54,6 +54,8 @@ require 'rubygems'
 # Methods:
 #
 #    getOSXVersion()
+#    is_chrome64_installed_osx?()
+#    is_firefox64_installed_osx?()
 #    save_screencapture_mac(...)
 #
 # Pre-requisites:
@@ -62,10 +64,7 @@ require 'rubygems'
 module WatirWorks_MacUtilities
 
   # Version of this module
-  WW_MAC_UTILITIES_VERSION =  "0.0.4"
-
-
-
+  WW_MAC_UTILITIES_VERSION =  "0.0.5"
   #=============================================================================#
   #--
   # Method: getOSXVersion()
@@ -101,7 +100,89 @@ module WatirWorks_MacUtilities
     return sOSVersion.to_s
 
   end # Method - getOSXVersion()
-  
+
+  #=============================================================================#
+  #--
+  # Method: is_chrome64_installed_osx?()
+  #
+  # TODO - Determine how it tell if Chrome is 32 or 64 bit.
+  #++
+  #
+  # Description: Determines if the 64 bit Chrome browser is installed
+  #
+  #              This method currently presumes that its is installed
+  #              and is hard coded to return true.
+  #
+  # Returns: BOOLEAN - true if installed, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:      if(is_chrome64_installed_osx? == true)
+  #                         # Put your code here
+  #                      end
+  #
+  #=============================================================================#
+  def is_chrome64_installed_osx?()
+
+    if($VERBOSE == true)
+      puts2("Parameters - is_chrome64_installed_win?:")
+      #puts2("  sX: " + sX.to_s)
+    end
+
+    bReturnStatus = false
+
+    bChrome32PathExists = false # File.exist?(sChrome32Path)
+    bChrome64PathExists = true # File.exist?(sChrome64Path)
+
+    if(bChrome32PathExists == false && bChrome64PathExists == true)
+      bReturnStatus = true
+    end
+
+    return bReturnStatus
+
+  end # Method - is_chrome64_installed_osx?()
+
+  #=============================================================================#
+  #--
+  # Method: is_firefox64_installed_osx?()
+  #
+  # TODO - Determine how it tell if Firefox is 32 or 64 bit.
+  #++
+  #
+  # Description: Determines if the 64 bit Firefox browser is installed
+  #
+  #              This method currently presumes that its is installed
+  #              and is hard coded to return true.
+  #
+  # Returns: BOOLEAN - true if installed, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:      if(is_firefox64_installed_osx? == true)
+  #                         # Put your code here
+  #                      end
+  #
+  #=============================================================================#
+  def is_firefox64_installed_osx?()
+
+    if($VERBOSE == true)
+      puts2("Parameters - is_firefox64_installed_osx?:")
+      #puts2("  sX: " + sX.to_s)
+    end
+
+    bReturnStatus = false
+
+    bFirefox32PathExists = false # File.exist?(sFirefox32Path)
+    bFirefox64PathExists = true  # File.exist?(sFirefox64Path)
+
+    if(bFirefox32PathExists == false && bFirefox64PathExists == true)
+      bReturnStatus = true
+    end
+
+    return bReturnStatus
+
+  end # Method - is_firefox64_installed_osx?()
+
   #=============================================================================#
   #--
   # Method: save_screencapture_mac()
@@ -190,124 +271,119 @@ module WatirWorks_MacUtilities
 
       puts2("Saved image to: #{sFullPathToImageFile}")
 
-
     end # Only run on mac
-
 
   end # Method - save_screencapture_mac()
 
 end # Module - WatirWorks_MacUtilities
 
+#=============================================================================#
+# Class: Watir::Safari
+#
+# Description: Extends the Watir::Safari class with additional methods
+#              This class is is NOT supported if using Watir, FireWatir or Watir_WebDriver
+#
+#--
+# Methods:
+#
+#          restart()
+#          scrollBy(...)
+#          title()
+#          title_from_url
+#++
+#=============================================================================#
+class Watir::Safari
   #=============================================================================#
-  # Class: Watir::Safari
-  #
-  # Description: Extends the Watir::Safari class with additional methods
-  #              This class is is NOT supported if using Watir, FireWatir or Watir_WebDriver
-  #
   #--
-  # Methods:
+  # Method: restart(...)
   #
-  #          restart()
-  #          scrollBy(...)
-  #          title()
-  #          title_from_url
   #++
+  #
+  # Description: Close the current browser object, pause,
+  #              then create and return a new browser object.
+  #              Any URL that the current browser is displaying is lost.
+  #
+  # Returns: BROWSER object
+  #
+  # Syntax: sURL = STRING - The URL to load in the new browser, defaults to the currently loaded URL
+  #
+  #         bClearCache = BOOLEAN - true - clear the cache and cookies after the old browser closes, but before the new browser starts
+  #                                 false - don't clear the cache & cookies
+  #
+  # Usage Examples:
+  #            To restart Global Browser Object with the same URL loaded:
+  #                $browser = $browser.restart()
+  #
+  #            To restart local browser object (e.g. myCurrentBrowser) with a different url:
+  #                myRestartedBrowser = myCurrentBrowser.restart("www.myNewURL.com")
+  #
   #=============================================================================#
-  class Watir::Safari
+  def restart(sURL ="", bClearCache = false)
 
+    if($VERBOSE == true)
+      puts2("Parameters - restart:")
+      puts2("  sURL: " + sURL)
+    end
 
-    #=============================================================================#
-    #--
-    # Method: restart(...)
-    #
-    #++
-    #
-    # Description: Close the current browser object, pause,
-    #              then create and return a new browser object.
-    #              Any URL that the current browser is displaying is lost.
-    #
-    # Returns: BROWSER object
-    #
-    # Syntax: sURL = STRING - The URL to load in the new browser, defaults to the currently loaded URL
-    #
-    #         bClearCache = BOOLEAN - true - clear the cache and cookies after the old browser closes, but before the new browser starts
-    #                                 false - don't clear the cache & cookies
-    #
-    # Usage Examples:
-    #            To restart Global Browser Object with the same URL loaded:
-    #                $browser = $browser.restart()
-    #
-    #            To restart local browser object (e.g. myCurrentBrowser) with a different url:
-    #                myRestartedBrowser = myCurrentBrowser.restart("www.myNewURL.com")
-    #
-    #=============================================================================#
-    def restart(sURL ="", bClearCache = false)
+    puts2("Closing the browser...")
 
-      if($VERBOSE == true)
-        puts2("Parameters - restart:")
-        puts2("  sURL: " + sURL)
-      end
+    if(sURL=="")
+      sURL = self.url
+    end
 
-      puts2("Closing the browser...")
+    self.close
 
-      if(sURL=="")
-        sURL = self.url
-      end
+    if($browser == self) # If a Global Browser Object exists remove it
+      $browser = nil
+    end
 
-      self.close
+    # Allow time to mourn the passing of the old browser.
+    sleep 3  # That's long enough to mourn
 
-      if($browser == self) # If a Global Browser Object exists remove it
-        $browser = nil
-      end
+    if(bClearCache == true)
+      clear_cache()
+    end
 
-      # Allow time to mourn the passing of the old browser.
-      sleep 3  # That's long enough to mourn
+    puts2("Starting a new browser object...")
 
-      if(bClearCache == true)
-        clear_cache()
-      end
+    # Create a new browser object using Watir's method directly
+    # Can't use start_Browser() as both local and Global Browser's may coexist
+    oBrowser = Watir::Safari.new
+    oBrowser.goto(sURL)
 
-      puts2("Starting a new browser object...")
+    # Allow time to celebrate the birth of the new browser.
+    sleep 2  # That's long enough to celebrate
 
-      # Create a new browser object using Watir's method directly
-      # Can't use start_Browser() as both local and Global Browser's may coexist
-      oBrowser = Watir::Safari.new
-      oBrowser.goto(sURL)
+    return oBrowser  # Return the new browser.
 
-      # Allow time to celebrate the birth of the new browser.
-      sleep 2  # That's long enough to celebrate
+  end # Method - restart()
 
-      return oBrowser  # Return the new browser.
-
-    end # Method - restart()
-
-
-    #=============================================================================#
-    #--
-    # Method: scrollBy(...)
-    #
-    #++
-    #
-    # Description: Scroll the current Browser window (in pixels)
-    #              Per: http://www.w3schools.com/jsref/obj_window.asp
-    #                    The ScrollBy() method is supported in all major browsers.
-    #
-    # Returns: BOOLEAN - true if successful, otherwise false
-    #
-    # Syntax: iHorizontal = INTEGER - How many pixels to scroll by, along the x-axis (horizontal)
-    #                                 Positive values move scroll left, Negative values move scroll right
-    #                                 Default value = 0
-    #
-    #         iVertical = INTEGER - How many pixels to scroll by, along the y-axis (vertical)
-    #                               Positive values move scroll down, Negative values move scroll up
-    #                               Default value = 0
-    #
-    # Usage Examples:
-    #                To scroll the browser vertically by 100 pixels
-    #                     browser.scrollBy(0, 100)
-    #
-    #=============================================================================#
-    def scrollBy(iHorizontal=0, iVertical=0)
+  #=============================================================================#
+  #--
+  # Method: scrollBy(...)
+  #
+  #++
+  #
+  # Description: Scroll the current Browser window (in pixels)
+  #              Per: http://www.w3schools.com/jsref/obj_window.asp
+  #                    The ScrollBy() method is supported in all major browsers.
+  #
+  # Returns: BOOLEAN - true if successful, otherwise false
+  #
+  # Syntax: iHorizontal = INTEGER - How many pixels to scroll by, along the x-axis (horizontal)
+  #                                 Positive values move scroll left, Negative values move scroll right
+  #                                 Default value = 0
+  #
+  #         iVertical = INTEGER - How many pixels to scroll by, along the y-axis (vertical)
+  #                               Positive values move scroll down, Negative values move scroll up
+  #                               Default value = 0
+  #
+  # Usage Examples:
+  #                To scroll the browser vertically by 100 pixels
+  #                     browser.scrollBy(0, 100)
+  #
+  #=============================================================================#
+  def scrollBy(iHorizontal=0, iVertical=0)
 
     # Return hard coded value until watir-webdriver supports JavaScript
     bReturnStatus = true
@@ -316,54 +392,54 @@ end # Module - WatirWorks_MacUtilities
 =end
     return bReturnStatus
 
-    end # Method - scrollBy()
+  end # Method - scrollBy()
 
-    #=============================================================================#
-    #--
-    # Method: status()
-    #
-    #++
-    #
-    # Description: SafariWatir does not support browser.status().
-    #              This method is hard coded to delay and always return "Done"
-    #
-    # Returns: STRING - Hard coded to delay and always return "Done"
-    #
-    # Syntax: N/A
-    #
-    # Usage Examples:
-    #
-    #                     browser.status()
-    #
-    #=============================================================================#
-    def status()
-      sleep 2
-      return "Done"
+  #=============================================================================#
+  #--
+  # Method: status()
+  #
+  #++
+  #
+  # Description: SafariWatir does not support browser.status().
+  #              This method is hard coded to delay and always return "Done"
+  #
+  # Returns: STRING - Hard coded to delay and always return "Done"
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:
+  #
+  #                     browser.status()
+  #
+  #=============================================================================#
+  def status()
+    sleep 2
+    return "Done"
 
-    end # Method - status()
+  end # Method - status()
 
-    #=============================================================================#
-    #--
-    # Method: title_from_url()
-    #
-    #++
-    #
-    # Description:  When a file is loaded in browser served by file system in location "c:\data\file.html"
-    #               And the title tag is empty ""
-    #               Then url method returns file:/// format "file:///c:/data/file.html"
-    #               But the window title displays "c:\data\file.html"
-    #               this method massages the locationUrl and returns its representation in title bar
-    #
-    #  From: http://gist.github.com/141738
-    #
-    #=============================================================================#
-    def title_from_url()
+  #=============================================================================#
+  #--
+  # Method: title_from_url()
+  #
+  #++
+  #
+  # Description:  When a file is loaded in browser served by file system in location "c:\data\file.html"
+  #               And the title tag is empty ""
+  #               Then url method returns file:/// format "file:///c:/data/file.html"
+  #               But the window title displays "c:\data\file.html"
+  #               this method massages the locationUrl and returns its representation in title bar
+  #
+  #  From: http://gist.github.com/141738
+  #
+  #=============================================================================#
+  def title_from_url()
 
-      loc = url # relies on browser.url to return @browser.locationUrl and not @browser.document.url
-       (loc[0,8] == "file:///") ? loc.split("file:///")[1].gsub("/", '\\') : loc
+    loc = url # relies on browser.url to return @browser.locationUrl and not @browser.document.url
+    (loc[0,8] == "file:///") ? loc.split("file:///")[1].gsub("/", '\\') : loc
 
-    end #  Method - title_from_url()
+  end #  Method - title_from_url()
 
-  end # Class - Safari
+end # Class - Safari
 
 # END File - watirworks_mac-utilities.rb

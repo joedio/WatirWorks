@@ -151,6 +151,27 @@ class Unittest_Browser < Test::Unit::TestCase
   end # END Testcase - test_Browser_001_DisplayWatirEnv
 
   #===========================================================================#
+  # Testcase method: test_Browser_001_is_browser_installed
+  #
+  # Description: Test the method is_chrome64_installed?()
+  #
+  #===========================================================================#
+  def test_Browser_001_is_browser_installed()
+
+    puts2("")
+    puts2("#######################")
+    puts2("Testcase: test_Browser_001_is_browser_installed")
+    puts2("#######################")
+
+    puts2("\n\nTest - is_chrome64_installed?()")
+    puts2("is_chrome64_installed? = " + is_chrome64_installed?().to_s)
+
+    puts2("\n\nTest - is_firefox64_installed?()")
+    puts2("is_firefox64_installed? = " + is_firefox64_installed?().to_s)
+
+  end # END Testcase - test_Browser_001_is_browser_installed
+
+  #===========================================================================#
   # Testcase method: test_Browser_003_BrowserTypes
   #
   # Description: Opens multiple browsers and manipulates each one.
