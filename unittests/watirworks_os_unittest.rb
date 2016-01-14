@@ -1,12 +1,12 @@
 #--
 #=============================================================================#
-# File: watirworks_windows_unittest.rb
+# File: watirworks_os_unittest.rb
 #
-#  Copyright (c) 2008-2010, Joe DiMauro
+#  Copyright (c) 2008-2016, Joe DiMauro
 #  All rights reserved.
 #
-# Description: Unit tests for WatirWorks Windowsmethods:
-#                          xxx_win(...)
+# Description: Unit tests for WatirWorks OS methods:
+#
 #
 #=============================================================================#
 
@@ -29,7 +29,7 @@ if(is_win?)
   require 'win32/registry'
   include WatirWorks_WinUtilities # WatirWorks Windows Utilities
 else
-  include WatirWorks_MacUtilities # WatirWorks OSX Utilities 
+  include WatirWorks_MacUtilities # WatirWorks OSX Utilities
   puts2("*** ERROR - These tests are not supported on this platform")
 end
 
@@ -51,16 +51,18 @@ iRun_TestLevel = 0
 
 #=============================================================================#
 #=============================================================================#
-# Class: UnitTest_Windows
+# Class: Unittest_OS
 #
 #
 # Test Case Methods: setup, teardown
-#                    test_Windows_001_WinMessageBox
-#                    test_Windows_002_Pause
-#                    test_Windows_003_popup_watchpoint
+#                    test_OS_001_ReadRegistryKey
+#                    test_OS_002_parseWinRegistryKey
+#                    test_OS_003_getWindowsVersion
+#                    test_OS_004_displayOSVersion
+#                    test_OS_005_getOSXVersion
 #
 #=============================================================================#
-class UnitTest_Windows < Test::Unit::TestCase
+class UnitTest_OS < Test::Unit::TestCase
   #===========================================================================#
   # Method: setup
   #
@@ -100,16 +102,16 @@ class UnitTest_Windows < Test::Unit::TestCase
   end # end of teardown
 
   #===========================================================================#
-  # Testcase method: test_Windows_001_ReadRegistryKey
+  # Testcase method: test_OS_001_ReadRegistryKey
   #
   # Description: Read single value's from the Window's Registry
   #
   #===========================================================================#
-  def test_Windows_001_ReadRegistryKey
+  def test_OS_001_ReadRegistryKey
 
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_Windows_001_ReadRegistryKey")
+    puts2("Testcase: test_OS_001_ReadRegistryKey")
     puts2("#######################")
 
     $VERBOSE = true
@@ -155,20 +157,20 @@ class UnitTest_Windows < Test::Unit::TestCase
 
     end # Read the key's value
 
-  end # end Testcase - test_Windows_001_ReadRegistryKey
+  end # end Testcase - test_OS_001_ReadRegistryKey
 
   #===========================================================================#
-  # Testcase method: test_Windows_002_parseWinRegistryKey
+  # Testcase method: test_OS_002_parseWinRegistryKey
   #
   # Description: Test methods:
   #                 parseWinRegistryKey(...)
   #
   #===========================================================================#
-  def test_Windows_002_parseWinRegistryKey
+  def test_OS_002_parseWinRegistryKey
 
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_Windows_002_parseWinRegistryKey")
+    puts2("Testcase: test_OS_002_parseWinRegistryKey")
     puts2("#######################")
 
     #$VERBOSE = true
@@ -200,20 +202,20 @@ class UnitTest_Windows < Test::Unit::TestCase
 
     end
 
-  end # end Testcase - test_Windows_002_parseWinRegistryKey
+  end # end Testcase - test_OS_002_parseWinRegistryKey
 
   #===========================================================================#
-  # Testcase method: test_Windows_003_getWindowsVersion
+  # Testcase method: test_OS_003_getWindowsVersion
   #
   # Description: Test methods:
   #                 getWindowsVersion()
   #
   #===========================================================================#
-  def test_Windows_003_getWindowsVersion
+  def test_OS_003_getWindowsVersion
 
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_Windows_003_getWindowsVersion")
+    puts2("Testcase: test_OS_003_getWindowsVersion")
     puts2("#######################")
 
     if(is_win? == false)
@@ -227,42 +229,42 @@ class UnitTest_Windows < Test::Unit::TestCase
     # Display the key's value
     puts2("\tWindows Version = " + sWinVersion.to_s)
 
-  end # end Testcase - test_Windows_003_getWindowsVersion
+  end # end Testcase - test_OS_003_getWindowsVersion
 
   #===========================================================================#
-  # Testcase method: test_Windows_004_displayOSVersion
+  # Testcase method: test_OS_004_displayOSVersion
   #
   # Description: Test methods:
   #                 displayOSVersion()
   #
   #===========================================================================#
-  def test_Windows_004_displayOSVersion
+  def test_OS_004_displayOSVersion
 
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_Windows_004_displayOSVersion")
+    puts2("Testcase: test_OS_004_displayOSVersion")
     puts2("#######################")
 
     # Display the OS Version
     display_OSVersion()
 
-  end # end Testcase - test_Windows_004_displayOSVersion
+  end # end Testcase - test_OS_004_displayOSVersion
 
   #===========================================================================#
-  # Testcase method: test_Windows_005_getOSXVersion
+  # Testcase method: test_OS_005_getOSXVersion
   #
   # Description: Test methods:
   #                 getOSXVersion()
   #
   #===========================================================================#
-  def test_Windows_005_getOSXVersion
+  def test_OS_005_getOSXVersion
 
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_Windows_005_getOSXVersion")
+    puts2("Testcase: test_OS_005_getOSXVersion")
     puts2("#######################")
 
-    if(is_osx? ==true)
+    if(is_osx? == true)
       # Get the OS Version
       sOSVersion = getOSXVersion()
     end
@@ -270,7 +272,7 @@ class UnitTest_Windows < Test::Unit::TestCase
     #puts2('sOSVersion.class = ' + sOSVersion.class.to_s)
 
     puts2("OSX " + sOSVersion.to_s)
-  end # end Testcase - test_Windows_005_getOSXVersion
+  end # end Testcase - test_OS_005_getOSXVersion
 
 =begin
   #=============================================================================#
@@ -311,4 +313,4 @@ class UnitTest_Windows < Test::Unit::TestCase
   end # Method - getOSXVersion()
 =end
 
-end # end of Class - UnitTest_Windows
+end # end of Class - UnitTest_OS
