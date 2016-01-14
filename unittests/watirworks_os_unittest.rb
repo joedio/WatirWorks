@@ -304,11 +304,19 @@ class UnitTest_OS < Test::Unit::TestCase
 
     puts2("\nWhat OS version is it ...")
     if(is_win? == true)
-          # Get the OS Version
-          sWindowsVersion = getWindowsVersion()
-          puts2("\tWindows " + sWindowsVersion + " = " + is_win?(sWindowsVersion).to_s)
+
+      puts2("\tIs it Windows XP: "  + is_win?("XP").to_s)
+      puts2("\tIs it Windows Vista: "  + is_win?("Vista").to_s)
+      puts2("\tIs it Windows 7: "  + is_win?("7").to_s)
+      puts2("\tIs it Windows 8: "  + is_win?("8").to_s)
+      puts2("\tIs it Windows 8.1: "  + is_win?("8.1").to_s)
+      puts2("\tIs it Windows 10: "  + is_win?("10").to_s)
+
+      # Get the OS Version
+      sWindowsVersion = getWindowsVersion()
+      puts2("\tFull version info: " + sWindowsVersion + " = " + is_win?(sWindowsVersion).to_s)
     end
-    
+
     if(is_osx? == true)
       # Get the OS Version
       sOSXVersion = getOSXVersion()

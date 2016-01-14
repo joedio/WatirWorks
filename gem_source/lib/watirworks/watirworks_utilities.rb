@@ -2134,20 +2134,6 @@ module WatirWorks_Utilities
 
     return bReturnStatus
 
-=begin
-    if(RUBY_PLATFORM.downcase.include?("darwin"))
-      return true
-
-      # Is it JRuby on OSX
-    elsif(RUBY_PLATFORM.downcase.include?("java"))
-      if(ENV["OSTYPE"].to_s.downcase.include?("darwin"))
-        return true
-      end
-    end
-
-    return bReturnStatus
-=end
-
   end # Method - is_osx?(...)
 
   alias is_mac? is_osx?
@@ -2237,21 +2223,6 @@ module WatirWorks_Utilities
     end # # Check the OS Version
 
     return bReturnStatus
-
-=begin
-
-    if(RUBY_PLATFORM.downcase.include?("mswin") or RUBY_PLATFORM.downcase.include?("windows") or RUBY_PLATFORM.downcase.include?("mingw"))
-      return true
-
-      # Is it JRuby on Windows
-    elsif(RUBY_PLATFORM.downcase.include?("java"))
-      if(ENV["OS"].to_s.downcase.include?("win"))
-        return true
-      end
-    end
-
-    return false
-=end
 
   end # Method - is_win?()
 
