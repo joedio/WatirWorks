@@ -30,7 +30,7 @@ if(is_win?)
   include WatirWorks_WinUtilities # WatirWorks Windows Utilities
 else
   include WatirWorks_MacUtilities # WatirWorks OSX Utilities
-  puts2("*** ERROR - These tests are not supported on this platform")
+  #puts2("*** ERROR - These tests are not supported on this platform")
 end
 
 #=============================================================================#
@@ -60,6 +60,7 @@ iRun_TestLevel = 0
 #                    test_OS_003_getWindowsVersion
 #                    test_OS_004_displayOSVersion
 #                    test_OS_005_getOSXVersion
+#                    test_OS_006_is_os
 #
 #=============================================================================#
 class UnitTest_OS < Test::Unit::TestCase
@@ -274,43 +275,46 @@ class UnitTest_OS < Test::Unit::TestCase
     puts2("OSX " + sOSVersion.to_s)
   end # end Testcase - test_OS_005_getOSXVersion
 
-=begin
-  #=============================================================================#
-  #--
-  # Method: getOSXVersion()
+  #===========================================================================#
+  # Testcase method: test_OS_006_is_os
   #
-  # TODO - Move to watirworks_mac-utilities.rb
-  #++
+  # Description: Test methods:
+  #                 is_win?(...)
+  #                 is_osx?(...)
+  #                 is_linux?(...)
   #
-  # Description: Returns the OSX version from environment variables
-  #
-  # Returns: STRING - Value read from the environment variable
-  #
-  # Syntax: N/A
-  #
-  # Usage:
-  #          sOSXVersion = getOSXVersion()   # => '10.11'
-  #=============================================================================#
-  def getOSXVersion()
+  #===========================================================================#
+  def test_OS_006_is_os()
 
-    #$VERBOSE = true
+    puts2("")
+    puts2("#######################")
+    puts2("Testcase: test_OS_006_is_os")
+    puts2("#######################")
 
-    if($VERBOSE == true)
-      puts2("Parameters - getOSXVersion:")
-      #puts2("  sXXX= " + sXXX.to_s)
+    puts2("\nWhat's the OS?...")
+    puts2("\tWindows = " + is_win?.to_s)
+    puts2("\tOSX = " + is_osx?.to_s)
+    puts2("\tLinux = " + is_linux?.to_s)
+
+    sVersion = '99'
+    puts2("\nIs it OS version " + sVersion + "...")
+    puts2("\tWindows 99 = " + is_win?(sVersion).to_s)
+    puts2("\tOSX 99 = " + is_osx?(sVersion).to_s)
+    #puts2("\tLinux = " + is_linux?(sVersion).to_s) # Not implimented yet
+
+    puts2("\nWhat OS version is it ...")
+    if(is_win? == true)
+          # Get the OS Version
+          sWindowsVersion = getWindowsVersion()
+          puts2("\tWindows " + sWindowsVersion + " = " + is_win?(sWindowsVersion).to_s)
+    end
+    
+    if(is_osx? == true)
+      # Get the OS Version
+      sOSXVersion = getOSXVersion()
+      puts2("\tOSX " + sOSXVersion + " = " + is_osx?(sOSXVersion).to_s)
     end
 
-    hOSVersion = getenv('_system_version')
-
-    if($VERBOSE == true)
-      puts2('hOSVersion.class = ' + hOSVersion.class.to_s)
-    end
-
-    sOSVersion = hOSVersion['_system_version']
-
-    return sOSVersion.to_s
-
-  end # Method - getOSXVersion()
-=end
+  end # end Testcase - test_OS_006_is_os
 
 end # end of Class - UnitTest_OS

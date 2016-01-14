@@ -1,7 +1,7 @@
 #=============================================================================#
 # File: watirworks_utilities.rb
 #
-#  Copyright (c) 2008-2015, Joe DiMauro
+#  Copyright (c) 2008-2016, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Functions and methods for WatirWorks
@@ -87,8 +87,8 @@ include WatirWorks_RefLib #  WatirWorks Reference data module
 #   is_java?()
 #   is_linux?()
 #   is_mac?()
-#   is_osx?()
-#   is_win?()
+#   is_osx?(...)
+#   is_win?(...)
 #   is_win32?()
 #   is_win64?()
 #   is_minimized?(...)
@@ -123,7 +123,7 @@ include WatirWorks_RefLib #  WatirWorks Reference data module
 module WatirWorks_Utilities
 
   # Version of this module
-  WW_UTILITIES_VERSION =  "1.0.15"
+  WW_UTILITIES_VERSION =  "1.0.16"
 
   # Format to use when appending a timestamp to file names
   DATETIME_FILEFORMAT="%Y_%m_%d_%H%M%S"
@@ -1858,7 +1858,7 @@ module WatirWorks_Utilities
         end
 
         sCurrentLineContents = aFileContents[iStart].strip
-        
+
         if($VERBOSE == true)
           puts2("sCurrentLineContents: '" + sCurrentLineContents.strip + "'")
           puts2("sSearchString       : '" + sSearchString + "'")
@@ -1870,7 +1870,7 @@ module WatirWorks_Utilities
           if($VERBOSE == true)
             puts2("### Found a Match")
           end
-          
+
           # Record line number
           #iLineNumberWithMatch = aFileContents.lineno
 
@@ -2059,7 +2059,7 @@ module WatirWorks_Utilities
 
   #=============================================================================#
   #--
-  # Method: is_osx?()
+  # Method: is_osx?(...)
   #
   #++
   #
@@ -2067,14 +2067,74 @@ module WatirWorks_Utilities
   #
   # Returns: BOOLEAN - true if platform is OS/X, otherwise false
   #
-  # Syntax: N/A
+  # Syntax: sVersion = STRING - The version of the OS (e.g. 10)
   #
-  # Usage Examples:  if(is_osx?)
+  # Usage Examples:  To check if it is a OSX Operating system
+  #                  if(is_osx?)
   #                      # Execute your OS/X specific code
   #                  end
   #
+  #                  To check if it is a OSX 10.9 Operating system
+  #                  if(is_osx?("10.9")
+  #                      # Execute your OS/X 10.9 specific code
+  #                  end
   #=============================================================================#
-  def is_osx?()
+  def is_osx?(sVersion = nil)
+
+    if($VERBOSE == true)
+      puts2("Parameters - is_osx?:")
+      if(sVersion.class.to_s == 'NilClass')
+        puts2("  sVersion: " + sVersion.class.to_s)
+      else
+        puts2("  sVersion: " + sVersion.to_s)
+      end
+    end
+
+    # Set default return status
+    bReturnStatus = false
+
+    # Get the Ruby platform
+    sPlatform = RUBY_PLATFORM.downcase
+
+    # Check the Platform Type
+    case sPlatform
+
+    when /.*darwin.*/
+      bReturnStatus = true
+
+    when   /.*java.*/
+
+      # Additional check if this is on JRuby
+      if(ENV["OSTYPE"].to_s.downcase.include?("darwin"))
+        bReturnStatus = true
+      end # Additional check if this is on JRuby
+
+    else
+      return false
+
+    end  # Check the Platform Type
+
+    # Check the OS Version
+    if(sVersion.class.to_s != 'NilClass')
+
+      # Make sure it's a STRING
+      sVersion = sVersion.to_s
+
+      # Get the OS Version
+      sRawVersion = getOSXVersion()
+
+      # Compare the OS versions
+      if(sRawVersion =~ /.*#{sVersion}.*/)
+        bReturnStatus = true
+      else
+        bReturnStatus = false
+      end # Compare the OS versions
+
+    end # # Check the OS Version
+
+    return bReturnStatus
+
+=begin
     if(RUBY_PLATFORM.downcase.include?("darwin"))
       return true
 
@@ -2085,9 +2145,10 @@ module WatirWorks_Utilities
       end
     end
 
-    return false
+    return bReturnStatus
+=end
 
-  end # Method - is_osx?()
+  end # Method - is_osx?(...)
 
   alias is_mac? is_osx?
 
@@ -2102,14 +2163,83 @@ module WatirWorks_Utilities
   #
   # Returns: BOOLEAN - true if platform is Windows, otherwise false
   #
-  # Syntax: N/A
+  # Syntax: sVersion = STRING - The version of the OS (e.g. 10)
   #
-  # Usage Examples:  if(is_win?)
+  # Usage Examples:
+  #                 To check if it is a Windows Operating system
+  #                  if(is_win?)
   #                      # Execute your Windows specific code
   #                  end
   #
+  #                  To check if it is a Windows 10 Operating system
+  #                  if(is_win?("10")
+  #                      # Execute your Windows 10 specific code
+  #                  end
+  #
   #=============================================================================#
-  def is_win?()
+  def is_win?(sVersion = nil)
+
+    if($VERBOSE == true)
+      puts2("Parameters - is_win?:")
+      if(sVersion.class.to_s == 'NilClass')
+        puts2("  sVersion: " + sVersion.class.to_s)
+      else
+        puts2("  sVersion: " + sVersion.to_s)
+      end
+    end
+
+    # Set default return status
+    bReturnStatus = false
+
+    # Get the Ruby platform
+    sPlatform = RUBY_PLATFORM.downcase
+
+    # Check the Platform Type
+    case sPlatform
+
+    when /.*windows.*/
+      bReturnStatus = true
+
+    when /.*mswin.*/
+      bReturnStatus = true
+
+    when /.*mingw.*/
+      bReturnStatus = true
+
+    when   /.*java.*/
+
+      # Additional check if this is on JRuby
+      if(ENV["OSTYPE"].to_s.downcase.include?("win"))
+        bReturnStatus = true
+      end # Additional check if this is on JRuby
+
+    else
+      return false
+
+    end  # Check the Platform Type
+
+    # Check the OS Version
+    if(sVersion.class.to_s != 'NilClass')
+
+      # Make sure it's a STRING
+      sVersion = sVersion.to_s
+
+      # Get the OS Version
+      sRawVersion = getWindowsVersion()
+
+      # Compare the OS versions
+      if(sRawVersion =~ /.*#{sVersion}.*/)
+        bReturnStatus = true
+      else
+        bReturnStatus = false
+      end # Compare the OS versions
+
+    end # # Check the OS Version
+
+    return bReturnStatus
+
+=begin
+
     if(RUBY_PLATFORM.downcase.include?("mswin") or RUBY_PLATFORM.downcase.include?("windows") or RUBY_PLATFORM.downcase.include?("mingw"))
       return true
 
@@ -2121,6 +2251,7 @@ module WatirWorks_Utilities
     end
 
     return false
+=end
 
   end # Method - is_win?()
 
