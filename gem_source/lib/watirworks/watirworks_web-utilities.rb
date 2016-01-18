@@ -1,7 +1,7 @@
 #=============================================================================#
 # File: watirworks_web-utilities.rb
 #
-#  Copyright (c) 2008-2015, Joe DiMauro
+#  Copyright (c) 2008-2016, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Web application specific functions and methods for WatirWorks.
@@ -125,7 +125,7 @@ require 'watir-webdriver'
 module WatirWorks_WebUtilities
 
   # Version of this module
-  WW_WEB_UTILITIES_VERSION = "1.2.5"
+  WW_WEB_UTILITIES_VERSION = "1.2.6"
 
   # Flag indicating if a browser was started
   $bBrowserStarted = false
@@ -5219,6 +5219,7 @@ end # Class - Object
 #    is_andriod?(...)
 #    is_celerity?(...)
 #    is_chrome?(...)
+#    is_edge?(...)
 #    is_firefox?(...)
 #    is_opera?(...)
 #    is_ie?(...)
@@ -5366,6 +5367,51 @@ class Watir::Browser
 
   end # Method - is_chrome?(...)
 
+  #=============================================================================#
+  #--
+  # Method: is_edge?(...)
+  #
+  #++
+  #
+  # Description: Identifies if running a Edge browser
+  #
+  # Returns: BOOLEAN - true if browser is Edge, otherwise false
+  #
+  # Syntax: N/A
+  #
+  # Usage Examples:  if(browser.is_edge?)
+  #                      # Execute Edge specific code
+  #                  end
+  #
+  #=============================================================================#
+  def is_edge?(iVersion = nil)
+
+    if($VERBOSE == true)
+      puts2("Parameters - is_edge?")
+      puts2("  iVersion " + iVersion.to_s)
+    end
+
+    if(iVersion == nil)
+      return (self.driver.browser.to_s.downcase == "edge")
+    elsif(iVersion >= 6)
+
+      # Get the major release number of current browser
+      sAcutalBrowserVersion = self.driver.capabilities[:version]
+      #sAcutalBrowserVersion = self.driver.capabilities[:version].prefix(".")
+      sAcutalBrowserBrand = self.name.to_s
+
+      if((iVersion == sAcutalBrowserVersion.to_i) and (sAcutalBrowserBrand == "edge"))
+        return true
+      else
+        return false
+      end
+
+    else # Not nil and not >=6
+      return false
+    end
+
+  end # Method - is_edge?(...)
+  
   #=============================================================================#
   #--
   # Method: is_firefox?()
