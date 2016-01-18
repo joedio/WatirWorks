@@ -3,7 +3,7 @@
 # File: watirworks_browser_unittest.rb
 #
 #
-#  Copyright (c) 2008-2010, Joe DiMauro
+#  Copyright (c) 2008-2016, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for WatirWorks methods using the Internet Explorer, Firefox & Chrome browser's:
@@ -179,6 +179,7 @@ class Unittest_Browser < Test::Unit::TestCase
   #
   #  Test methods: start_browser(...)
   #                       is_chrome?(...)
+  #                       is_edge?(...)
   #                       is_firefox?(...)
   #                       is_ie?(...)
   #                       is_opera?(...)
@@ -208,7 +209,11 @@ class Unittest_Browser < Test::Unit::TestCase
     if(is_win?)
       #sCurrentOS = "windows"
       puts2("OS = Windows")
-      aSupportedBrowsers = ["Firefox", "Chrome", "Internet Explorer"]
+      if(is_win?(10))
+        aSupportedBrowsers = ["Firefox", "Chrome", "Internet Explorer", "Edge"]
+      else
+        aSupportedBrowsers = ["Firefox", "Chrome", "Internet Explorer"]
+      end
     elsif(is_osx?)
       #sCurrentOS = "osx"
       puts2("OS = OSX")
@@ -232,23 +237,36 @@ class Unittest_Browser < Test::Unit::TestCase
       sCurrentURL = oBrowser.url
       puts2("Current URL: " + sCurrentURL)
 
-      puts2("\nChrome browser?: " + oBrowser.is_chrome?.to_s)
-      puts2("Firefox browser?: " + oBrowser.is_firefox?.to_s)
-      puts2("IE browser?: " + oBrowser.is_ie?.to_s)
-      puts2("Opera browser?: " + oBrowser.is_opera?.to_s)
-      puts2("Safari browser?: " + oBrowser.is_safari?.to_s)
+      puts2("\nBrowser type...")
+      puts2("\tis_chrome? = " + oBrowser.is_chrome?.to_s)
+      puts2("\tis_edge? = " + oBrowser.is_edge?.to_s)
+      puts2("\tis_firefox? = " + oBrowser.is_firefox?.to_s)
+      puts2("\tis_ie? = " + oBrowser.is_ie?.to_s)
+      puts2("\tis_opera? = " + oBrowser.is_opera?.to_s)
+      puts2("\tis_safari? = " + oBrowser.is_safari?.to_s)
 
       oBrowser.display_info()
 
-      sBrowserVersion = oBrowser.version.to_s
-      puts2("Browser's full version = " + sBrowserVersion)
-      sBrowserMajorVersion = sBrowserVersion.prefix(".")
-      puts2("Browser's major version = " + sBrowserMajorVersion)
+      # The #browser.version method is not supported for Edge
+      if(oBrowser.is_edge?)
+        puts2("SKIPPED - #browser.version method is not supported for Edge")
+      else
+        sBrowserVersion = oBrowser.version.to_s
+        puts2("Browser's full version = " + sBrowserVersion)
+        sBrowserMajorVersion = sBrowserVersion.prefix(".")
+        puts2("Browser's major version = " + sBrowserMajorVersion)
+      end
 
       if(oBrowser.is_chrome?)
         puts2("Chrome " + (sBrowserMajorVersion.to_i - 1).to_s + ".x browser?: " + oBrowser.is_chrome?((sBrowserMajorVersion.to_i - 1)).to_s)
         puts2("Chrome " + sBrowserMajorVersion + ".x browser?: " + oBrowser.is_chrome?(sBrowserMajorVersion.to_i).to_s)
         puts2("Chrome " + (sBrowserMajorVersion.to_i + 1).to_s + ".x browser?: " + oBrowser.is_chrome?((sBrowserMajorVersion.to_i + 1)).to_s)
+      end
+      if(oBrowser.is_edge?)
+        puts2("SKIPPED - For Edge")
+        #puts2("Edge " + (sBrowserMajorVersion.to_i - 1).to_s + ".x browser?: " + oBrowser.is_edge?((sBrowserMajorVersion.to_i - 1)).to_s)
+        #puts2("Edge " + sBrowserMajorVersion + ".x browser?: " + oBrowser.is_edge?(sBrowserMajorVersion.to_i).to_s)
+        #puts2("Edge " + (sBrowserMajorVersion.to_i + 1).to_s + ".x browser?: " + oBrowser.is_edge?((sBrowserMajorVersion.to_i + 1)).to_s)
       end
       if(oBrowser.is_firefox?)
         puts2("Firefox " + (sBrowserMajorVersion.to_i - 1).to_s + ".x browser?: " + oBrowser.is_firefox?((sBrowserMajorVersion.to_i - 1)).to_s)
@@ -275,18 +293,18 @@ class Unittest_Browser < Test::Unit::TestCase
       puts2("\nBrowser - Set URL = " + sBingURL)
       oBrowser.goto(sBingURL)
       sleep(10) # Placeholder delay to figure out why a new IE fails at this point, and what can be waited on.
-      puts2("  URL = " + oBrowser.url)
-      puts2("  Browser name = " + oBrowser.name.to_s)
+      puts2("\tURL = " + oBrowser.url)
+      puts2("\tBrowser name = " + oBrowser.name.to_s)
 
       puts2("Misc. browser methods...")
-      puts2("  Browser status = '" + oBrowser.status.to_s + "'")
-      puts2("  Browser ready_state = " + oBrowser.ready_state.to_s)
-      puts2("  Window current = " + oBrowser.window.current?.to_s)
-      puts2("  Browse refresh...")
+      puts2("\tBrowser status = '" + oBrowser.status.to_s + "'")
+      puts2("\tBrowser ready_state = " + oBrowser.ready_state.to_s)
+      puts2("\tWindow current = " + oBrowser.window.current?.to_s)
+      puts2("\tBrowse refresh...")
       oBrowser.refresh
 
       # Start with browser in it's current size
-      puts2("\Browser is at it's initial size & position")
+      puts2("\tBrowser is at it's initial size & position")
       oBrowser.display_info()
 
       puts2("\nMaximize browser")
@@ -317,18 +335,26 @@ class Unittest_Browser < Test::Unit::TestCase
 
       puts2("\nLoad a different URL " + sGoogleURL)
       oBrowser.goto(sGoogleURL)
-      puts("  URL = " + oBrowser.url)
-      puts("  Title = " + oBrowser.title)
+      puts("\tURL = " + oBrowser.url)
+      puts("\tTitle = " + oBrowser.title)
 
       puts2("Use the browser's 'back' button...")
-      oBrowser.back
-      puts("  URL = " + oBrowser.url)
-      puts("  Title = " + oBrowser.title)
+      if(oBrowser.is_safari?)
+        puts2("\tSKIPPED - Safari Browser's back operation not supported.")
+      else
+        oBrowser.back
+        puts("\tURL = " + oBrowser.url)
+        puts("\tTitle = " + oBrowser.title)
+      end
 
       puts2("Use the browser's 'forward' button...")
-      oBrowser.forward
-      puts("  URL = " + oBrowser.url)
-      puts("  Title = " + oBrowser.title)
+      if(oBrowser.is_safari?)
+        puts2("\tSKIPPED - Safari Browser's forward operation not supported.")
+      else
+        oBrowser.forward
+        puts("\tURL = " + oBrowser.url)
+        puts("\tTitle = " + oBrowser.title)
+      end
 
       puts2("Focus the cursor on 1st div...")
       oBrowser.div(:id, "searchform").focus
@@ -343,8 +369,8 @@ class Unittest_Browser < Test::Unit::TestCase
       sleep(1)
 
       puts2("\nAbout to close the current browser")
-      puts2("  Does browser exist? = " + oBrowser.exists?.to_s)
-      puts2("  Does window exist? = " + oBrowser.window.exists?.to_s)
+      puts2("\tDoes browser exist? = " + oBrowser.exists?.to_s)
+      puts2("\tDoes window exist? = " + oBrowser.window.exists?.to_s)
       puts2("Close the browser...")
       oBrowser.close
       puts2("  Does browser exist? = " + oBrowser.exists?.to_s)
