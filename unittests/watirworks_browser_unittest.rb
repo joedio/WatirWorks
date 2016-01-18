@@ -341,6 +341,8 @@ class Unittest_Browser < Test::Unit::TestCase
       puts2("Use the browser's 'back' button...")
       if(oBrowser.is_safari?)
         puts2("\tSKIPPED - Safari Browser's back operation not supported.")
+        oBrowser.goto(sBingURL)
+        sleep(1)
       else
         oBrowser.back
         puts("\tURL = " + oBrowser.url)
@@ -350,6 +352,8 @@ class Unittest_Browser < Test::Unit::TestCase
       puts2("Use the browser's 'forward' button...")
       if(oBrowser.is_safari?)
         puts2("\tSKIPPED - Safari Browser's forward operation not supported.")
+        oBrowser.goto(sGoogleURL)
+        sleep(1)
       else
         oBrowser.forward
         puts("\tURL = " + oBrowser.url)
@@ -361,8 +365,12 @@ class Unittest_Browser < Test::Unit::TestCase
       sleep(1)
 
       puts2("Hover the cursor on 1st div...")
-      oBrowser.div(:id, "searchform").hover
-      sleep(1)
+      if(oBrowser.is_safari?)
+        puts2("\tSKIPPED - Safari Browser does not appear to support hover")
+      else
+        oBrowser.div(:id, "searchform").hover
+        sleep(1)
+      end
 
       puts2("Click the cursor on 1st div...")
       oBrowser.div(:id, "searchform").click
