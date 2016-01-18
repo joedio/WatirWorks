@@ -1,7 +1,7 @@
 #=============================================================================#
 # File: watirworks_reflib.rb
 #
-#  Copyright (c) 2008-2015, Joe DiMauro
+#  Copyright (c) 2008-2016, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Reference data that is platform and application independent.
@@ -44,7 +44,7 @@ require 'rubygems'
 module WatirWorks_RefLib
 
   # Version of this module
-  WW_REFLIB_VERSION = "1.2.1"
+  WW_REFLIB_VERSION = "1.2.2"
 
   # Format to use when appending a timestamp to file names
   DATETIME_FILEFORMAT="%Y_%m_%d_%H%M%S"
@@ -1157,14 +1157,86 @@ module WatirWorks_RefLib
   MONTHS = MONTH_ABBREVIATION.invert
 
   #=============================================================================#
+  # ObjectName: COMMON_HTML_ATTRIBUTES
+  # Returns: ARRAY
+  #
+  # Description: Contains the attributes that are common to each of the HTML TAG Elements
+  #
+  # Usage examples: "button" => COMMON_HTML_ATTRIBUTES + ["other", "attributes", "specific", "to", "this", "tag"]
+  #=============================================================================#
+  COMMON_HTML_ATTRIBUTES =
+  ["accesskey", "class", "contenteditable", "dir", "hidden", "id", "lang", "style", "tabindex", "title", "translate"]
+
+  #=============================================================================#
   # ObjectName: SUPPORTED_HTML_ATTRIBUTES
   # Returns: HASH
   #
   # Description: Contains a list of attributes by HTML TAG Element
   #
-  # Usage examples: SUPPORTED_HTML_ATTRIBUTES["div"] # => ["type", "id", "name", "title", "value", "enabled?", "visible?"]
+  # Usage example: SUPPORTED_HTML_ATTRIBUTES["button"] # => ["accesskey", "class", "contenteditable", "dir", "hidden",
+  #                                                           "id", "lang", "style", "tabindex", "title", "translate", 
+  #                                                           "autofocus", "disabled", "form", "formaction", "formenctype", 
+  #                                                           "formmethod", "formvalidate", "formtarget", "name", "type", "value"]
   #=============================================================================#
   SUPPORTED_HTML_ATTRIBUTES = {
+    "a" => (COMMON_HTML_ATTRIBUTES + ["download", "href", "hreflang", "media", "ping", "rel", "target", "type"]).sort,
+    "area" => (COMMON_HTML_ATTRIBUTES).sort,
+    "base" => (COMMON_HTML_ATTRIBUTES).sort,
+    "body" => (COMMON_HTML_ATTRIBUTES).sort,
+    "br" => (COMMON_HTML_ATTRIBUTES).sort,
+    "button" => (COMMON_HTML_ATTRIBUTES + ["autofocus", "disabled", "form", "formaction", "formenctype", "formmethod", "formvalidate", "formtarget", "name", "type", "value"]).sort,
+    "caption" => (COMMON_HTML_ATTRIBUTES.sort),
+    "data" => (COMMON_HTML_ATTRIBUTES.sort),
+    "div" => (COMMON_HTML_ATTRIBUTES.sort),
+    "dl" => (COMMON_HTML_ATTRIBUTES.sort),
+    "dialog" => (COMMON_HTML_ATTRIBUTES.sort),
+    "embed" => (COMMON_HTML_ATTRIBUTES + ["height", "src", "type", "width"]).sort,
+    "fieldset" => (COMMON_HTML_ATTRIBUTES.sort),
+    "font" => (COMMON_HTML_ATTRIBUTES.sort),
+    "form" => (COMMON_HTML_ATTRIBUTES + ["accept-charset", "action", "autocomplete", "enctype", "method", "name", "novalidate", "target"]).sort,
+    "header"=> (COMMON_HTML_ATTRIBUTES.sort),
+    "hr" => (COMMON_HTML_ATTRIBUTES.sort),
+    "head"=> (COMMON_HTML_ATTRIBUTES.sort),
+    "html" => (COMMON_HTML_ATTRIBUTES.sort),
+    "iframe" => (COMMON_HTML_ATTRIBUTES.sort),
+    "img" => (COMMON_HTML_ATTRIBUTES + ["alt", "crossorigin", "height", "longdesc", "sizes", "src", "srcset", "width", "usemap"]).sort,
+    "input" => (COMMON_HTML_ATTRIBUTES + ["accept", "autocomplete", "autofocus", "autosave", "checked", "disabled", "form", "height", "inputmode", "list", "max", "min", "type"]).sort,
+    "keygen" => (COMMON_HTML_ATTRIBUTES.sort),
+    "legend" => (COMMON_HTML_ATTRIBUTES.sort),
+    "li" => (COMMON_HTML_ATTRIBUTES + ["value"]).sort,
+    "label" => (COMMON_HTML_ATTRIBUTES + ["for", "form"]).sort,
+    "map" => (COMMON_HTML_ATTRIBUTES.sort),
+    "menu" => (COMMON_HTML_ATTRIBUTES.sort),
+    "menuitem" => (COMMON_HTML_ATTRIBUTES.sort),
+    "meta" => (COMMON_HTML_ATTRIBUTES + ["charset", "content", "http-equiv", "name"]).sort,
+    "meter" => (COMMON_HTML_ATTRIBUTES.sort),
+    "ol" => (COMMON_HTML_ATTRIBUTES + ["reversed", "start", "type"]).sort,
+    "object" => (COMMON_HTML_ATTRIBUTES.sort),
+    "option" => (COMMON_HTML_ATTRIBUTES + ["disabled", "label", "selected", "value"]).sort,
+    "optgroup" => (COMMON_HTML_ATTRIBUTES.sort),
+    "p" => (COMMON_HTML_ATTRIBUTES + ["disabled"]).sort,
+    "param" => (COMMON_HTML_ATTRIBUTES + ["name", "value"]).sort,
+    "pre" => (COMMON_HTML_ATTRIBUTES.sort),
+    "script" => (COMMON_HTML_ATTRIBUTES.sort),
+    "select" => (COMMON_HTML_ATTRIBUTES.sort),
+    "source" => (COMMON_HTML_ATTRIBUTES.sort),
+    "span" => (COMMON_HTML_ATTRIBUTES.sort),
+    "style" => (COMMON_HTML_ATTRIBUTES + ["disabled", "media", "scoped", "type"]).sort,
+    "table" => (COMMON_HTML_ATTRIBUTES.sort),
+    "th" => (COMMON_HTML_ATTRIBUTES + ["colspan", "headers", "rowspan", "scope"]).sort,
+    "td" => (COMMON_HTML_ATTRIBUTES + ["colspan", "headers", "rowspan", "scope"]).sort,
+    "textarea" => (COMMON_HTML_ATTRIBUTES + ["autocomplete", "autofocus", "cols", "disabled", "form", "maxlength", "minlength", "name", "placeholder", "readonly", "required", "rows", "selectDirection", "selectionEnd", "selectionStart", "spellcheck", "wrap"]).sort,
+    "thead" => (COMMON_HTML_ATTRIBUTES.sort),
+    "tfoot" => (COMMON_HTML_ATTRIBUTES.sort),
+    "template" => (COMMON_HTML_ATTRIBUTES.sort),
+    "textarea" => (COMMON_HTML_ATTRIBUTES.sort),
+    "time" => (COMMON_HTML_ATTRIBUTES.sort),
+    "title" => (COMMON_HTML_ATTRIBUTES.sort),
+    "track" => (COMMON_HTML_ATTRIBUTES.sort),
+    "ul" => (COMMON_HTML_ATTRIBUTES.sort),
+  }
+
+  OLD_SUPPORTED_HTML_ATTRIBUTES = {
     "a" => ["type", "id", "name", "title", "value", "href", "text","enabled?", "visible?"],
     "area" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
     "br" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
