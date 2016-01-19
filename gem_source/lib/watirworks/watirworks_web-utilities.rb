@@ -4657,17 +4657,17 @@ class Object
     aAttribs_ul = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
     # Determine the object type
 
-    # Determine the object type
+    # Determine the HTML Element object type
     case
 
     when oElementsToCheck.class.to_s == "String"
 
-      # Populate array with the string of the single HTML element to count
+      # Populate array with the string of the single HTML element
       aElements = [oElementsToCheck]
 
     when oElementsToCheck.class.to_s == "Array"
 
-      # Populate array with the array of the single or multiple HTML elements to count
+      # Populate array with the array of the single or multiple HTML elements
       aElements = oElementsToCheck
 
     when oElementsToCheck.class.to_s == "NilClass"
@@ -4679,9 +4679,9 @@ class Object
       puts2(oElementsToCheck.class.to_s + " class objects are NOT supported. Please use a nil, String or Array of Strings.", 'WARN')
       return  false
 
-    end # Determine the object type
+    end # Determine the HTML Element object type
 
-    # If the first string in the array is "All" populate the array with all the supported HTML tags
+    # If the first string in the array is "All" populate the array with all the supported HTML Elements
     if(aElements[0].to_s.downcase == "all")
       aElements = aSupportedHTMLElementNames
     end
@@ -5077,14 +5077,18 @@ class Object
   #                        my_browser.show_html_tag_attributes(aObjects)
   #
   #=======================================================================#
-  def show_html_tag_attributes(oElementsToShow="all")
+  def show_html_tag_attributes(oElementsToShow = "all", oAttributesToShow = SUPPORTED_HTML_ATTRIBUTES)
 
     if($VERBOSE == true)
       puts2("Parameters - show_html_tag_attributes:")
       puts2("  oElementsToShow: ")
       puts2(     oElementsToShow.to_s)
+      puts2("\n\toAttributesToShow: ")
+      puts2(     oAttributesToShow.to_s)
     end
 
+=begin
+    ############ BEGIN OLD CODE #####################
     # Define the element attributes to collect  # removed "file_size" : NotImplementedError: not currently supported by WebDriver
     aAttributes = ["exists?", "type", "id", "name", "title",
       "value", "enabled?", "visible?", "loaded?", "src",
@@ -5096,8 +5100,10 @@ class Object
 
     # Sort the attributes
     aAttributes = aAttributes.sort!
+    ############## END OLD CODE ############################
+=end
 
-    # Determine the object type
+    # Determine the HTML Element object type
     case
 
     when oElementsToShow.class.to_s == "String"
@@ -5119,9 +5125,9 @@ class Object
       puts2(oElementsToShow.class.to_s + " class objects are NOT supported. Please use a nil, String or Array of Strings.", 'WARN')
       return  false
 
-    end # Determine the object type
+    end # Determine the HTML Element object type
 
-    # If the first string in the array is "All" populate the array with all the supported HTML tags
+    # If the first string in the HTML Element array is "All" populate the array with all the supported HTML elements
     if(aElements[0].to_s.downcase == "all")
       aElements = SUPPORTED_HTML_ELEMENTS
     end
@@ -5169,6 +5175,42 @@ class Object
           puts2("\n#-------------------------#")
           puts2("# Attributes of #{sElement} #{iIndex}")
           puts2("#-------------------------#")
+
+          ########### BEGN NEW CODE ###########################
+
+          # Determine the HTML Attribute object type
+          case
+
+          when oAttributesToShow.class.to_s == "String"
+
+            # Populate array with the string of the single HTML attribute to show
+            aAttributes = [oAttributesToShow]
+
+          when oAttributesToShow.class.to_s == "Array"
+
+            # Populate array with the array of the single or multiple HTML attributes to show
+            aAttributes = oAttributesToShow
+
+          when oAttributesToShow.class.to_s == "Hash"
+
+            # Populate array with the array of the specified single or multiple HTML attributes to show
+            aAttributes = oAttributesToShow[sElement]
+
+          when oAttributesToShow.class.to_s == "NilClass"
+
+            # Populate array with the array of the string "All" to show all HTML attributes
+            aAttributes = SUPPORTED_HTML_ATTRIBUTES[sElement]
+
+          else
+            puts2(oAttributesToShow.class.to_s + " class objects are NOT supported. Please use a nil, String, Hash or Array", 'WARN')
+            return  false
+
+          end # Determine the HTML Attribute object type
+
+          # Sort the attributes
+          aAttributes = aAttributes.sort!
+
+          ############ END NEW CODE ##########################
 
           aAttributes.each do | sAttribute |
 
@@ -5411,7 +5453,7 @@ class Watir::Browser
     end
 
   end # Method - is_edge?(...)
-  
+
   #=============================================================================#
   #--
   # Method: is_firefox?()

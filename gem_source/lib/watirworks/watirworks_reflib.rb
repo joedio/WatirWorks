@@ -1165,7 +1165,7 @@ module WatirWorks_RefLib
   # Usage examples: "button" => COMMON_HTML_ATTRIBUTES + ["other", "attributes", "specific", "to", "this", "tag"]
   #=============================================================================#
   COMMON_HTML_ATTRIBUTES =
-  ["accesskey", "class", "contenteditable", "dir", "hidden", "id", "lang", "style", "tabindex", "title", "translate"]
+  ["accesskey", "class", "class_name", "contenteditable", "dir", "draggable?", "hidden", "hidden?", "id", "lang", "style", "tabindex", "title", "translate", 'text', "visible?"]
 
   #=============================================================================#
   # ObjectName: SUPPORTED_HTML_ATTRIBUTES
@@ -1174,12 +1174,12 @@ module WatirWorks_RefLib
   # Description: Contains a list of attributes by HTML TAG Element
   #
   # Usage example: SUPPORTED_HTML_ATTRIBUTES["button"] # => ["accesskey", "class", "contenteditable", "dir", "hidden",
-  #                                                           "id", "lang", "style", "tabindex", "title", "translate", 
-  #                                                           "autofocus", "disabled", "form", "formaction", "formenctype", 
+  #                                                           "id", "lang", "style", "tabindex", "title", "translate",
+  #                                                           "autofocus", "disabled", "form", "formaction", "formenctype",
   #                                                           "formmethod", "formvalidate", "formtarget", "name", "type", "value"]
   #=============================================================================#
   SUPPORTED_HTML_ATTRIBUTES = {
-    "a" => (COMMON_HTML_ATTRIBUTES + ["download", "href", "hreflang", "media", "ping", "rel", "target", "type"]).sort,
+    "a" => (COMMON_HTML_ATTRIBUTES + ["coords", "download", "href", "hreflang", "media", "ping", "rel", "target", "type"]).sort,
     "area" => (COMMON_HTML_ATTRIBUTES).sort,
     "base" => (COMMON_HTML_ATTRIBUTES).sort,
     "body" => (COMMON_HTML_ATTRIBUTES).sort,
@@ -1199,7 +1199,7 @@ module WatirWorks_RefLib
     "head"=> (COMMON_HTML_ATTRIBUTES.sort),
     "html" => (COMMON_HTML_ATTRIBUTES.sort),
     "iframe" => (COMMON_HTML_ATTRIBUTES.sort),
-    "img" => (COMMON_HTML_ATTRIBUTES + ["alt", "crossorigin", "height", "longdesc", "sizes", "src", "srcset", "width", "usemap"]).sort,
+    "img" => (COMMON_HTML_ATTRIBUTES + ["align", "alt", "crossorigin", "height", "loaded?", "longdesc", "map?", "natural_height", "natural_width", "sizes", "src", "srcset", "width", "usemap"]).sort,
     "input" => (COMMON_HTML_ATTRIBUTES + ["accept", "autocomplete", "autofocus", "autosave", "checked", "disabled", "form", "height", "inputmode", "list", "max", "min", "type"]).sort,
     "keygen" => (COMMON_HTML_ATTRIBUTES.sort),
     "legend" => (COMMON_HTML_ATTRIBUTES.sort),
