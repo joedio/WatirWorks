@@ -1220,9 +1220,39 @@ module WatirWorks_RefLib
   # ObjectName: SUPPORTED_HTML_ATTRIBUTES
   # Returns: HASH
   #
-  # TODO - Figure out what's with elements: th, td, thead, tfoot
+  # TODO - Figure out what's with elements: tfoot
   # TODO - Presuming: caption is TableCaption
   # TODO - Presuming: header is Heading
+  #
+  # HTML Element = Watir Class
+  # ---------------------------
+  # a = Watir::Anchor
+  # area = Watir::Area
+  # br = Watir::BR
+  # body = Watir::Body
+  # button = Watir::Button
+  # div = Watir::Div
+  # form = Watir::Form
+  # hr = Watir::HR
+  # head = Watir::Head
+  # img = Watir::Image
+  # input = Watir::Input
+  # label = Watir::Label
+  # li = Watir::LI
+  # map = Watir::Map
+  # option = Watir::Option
+  # p = Watir::Paragraph
+  # pre = Watir::Pre
+  # script = Watir::Script
+  # select = Watir::Select
+  # span = Watir::Span
+  # style = Watir::Style
+  # table = Watir::Table
+  # td = Watir::TableDataCell
+  # textarea = Watir::TextArea
+  # th = Watir::TableHeaderCell
+  # thead = Watir::TableSection  # a.k.a. t_head
+  # ul = Watir::UList
   #
   # Description: Contains a list of attributes by HTML TAG Element
   #
@@ -1276,14 +1306,15 @@ module WatirWorks_RefLib
     "span" => (COMMON_HTML_ATTRIBUTES).sort!,
     "style" => (COMMON_HTML_ATTRIBUTES + ["media", "scoped?", "type"]).sort!,
     "table" => (COMMON_HTML_ATTRIBUTES + ["align", "bg_color", "border", "caption", "cell_padding", "cell_spacing", "frame", "rules", "sortable?", "summary", "t_bodies", "t_foot", "t_head", "width"]).sort!,
-    "th" => (COMMON_HTML_ATTRIBUTES + ["colspan", "headers", "rowspan", "scope"]).sort!,
-    "td" => (COMMON_HTML_ATTRIBUTES + ["colspan", "headers", "rowspan", "scope"]).sort!,
+    "th" => (COMMON_HTML_ATTRIBUTES + ["abbr", "align", "axis", "bg_color", "cell_index", "ch", "ch_off", "col_span", "headers", "height", "no_wrap?", "row_span", "scope", "sorted", "v_align", "width"]).sort!,
+    "td" => (COMMON_HTML_ATTRIBUTES + ["align", "axis", "bg_color", "cell_index", "ch", "ch_off", "col_span", "headers", "height", "no_wrap?", "row_span", "v_align", "width"]).sort!,
     "textarea" => (COMMON_HTML_ATTRIBUTES + ["autocomplete", "autofocus?", "cols", "default_value", "dir_name", "disabled?", "form", "input_mode", "labels", "max_length", "min_length", "name", "placeholder", "read_only?", "required?", "selection_direction", "selection_end", "selection_start", "text_lenght", "type", "validation_message", "validity", "value", "will_validate?", "wrap"]).sort!,
-    "thead" => (COMMON_HTML_ATTRIBUTES).sort!,
+    "thead" => (COMMON_HTML_ATTRIBUTES + ["align", "axis", "bg_color", "cell_index", "ch", "ch_off", "col_span", "headers", "height", "no_wrap?", "row_span", "v_align", "width"]).sort!,
     "tfoot" => (COMMON_HTML_ATTRIBUTES).sort!,
     "template" => (COMMON_HTML_ATTRIBUTES + ["content"]).sort!,
     "time" => (COMMON_HTML_ATTRIBUTES + ["date_time"]).sort!,
     "title" => (COMMON_HTML_ATTRIBUTES).sort!,
+    "tr" => (COMMON_HTML_ATTRIBUTES + ["align", "bg_color", "ch", "ch_off", "row_index", "section_row_index", "v_align"]).sort!,
     "track" => (COMMON_HTML_ATTRIBUTES + ["default?", "kind", "label", "ready_state", "src" "srclang", "track"]).sort!,
     "ul" => (COMMON_HTML_ATTRIBUTES + ["compact?", "type"]).sort!
   }
@@ -1293,6 +1324,37 @@ module WatirWorks_RefLib
   # Returns: ARRAY
   #
   # Description: Contains a list of HTML elements that Watir-Webdriver supports
+  #
+  # HTML Element = Watir Class
+  # ---------------------------
+  # a = Watir::Anchor
+  # area = Watir::Area
+  # br = Watir::BR
+  # body = Watir::Body
+  # button = Watir::Button
+  # div = Watir::Div
+  # form = Watir::Form
+  # hr = Watir::HR
+  # head = Watir::Head
+  # img = Watir::Image
+  # input = Watir::Input
+  # label = Watir::Label
+  # li = Watir::LI
+  # map = Watir::Map
+  # option = Watir::Option
+  # p = Watir::Paragraph
+  # pre = Watir::Pre
+  # script = Watir::Script
+  # select = Watir::Select
+  # span = Watir::Span
+  # style = Watir::Style
+  # table = Watir::Table
+  # td = Watir::TableDataCell
+  # textarea = Watir::TextArea
+  # th = Watir::TableHeaderCell
+  # thead = Watir::TableSection  # a.k.a. t_head
+  # tr = Watir::TableRow
+  # ul = Watir::UList
   #
   # Usage examples:
   #                      # Define the elements to check
@@ -1314,7 +1376,7 @@ module WatirWorks_RefLib
     "object", "ol", "optgroup", "option", "output",
     "p", "param", "pre",
     "script", "select", "source", "span", "style",
-    "table", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "track",
+    "table", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track",
     "ul"
   ]
 
