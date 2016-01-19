@@ -1317,7 +1317,6 @@ class Unittest_WebPage < Test::Unit::TestCase
     begin # Start local browsers
 
       puts2("Create a new local Browser Object")
-      #browser = Watir::Browser.new
       browser = start_browser($sDefaultBrowser)
       sleep 2
 
@@ -1326,8 +1325,25 @@ class Unittest_WebPage < Test::Unit::TestCase
       sleep iDelay
       puts2("Current URL: " + browser.url)
 
-      browser.generate_testcode_html_tag_attributes("all", "myBrowser")
-      browser.generate_testcode_html_tag_attributes(["text_field", "select_list"], "myBrowser")
+      puts2("\n################################################")
+      puts2("### Test with single element & singel attribute")
+      puts2("################################################")
+      browser.generate_testcode_html_tag_attributes("button", "id", "myBrowser")
+      
+      puts2("\n##################################################################")
+      puts2("### Test with an array of two elements and HASH of two Attributes per element")
+      puts2("##################################################################")
+      aTwoElements = ["a", "img"]
+      hTwoAttributes = {
+        "a" => ["href", "visible?"],
+        "img" => ["height", "id"]
+      }
+      browser.generate_testcode_html_tag_attributes(aTwoElements, hTwoAttributes, "myBrowser")
+      
+      puts2("\n########################################")
+      puts2("### Test with all attributes for elements")
+      puts2("########################################")
+      browser.generate_testcode_html_tag_attributes(nil, nil, "myBrowser")
 
     rescue => e
 

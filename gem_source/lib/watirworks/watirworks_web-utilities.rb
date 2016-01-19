@@ -125,7 +125,7 @@ require 'watir-webdriver'
 module WatirWorks_WebUtilities
 
   # Version of this module
-  WW_WEB_UTILITIES_VERSION = "1.2.6"
+  WW_WEB_UTILITIES_VERSION = "1.3.0"
 
   # Flag indicating if a browser was started
   $bBrowserStarted = false
@@ -4273,19 +4273,19 @@ class Object
     hObjectsFound = {}
 
     # Determine the object type
-    case
+    case oElementToCount.class.to_s
 
-    when oElementToCount.class.to_s == "String"
+    when "String"
 
       # Populate array with the string of the single HTML element to count
       aElementsToCount = [oElementToCount]
 
-    when oElementToCount.class.to_s == "Array"
+    when "Array"
 
       # Populate array with the array of the single or multiple HTML elements to count
       aElementsToCount = oElementToCount
 
-    when oElementToCount.class.to_s == "NilClass"
+    when "NilClass"
 
       # Populate array with the array of the string "All" to count all HTML elements
       aElementsToCount = ["All"]
@@ -4357,15 +4357,9 @@ class Object
       when  "form"
         iForm = self.forms.length
         hObjectsFound.store("form", iForm)
-        #=begin
       when  "form"
-        if(is_firefox?)
-          iForm = -1  # FireWatir is missing a forms method, so it is set to -1 as a flag indicating that the forms element was NOT counted.
-        else  # Watir supports forms so count them
-          iForm = self.forms.length
-        end
+        iForm = self.forms.length
         hObjectsFound.store("form", iForm)
-        #=end
       when "head"
         iHead = self.heads.length
         hObjectsFound.store("head", iHead)
@@ -4518,19 +4512,19 @@ class Object
   #              Example partial output:
   #
   #                  #-------------------------#
-  #                  # Attributes of image 1
+  #                  # Attributes of img 1
   #                  #-------------------------#
-  #                  assert($browser.image(:index, 1).alt == "Search Google" )
-  #                  assert($browser.image(:index, 1).enabled? == "" )
-  #                  assert($browser.image(:index, 1).file_size == "4325" )
-  #                  assert($browser.image(:index, 1).loaded? == "SyntaxError: syntax error" )
-  #                  assert($browser.image(:index, 1).height == "32" )
-  #                  assert($browser.image(:index, 1).id == "" )
-  #                  assert($browser.image(:index, 1).name == "" )
-  #                  assert($browser.image(:index, 1).src == "logo_25wht.gif" )
-  #                  assert($browser.image(:index, 1).title == "Search Google" )
-  #                  assert($browser.image(:index, 1).type == "" )
-  #                  assert($browser.image(:index, 1).value == "" )
+  #                  assert($browser.img(:index, 1).alt == "Search Google" )
+  #                  assert($browser.img(:index, 1).enabled? == true )
+  #                  assert($browser.img(:index, 1).file_size == "4325" )
+  #                  assert($browser.img(:index, 1).loaded? == "SyntaxError: syntax error" )
+  #                  assert($browser.img(:index, 1).height == "32" )
+  #                  assert($browser.img(:index, 1).id == "" )
+  #                  assert($browser.img(:index, 1).name == "" )
+  #                  assert($browser.img(:index, 1).src == "logo_25wht.gif" )
+  #                  assert($browser.img(:index, 1).title == "Search Google" )
+  #                  assert($browser.img(:index, 1).type == "" )
+  #                  assert($browser.img(:index, 1).value == "" )
   #
   #              Supported HTML Tag elements are obtained from the WatirWorks Reflib array SUPPORTED_HTML_ELEMENTS
   #
@@ -4555,7 +4549,7 @@ class Object
   #
   # Syntax: oElementsToCheck = OBJECT - One of the following object types:
   #
-  #                                    nil - All HTML Element attributes
+  #                                    nil - All HTML Element attributes in SUPPORTED_HTML_ELEMENTS
   #
   #                                    STRING - Name of any single HTML Element attribute
   #                                                 i.e. "link"
@@ -4565,118 +4559,64 @@ class Object
   #                                                           i.e ["link"] or ["button", "checkbox"]
   #                                                         Or if ["all"] for all the Element's.
   #
+  #             oAttributesToCheck = OBJECT One of the following object types:
+  #
+  #                                    nil - All HTML Element Attributes in SUPPORTED_HTML_ATTRIBUTES
+  #
+  #                                    STRING - Name of any single HTML Element attribute
+  #                                                 i.e. "link"
+  #                                               Or "all" for them all.
+  #
+  #                                    HASH - A hash of HTML Tag Elements and their associated Attributes
+  #                                                           i.e { "img" => ["href", "id"],
+  #                                                                "br" => ["name"] }
+  #
   #              sObjectName = STRING - The name to use in the print statement
   #
   #
   # Examples: To generate testcode for all the HTML Tag Elements on the page in the current web browser:
-  #                 myBrowser.generate_testcode_html_tag_attributes("all", "myBrowser")
+  #                 myBrowser.generate_testcode_html_tag_attributes("all", nil, "myBrowser")
   #
-  #           To generate testcode for only the LINK objects within the page's footer div on the current web browser :
+  #           To generate testcode for only the Anchor (a) Elements within the page's footer div on the current web browser :
   #                 oFooterDiv = browser.div(:id, 'footer')
-  #                 oFooterDiv.generate_testcode_html_tag_attributes("link", "oFooterDiv")
+  #                 oFooterDiv.generate_testcode_html_tag_attributes("a", nil,"oFooterDiv")
   #
-  #           To generate testcode for only IMAGE  and LINK objects on the page in the current web browser:
-  #                 $browser.generate_testcode_html_tag_attributes(["image", "link"])
+  #           To generate testcode for only IMAGE  and Anchor objects on the page in the current web browser:
+  #                 $browser.generate_testcode_html_tag_attributes(["a", "img"], SUPPORTED_HTML_ATTRIBUTES)
   #
   #=============================================================================#
-  def generate_testcode_html_tag_attributes(oElementsToCheck="all", sObjectName="$browser")
+  def generate_testcode_html_tag_attributes(oElementsToCheck="all", oAttributesToCheck = SUPPORTED_HTML_ATTRIBUTES, sObjectName="$browser")
 
     if($VERBOSE == true)
       puts2("Parameters - generate_testcode_html_tag_attributes:")
       puts2("  oElementsToCheck: ")
       puts2(     oElementsToCheck.to_s)
+      puts2("\n\oAttributesToCheck: ")
+      puts2(     oAttributesToCheck.to_s)
     end
 
-    # Define the elements to check
     aSupportedHTMLElementNames = SUPPORTED_HTML_ELEMENTS
 
-    # Define the element attributes to collect
-    aAttributes = []
-
-    # TODO - Update each of the entries with the correct set of attributes
-    #
-    # Define arrays for each tag and the attributes that apply to each
-    #
-    # Those attributes that are not listed for a particular element were either tried and
-    #  did NOT appear to be useful (e.g. exists?) or are not supported by that element. in Watir1.6.5/Firewatir1.6.5
-    aAttribs_a = ["type", "id", "name", "title", "value", "alt", "href", "text","enabled?", "visible?"]
-    aAttribs_area = ["type", "id", "name", "title", "value", "src", "enabled?", "visible?"]
-    aAttribs_br = ["type", "id", "name", "title", "value", "enabled?", "visible?", "set?"]
-    aAttribs_base = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_body = ["id", "name", "title", "value", "class_name", "enabled?", "visible?"]
-    aAttribs_button = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_caption = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_data = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_dl = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_dialog = ["class", "id", "name", "action", "method", "visible?"]
-    aAttribs_div = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_embed = ["type", "id", "name", "title", "value", "src", "height", "width", "alt", "enabled?", "visible?", "loaded?"]
-    aAttribs_fieldset = ["type", "id", "name", "title", "value", "text", "enabled?", "visible?"]
-    aAttribs_font = ["type", "id", "name", "title", "value", "href", "text", "src","enabled?", "visible?"]
-    aAttribs_form = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_hr = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_head = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_header = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_html = ["type", "id", "name", "title", "value", "enabled?", "visible?", "set?"]
-    aAttribs_iframe = ["type", "id", "name", "title", "value", "selected_options", "options", "text", "enabled?", "visible?"]
-    # removed "file_size",  "file_created_date", from image : NotImplementedError: not currently supported by WebDriver
-    aAttribs_img = ["type", "id", "name", "title", "value", "class_name", "enabled?", "visible?"]
-    aAttribs_input = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_keygen = ["type", "id", "name", "title", "value", "row_count_excluding_nested_tables", "enabled?", "visible?"]
-    aAttribs_li = ["type", "id", "name", "title", "value", "text", "size", "maxLength", "enabled?", "visible?"]
-    aAttribs_label = ["type", "id", "name", "title", "value", "src", "height", "width", "alt", "enabled?", "visible?", "loaded?"]
-    aAttribs_legend = ["type", "id", "name", "title", "value", "text", "enabled?", "visible?"]
-    aAttribs_map = ["type", "id", "name", "title", "value", "href", "text", "src","enabled?", "visible?"]
-    aAttribs_menu = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_menuitem = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_meta = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_meter = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_ol = ["type", "id", "name", "title", "value", "enabled?", "visible?", "set?"]
-    aAttribs_object = ["type", "id", "name", "title", "value", "src", "height", "width", "alt", "enabled?", "visible?", "loaded?"]
-    aAttribs_optgroup = ["type", "id", "name", "title", "value", "text", "enabled?", "visible?"]
-    aAttribs_option = ["type", "id", "name", "title", "value", "href", "text", "src","enabled?", "visible?"]
-    aAttribs_output = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_p = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_param = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_pre = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_script = ["type", "id", "name", "title", "value", "enabled?", "visible?", "set?"]
-    aAttribs_select = ["type", "id", "name", "title", "value", "src", "height", "width", "alt", "enabled?", "visible?", "loaded?"]
-    aAttribs_source = ["type", "id", "name", "title", "value", "text", "enabled?", "visible?"]
-    aAttribs_span = ["type", "id", "name", "title", "value", "href", "text", "src","enabled?", "visible?"]
-    aAttribs_style = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_table = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_th = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_td = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_thead = ["type", "id", "name", "title", "value", "enabled?", "visible?", "set?"]
-    aAttribs_tfoot = ["type", "id", "name", "title", "value", "src", "height", "width", "alt", "enabled?", "visible?", "loaded?"]
-    aAttribs_template = ["type", "id", "name", "title", "value", "text", "enabled?", "visible?"]
-    aAttribs_textarea = ["type", "id", "name", "title", "value", "href", "text", "src","enabled?", "visible?"]
-    aAttribs_time = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_title = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_track = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    aAttribs_ul = ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-    # Determine the object type
-
     # Determine the HTML Element object type
-    case
+    case oElementsToCheck.class.to_s
 
-    when oElementsToCheck.class.to_s == "String"
+    when "String"
 
       # Populate array with the string of the single HTML element
       aElements = [oElementsToCheck]
 
-    when oElementsToCheck.class.to_s == "Array"
+    when "Array"
 
       # Populate array with the array of the single or multiple HTML elements
       aElements = oElementsToCheck
 
-    when oElementsToCheck.class.to_s == "NilClass"
+    when "NilClass"
 
       # Populate array with the array of the string "All" to count all HTML elements
       aElements = aSupportedHTMLElementNames
 
     else
-      puts2(oElementsToCheck.class.to_s + " class objects are NOT supported. Please use a nil, String or Array of Strings.", 'WARN')
+      puts2(oElementsToCheck.class.to_s + " class Element objects are NOT supported. Please use a nil, String or Array of Strings.", 'WARN')
       return  false
 
     end # Determine the HTML Element object type
@@ -4710,129 +4650,37 @@ class Object
     # Loop for HTML Element types
     aElements.each do | sElement|
 
-      # Define the proper attributes based on the type of HTML Element
-      case sElement.to_s.downcase
+      # Determine the HTML Attribute object type
+      case oAttributesToCheck.class.to_s
 
-      when "a"
-        aAttributes = aAttribs_a
-      when "area"
-        aAttributes = aAttribs_area
-      when "br"
-        aAttributes = aAttribs_br
-      when "base"
-        aAttributes = aAttribs_base
-      when "body"
-        aAttributes = aAttribs_body
-      when "button"
-        aAttributes = aAttribs_button
-      when "caption"
-        aAttributes = aAttribs_caption
-      when "data"
-        aAttributes = aAttribs_data
-      when "dialog"
-        aAttributes = aAttribs_dialog
-      when "div"
-        aAttributes = aAttribs_div
-      when "dl"
-        aAttributes = aAttribs_dl
-      when "embed"
-        aAttributes = aAttribs_embed
-      when "fieldset"
-        aAttributes = aAttribs_fieldset
-      when "font"
-        aAttributes = aAttribs_font
-      when "form"
-        aAttributes = aAttribs_form
-      when "head"
-        aAttributes = aAttribs_head
-      when "header"
-        aAttributes = aAttribs_header
-      when "html"
-        aAttributes = aAttribs_html
-      when "hr"
-        aAttributes = aAttribs_hr
-      when "iframe"
-        aAttributes = aAttribs_iframe
-      when "img"
-        aAttributes = aAttribs_img
-      when "input"
-        aAttributes = aAttribs_input
-      when "keygen"
-        aAttributes = aAttribs_keygen
-      when "label"
-        aAttributes = aAttribs_label
-      when "li"
-        aAttributes = aAttribs_li
-      when "legend"
-        aAttributes = aAttribs_legend
-      when "map"
-        aAttributes = aAttribs_map
-      when "menu"
-        aAttributes = aAttribs_menu
-      when "menuitem"
-        aAttributes = aAttribs_menuitem
-      when "meta"
-        aAttributes = aAttribs_meta
-      when "meter"
-        aAttributes = aAttribs_meter
-      when "object"
-        aAttributes = aAttribs_object
-      when "optgroup"
-        aAttributes = aAttribs_optgroup
-      when "option"
-        aAttributes = aAttribs_option
-      when "output"
-        aAttributes = aAttribs_output
-      when "param"
-        aAttributes = aAttribs_param
-      when "ol"
-        aAttributes = aAttribs_ol
-      when "pre"
-        aAttributes = aAttribs_pre
-      when "p"
-        aAttributes = aAttribs_p
-      when "radio"
-        aAttributes = aAttribs_radio
-      when "select"
-        aAttributes = aAttribs_select
-      when "script"
-        aAttributes = aAttribs_script
-      when "source"
-        aAttributes = aAttribs_source
-      when "noscript"
-        aAttributes = aAttribs_noscript
-      when "strong"
-        aAttributes = aAttribs_strong
-      when "span"
-        aAttributes = aAttribs_span
-      when "style"
-        aAttributes = aAttribs_style
-      when "table"
-        aAttributes = aAttribs_table
-      when "th"
-        aAttributes = aAttribs_th
-      when "td"
-        aAttributes = aAttribs_td
-      when "thead"
-        aAttributes = aAttribs_thead
-      when "tfoot"
-        aAttributes = aAttribs_tfoot
-      when "template"
-        aAttributes = aAttribs_template
-      when "time"
-        aAttributes = aAttribs_time
-      when "title"
-        aAttributes = aAttribs_title
-      when "track"
-        aAttributes = aAttribs_track
-      when "ul"
-        aAttributes = aAttribs_ul
-      when "textarea"
-        aAttributes = aAttribs_textarea
-      end # Define the proper attributes based on the type of HTML Element
+      when "String"
+
+        # Populate array with the string of the single HTML attribute to show
+        aAttributes = [oAttributesToCheck]
+
+      when "Array"
+
+        # Populate array with the array of the single or multiple HTML attributes to show
+        aAttributes = oAttributesToCheck
+
+      when "Hash"
+
+        # Populate array with the array of the specified single or multiple HTML attributes to show
+        aAttributes = oAttributesToCheck[sElement]
+
+      when "NilClass"
+
+        # Populate array with the array of the specified single or multiple HTML attributes to show
+        aAttributes = SUPPORTED_HTML_ATTRIBUTES[sElement]
+
+      else
+        puts2(oAttributesToCheck.class.to_s + " class Attribute objects are NOT supported. Please use a nil, String, Hash or Array", 'WARN')
+        return  false
+
+      end # Determine the HTML Attribute object type
 
       # Sort the attributes
-      aAttributes.sort!
+      #aAttributes.sort!
 
       puts2("\n################")
       puts2("# Verifying attributes for: #{sElement}")
@@ -5012,13 +4860,13 @@ class Object
   #              Example partial output:
   #
   #                  #-------------------------#
-  #                  # Attributes of image 1
+  #                  # Attributes of img 1
   #                  #-------------------------#
   #                  action  = ""
   #                  alt  = "Search Google"
   #                  class  = FireWatir::Image
   #                  class_name  = ""
-  #                  enabled?  = ""
+  #                  enabled?  = true
   #                  exists?  = true
   #                  file_size  = ""
   #                  options  = ""
@@ -5067,12 +4915,12 @@ class Object
   #                        browser.show_html_tag_attributes()   #  Also works using: show_html_tag_attributes("all")
   #
   #
-  #                 2) To show HTML Element attributes for only the LINK objects within the page's footer div for the current web browser:
+  #                 2) To show HTML Element attributes for only the Anchor (a) Elements within the page's footer div for the current web browser:
   #                             oFooterDiv = $browser.div(:id, 'footer')
-  #                             hMyPageObjects = oFooterDiv.show_html_tag_attributes('link')
+  #                             hMyPageObjects = oFooterDiv.show_html_tag_attributes('a')
   #
-  #                 3) To show HTML Element attributes for ONLY the image and button HTML Elements on the page:
-  #                        aObjects = ["image", "button"]
+  #                 3) To show All Attributes for only the Image and Button HTML Elements on the page:
+  #                        aObjects = ["img", "button"]
   #                        my_browser = Watir::Browser.start("http://google.com")
   #                        my_browser.show_html_tag_attributes(aObjects)
   #
@@ -5087,36 +4935,20 @@ class Object
       puts2(     oAttributesToShow.to_s)
     end
 
-=begin
-    ############ BEGIN OLD CODE #####################
-    # Define the element attributes to collect  # removed "file_size" : NotImplementedError: not currently supported by WebDriver
-    aAttributes = ["exists?", "type", "id", "name", "title",
-      "value", "enabled?", "visible?", "loaded?", "src",
-      "height", "width",  "alt", "class",
-      "action", "method", "set?", "text",
-      "href", "selected_options", "options",
-      "class_name", "row_count_excluding_nested_tables",
-      "size", "maxLength"]
-
-    # Sort the attributes
-    aAttributes = aAttributes.sort!
-    ############## END OLD CODE ############################
-=end
-
     # Determine the HTML Element object type
-    case
+    case oElementsToShow.class.to_s
 
-    when oElementsToShow.class.to_s == "String"
+    when "String"
 
       # Populate array with the string of the single HTML element to count
       aElements = [oElementsToShow]
 
-    when oElementsToShow.class.to_s == "Array"
+    when "Array"
 
       # Populate array with the array of the single or multiple HTML elements to count
       aElements = oElementsToShow
 
-    when oElementsToShow.class.to_s == "NilClass"
+    when "NilClass"
 
       # Populate array with the array of the string "All" to count all HTML elements
       aElements = SUPPORTED_HTML_ELEMENTS
@@ -5176,27 +5008,25 @@ class Object
           puts2("# Attributes of #{sElement} #{iIndex}")
           puts2("#-------------------------#")
 
-          ########### BEGN NEW CODE ###########################
-
           # Determine the HTML Attribute object type
-          case
+          case oAttributesToShow.class.to_s
 
-          when oAttributesToShow.class.to_s == "String"
+          when "String"
 
             # Populate array with the string of the single HTML attribute to show
             aAttributes = [oAttributesToShow]
 
-          when oAttributesToShow.class.to_s == "Array"
+          when "Array"
 
             # Populate array with the array of the single or multiple HTML attributes to show
             aAttributes = oAttributesToShow
 
-          when oAttributesToShow.class.to_s == "Hash"
+          when "Hash"
 
             # Populate array with the array of the specified single or multiple HTML attributes to show
             aAttributes = oAttributesToShow[sElement]
 
-          when oAttributesToShow.class.to_s == "NilClass"
+          when "NilClass"
 
             # Populate array with the array of the string "All" to show all HTML attributes
             aAttributes = SUPPORTED_HTML_ATTRIBUTES[sElement]
@@ -5210,8 +5040,7 @@ class Object
           # Sort the attributes
           aAttributes = aAttributes.sort!
 
-          ############ END NEW CODE ##########################
-
+          # Loop thru the Attributes
           aAttributes.each do | sAttribute |
 
             # Catcher
@@ -5232,12 +5061,12 @@ class Object
               puts2("#{sAttribute}  = " + mySetting.to_s)
 
             rescue
-              # Element doe snot support the current attribute
+              # Element does not support the current attribute
               # no harm no foul
             ensure
             end # Catcher
 
-          end # Loop for Attribute
+          end # Loop thru the Attributes
 
           iIndex = iIndex + 1
         end # while

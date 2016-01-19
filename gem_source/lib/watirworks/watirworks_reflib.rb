@@ -1288,64 +1288,6 @@ module WatirWorks_RefLib
     "ul" => (COMMON_HTML_ATTRIBUTES + ["compact?", "type"]).sort!
   }
 
-  OLD_SUPPORTED_HTML_ATTRIBUTES = {
-    "a" => ["type", "id", "name", "title", "value", "href", "text","enabled?", "visible?"],
-    "area" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "br" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "base" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "body" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "button" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "caption" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "data" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "dl" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "dialog" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "div" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "embed" => ["type", "id", "name", "title", "value", "src", "height", "width", "alt", "enabled?", "visible?", "loaded?"],
-    "fieldset" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "font" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "form" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "hr" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "head" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "header" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "html" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "iframe" => ["type", "id", "name", "title", "value", "selected_options", "options", "text", "enabled?", "visible?"],
-    "img" => ["type", "id", "name", "title", "alt", "value", "enabled?", "visible?"],
-    "input" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "keygen" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "li" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "label" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "legend" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "map" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "menu" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "menuitem" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "meta" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "meter" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "ol" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "object" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "optgroup" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "option" => ["type", "id", "name", "title", "value", "href", "text", "src","enabled?", "visible?"],
-    "output" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "p" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "param" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "pre" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "script" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "select" => ["type", "id", "name", "title", "value", "src", "height", "width", "alt", "enabled?", "visible?", "loaded?"],
-    "source" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "span" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "style" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "table" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "th" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "td" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "thead" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "tfoot" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "template" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "textarea" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "time" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "title" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "track" => ["type", "id", "name", "title", "value", "enabled?", "visible?"],
-    "ul" => ["type", "id", "name", "title", "value", "enabled?", "visible?"]
-  }
-
   #=============================================================================#
   # ObjectName: SUPPORTED_HTML_ELEMENTS
   # Returns: ARRAY
@@ -1353,15 +1295,8 @@ module WatirWorks_RefLib
   # Description: Contains a list of HTML elements that Watir-Webdriver supports
   #
   # Usage examples:
-  #                     #Define the elements to check
+  #                      # Define the elements to check
   #                      aSupportedHTMLElementNames = SUPPORTED_HTML_ELEMENTS
-  #
-  #                     # Remove the unsupported elements from the supported list
-  #                      if(is_safari? == true
-  #	                    SAFARIWATIR_UNSUPPORTED_HTML_ELEMENTS.each do |sUnsupportedElement |
-  #		             aSupportedHTMLElementNames.delete(sUnsupportedElement)
-  #	                    end
-  #                     end # Remove the unsupported elements form the supported list
   #
   #=============================================================================#
   SUPPORTED_HTML_ELEMENTS = [
@@ -1382,15 +1317,6 @@ module WatirWorks_RefLib
     "table", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "track",
     "ul"
   ]
-
-=begin
-  OLD_SUPPORTED_HTML_ELEMENTS = ["area", "button",
-    "checkbox", "dd", "div", "dl", "dt", "em",
-    "file_field", "form", "hidden", "image", "label",
-    "link",  "li", "map", "pre", "p",
-    "radio", "select_list", "strong",  "span",
-    "table", "text_field" ]
-=end
 
   #=============================================================================#
   # ObjectName: TOP_LEVEL_DOMAINS
