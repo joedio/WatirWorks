@@ -134,7 +134,7 @@ class Unittest_WebPage < Test::Unit::TestCase
   #
   # Description: Test methods: count_html_tags()
   #===========================================================================#
-  def te_st_WebPage_001_count_html_tags
+  def test_WebPage_001_count_html_tags
 
     puts2("")
     puts2("#######################")
@@ -232,7 +232,7 @@ class Unittest_WebPage < Test::Unit::TestCase
   #
   # Description: Test methods: generate_testcode_html_tag_counts()
   #===========================================================================#
-  def te_st_WebPage_002_generate_testcode_html_tag_counts
+  def test_WebPage_002_generate_testcode_html_tag_counts
 
     puts2("")
     puts2("#######################")
@@ -316,7 +316,7 @@ class Unittest_WebPage < Test::Unit::TestCase
   #
   # Description: Test methods: set_select_list_by_name()
   #===========================================================================#
-  def te_st_WebPage_003_set_select_list_by_name
+  def test_WebPage_003_set_select_list_by_name
 
     puts2("")
     puts2("#######################")
@@ -415,7 +415,7 @@ class Unittest_WebPage < Test::Unit::TestCase
   #
   # Description: Test methods: set_multiselect_list_by_name()
   #===========================================================================#
-  def te_st_WebPage_004_set_multiselect_list_by_name
+  def test_WebPage_004_set_multiselect_list_by_name
 
     puts2("")
     puts2("#######################")
@@ -504,7 +504,7 @@ class Unittest_WebPage < Test::Unit::TestCase
   #
   # Description: Test methods: set_select_list_by_id()
   #===========================================================================#
-  def te_st_WebPage_005_set_select_list_by_id
+  def test_WebPage_005_set_select_list_by_id
 
     puts2("")
     puts2("#######################")
@@ -604,7 +604,7 @@ class Unittest_WebPage < Test::Unit::TestCase
   #
   # Description: Test methods: set_multiselect_list_by_id()
   #===========================================================================#
-  def te_st_WebPage_006_set_multiselect_list_by_id
+  def test_WebPage_006_set_multiselect_list_by_id
 
     puts2("")
     puts2("#######################")
@@ -697,7 +697,7 @@ class Unittest_WebPage < Test::Unit::TestCase
   #
   # Description: Test methods: set_select_list_by_index()
   #===========================================================================#
-  def te_st_WebPage_007_set_select_list_by_index
+  def test_WebPage_007_set_select_list_by_index
 
     puts2("")
     puts2("#######################")
@@ -795,7 +795,7 @@ class Unittest_WebPage < Test::Unit::TestCase
   #
   # Description: Test methods: set_multiselect_list_by_index()
   #===========================================================================#
-  def te_st_WebPage_008_set_multiselect_list_by_index
+  def test_WebPage_008_set_multiselect_list_by_index
 
     puts2("")
     puts2("#######################")
@@ -891,7 +891,7 @@ class Unittest_WebPage < Test::Unit::TestCase
   #                    The web page being validated by this test should have Status bar
   #                     text of "Done", unless you manually hover over an input element
   #===========================================================================#
-  def te_st_WebPage_009_wait_until_status
+  def test_WebPage_009_wait_until_status
 
     puts2("")
     puts2("#######################")
@@ -968,7 +968,7 @@ class Unittest_WebPage < Test::Unit::TestCase
   #                    The web page being validated by this test should have a select list
   #                    that contains 5 selections.
   #===========================================================================#
-  def te_st_WebPage_010_wait_until_count
+  def test_WebPage_010_wait_until_count
 
     puts2("")
     puts2("#######################")
@@ -1046,7 +1046,7 @@ class Unittest_WebPage < Test::Unit::TestCase
   #                    The web page being validated by this test should have a select list
   #                    that contains 5 selections.
   #===========================================================================#
-  def te_st_WebPage_011_wait_until_text
+  def test_WebPage_011_wait_until_text
 
     puts2("")
     puts2("#######################")
@@ -1123,7 +1123,7 @@ class Unittest_WebPage < Test::Unit::TestCase
   #
   # Description: Test methods: scroll_element_intoview()
   #===========================================================================#
-  def te_st_WebPage_012_scroll_element_intoview
+  def test_WebPage_012_scroll_element_intoview
 
     puts2("")
     puts2("#######################")
@@ -1295,7 +1295,7 @@ class Unittest_WebPage < Test::Unit::TestCase
   #
   # Description: Test methods: generate_testcode_html_tag_attributes()
   #===========================================================================#
-  def te_st_WebPage_020_generate_testcode_html_tag_attributes
+  def test_WebPage_020_generate_testcode_html_tag_attributes
 
     puts2("")
     puts2("#######################")
