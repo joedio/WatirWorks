@@ -3,7 +3,7 @@
 # File: watirworks_webpage_unittest.rb
 #
 #
-#  Copyright (c) 2008-2015, Joe DiMauro
+#  Copyright (c) 2008-2016, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for the Web pages using WatirWorks methods:
@@ -149,7 +149,7 @@ class Unittest_WebPage < Test::Unit::TestCase
 
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
-    sRootURL =Dir.pwd
+    sRootURL = Dir.pwd
     sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
@@ -161,6 +161,7 @@ class Unittest_WebPage < Test::Unit::TestCase
       browser = start_browser($sDefaultBrowser)
       sleep iDelay
 
+=begin
       puts2("\nLoad a blank page")
       browser.goto("about:blank")
       sleep iDelay
@@ -169,13 +170,13 @@ class Unittest_WebPage < Test::Unit::TestCase
       puts2("Current URL: " + sCurrentURL)
 
       puts2("Count all Watir supported HTML tags on the current Web page")
-      hMyPageObjects =browser.count_html_tags()
+      hMyPageObjects = browser.count_html_tags()
 
       puts2("Counts of the objects on the page:")
       hMyPageObjects.sort.each do | key, value|
         puts2(" #{key} =  #{value.to_s}")
       end
-
+=end
       puts2("\nLoad Google")
       browser.goto(sGoogleURL)
       sleep iDelay
@@ -246,7 +247,7 @@ class Unittest_WebPage < Test::Unit::TestCase
 
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
-    sRootURL =Dir.pwd
+    sRootURL = Dir.pwd
     sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
@@ -258,6 +259,7 @@ class Unittest_WebPage < Test::Unit::TestCase
       browser = start_browser($sDefaultBrowser)
       sleep iDelay
 
+=begin
       puts2("\nLoad a blank page")
       browser.goto("about:blank")
       sleep iDelay
@@ -267,6 +269,7 @@ class Unittest_WebPage < Test::Unit::TestCase
 
       puts2("Count all Watir supported HTML tags on the current Web page")
       browser.generate_testcode_html_tag_counts()
+=end
 
       puts2("\nLoad Google")
       browser.goto(sGoogleURL)
@@ -326,7 +329,7 @@ class Unittest_WebPage < Test::Unit::TestCase
 
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
-    sRootURL =Dir.pwd
+    sRootURL = Dir.pwd
     sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
@@ -425,7 +428,7 @@ class Unittest_WebPage < Test::Unit::TestCase
 
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
-    sRootURL =Dir.pwd
+    sRootURL = Dir.pwd
     sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
@@ -514,7 +517,7 @@ class Unittest_WebPage < Test::Unit::TestCase
 
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
-    sRootURL =Dir.pwd
+    sRootURL = Dir.pwd
     sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
@@ -614,7 +617,7 @@ class Unittest_WebPage < Test::Unit::TestCase
 
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
-    sRootURL =Dir.pwd
+    sRootURL = Dir.pwd
     sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
@@ -707,7 +710,7 @@ class Unittest_WebPage < Test::Unit::TestCase
 
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
-    sRootURL =Dir.pwd
+    sRootURL = Dir.pwd
     sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
@@ -805,7 +808,7 @@ class Unittest_WebPage < Test::Unit::TestCase
 
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
-    sRootURL =Dir.pwd
+    sRootURL = Dir.pwd
     sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
@@ -901,7 +904,7 @@ class Unittest_WebPage < Test::Unit::TestCase
 
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
-    sRootURL =Dir.pwd
+    sRootURL = Dir.pwd
     sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
@@ -978,7 +981,7 @@ class Unittest_WebPage < Test::Unit::TestCase
 
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
-    sRootURL =Dir.pwd
+    sRootURL = Dir.pwd
     sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
@@ -1056,7 +1059,7 @@ class Unittest_WebPage < Test::Unit::TestCase
 
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
-    sRootURL =Dir.pwd
+    sRootURL = Dir.pwd
     sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
@@ -1133,7 +1136,7 @@ class Unittest_WebPage < Test::Unit::TestCase
 
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
-    sRootURL =Dir.pwd
+    sRootURL = Dir.pwd
     sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
@@ -1217,7 +1220,7 @@ class Unittest_WebPage < Test::Unit::TestCase
 
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
-    sRootURL =Dir.pwd
+    sRootURL = Dir.pwd
     sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
@@ -1302,7 +1305,7 @@ class Unittest_WebPage < Test::Unit::TestCase
 
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
-    sRootURL =Dir.pwd
+    sRootURL = Dir.pwd
     sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
