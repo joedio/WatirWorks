@@ -150,7 +150,7 @@ class Unittest_WebPage < Test::Unit::TestCase
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
     sRootURL =Dir.pwd
-    sPage = "data/html/html_tags.html"
+    sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
@@ -247,7 +247,7 @@ class Unittest_WebPage < Test::Unit::TestCase
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
     sRootURL =Dir.pwd
-    sPage = "data/html/html_tags.html"
+    sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
@@ -327,7 +327,7 @@ class Unittest_WebPage < Test::Unit::TestCase
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
     sRootURL =Dir.pwd
-    sPage = "data/html/html_tags.html"
+    sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
@@ -426,7 +426,7 @@ class Unittest_WebPage < Test::Unit::TestCase
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
     sRootURL =Dir.pwd
-    sPage = "data/html/html_tags.html"
+    sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
@@ -515,7 +515,7 @@ class Unittest_WebPage < Test::Unit::TestCase
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
     sRootURL =Dir.pwd
-    sPage = "data/html/html_tags.html"
+    sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
@@ -615,7 +615,7 @@ class Unittest_WebPage < Test::Unit::TestCase
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
     sRootURL =Dir.pwd
-    sPage = "data/html/html_tags.html"
+    sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
@@ -708,7 +708,7 @@ class Unittest_WebPage < Test::Unit::TestCase
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
     sRootURL =Dir.pwd
-    sPage = "data/html/html_tags.html"
+    sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
@@ -806,7 +806,7 @@ class Unittest_WebPage < Test::Unit::TestCase
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
     sRootURL =Dir.pwd
-    sPage = "data/html/html_tags.html"
+    sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
@@ -902,7 +902,7 @@ class Unittest_WebPage < Test::Unit::TestCase
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
     sRootURL =Dir.pwd
-    sPage = "data/html/html_tags.html"
+    sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
@@ -979,7 +979,7 @@ class Unittest_WebPage < Test::Unit::TestCase
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
     sRootURL =Dir.pwd
-    sPage = "data/html/html_tags.html"
+    sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
@@ -1057,7 +1057,7 @@ class Unittest_WebPage < Test::Unit::TestCase
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
     sRootURL =Dir.pwd
-    sPage = "data/html/html_tags.html"
+    sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
@@ -1134,7 +1134,7 @@ class Unittest_WebPage < Test::Unit::TestCase
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
     sRootURL =Dir.pwd
-    sPage = "data/html/html_tags.html"
+    sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
@@ -1218,7 +1218,7 @@ class Unittest_WebPage < Test::Unit::TestCase
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
     sRootURL =Dir.pwd
-    sPage = "data/html/html_tags.html"
+    sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
@@ -1303,7 +1303,7 @@ class Unittest_WebPage < Test::Unit::TestCase
     # Define components of  the URL for the WatirWorks HTML Tags web page
     sProtocol = "file:///"
     sRootURL =Dir.pwd
-    sPage = "data/html/html_tags.html"
+    sPage = "unittests/data/html/html_tags.html"
 
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
