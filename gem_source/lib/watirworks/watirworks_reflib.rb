@@ -1157,19 +1157,72 @@ module WatirWorks_RefLib
   MONTHS = MONTH_ABBREVIATION.invert
 
   #=============================================================================#
+  # ObjectName: COMMON_HTMLELEMENT_ATTRIBUTES
+  # Returns: ARRAY
+  #
+  # Description: Contains the attributes that are common to each of the HTML Element
+  #              These attributes are from WatirWebdriver's HTMLElement classes
+  #
+  # Usage examples: COMMON_HTML_ATTRIBUTES = (COMMON_HTMLELEMENT_ATTRIBUTES + COMMON_HTML_ELEMENT_ATTRIBUTES).sort!
+  #=============================================================================#
+  COMMON_HTMLELEMENT_ATTRIBUTES =
+  ["access_key", "access_key_label",
+    "class", "command_checked?", "command_disabled?",  "command_hidden?", "command_icon",
+    "command_label", "command_type", "content_editable?", "content_editable", "context_menu",
+    "dataset", "dir", "draggable?", "dropzone",
+    "hidden?",
+    "item_id", "item_prop", "item_ref", "item_scope?", "item_type", "item_value",
+    "lang",
+    "onabort", "onautocomplete", "onautocompleteerror", "onblur", "oncancel", "oncanplay", "oncanplaythrough",
+    "onchange", "onclick", "onclose", "oncontextmenu", "oncuechange", "ondblclick",
+    "ondrag", "ondragend", "ondragenter", "ondragexit", "ondragleave", "ondragover", "ondragstart", "ondrop",
+    "ondurationchange", "onemptied", "onended", "onerror", "onfocus", "oninput", "oninvalid",
+    "onkeydown", "onkeypress", "onkeyup",
+    "onload", "onloadeddata", "onloadedmetadata", "onloadstart",
+    "onmousedown", "onmouseenter", "onmouseleave", "onmousemove", "onmouseout", "onmouseover", "onmouseup", "onmousewheel",
+    "onpause", "onplay", "onplaying", "onprogress", "onratechange", "onreset", "onresize", "onscroll",
+    "onseeked", "onseeking", "onselect", "onshow", "onsort", "onstalled", "onsubmit", "onsuspend", "ontimeupdate", "ontoggle", "onvolumechange", "onwaiting",
+    "properties",
+    "spellcheck?",
+    "tab_index", "title", "translate?"]
+
+  #=============================================================================#
+  # ObjectName: COMMON_HTML_ELEMENT_ATTRIBUTES
+  # Returns: ARRAY
+  #
+  # Description: Contains the attributes that are common to each of the HTML Element
+  #              These attributes are from WatirWebdriver's Element classes
+  #
+  # Usage examples: COMMON_HTML_ATTRIBUTES = (COMMON_HTMLELEMENT_ATTRIBUTES + COMMON_HTML_ELEMENT_ATTRIBUTES).sort!
+  #=============================================================================#
+  COMMON_HTML_ELEMENT_ATTRIBUTES =
+  ["class_name",
+    "enabled?", "exists?", "focused?",
+    "id", "inner_html",
+    "outer_html",
+    "present?",
+    "tag_name", "text",
+    "value", "visible?"]
+
+  #=============================================================================#
   # ObjectName: COMMON_HTML_ATTRIBUTES
   # Returns: ARRAY
   #
   # Description: Contains the attributes that are common to each of the HTML TAG Elements
+  #              In general these attributes are inherited from WatirWebdriver's
+  #              HTMLElement, or Element classes.
   #
   # Usage examples: "button" => COMMON_HTML_ATTRIBUTES + ["other", "attributes", "specific", "to", "this", "tag"]
   #=============================================================================#
-  COMMON_HTML_ATTRIBUTES =
-  ["accesskey", "class", "class_name", "contenteditable", "dir", "draggable?", "hidden", "hidden?", "id", "lang", "style", "tabindex", "title", "translate", 'text', "visible?"]
+  COMMON_HTML_ATTRIBUTES = (COMMON_HTMLELEMENT_ATTRIBUTES + COMMON_HTML_ELEMENT_ATTRIBUTES).sort!
 
   #=============================================================================#
   # ObjectName: SUPPORTED_HTML_ATTRIBUTES
   # Returns: HASH
+  #
+  # TODO - Figure out what's with elements: th, td, thead, tfoot
+  # TODO - Presuming: caption is TableCaption
+  # TODO - Presuming: header is Heading
   #
   # Description: Contains a list of attributes by HTML TAG Element
   #
@@ -1179,61 +1232,60 @@ module WatirWorks_RefLib
   #                                                           "formmethod", "formvalidate", "formtarget", "name", "type", "value"]
   #=============================================================================#
   SUPPORTED_HTML_ATTRIBUTES = {
-    "a" => (COMMON_HTML_ATTRIBUTES + ["coords", "download", "href", "hreflang", "media", "ping", "rel", "target", "type"]).sort,
-    "area" => (COMMON_HTML_ATTRIBUTES).sort,
-    "base" => (COMMON_HTML_ATTRIBUTES).sort,
-    "body" => (COMMON_HTML_ATTRIBUTES).sort,
-    "br" => (COMMON_HTML_ATTRIBUTES).sort,
-    "button" => (COMMON_HTML_ATTRIBUTES + ["autofocus", "disabled", "form", "formaction", "formenctype", "formmethod", "formvalidate", "formtarget", "name", "type", "value"]).sort,
-    "caption" => (COMMON_HTML_ATTRIBUTES.sort),
-    "data" => (COMMON_HTML_ATTRIBUTES.sort),
-    "div" => (COMMON_HTML_ATTRIBUTES.sort),
-    "dl" => (COMMON_HTML_ATTRIBUTES.sort),
-    "dialog" => (COMMON_HTML_ATTRIBUTES.sort),
-    "embed" => (COMMON_HTML_ATTRIBUTES + ["height", "src", "type", "width"]).sort,
-    "fieldset" => (COMMON_HTML_ATTRIBUTES.sort),
-    "font" => (COMMON_HTML_ATTRIBUTES.sort),
-    "form" => (COMMON_HTML_ATTRIBUTES + ["accept-charset", "action", "autocomplete", "enctype", "method", "name", "novalidate", "target"]).sort,
-    "header"=> (COMMON_HTML_ATTRIBUTES.sort),
-    "hr" => (COMMON_HTML_ATTRIBUTES.sort),
-    "head"=> (COMMON_HTML_ATTRIBUTES.sort),
-    "html" => (COMMON_HTML_ATTRIBUTES.sort),
-    "iframe" => (COMMON_HTML_ATTRIBUTES.sort),
-    "img" => (COMMON_HTML_ATTRIBUTES + ["align", "alt", "crossorigin", "height", "loaded?", "longdesc", "map?", "natural_height", "natural_width", "sizes", "src", "srcset", "width", "usemap"]).sort,
-    "input" => (COMMON_HTML_ATTRIBUTES + ["accept", "autocomplete", "autofocus", "autosave", "checked", "disabled", "form", "height", "inputmode", "list", "max", "min", "type"]).sort,
-    "keygen" => (COMMON_HTML_ATTRIBUTES.sort),
-    "legend" => (COMMON_HTML_ATTRIBUTES.sort),
-    "li" => (COMMON_HTML_ATTRIBUTES + ["value"]).sort,
-    "label" => (COMMON_HTML_ATTRIBUTES + ["for", "form"]).sort,
-    "map" => (COMMON_HTML_ATTRIBUTES.sort),
-    "menu" => (COMMON_HTML_ATTRIBUTES.sort),
-    "menuitem" => (COMMON_HTML_ATTRIBUTES.sort),
-    "meta" => (COMMON_HTML_ATTRIBUTES + ["charset", "content", "http-equiv", "name"]).sort,
-    "meter" => (COMMON_HTML_ATTRIBUTES.sort),
-    "ol" => (COMMON_HTML_ATTRIBUTES + ["reversed", "start", "type"]).sort,
-    "object" => (COMMON_HTML_ATTRIBUTES.sort),
-    "option" => (COMMON_HTML_ATTRIBUTES + ["disabled", "label", "selected", "value"]).sort,
-    "optgroup" => (COMMON_HTML_ATTRIBUTES.sort),
-    "p" => (COMMON_HTML_ATTRIBUTES + ["disabled"]).sort,
-    "param" => (COMMON_HTML_ATTRIBUTES + ["name", "value"]).sort,
-    "pre" => (COMMON_HTML_ATTRIBUTES.sort),
-    "script" => (COMMON_HTML_ATTRIBUTES.sort),
-    "select" => (COMMON_HTML_ATTRIBUTES.sort),
-    "source" => (COMMON_HTML_ATTRIBUTES.sort),
-    "span" => (COMMON_HTML_ATTRIBUTES.sort),
-    "style" => (COMMON_HTML_ATTRIBUTES + ["disabled", "media", "scoped", "type"]).sort,
-    "table" => (COMMON_HTML_ATTRIBUTES.sort),
-    "th" => (COMMON_HTML_ATTRIBUTES + ["colspan", "headers", "rowspan", "scope"]).sort,
-    "td" => (COMMON_HTML_ATTRIBUTES + ["colspan", "headers", "rowspan", "scope"]).sort,
-    "textarea" => (COMMON_HTML_ATTRIBUTES + ["autocomplete", "autofocus", "cols", "disabled", "form", "maxlength", "minlength", "name", "placeholder", "readonly", "required", "rows", "selectDirection", "selectionEnd", "selectionStart", "spellcheck", "wrap"]).sort,
-    "thead" => (COMMON_HTML_ATTRIBUTES.sort),
-    "tfoot" => (COMMON_HTML_ATTRIBUTES.sort),
-    "template" => (COMMON_HTML_ATTRIBUTES.sort),
-    "textarea" => (COMMON_HTML_ATTRIBUTES.sort),
-    "time" => (COMMON_HTML_ATTRIBUTES.sort),
-    "title" => (COMMON_HTML_ATTRIBUTES.sort),
-    "track" => (COMMON_HTML_ATTRIBUTES.sort),
-    "ul" => (COMMON_HTML_ATTRIBUTES.sort),
+    "a" => (COMMON_HTML_ATTRIBUTES + ["charset","coords", "download", "href", "hreflang", "name", "media", "ping", "rel", "rel_list", "rev", "shape", "target", "type"]).sort!,
+    "area" => (COMMON_HTML_ATTRIBUTES + ["alt", "coords", "download", "hreflang", "no_href?", "ping", "rel", "rel_list", "shape", "target", "type"]).sort!,
+    "base" => (COMMON_HTML_ATTRIBUTES + ["href", "target"]).sort!,
+    "body" => (COMMON_HTML_ATTRIBUTES + ["a_link", "background", "bg_color", "link", "onafterprint", "onbeforeprint", "onbeforeunload", "onhashchange", "onlanguagechange", "onmessage", "onoffline", "ononline","onpagehide", "onpageshow", "onpopstate", "onstorage", "onunload", "v_link"]).sort!,
+    "br" => (COMMON_HTML_ATTRIBUTES + ["clear"]).sort!,
+    "button" => (COMMON_HTML_ATTRIBUTES + ["autofocus?", "disabled?", "form", "form_action", "form_enctype", "form_method", "form_no_validate?", "form_target", "labels", "menu", "name", "text", "type", "validation_message", "validity", "value" "will_validate?"]).sort!,
+    "caption" => (COMMON_HTML_ATTRIBUTES + ["align"]).sort!,
+    "data" => (COMMON_HTML_ATTRIBUTES + ["value"]).sort!,
+    "div" => (COMMON_HTML_ATTRIBUTES + ["align"]).sort!,
+    "dl" => (COMMON_HTML_ATTRIBUTES + ["compact?"]).sort!,
+    "dialog" => (COMMON_HTML_ATTRIBUTES + ["open?", "return_value"]).sort!,
+    "embed" => (COMMON_HTML_ATTRIBUTES + ["align", "height", "name", "src", "type", "width"]).sort!,
+    "fieldset" => (COMMON_HTML_ATTRIBUTES + ["disabled/","form", "name", "type", "validation_Message", "validity", "will_validate?"]).sort!,
+    "font" => (COMMON_HTML_ATTRIBUTES + ["color", "face", "size"]).sort!,
+    "form" => (COMMON_HTML_ATTRIBUTES + ["accept_charset", "action", "autocomplete", "encoding", "enctype", "length", "method", "name", "no_validate?", "target"]).sort!,
+    "header"=> (COMMON_HTML_ATTRIBUTES).sort!,
+    "hr" => (COMMON_HTML_ATTRIBUTES + ["align", "color", "no_shade?", "size", "width"]).sort!,
+    "head"=> (COMMON_HTML_ATTRIBUTES + ["align"]).sort!,
+    "html" => (COMMON_HTML_ATTRIBUTES + ["version"]).sort!,
+    "iframe" => (COMMON_HTML_ATTRIBUTES + ["align", "allow_fullscreen?", "content_document", "content_window", "frame_border", "height", "long_desc", "margin_height", "margin_width", "name", "sandbox", "scrollong", "seamless?", "src", "srcdoc", "width"]).sort!,
+    "img" => (COMMON_HTML_ATTRIBUTES + ["align", "alt", "border", "complete?", "cross_origin", "current_src", "height", "hspace", "loaded?", "long_desc", "lowsrc", "map?", "name", "natural_height", "natural_width", "sizes", "src", "srcset", "use_map", "vspace", "width"]).sort!,
+    "input" => (COMMON_HTML_ATTRIBUTES + ["accept", "align", "alt", "autocomplete", "autofocus?", "checked?", "default_checked?", "default_value", "dir_name", "disabled?", "files", "form_action", "form_enctype", "form_method", "form_no_validate?", "form_target", "ndeterminate?",  "input_mode", "labels", "list", "max", "max_length", "min", "min_length", "multiple?", "pattern", "placeholder", "read_only?", "required?", "selection_direction", "selection_end", "selection_start", "size", "src", "step", "use_map", "value", "value_as_date", "value_as_number", "value_high", "value_low"]).sort!,
+    "keygen" => (COMMON_HTML_ATTRIBUTES + ["autofocus?", "challange", "disabled?", "form", "keytype", "labels", "name", "type", "validation_message", "validity", "will_validate?"]).sort!,
+    "legend" => (COMMON_HTML_ATTRIBUTES + ["align", "form"]).sort!,
+    "li" => (COMMON_HTML_ATTRIBUTES + ["type", "value"]).sort!,
+    "label" => (COMMON_HTML_ATTRIBUTES + ["control", "for", "form"]).sort!,
+    "map" => (COMMON_HTML_ATTRIBUTES + ["areas", "images", "name"]).sort!,
+    "menu" => (COMMON_HTML_ATTRIBUTES + ["compact?", "label", "type"]).sort!,
+    "menuitem" => (COMMON_HTML_ATTRIBUTES + ["checked?", "command", "default?", "disabled?", "icon", "label", "radiogroup", "type"]).sort!,
+    "meta" => (COMMON_HTML_ATTRIBUTES + ["content", "http-equiv", "name", "scheme"]).sort!,
+    "meter" => (COMMON_HTML_ATTRIBUTES + ["high", "labels", "low", "max", "min", "optium", "value"]).sort!,
+    "ol" => (COMMON_HTML_ATTRIBUTES + ["compact?", "reversed?", "start", "type"]).sort!,
+    "object" => (COMMON_HTML_ATTRIBUTES + ["align", "archive", "border", "code", "code_base", "code_type", "content_document", "content_window", "data", "declare?", "form", "height", "hspace", "name", "standby", "type", "type_must_match?", "use_map", "validation_message", "validity", "vspace",  "width", "will_validate?"]).sort!,
+    "option" => (COMMON_HTML_ATTRIBUTES + ["clear", "default_selected?", "disabled?", "form", "index", "label", "selected?", "text", "value"]).sort!,
+    "optgroup" => (COMMON_HTML_ATTRIBUTES + ["disabled?", "label"]).sort!,
+    "p" => (COMMON_HTML_ATTRIBUTES + ["align"]).sort!,
+    "param" => (COMMON_HTML_ATTRIBUTES + ["name", "type", "value", "value_type"]).sort!,
+    "pre" => (COMMON_HTML_ATTRIBUTES + ["width"]).sort!,
+    "script" => (COMMON_HTML_ATTRIBUTES + ["async?", "charset", "cross_origin", "defer?", "event", "for", "src", "type"]).sort!,
+    "select" => (COMMON_HTML_ATTRIBUTES + ["autocomplete", "autofocus?", "clear", "disapbled?", "form", "labels", "length", "multiple?", "name", "options", "required?", "selected_index", "selected_options", "size", "type", "validation_message", "validity", "value", "will_validate?"]).sort!,
+    "source" => (COMMON_HTML_ATTRIBUTES + ["media", "sizes", "src", "srcset", "type"]).sort!,
+    "span" => (COMMON_HTML_ATTRIBUTES).sort!,
+    "style" => (COMMON_HTML_ATTRIBUTES + ["media", "scoped?", "type"]).sort!,
+    "table" => (COMMON_HTML_ATTRIBUTES + ["align", "bg_color", "border", "caption", "cell_padding", "cell_spacing", "frame", "rules", "sortable?", "summary", "t_bodies", "t_foot", "t_head", "width"]).sort!,
+    "th" => (COMMON_HTML_ATTRIBUTES + ["colspan", "headers", "rowspan", "scope"]).sort!,
+    "td" => (COMMON_HTML_ATTRIBUTES + ["colspan", "headers", "rowspan", "scope"]).sort!,
+    "textarea" => (COMMON_HTML_ATTRIBUTES + ["autocomplete", "autofocus?", "cols", "default_value", "dir_name", "disabled?", "form", "input_mode", "labels", "max_length", "min_length", "name", "placeholder", "read_only?", "required?", "selection_direction", "selection_end", "selection_start", "text_lenght", "type", "validation_message", "validity", "value", "will_validate?", "wrap"]).sort!,
+    "thead" => (COMMON_HTML_ATTRIBUTES).sort!,
+    "tfoot" => (COMMON_HTML_ATTRIBUTES).sort!,
+    "template" => (COMMON_HTML_ATTRIBUTES + ["content"]).sort!,
+    "time" => (COMMON_HTML_ATTRIBUTES + ["date_time"]).sort!,
+    "title" => (COMMON_HTML_ATTRIBUTES).sort!,
+    "track" => (COMMON_HTML_ATTRIBUTES + ["default?", "kind", "label", "ready_state", "src" "srclang", "track"]).sort!,
+    "ul" => (COMMON_HTML_ATTRIBUTES + ["compact?", "type"]).sort!
   }
 
   OLD_SUPPORTED_HTML_ATTRIBUTES = {
