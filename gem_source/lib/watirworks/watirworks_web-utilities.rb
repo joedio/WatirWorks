@@ -4616,7 +4616,8 @@ class Object
       aElements = aSupportedHTMLElementNames
 
     else
-      puts2(oElementsToCheck.class.to_s + " class Element objects are NOT supported. Please use a nil, String or Array of Strings.", 'WARN')
+      puts2(oElementsToCheck.class.to_s + " class Element objects are NOT supported. Please use a nil, String or Array of Strings.")
+      #puts2(oElementsToCheck.class.to_s + " class Element objects are NOT supported. Please use a nil, String or Array of Strings.", 'WARN')
       return  false
 
     end # Determine the HTML Element object type
@@ -4641,11 +4642,12 @@ class Object
     #####################
     sTitle = self.title
 
-    puts2("\n###############")
-    puts2("# Verify title: ")
-    puts2("###############\n\n")
+    puts2("\n##################")
+    puts2("# Verifying title: ")
+    puts2("##################\n\n")
     puts2("puts2(\"\t # Verify - title\")")
-    puts2("assert(#{sObjectName}.title == \"" + sTitle + "\" , 'WARNING - Title not found')", 'WARN')
+    puts2("assert(#{sObjectName}.title == \"" + sTitle + "\" , 'WARNING - Title not found')")
+    #puts2("assert(#{sObjectName}.title == \"" + sTitle + "\" , 'WARNING - Title not found')", 'WARN')
 
     # Loop for HTML Element types
     aElements.each do | sElement|
@@ -4674,7 +4676,8 @@ class Object
         aAttributes = SUPPORTED_HTML_ATTRIBUTES[sElement]
 
       else
-        puts2(oAttributesToCheck.class.to_s + " class Attribute objects are NOT supported. Please use a nil, String, Hash or Array", 'WARN')
+        puts2(oAttributesToCheck.class.to_s + " class Attribute objects are NOT supported. Please use a nil, String, Hash or Array")
+        #puts2(oAttributesToCheck.class.to_s + " class Attribute objects are NOT supported. Please use a nil, String, Hash or Array", 'WARN')
         return  false
 
       end # Determine the HTML Attribute object type
@@ -4698,7 +4701,8 @@ class Object
       iElementCount = self.send(sElementPlural).length
 
       # Generate the test code for the tag count
-      puts2("assert(#{sObjectName}.#{sElementPlural}.length == #{iElementCount.to_s}, 'WARNING - Wrong number of #{sElementPlural}') # Number of #{sElementPlural}", 'WARN')
+      puts2("assert(#{sObjectName}.#{sElementPlural}.length == #{iElementCount.to_s}, 'WARNING - Wrong number of #{sElementPlural}') # Number of #{sElementPlural}")
+      #puts2("assert(#{sObjectName}.#{sElementPlural}.length == #{iElementCount.to_s}, 'WARNING - Wrong number of #{sElementPlural}') # Number of #{sElementPlural}", 'WARN')
 
       # Only check existing elements
       if(iElementCount > 0)
@@ -4734,7 +4738,8 @@ class Object
               #              end
 
               # puts2("#{sAttribute}  = " + mySetting.to_s)
-              puts2("assert(#{sObjectName}.#{sElement}(:index, "+ iIndex.adjust_index.to_s + ").#{sAttribute} == #{mySetting}, 'WARNING - Wrong attribute setting: #{sAttribute} = #{mySetting}'), 'WARN'")
+              puts2("assert(#{sObjectName}.#{sElement}(:index, "+ iIndex.adjust_index.to_s + ").#{sAttribute} == #{mySetting}, 'WARNING - Wrong value for Attribute: #{sAttribute}')")
+              #puts2("assert(#{sObjectName}.#{sElement}(:index, "+ iIndex.adjust_index.to_s + ").#{sAttribute} == #{mySetting}, 'WARNING - Wrong attribute setting: #{sAttribute} = #{mySetting}'), 'WARN'")
 
             rescue
               # Element does not support the current attribute
