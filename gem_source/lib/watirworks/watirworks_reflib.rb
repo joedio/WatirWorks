@@ -1163,6 +1163,8 @@ module WatirWorks_RefLib
   # Description: Contains the attributes that are common to each of the HTML Element
   #              These attributes are from WatirWebdriver's HTMLElement classes
   #
+  #              Attributes deliberately omitted: spellcheck?, translate?
+  #                         
   # Usage examples: COMMON_HTML_ATTRIBUTES = (COMMON_HTMLELEMENT_ATTRIBUTES + COMMON_HTML_ELEMENT_ATTRIBUTES).sort!
   #=============================================================================#
   COMMON_HTMLELEMENT_ATTRIBUTES =
@@ -1183,8 +1185,7 @@ module WatirWorks_RefLib
     "onpause", "onplay", "onplaying", "onprogress", "onratechange", "onreset", "onresize", "onscroll",
     "onseeked", "onseeking", "onselect", "onshow", "onsort", "onstalled", "onsubmit", "onsuspend", "ontimeupdate", "ontoggle", "onvolumechange", "onwaiting",
     "properties",
-    "spellcheck?",
-    "tab_index", "title", "translate?"]
+    "tab_index", "title"]
 
   #=============================================================================#
   # ObjectName: COMMON_HTML_ELEMENT_ATTRIBUTES
@@ -1192,16 +1193,18 @@ module WatirWorks_RefLib
   #
   # Description: Contains the attributes that are common to each of the HTML Element
   #              These attributes are from WatirWebdriver's Element classes
+  #  
+  #              Attributes deliberately omitted: exists?, tag_name, 
   #
   # Usage examples: COMMON_HTML_ATTRIBUTES = (COMMON_HTMLELEMENT_ATTRIBUTES + COMMON_HTML_ELEMENT_ATTRIBUTES).sort!
   #=============================================================================#
   COMMON_HTML_ELEMENT_ATTRIBUTES =
   ["class_name",
-    "enabled?", "exists?", "focused?",
+    "enabled?", "focused?",
     "id", "inner_html",
     "outer_html",
     "present?",
-    "tag_name", "text",
+    "text",
     "value", "visible?"]
 
   #=============================================================================#
