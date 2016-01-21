@@ -367,11 +367,8 @@ class Unittest_WebPage < Test::Unit::TestCase
           puts2("\n Number of options in select list: " + aSelections.count.to_s)
           puts2("\t Options in select list:")
           aSelections.each do | sSelection |
-            if(is_webdriver? == false)
-              puts2("\t " + sSelection.to_s)
-            else
-              puts2("\t " + sSelection.text)
-            end
+
+            puts2("\t " + sSelection.text)
 
           end # Display options
         end # Display the contents of the select list
@@ -458,11 +455,8 @@ class Unittest_WebPage < Test::Unit::TestCase
         puts2("\n Number of options in select list: " + aSelections.count.to_s)
         puts2("\t Options in select list:")
         aSelections.each do | sSelection |
-          if(is_webdriver? == false)
-            puts2("\t " + sSelection.to_s)
-          else
-            puts2("\t " + sSelection.text)
-          end
+
+          puts2("\t " + sSelection.text)
 
         end # Display options
       end # Display the contents of the select list
@@ -555,11 +549,8 @@ class Unittest_WebPage < Test::Unit::TestCase
           puts2("\n Number of options in select list: " + aSelections.count.to_s)
           puts2("\t Options in select list:")
           aSelections.each do | sSelection |
-            if(is_webdriver? == false)
-              puts2("\t " + sSelection.to_s)
-            else
-              puts2("\t " + sSelection.text)
-            end
+
+            puts2("\t " + sSelection.text)
 
           end # Display options
         end # Display the contents of the select list
@@ -650,11 +641,8 @@ class Unittest_WebPage < Test::Unit::TestCase
         puts2("\n Number of options in select list: " + aSelections.count.to_s)
         puts2("\t Options in select list:")
         aSelections.each do | sSelection |
-          if(is_webdriver? == false)
-            puts2("\t " + sSelection.to_s)
-          else
-            puts2("\t " + sSelection.text)
-          end
+
+          puts2("\t " + sSelection.text)
 
         end # Display options
       end # Display the contents of the select list
@@ -746,11 +734,8 @@ class Unittest_WebPage < Test::Unit::TestCase
           puts2("\n Number of options in select list: " + aSelections.count.to_s)
           puts2("\t Options in select list:")
           aSelections.each do | sSelection |
-            if(is_webdriver? == false)
-              puts2("\t " + sSelection.to_s)
-            else
-              puts2("\t " + sSelection.text)
-            end
+
+            puts2("\t " + sSelection.text)
 
           end # Display options
         end # Display the contents of the select list
@@ -841,11 +826,8 @@ class Unittest_WebPage < Test::Unit::TestCase
         puts2("\n Number of options in select list: " + aSelections.count.to_s)
         puts2("\t Options in select list:")
         aSelections.each do | sSelection |
-          if(is_webdriver? == false)
-            puts2("\t " + sSelection.to_s)
-          else
-            puts2("\t " + sSelection.text)
-          end
+
+          puts2("\t " + sSelection.text)
 
         end # Display options
       end # Display the contents of the select list
@@ -1329,7 +1311,7 @@ class Unittest_WebPage < Test::Unit::TestCase
       puts2("### Test with single element & singel attribute")
       puts2("################################################")
       browser.generate_testcode_html_tag_attributes("button", "id", "myBrowser")
-      
+
       puts2("\n##################################################################")
       puts2("### Test with an array of two elements and HASH of two Attributes per element")
       puts2("##################################################################")
@@ -1339,7 +1321,7 @@ class Unittest_WebPage < Test::Unit::TestCase
         "img" => ["height", "id"]
       }
       browser.generate_testcode_html_tag_attributes(aTwoElements, hTwoAttributes, "myBrowser")
-      
+
       puts2("\n########################################")
       puts2("### Test with all attributes for elements")
       puts2("########################################")

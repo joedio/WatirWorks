@@ -3,7 +3,7 @@
 # File: watirworks_html_text_unittest.rb
 #
 #
-#  Copyright (c) 2008-2015, Joe DiMauro
+#  Copyright (c) 2008-2016, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for the HTML text using WatirWorks methods:
@@ -344,16 +344,6 @@ class UnitTest_HTMLText < Test::Unit::TestCase
     sURL = sProtocol  + sRootURL + "/" + sPage
 
     # Array of trial data with the Expected Text, the Class Name, and the Save file prefix
-    # Adjust index for Watir-Webdriver's 0-based indexing vs. Watir's 1-based indexing
-    #if(is_webdriver? == true)
-    #  aSearchCriteria = [
-    #  ["Text in First Div", 4, false, "isTextIn_DivID_Trial_1"],
-    #  ["Second Div", 5, false, "isTextIn_DivID_Trial_2"],
-    #  ["in Second", 6, false, "isTextIn_DivID_Trial_3"],
-    #  ["in Fifth", 8, false, "isTextIn_DivID_Trial_4"],
-    #  ["no such text", 4, true, "isTextIn_DivID_Trial_5"]
-    #  ]
-    #else
     aSearchCriteria = [
       ["Text in First Div", 5, false, "isTextIn_DivID_Trial_1"],
       ["Second Div", 6, false, "isTextIn_DivID_Trial_2"],
@@ -361,7 +351,6 @@ class UnitTest_HTMLText < Test::Unit::TestCase
       ["in Fifth", 9, false, "isTextIn_DivID_Trial_4"],
       ["no such text", 5, true, "isTextIn_DivID_Trial_5"]
     ]
-    #end
 
     begin # Test the method
 
@@ -631,16 +620,6 @@ class UnitTest_HTMLText < Test::Unit::TestCase
     sURL = sProtocol  + sRootURL + "/" + sPage
 
     # Array of trial data with the Expected Text, the Class Name, and the Save file prefix
-    # Adjust index for Watir-Webdriver's 0-based indexing vs. Watir's 1-based indexing
-    #if(is_webdriver? == true)
-    #  aSearchCriteria = [
-    #  ["Text in First Span", 0, false, "isTextIn_SpanID_Trial_1"],
-    #  ["Second Span", 1, false, "isTextIn_SpanID_Trial_2"],
-    #  ["in Second", 3, false, "isTextIn_SpanID_Trial_3"],
-    #  ["in Fifth", 4, false, "isTextIn_SpanID_Trial_4"],
-    #  ["no such text", 0, true, "isTextIn_SpanID_Trial_5"]
-    #  ]
-    #else
     aSearchCriteria = [
       ["Text in First Span", 1, false, "isTextIn_SpanID_Trial_1"],
       ["Second Span", 2, false, "isTextIn_SpanID_Trial_2"],
@@ -648,7 +627,6 @@ class UnitTest_HTMLText < Test::Unit::TestCase
       ["in Fifth", 5, false, "isTextIn_SpanID_Trial_4"],
       ["no such text", 1, true, "isTextIn_SpanID_Trial_5"]
     ]
-    #end
 
     begin # Test the method
 
@@ -916,22 +894,12 @@ class UnitTest_HTMLText < Test::Unit::TestCase
     sURL = sProtocol  + sRootURL + "/" + sPage
 
     # Array of trial data with the Expected Text, the Class Name, and the Save file prefix
-    # Adjust index for Watir-Webdriver's 1-based indexing vs. Watir's 0-based indexing
-    #if(is_webdriver? == true)
-    #  aSearchCriteria = [
-    #  ["Bonzo", 5, false, "isTextIn_TableIndex_Trial_1"],
-    #  ["Parent Row 1 Cell 1", 6, false, "isTextIn_TableIndex_Trial_2"],
-    #  ["Nested row_2", 7, false, "isTextIn_TableIndex_Trial_3"],
-    #  ["no such text", 5, true, "isTextIn_TableIndex_Trial_5"]
-    #  ]
-    #else
     aSearchCriteria = [
       ["Bonzo", 6, false, "isTextIn_TableIndex_Trial_1"],
       ["Parent Row 1 Cell 1", 7, false, "isTextIn_TableIndex_Trial_2"],
       ["Nested row_2", 8, false, "isTextIn_TableIndex_Trial_3"],
       ["no such text", 6, true, "isTextIn_TableIndex_Trial_5"]
     ]
-    #end
 
     begin # Test the method
 
@@ -1109,11 +1077,7 @@ class UnitTest_HTMLText < Test::Unit::TestCase
     # Construct the URL
     sURL = sProtocol  + sRootURL + "/" + sPage
 
-    #if(is_webdriver? == true)
     aTablesIndexesToRead=[5,6,7]
-    #else
-    #  aTablesIndexesToRead=[6,7,8]
-    #end
 
     begin # Test the method
 
@@ -1134,13 +1098,8 @@ class UnitTest_HTMLText < Test::Unit::TestCase
 
         puts2("\nReading Table Index: " + iTableIndexToRead.adjust_index.to_s)
 
-        #if(is_webdriver? == true)
-        #  iFirstRow=0
-        #  iLastRow=-2
-        #else
         iFirstRow=1
         iLastRow=-1
-        #end
 
         bSaveIssues=false
 

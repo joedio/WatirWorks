@@ -324,5 +324,32 @@ class UnitTest_OS < Test::Unit::TestCase
     end
 
   end # end Testcase - test_OS_006_is_os
+  
+#===========================================================================#
+ # Testcase method: test_OS_007_is_webdriver
+ #
+ # Description: Test methods:
+ #                 is_webdriver?()
+ #                 adjust_index()
+ #
+ #===========================================================================#
+ def test_OS_007_is_webdriver()
+
+   puts2("")
+   puts2("#######################")
+   puts2("Testcase: test_OS_007_is_webdriver")
+   puts2("#######################")
+
+   puts2("\nIs this running on WatirWebdriver? " + is_webdriver?.to_s)
+   
+   iIndex = 2
+   puts2("Actual index   = " + iIndex.to_s)
+   puts2("Adjusted index = " + iIndex.adjust_index.to_s)
+   
+   #puts2("Checking for one-based or zero-based index")
+   
+   
+
+ end # end Testcase - test_OS_007_is_webdriver
 
 end # end of Class - UnitTest_OS

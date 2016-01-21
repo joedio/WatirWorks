@@ -379,11 +379,7 @@ module WatirWorks_WebUtilities
       iCurrentIndex = iNumberOfObjects
 
       # Adjust index for Watir-Webdriver's 1-based indexing vs. Watir's 0-based indexing
-      if(is_webdriver? == true)
-        iCurrentIndex = iNumberOfObjects - 1
-      else
-        iCurrentIndex = iNumberOfObjects
-      end
+      iCurrentIndex = iNumberOfObjects - 1
 
     end # Determine if there are divs on the page
 
@@ -482,11 +478,7 @@ module WatirWorks_WebUtilities
       iCurrentIndex = iNumberOfObjects
 
       # Adjust index for Watir-Webdriver's 1-based indexing vs. Watir's 0-based indexing
-      if(is_webdriver? == true)
-        iCurrentIndex = iNumberOfObjects - 1
-      else
-        iCurrentIndex = iNumberOfObjects
-      end
+      iCurrentIndex = iNumberOfObjects - 1
 
     end # Determine if there are spans on the page
 
@@ -590,9 +582,7 @@ module WatirWorks_WebUtilities
     iTableIndex = iTotalTables
 
     # Adjust index for Watir-Webdriver's 1-based indexing vs. Watir's 0-based indexing
-    if(is_webdriver? == true)
-      iTableIndex = iTableIndex - 1
-    end
+    iTableIndex = iTableIndex - 1
 
     # BEGIN - Loop through the tables
     while(iTableIndex > 0)
@@ -837,9 +827,7 @@ module WatirWorks_WebUtilities
     iTableIndex = iTotalTables
 
     # Adjust index for Watir-Webdriver's 1-based indexing vs. Watir's 0-based indexing
-    if(is_webdriver? == true)
-      iTableIndex = iTableIndex - 1
-    end
+    iTableIndex = iTableIndex - 1
 
     # BEGIN - Loop through the tables
     while(iTableIndex.adjust_index > 0)
