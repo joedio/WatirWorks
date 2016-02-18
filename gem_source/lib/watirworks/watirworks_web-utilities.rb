@@ -125,7 +125,7 @@ require 'watir-webdriver'
 module WatirWorks_WebUtilities
 
   # Version of this module
-  WW_WEB_UTILITIES_VERSION = "1.3.0"
+  WW_WEB_UTILITIES_VERSION = "1.3.1"
 
   # Flag indicating if a browser was started
   $bBrowserStarted = false
@@ -3883,12 +3883,15 @@ module WatirWorks_WebUtilities
   #
   #         sURL = STRING - A URL for the browser to load. Default is to open a blank browser page "about:blank"
   #
+  #         sProfile = STRING - Only supported for Firefox & Chrome browsers. Optional Name of a profile to use
+  #                             instead of the normal WatirWebdriver profile.
+  #
   #         iWidth = INT - The width of the browser window (defaults to 1024)
   #         iHeigth = INT - The height of the browser window (defaults to 756)
   #         iXpos = INT - The X Position of the browser window (defaults to 10)
   #         iYpos = INT - The Y Position of the browser window (defaults to 10)
   #
-  #         NOT SUPPORTED iDriverTimeout = INT = Number of sec for the driver to wait before timeing out.
+  #         NOT SUPPORTED iDriverTimeout = INT = Number of sec for the driver to wait before timing out.
   #                          The "factory default value" of 60 sec. has not been working well on some sites so
   #                          theis method will default to 3 min (180 sec).
   #
@@ -3905,7 +3908,7 @@ module WatirWorks_WebUtilities
   #
   #                 For Edge:  For security reasons, WebDriver is disabled by default in Microsoft Edge.
   #                            To enable it, you need to install the MicrosoftWebDriver server (see below)
-  #                            in the location of your test respository. With that, WebDriver in Microsoft Edge
+  #                            in the location of your test repository. With that, WebDriver in Microsoft Edge
   #                            should work just like it does with other supporting browsers.
   #                            To use WebDriver with Microsoft Edge, you'll need to do the following:
   #                                Install Windows 10
@@ -3925,12 +3928,18 @@ module WatirWorks_WebUtilities
   #                                          $browser = start_browser("firefox")
   #
   #=============================================================================#
-  def start_browser(sBrowserType = "firefox", sURL="about:blank", iWidth=1024, iHeight=756, iXpos=10, iYpos=10, iDriverTimeout = 180)
+  def start_browser(sBrowserType = "firefox", sURL="about:blank", sProfile = nil, iWidth=1024, iHeight=756, iXpos=10, iYpos=10, iDriverTimeout = 180)
 
     if($VERBOSE == true)
       puts2("Parameters - start_browser:")
       puts2("  sBrowserType: " + sBrowserType.to_s)
       puts2("  sURL: " + sURL.to_s)
+      if(sProfile.class == NilClass)
+        puts2("  sProfile: nil")
+      else
+        puts2("  sProfile: " + sProfile.to_s)
+      end
+
       puts2("  iWidth: " + iWidth.to_s)
       puts2("  iHeight: " + iHeight.to_s)
       puts2("  iXpos: " + iXpos.to_s)
@@ -3960,17 +3969,28 @@ module WatirWorks_WebUtilities
         end
       else
         if(is_chrome64_installed? == false)
-          puts2("\nStarting Chrome 32-biton OSX...")
+          puts2("\nStarting Chrome 32-bit on OSX...")
         else
           puts2("\nStarting Chrome 64-bit on OSX...")
         end
       end # when Chrome
 
-      oBrowser = Watir::Browser.new :chrome, :switches => %w[--test-type --allow-running-insecure-content] #, :profile => 'default'
+      if(sProfile.class == NilClass)
+        oBrowser = Watir::Browser.new :chrome, :switches => %w[--test-type --allow-running-insecure-content] #, :profile => 'default'
+      else
+        # TODO -  PUT PROFILE CODE HERE
+        #oBrowser = Watir::Browser.new :chrome , :profile => sProfile
+      end
+
       $bStartedBrowser = true
 
     when /^e.*/
       if(is_win?() == true)
+
+        if(sProfile.class != NilClass)
+          puts2("WARNING - Ignoring Profile, WebDriver for Edge does not support Profiles.", 'WARN')
+        end
+
         puts2("\nStarting Edge on Windows...")
         oBrowser = Watir::Browser.new :edge #, :profile => 'default'
         $bStartedBrowser = true
@@ -3994,11 +4014,22 @@ module WatirWorks_WebUtilities
         puts2("\nStarting Firefox on OSX...")
       end # when firefox
 
-      oBrowser = Watir::Browser.new :firefox #, :profile => 'default'
+      if(sProfile.class == NilClass)
+        oBrowser = Watir::Browser.new :firefox #, :profile => 'default'
+      else
+        # TODO -  PUT PROFILE CODE HERE
+        #oBrowser = Watir::Browser.new :firefox , :profile => sProfile
+      end
+
       $bStartedBrowser = true
 
     when  /^i.*/
       if (is_win? == true)
+
+        if(sProfile.class != NilClass)
+          puts2("WARNING - Ignoring Profile, WebDriver for Internet Explorer does not support Profiles.", 'WARN')
+        end
+
         oBrowser = Watir::Browser.new :ie #, :profile => 'default'
         $bStartedBrowser = true
         puts2("\nStarting Internet Explorer on Windows...")
@@ -4008,8 +4039,18 @@ module WatirWorks_WebUtilities
 
     when /^o.*/
       if (is_win? == true)
+
+        if(sProfile.class != NilClass)
+          puts2("WARNING - Ignoring Profile, WebDriver for Opera does not support Profiles.", 'WARN')
+        end
+
         puts2("\nStarting Opera on Windows")
       else
+
+        if(sProfile.class != NilClass)
+          puts2("WARNING - Ignoring Profile, WebDriver for Opera does not support Profiles.", 'WARN')
+        end
+
         puts2("\nStarting Opera on OSX...")
       end # When Opera
       oBrowser = Watir::Browser.new :opera #, :profile => 'default'
@@ -4019,6 +4060,11 @@ module WatirWorks_WebUtilities
       if (is_win? == true)
         puts2("WARNING - Safari is not supported on this OS", 'WARN')
       else
+
+        if(sProfile.class != NilClass)
+          puts2("WARNING - Ignoring Profile, WebDriver for Safari does not support Profiles.", 'WARN')
+        end
+
         puts2("\nStarting Safari on OSX...")
         oBrowser = Watir::Browser.new :safari #, :profile => 'default'
         $bStartedBrowser = true
