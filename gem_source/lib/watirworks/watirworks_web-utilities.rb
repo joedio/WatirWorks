@@ -3927,6 +3927,12 @@ module WatirWorks_WebUtilities
   #                              To create a single Global Browser Object: for watir-webdriver
   #                                          $browser = start_browser("firefox")
   #
+  #                              To create a single Global Browser Object: for watir-webdriver that
+  #                                  uses a specific Browser profile for Firefox to access Google
+  #                                          sProfile = 'MyProifle'
+  #                                          sURL = 'http://www.google.com'
+  #                                          $browser = start_browser("firefox", sURL, sProfile)
+  #
   #=============================================================================#
   def start_browser(sBrowserType = "firefox", sURL="about:blank", sProfile = nil, iWidth=1024, iHeight=756, iXpos=10, iYpos=10, iDriverTimeout = 180)
 
@@ -3979,7 +3985,7 @@ module WatirWorks_WebUtilities
         oBrowser = Watir::Browser.new :chrome, :switches => %w[--test-type --allow-running-insecure-content] #, :profile => 'default'
       else
         # TODO -  PUT PROFILE CODE HERE
-        #oBrowser = Watir::Browser.new :chrome , :profile => sProfile
+        oBrowser = Watir::Browser.new :chrome, :profile => sProfile
       end
 
       $bStartedBrowser = true
@@ -4018,7 +4024,7 @@ module WatirWorks_WebUtilities
         oBrowser = Watir::Browser.new :firefox #, :profile => 'default'
       else
         # TODO -  PUT PROFILE CODE HERE
-        #oBrowser = Watir::Browser.new :firefox , :profile => sProfile
+        oBrowser = Watir::Browser.new :firefox, :profile => sProfile
       end
 
       $bStartedBrowser = true
@@ -4068,7 +4074,7 @@ module WatirWorks_WebUtilities
         puts2("\nStarting Safari on OSX...")
         oBrowser = Watir::Browser.new :safari #, :profile => 'default'
         $bStartedBrowser = true
-      end # when Safair
+      end # when Safari
 
     end  # Start the specified browser
 
