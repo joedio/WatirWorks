@@ -3963,6 +3963,9 @@ module WatirWorks_WebUtilities
       return $browser
     end
 
+    # Define a default delay time
+    iDelay = 2
+    
     # Start the specified browser
     case sBrowserType
 
@@ -4074,6 +4077,10 @@ module WatirWorks_WebUtilities
         puts2("\nStarting Safari on OSX...")
         oBrowser = Watir::Browser.new :safari #, :profile => 'default'
         $bStartedBrowser = true
+        
+        # Safari intermittently requires additional time to connect with the driver before its ready 
+        sleep iDelay  # That's long enough to celebrate
+            
       end # when Safari
 
     end  # Start the specified browser
@@ -4090,11 +4097,11 @@ module WatirWorks_WebUtilities
     #Watir::Wait.until{oBrowser.window.size.height ==  iHeight}
     #Watir::Wait.until{oBrowser.window.size.width == iWidth}
 
+    # Allow time to celebrate the birth of the new browser.
+    sleep iDelay  # That's long enough to celebrate
+    
     # Load the URL
     oBrowser.goto(sURL)
-
-    # Allow time to celebrate the birth of the new browser.
-    sleep 2  # That's long enough to celebrate
 
     # Set global flag for use in various methods or tests to determine if a browser was started
     $bBrowserStarted = true
