@@ -3956,7 +3956,7 @@ module WatirWorks_WebUtilities
     end
 
     # Cleanup the specified value
-    sBrowserType = sBrowserType.to_s.downcase
+    sBrowserType = sBrowserType.capitalize
 
     if($browser != nil) # If current Browser object is a Global Browser Object don't start an new one
       puts2("WARNING - Global browser object already started.",'WARN')
@@ -3969,7 +3969,7 @@ module WatirWorks_WebUtilities
     # Start the specified browser
     case sBrowserType
 
-    when /^c.*/
+    when /^C.*/i
       if(is_win? == true)
         if(is_chrome64_installed? == false)
           puts2("\nStarting Chrome 32-bit on Windows...")
@@ -3993,7 +3993,7 @@ module WatirWorks_WebUtilities
 
       $bStartedBrowser = true
 
-    when /^e.*/
+    when /^E.*/i
       if(is_win?() == true)
 
         if(sProfile.class != NilClass)
@@ -4007,7 +4007,7 @@ module WatirWorks_WebUtilities
         puts2("WARNING - Edge is not supported on this OS", 'WARN')
       end # when Edge
 
-    when  /^f.*/
+    when  /^F.*/i
       if(is_win? == true)
         # The 32-bit Firefox browser installs in different folder on Win32 vs. Win64 bit OS's
         if(is_firefox64_installed?() == false)
@@ -4032,8 +4032,10 @@ module WatirWorks_WebUtilities
 
       $bStartedBrowser = true
 
-    when  /^i.*/
+    when  /^I.*/i
       if (is_win? == true)
+
+        sBrowserType = "Internet Explorer"
 
         if(sProfile.class != NilClass)
           puts2("WARNING - Ignoring Profile, WebDriver for Internet Explorer does not support Profiles.", 'WARN')
@@ -4046,7 +4048,7 @@ module WatirWorks_WebUtilities
         puts2("WARNING - Internet Explorer is not supported on this OS", 'WARN')
       end # when IE
 
-    when /^o.*/
+    when /^O.*/i
       if (is_win? == true)
 
         if(sProfile.class != NilClass)
@@ -4065,7 +4067,7 @@ module WatirWorks_WebUtilities
       oBrowser = Watir::Browser.new :opera #, :profile => 'default'
       $bStartedBrowser = true
 
-    when /^s.*/
+    when /^S.*/i
       if (is_win? == true)
         puts2("WARNING - Safari is not supported on this OS", 'WARN')
       else
@@ -4088,7 +4090,7 @@ module WatirWorks_WebUtilities
     # Display info on the browser's: type, version & OS
     Watir::Wait.until{oBrowser.exists?}
     sBrowserVersion = oBrowser.version.to_s
-    
+
     sOSVersion = ""
     if(is_win? == true)
       sOSVersion = getWindowsVersion.to_s
