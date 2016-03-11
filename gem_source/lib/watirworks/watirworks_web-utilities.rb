@@ -125,7 +125,7 @@ require 'watir-webdriver'
 module WatirWorks_WebUtilities
 
   # Version of this module
-  WW_WEB_UTILITIES_VERSION = "1.3.1"
+  WW_WEB_UTILITIES_VERSION = "1.3.2"
 
   # Flag indicating if a browser was started
   $bBrowserStarted = false
@@ -3965,7 +3965,7 @@ module WatirWorks_WebUtilities
 
     # Define a default delay time
     iDelay = 2
-    
+
     # Start the specified browser
     case sBrowserType
 
@@ -4077,16 +4077,28 @@ module WatirWorks_WebUtilities
         puts2("\nStarting Safari on OSX...")
         oBrowser = Watir::Browser.new :safari #, :profile => 'default'
         $bStartedBrowser = true
-        
-        # Safari intermittently requires additional time to connect with the driver before its ready 
+
+        # Safari intermittently requires additional time to connect with the driver before its ready
         sleep iDelay  # That's long enough to celebrate
-            
+
       end # when Safari
 
     end  # Start the specified browser
 
+    # Display info on the browser's: type, version & OS
     Watir::Wait.until{oBrowser.exists?}
-    puts2("\tBrowser version = " + oBrowser.version.to_s)
+    sBrowserVersion = oBrowser.version.to_s
+    
+    sOSVersion = ""
+    if(is_win? == true)
+      sOSVersion = getWindowsVersion.to_s
+    end
+
+    if(is_osx? == true)
+      sOSVersion = 'OSX ' + getOSXVersion.to_s
+    end
+
+    puts2("Started " + sBrowserType + " version " + sBrowserVersion + " on " + sOSVersion)
 
     # Size & position the browser window
     oBrowser.window.move_to(iXpos, iYpos)
@@ -4099,7 +4111,7 @@ module WatirWorks_WebUtilities
 
     # Allow time to celebrate the birth of the new browser.
     sleep iDelay  # That's long enough to celebrate
-    
+
     # Load the URL
     oBrowser.goto(sURL)
 
