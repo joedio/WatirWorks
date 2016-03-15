@@ -125,7 +125,7 @@ require 'watir-webdriver'
 module WatirWorks_WebUtilities
 
   # Version of this module
-  WW_WEB_UTILITIES_VERSION = "1.3.2"
+  WW_WEB_UTILITIES_VERSION = "1.3.3"
 
   # Flag indicating if a browser was started
   $bBrowserStarted = false
@@ -5206,8 +5206,9 @@ class Watir::Browser
       puts2("\tWindow width = " + self.window.size.width.to_s)
       puts2("\tWindow position.x = " + self.window.position.x.to_s)
       puts2("\tWindow position.y = " + self.window.position.y.to_s)
-      puts2("\tURL = " + self.url )
-      puts2("\tTitle = " + self.title)
+      puts2("\tURL = " + self.url.to_s)
+      puts2("\tTitle = " + self.title.to_s)
+      puts2("\tStatus = " + self.status.to_s)
     end
 
   end # Method - display_info()
