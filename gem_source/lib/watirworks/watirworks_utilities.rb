@@ -3049,14 +3049,14 @@ module WatirWorks_Utilities
 
       aSheetsInWorkbook = oWorkbook.sheets
 
-      #if($VERBOSE == true)
-      puts2("\t Workbook contains spreadsheets: " )
+      if($VERBOSE == true)
+        puts2("\t Workbook contains spreadsheets: " )
 
-      # Loop through sheets in workbook
-      aSheetsInWorkbook.each do | sSheetLabel |
-        puts2("\t\t" + sSheetLabel)
-      end # Loop through sheets in workbook
-      #end
+        # Loop through sheets in workbook
+        aSheetsInWorkbook.each do | sSheetLabel |
+          puts2("\t\t" + sSheetLabel)
+        end # Loop through sheets in workbook
+      end
 
       # Set the specified Spreadsheet as the default (active) sheet
       if(sSpreadsheet == nil)
