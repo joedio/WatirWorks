@@ -2986,9 +2986,9 @@ module WatirWorks_Utilities
 
     if($VERBOSE == true)
       puts2("Parameters - parse_spreadsheet:")
-      puts2("  sWorkbookFile: " + sWorkbookFile)
+      puts2("  sWorkbookFile: " + sWorkbookFile.to_s)
       puts2("  sSpreadsheet: " + sSpreadsheet.to_s)
-      puts2("  sDataDirectory: " + sDataDirectory)
+      puts2("  sDataDirectory: " + sDataDirectory.to_s)
       puts2("  bStopAtEmptyRow: " + bStopAtEmptyRow.to_s)
     end
 
@@ -3106,7 +3106,7 @@ module WatirWorks_Utilities
           end
 
           if(aRowData[0] == nil)
-            puts2("Skip from the row starting with an empty first column to the last row")
+            puts2("\t Skipping rows starting with the first empty column.")
             # Force skipping the remaining rows
             iCurrentRow = iLastRow + 1
           else
