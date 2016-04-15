@@ -125,7 +125,7 @@ require 'watir-webdriver'
 module WatirWorks_WebUtilities
 
   # Version of this module
-  WW_WEB_UTILITIES_VERSION = "1.3.3"
+  WW_WEB_UTILITIES_VERSION = "1.3.4"
 
   # Flag indicating if a browser was started
   $bBrowserStarted = false
@@ -3959,8 +3959,9 @@ module WatirWorks_WebUtilities
     sBrowserType = sBrowserType.capitalize
 
     if($browser != nil) # If current Browser object is a Global Browser Object don't start an new one
-      puts2("WARNING - Global browser object already started.",'WARN')
-      return $browser
+      puts2("WARNING - Global $browser object found. Destroying $browser...",'WARN')
+      $browser = nil
+      #return $browser
     end
 
     # Define a default delay time
