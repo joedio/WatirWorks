@@ -116,7 +116,6 @@ require 'watir-webdriver'
 #    set_select_list_by_id?(...)
 #    set_select_list_by_index?(...)
 #    start_browser(...)
-#    wait_until_status(...)
 #
 #
 # Pre-requisites:
@@ -125,7 +124,7 @@ require 'watir-webdriver'
 module WatirWorks_WebUtilities
 
   # Version of this module
-  WW_WEB_UTILITIES_VERSION = "1.3.4"
+  WW_WEB_UTILITIES_VERSION = "1.3.5"
 
   # Flag indicating if a browser was started
   $bBrowserStarted = false
@@ -4125,85 +4124,6 @@ module WatirWorks_WebUtilities
 
   end # Method - start_browser()
 
-  #=============================================================================#
-  #--
-  # Method: wait_until_status(...)
-  #
-  #++
-  #
-  # Description: Checks the Browser's status text for a match with the specified text.
-  #              Loops once each Interval, until a specified Timeout is reached.
-  #
-  # NOTE: In Firefox 1.6.5 the  method 'status' is incorrectly using #{WINDOW_VAR}instead of #{window_var}
-  #       For details see:  http://jira.openqa.org/browse/WTR-441
-  #
-  #       SafariWatir does not support browser.status()
-  #       Calling this method will return true if run under Safari.
-  #
-  # Returns: BOOLEAN - true if the specified Browser's status text is found, otherwise false
-  #
-  # Syntax: sStatusText = STRING - The Browser's status text to check for
-  #         iTimeout = INTEGER - The number of seconds to wait for the specified status text
-  #         iInterval = INTEGER - The number of second to wait between loops
-  #
-  # Usage Examples: To verify the Browser's status is "Done" for up to 20 seconds, checking every 4 seconds
-  #                         if(browser.wait_until_status("Done", 20, 4) == true)
-  #                              puts2("Found expected Browser's status text = " + browser.status)
-  #                         else
-  #                              puts2("Found unexpected Browser's status text = " + browser.status)
-  #                         end
-  #
-  #=============================================================================#
-  def wait_until_status(sStatusText = "Done", iTimeout=10, iInterval=0.1)
-
-    if($VERBOSE == true)
-      puts2("Parameters - wait_until_status:")
-      puts2("  sStatusText: " + sStatusText.to_s)
-      puts2("  iTimeout: " + iTimeout.to_s)
-      puts2("  iInterval: " + iInterval.to_s)
-    end
-
-    # Status not supported with Safariwatir
-    #if(self.is_safari?() == true)
-    #  return true
-    #end
-
-    # Disallow values less that one
-    if(iTimeout <= 1)
-      iTimeout = 1
-    end
-
-    if(iInterval <= 0.1)
-      iInterval = 0.1
-    end
-
-    if($VERBOSE == true)
-      puts2("Browser's status text: " +	self.status)
-    end
-
-    tStartTime = Time.now
-    tElapsedTime = 0
-
-    # Loop until the status bar text to changes back to "Done" or the timeout is exceeded
-    while((self.status != sStatusText) && (tElapsedTime <= iTimeout)) do
-      if($VERBOSE == true)
-        puts2("Browser's status text: " +	self.status)
-      end
-
-      sleep iInterval
-      tElapsedTime = calc_elapsed_time(tStartTime).to_f
-
-    end
-
-    # In case the timeout was reached need to check once more to set the return status
-    if(self.status == sStatusText)
-      return true
-    else
-      return false
-    end
-
-  end # Method - wait_until_status()
-
 end # Module - WatirWorks_WebUtilities
 
 #=============================================================================#
@@ -5169,6 +5089,9 @@ end # Class - Object
 #    save_html(...)
 #    save_screencapture(...)
 #    scrollBy(...)
+#    version()
+#    wait_for_url_change?(...)
+#    wait_until_status(...)
 #++
 #=============================================================================#
 class Watir::Browser
@@ -5796,6 +5719,122 @@ class Watir::Browser
     return self.driver.capabilities[:version]
 
   end # Method - version...)
+
+  #=============================================================================#
+  #--
+  # Method: wait_for_url_change?(...)
+  #++
+  #
+  # Description: Waits until the current page's URL has changed from its prior URL.
+  #
+  # Hint: Use prior to calling wait_until_status() to tell if a page is ready.
+  #
+  # Returns: BOOLEAN - true if URL has changed, otherwise false
+  #
+  # Syntax: sPriorURL = STRING - URL to wait on until it changes
+  #         iMaxWaitTime = FIXNUM - Number of seconds to wait before timing out
+  #
+  # Usage: assert($browser.wait_for_url_change?)
+  #=============================================================================#
+  def wait_for_url_change?(sPriorURL, iMaxWaitTime = 120)
+
+    if($VERBOSE == true)
+      puts2("Parameters - wait_for_url_change?:")
+      puts2("  sPriorURL = " + sPriorURL.to_s)
+      puts2("  iMaxWaitTime = " + iMaxWaitTime.to_s)
+    end
+
+    # Set default return status
+    bReturnStatus = false
+
+    #  Loop until the URL changes or the loop times out
+    iCount = 0
+    until(self.url != sPriorURL || iCount >= iMaxWaitTime) do
+      sleep(1)
+      iCount = iCount + 1
+    end #  Loop until the URL changes or the loop times out
+
+    bReturnStatus = true
+
+    return bReturnStatus
+
+  end # method - wait_for_url_change?(...)
+
+  #=============================================================================#
+  #--
+  # Method: wait_until_status(...)
+  #
+  #++
+  #
+  # Description: Checks the Browser's status text for a match with the specified text.
+  #              Loops once each Interval, until a specified Timeout is reached.
+  #
+  # NOTE: In Firefox 1.6.5 the  method 'status' is incorrectly using #{WINDOW_VAR}instead of #{window_var}
+  #       For details see:  http://jira.openqa.org/browse/WTR-441
+  #
+  # Returns: BOOLEAN - true if the specified Browser's status text is found, otherwise false
+  #
+  # Syntax: sStatusText = STRING - The Browser's status text to check for
+  #         iTimeout = INTEGER - The number of seconds to wait for the specified status text
+  #         iInterval = INTEGER - The number of second to wait between loops
+  #
+  # Usage Examples: To verify the Browser's status is "Done" for up to 20 seconds, checking every 4 seconds
+  #                         if(browser.wait_until_status("Done", 20, 4) == true)
+  #                              puts2("Found expected Browser's status text = " + browser.status)
+  #                         else
+  #                              puts2("Found unexpected Browser's status text = " + browser.status)
+  #                         end
+  #
+  #=============================================================================#
+  def wait_until_status(sStatusText = "Done", iTimeout=10, iInterval=0.1)
+
+    if($VERBOSE == true)
+      puts2("Parameters - wait_until_status:")
+      puts2("  sStatusText: " + sStatusText.to_s)
+      puts2("  iTimeout: " + iTimeout.to_s)
+      puts2("  iInterval: " + iInterval.to_s)
+    end
+
+    # Status not supported with Safariwatir
+    #if(self.is_safari?() == true)
+    #  return true
+    #end
+
+    # Disallow values less that one
+    if(iTimeout <= 1)
+      iTimeout = 1
+    end
+
+    if(iInterval <= 0.1)
+      iInterval = 0.1
+    end
+
+    if($VERBOSE == true)
+      puts2("Browser's status text: " + self.status)
+    end
+
+    tStartTime = Time.now
+    tElapsedTime = 0
+
+    # Loop until the status bar text to changes back to "Done" or the timeout is exceeded
+    while((self.status != sStatusText) && (tElapsedTime <= iTimeout)) do
+      if($VERBOSE == true)
+        puts2("Browser's status text: " + self.status)
+      end
+
+      sleep iInterval
+      tElapsedTime = calc_elapsed_time(tStartTime).to_f
+
+    end
+
+    # In case the timeout was reached need to check once more to set the return status
+    if(self.status == sStatusText)
+      return true
+    else
+      return false
+    end
+
+  end # Method - wait_until_status()
 
 end  # Class - Watir::Browser
 
