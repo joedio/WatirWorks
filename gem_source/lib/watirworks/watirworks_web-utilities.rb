@@ -5828,9 +5828,11 @@ class Watir::Browser
     end
 
     # In case the timeout was reached need to check once more to set the return status
-    if(self.status == sStatusText)
+    sFailingStatus = self.status.to_s
+    if(sFailingStatus == sStatusText)
       return true
     else
+      puts2("Browser status = '#{sFailingStatus}'")
       return false
     end
 
