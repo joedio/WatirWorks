@@ -2,7 +2,7 @@
 /chromedriver.log
 
 ##/.project
-*.gem
+#*.gem
 *.rbc
 /.config
 /coverage/
