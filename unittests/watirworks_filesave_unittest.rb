@@ -132,7 +132,7 @@ class UnitTest_Save < Test::Unit::TestCase
         # Get the TEMP Environment Variable setting
         hEnvVars = getenv("TEMP")
         sOutputDir = hEnvVars["TEMP"].to_s
-      elsif(is_linux?)
+      else
         sOutputDir = "/tmp"
       end
 
