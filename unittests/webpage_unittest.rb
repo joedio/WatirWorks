@@ -1,9 +1,9 @@
 #--
 #=============================================================================#
-# File: watirworks_webpage_unittest.rb
+# File: webpage_unittest.rb
 #
 #
-#  Copyright (c) 2008-2016, Joe DiMauro
+#  Copyright (c) 2008-2018, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for the Web pages using WatirWorks methods:

@@ -1,8 +1,8 @@
 #--
 #=============================================================================#
-# File: waitrworks_calc_time_unittest.rb
+# File: calc_time_unittest.rb
 #
-#  Copyright (c) 2008-2010, Joe DiMauro
+#  Copyright (c) 2008-2018, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit test for time calculations. Tests method:

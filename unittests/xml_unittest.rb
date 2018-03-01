@@ -1,8 +1,8 @@
 #--
 #=============================================================================#
-# File: watirworks_xml_unittest.rb
+# File: xml_unittest.rb
 #
-#  Copyright (c) 2008-2010, Joe DiMauro
+#  Copyright (c) 2008-2018, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for WatirWorks WebUtilities methods:

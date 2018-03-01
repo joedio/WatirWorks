@@ -1,8 +1,8 @@
 #--
 #=============================================================================#
-# File: watirworks_convert_datestrings_unittest.rb
+# File: convert_datestrings_unittest.rb
 #
-#  Copyright (c) 2008-2010, Joe DiMauro
+#  Copyright (c) 2008-2018, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for WatirWorks STRING methods:

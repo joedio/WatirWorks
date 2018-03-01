@@ -1,6 +1,9 @@
 #--
 #=============================================================================#
-# File: watirworks_string_unittest.rb
+# File: string_unittest.rb
+#
+# Copyright (c) 2008-2018, Joe DiMauro
+#  All rights reserved.
 #
 # Description: Unit tests for WatirWorks STRING methods:
 #                   wordcount()

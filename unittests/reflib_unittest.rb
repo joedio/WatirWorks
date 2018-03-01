@@ -1,8 +1,8 @@
 #--
 #=============================================================================#
-# File: watirworks_reflib_unittest.rb
+# File: reflib_unittest.rb
 #
-#  Copyright (c) 2008-2010, Joe DiMauro
+#  Copyright (c) 2008-2018, Joe DiMauro
 #  All rights reserved.
 #
 # Description:  The WatirWorks Reference Library's unit test

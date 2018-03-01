@@ -1,12 +1,12 @@
 #--
 #=============================================================================#
-# File: watirworks_numeric_unittest.rb
+# File: fixnum_unittest.rb
 #
-#  Copyright (c) 2008-2010, Joe DiMauro
+#  Copyright (c) 2008-2018, Joe DiMauro
 #  All rights reserved.
 #
-# Description: Unit tests for WatirWorks NUMERIC methods:
-#                 comma_delimit(...)
+# Description: Unit tests for WatirWorks FIXNUM methods:
+#                 ordinal()
 #=============================================================================#
 
 #=============================================================================#
@@ -39,15 +39,15 @@ iRun_TestLevel = 0
 #=============================================================================#
 
 #=============================================================================#
-# Class: UnitTest_Numeric
+# Class: UnitTest_FixnumOrdinal
 #
 #
 # Test Case Methods: setup, teardown
-#                    test_NUMERIC_CommaDelimit
+#                    test_Fixnum_001_ordinal
 #
 #
 #=============================================================================#
-class UnitTest_Numeric < Test::Unit::TestCase
+class UnitTest_Fixnum < Test::Unit::TestCase
 
   #===========================================================================#
   # Method: setup
@@ -85,50 +85,22 @@ class UnitTest_Numeric < Test::Unit::TestCase
   end # end of teardown
 
   #===========================================================================#
-  # Testcase method: test_Numeric_001_CommaDelimit
+  # Testcase method: test_Fixnum_001_ordinal
   #
-  # Description: Test the NUMERIC method comma_delimit(...)
+  # Description: Test the FIXNUM method ordinal()
   #===========================================================================#
-  def test_Numeric_001_CommaDelimit
+  def test_Fixnum_001_ordinal
 
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_Numeric_001_CommaDelimit")
+    puts2("Testcase: test_Fixnum_001_ordinal")
     puts2("#######################")
 
-    iNumber = 1
-    puts2("Delimit " + iNumber.to_s + " with a comma: " + iNumber.comma_delimit(","))
+    # Print the Ordinal values from iMin to iMax
+    iMin = -1
+    iMax = 20
+    iMin.upto(iMax) { | iInteger |  puts2("#{iInteger.to_s} " + " has an ordinal of " + iInteger.ordinal) }
 
-    iNumber = 12
-    puts2("Delimit " + iNumber.to_s + " with a comma: " + iNumber.comma_delimit(","))
+  end # End of test method - test_Fixnum_001_ordinal
 
-    iNumber = 123
-    puts2("Delimit " + iNumber.to_s + " with a comma: " + iNumber.comma_delimit(","))
-
-    iNumber = 1234
-    puts2("Delimit " + iNumber.to_s + " with a comma: " + iNumber.comma_delimit(","))
-
-    iNumber = 1234.0
-    puts2("Delimit " + iNumber.to_s + " with a comma: " + iNumber.comma_delimit(","))
-
-    iNumber = 1234.56
-    puts2("Delimit " + iNumber.to_s + " with a comma: " + iNumber.comma_delimit(","))
-
-    iNumber = 1234.567
-    puts2("Delimit " + iNumber.to_s + " with a comma: " + iNumber.comma_delimit(","))
-
-    iNumber = 1234.5678
-    puts2("Delimit " + iNumber.to_s + " with a comma: " + iNumber.comma_delimit(","))
-
-    iNumber = -1234567890.01
-    puts2("Delimit " + iNumber.to_s + " with a comma: " + iNumber.comma_delimit)
-
-    iNumber = 1234567890.99
-    puts2("Delimit " + iNumber.to_s + " with a period: " + iNumber.comma_delimit("."))
-
-    iNumber = 1234567890.0123
-    puts2("Delimit " + iNumber.to_s + " with a space: " + iNumber.comma_delimit(" "))
-
-  end # End of test method - test_Numeric_001_CommaDelimit
-
-end # end of Class - UnitTest_Numeric
+end # end of Class - UnitTest_Fixnum

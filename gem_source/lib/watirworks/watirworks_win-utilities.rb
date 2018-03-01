@@ -42,7 +42,8 @@ require 'watirworks'  # The WatirWorks library loader
 include WatirWorks_Utilities  # The WatirWorks Utilities Library
 
 # Watir-WebDriver
-require 'watir-webdriver'
+require 'watir'
+#require 'watir-webdriver'
 
 #============================================================================#
 # Module: WatirWorks_WinUtilities

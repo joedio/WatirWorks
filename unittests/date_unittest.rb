@@ -1,8 +1,8 @@
 #--
 #=============================================================================#
-# File: watirworks_date_unittest.rb
+# File: date_unittest.rb
 #
-#  Copyright (c) 2008-2010, Joe DiMauro
+#  Copyright (c) 2008-2018, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit test showing various examples of date manipulation using

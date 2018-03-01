@@ -1,8 +1,8 @@
 #--
 #=============================================================================#
-# File: watirworks_validate_unittest.rb
+# File: validate_unittest.rb
 #
-#  Copyright (c) 2008-2010, Joe DiMauro
+#  Copyright (c) 2008-2018, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for WatirWorks methods:

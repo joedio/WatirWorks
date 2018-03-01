@@ -1,9 +1,9 @@
 #--
 #=============================================================================#
-# File: watirworks_filesave_unittest.rb
+# File: filesave_unittest.rb
 #
 #
-#  Copyright (c) 2008-2015, Joe DiMauro
+#  Copyright (c) 2008-2018, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for the IE browser using WatirWorks methods:

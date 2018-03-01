@@ -1,8 +1,8 @@
 #--
 #=============================================================================#
-# File: watirworks_win_dialogs_unittest.rb
+# File: win_dialogs_unittest.rb
 #
-#  Copyright (c) 2008-2010, Joe DiMauro
+#  Copyright (c) 2008-2018, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for WatirWorks Windows Message box methods:

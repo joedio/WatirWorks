@@ -1,8 +1,8 @@
 #--
 #=============================================================================#
-# File: watirworks_unittest_testsuite.rb
+# File: watirworks__nobrowser_unittest_testsuite.rb
 #
-#  Copyright (c) 2008-2015, Joe DiMauro
+#  Copyright (c) 2008-2018, Joe DiMauro
 #  All rights reserved.
 #
 #

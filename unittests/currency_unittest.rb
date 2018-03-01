@@ -1,9 +1,9 @@
 #encoding: ISO-8859-1
 #--
 #=============================================================================#
-# File: watirworks_currency_unittest.rb
+# File: currency_unittest.rb
 #
-#  Copyright (c) 2008-2010, Joe DiMauro
+#  Copyright (c) 2008-2018, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for WatirWorks methods:

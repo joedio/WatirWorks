@@ -1,8 +1,8 @@
 #--
 #=============================================================================#
-# File: watirworks_spreadsheet_unittest.rb
+# File: spreadsheet_unittest.rb
 #
-#  Copyright (c) 2008-2011, Joe DiMauro
+#  Copyright (c) 2008-2018, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for WatirWorks methods:

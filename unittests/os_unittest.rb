@@ -1,8 +1,8 @@
 #--
 #=============================================================================#
-# File: watirworks_os_unittest.rb
+# File: os_unittest.rb
 #
-#  Copyright (c) 2008-2016, Joe DiMauro
+#  Copyright (c) 2008-2018, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for WatirWorks OS methods:

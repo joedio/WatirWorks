@@ -46,7 +46,8 @@ include Test::Unit::Assertions    # A Ruby Module
 
 # Watir WebDriver section
 #===============
-require 'watir-webdriver'            # Require the files for the Watir WebDriver gem
+require 'watir'
+#require 'watir-webdriver'            # Require the files for the Watir WebDriver gem
 
 
 # WatirWorks section

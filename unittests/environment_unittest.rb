@@ -1,8 +1,8 @@
 #--
 #=============================================================================#
-# File: watirworks_environment_unittest.rb
+# File: environment_unittest.rb
 #
-#  Copyright (c) 2008-2015, Joe DiMauro
+#  Copyright (c) 2008-2018, Joe DiMauro
 #  All rights reserved.
 #
 # Description: Unit tests for WatirWorks methods:
