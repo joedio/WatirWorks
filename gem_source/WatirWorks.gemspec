@@ -1,7 +1,7 @@
 require 'rubygems'
 spec = Gem::Specification.new do |s|
   s.name = 'watirworks'
-  s.version = '0.2.1'
+  s.version = '0.2.2'
   s.license = 'MIT'
   s.authors = "Joe DiMauro"
   s.homepage = ""
