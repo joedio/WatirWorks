@@ -1,11 +1,11 @@
 #--
 #=============================================================================#
-# File: fixnum_unittest.rb
+# File: integer_unittest.rb
 #
 #  Copyright (c) 2008-2018, Joe DiMauro
 #  All rights reserved.
 #
-# Description: Unit tests for WatirWorks FIXNUM methods:
+# Description: Unit tests for WatirWorks Integer methods:
 #                 ordinal()
 #=============================================================================#
 
@@ -17,6 +17,7 @@ require 'rubygems'
 
 # WatirWorks
 require 'watirworks'  # The WatirWorks library loader
+
 include WatirWorks_Utilities    #  WatirWorks General Utilities
 #=============================================================================#
 
@@ -31,7 +32,6 @@ include WatirWorks_Utilities    #  WatirWorks General Utilities
 # Watir global variables
 #
 
-
 # WatirWorks global variables
 bIncludeInSuite = true
 sRun_TestType = "nobrowser"
@@ -39,16 +39,15 @@ iRun_TestLevel = 0
 #=============================================================================#
 
 #=============================================================================#
-# Class: UnitTest_FixnumOrdinal
+# Class: UnitTest_IntgerOrdinal
 #
 #
 # Test Case Methods: setup, teardown
-#                    test_Fixnum_001_ordinal
+#                    test_Intger_001_ordinal
 #
 #
 #=============================================================================#
-class UnitTest_Fixnum < Test::Unit::TestCase
-
+class UnitTest_Intger < Test::Unit::TestCase
   #===========================================================================#
   # Method: setup
   #
@@ -85,15 +84,15 @@ class UnitTest_Fixnum < Test::Unit::TestCase
   end # end of teardown
 
   #===========================================================================#
-  # Testcase method: test_Fixnum_001_ordinal
+  # Testcase method: test_Intger_001_ordinal
   #
-  # Description: Test the FIXNUM method ordinal()
+  # Description: Test the Intger method ordinal()
   #===========================================================================#
-  def test_Fixnum_001_ordinal
+  def test_Intger_001_ordinal
 
     puts2("")
     puts2("#######################")
-    puts2("Testcase: test_Fixnum_001_ordinal")
+    puts2("Testcase: test_Intger_001_ordinal")
     puts2("#######################")
 
     # Print the Ordinal values from iMin to iMax
@@ -101,6 +100,6 @@ class UnitTest_Fixnum < Test::Unit::TestCase
     iMax = 20
     iMin.upto(iMax) { | iInteger |  puts2("#{iInteger.to_s} " + " has an ordinal of " + iInteger.ordinal) }
 
-  end # End of test method - test_Fixnum_001_ordinal
+  end # End of test method - test_Intger_001_ordinal
 
-end # end of Class - UnitTest_Fixnum
+end # end of Class - UnitTest_Integer

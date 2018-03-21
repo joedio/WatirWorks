@@ -4212,15 +4212,15 @@ end # end of module WatirWorks_Utilities
 #=============================================================================#
 
 #=============================================================================#
-# Class: Fixnum
+# Class: Integer
 #
-# Description: Extends the Ruby Fixnum class with additional methods
+# Description: Extends the Ruby Integer class with additional methods
 #
 #--
 # Methods: ordinal
 #++
 #=============================================================================#
-class Fixnum
+class Integer
   #=============================================================================#
   #--
   # Method: ordinal
@@ -4256,7 +4256,7 @@ class Fixnum
 
   end # Method - ordinal
 
-end # Class - Fixnum
+end # Class - Integer
 
 #=============================================================================#
 # Class: Numeric

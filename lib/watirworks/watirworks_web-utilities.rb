@@ -43,6 +43,7 @@ include WatirWorks_Utilities  # The WatirWorks Utilities Library
 
 # Watir-WebDriver
 require 'watir'
+
 #require 'watir-webdriver'
 
 #============================================================================#
@@ -4128,9 +4129,9 @@ module WatirWorks_WebUtilities
 end # Module - WatirWorks_WebUtilities
 
 #=============================================================================#
-# Class: Fixnum
+# Class: Integer
 #
-# Description: Extends the Ruby Fixnum class with additional methods
+# Description: Extends the Ruby Integer class with additional methods
 #
 #              For backwards compatibility with Watir/WatirWorks
 #
@@ -4138,7 +4139,7 @@ end # Module - WatirWorks_WebUtilities
 # Methods: adjust_index()
 #++
 #=============================================================================#
-class Fixnum
+class Integer
   #=============================================================================#
   #--
   # Method: adjust_index()
@@ -4173,7 +4174,7 @@ class Fixnum
     end
 
   end # adjust_index
-end # Class - Fixnum
+end # Class - Integer
 
 #=============================================================================#
 # Class: Object
