@@ -183,8 +183,9 @@ class Example_Search_TestClass < Test::Unit::TestCase
         display_watir_env()
         display_watirworks_env()
         
+        # TODO - Remove or replace
         # Display information on the browser executing the test
-        display_browser_env()
+        #display_browser_env()
         
         if(is_win?)
           puts2("Registered IE version: " + get_registered_ie_version)
@@ -196,11 +197,13 @@ class Example_Search_TestClass < Test::Unit::TestCase
       # Only run this if no other test has read in the Common data from the workbooks
       if($hWorkbook_Data.class == NilClass)
         
-        sWorkbook_Name = "RunControl_Data.xls"
+        sWorkbook_Name = "../examples/search/data/RunControl_Data.xls"
         aSpreadsheet_List = ["Environment", "Urls", "SearchTerms", "RunControl"]
         
+        # TODO - Replace with parse_workbook
         # Read the Test control workbook into a  Hash of -Sheet Arrays of - Column data Hashes of - STRING of data
-        $hWorkbook_Data = parse_workbook_xls(sWorkbook_Name, aSpreadsheet_List)
+        $hWorkbook_Data = parse_workbook(sWorkbook_Name, aSpreadsheet_List)
+        #$hWorkbook_Data = parse_workbook_xls(sWorkbook_Name, aSpreadsheet_List)
         
         # Split the Workbook Hash of - Sheet Arrays of-  Column data Hashes - into separate Arrays by Sheet
         $aSpreadsheet_ENV = $hWorkbook_Data["Environment"]

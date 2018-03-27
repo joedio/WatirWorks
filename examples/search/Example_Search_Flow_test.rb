@@ -1,4 +1,3 @@
-
 #--
 #=============================================================================#
 # File: Example_Search_Flow_test.rb
@@ -64,6 +63,7 @@ require 'rubygems'
 
 # WatirWorks
 require 'watirworks'  # The WatirWorks library loader
+
 include WatirWorks_Utilities    # WatirWorks General Utilities
 include WatirWorks_WebUtilities # WatirWorks Web Utilities
 
@@ -108,7 +108,6 @@ iRun_TestLevel = 0
 #
 #=============================================================================#
 class Example_Search_TestClass < Test::Unit::TestCase
-
   #===========================================================================#
   # Method: setup
   #
@@ -144,7 +143,6 @@ class Example_Search_TestClass < Test::Unit::TestCase
 
   end # end of teardown
 
-
   #===========================================================================#
   # Testcase: test_0000_Search_Prep
   #
@@ -159,7 +157,6 @@ class Example_Search_TestClass < Test::Unit::TestCase
 
     sTestCase_Name = "test_0000_Search_Prep"
     puts2("\nStarting Testcase: #{sTestCase_Name}")
-
 
     begin
 
@@ -183,8 +180,9 @@ class Example_Search_TestClass < Test::Unit::TestCase
         display_watir_env()
         display_watirworks_env()
 
+        # TODO - Remove or replace
         # Display information on the browser executing the test
-        display_browser_env()
+        #display_browser_env()
 
         if(is_win?)
           puts2("Registered IE version: " + get_registered_ie_version)
@@ -196,11 +194,13 @@ class Example_Search_TestClass < Test::Unit::TestCase
       # Only run this if no other test has read in the Common data from the workbooks
       if($hWorkbook_Data.class == NilClass)
 
-        sWorkbook_Name = "RunControl_Data.xls"
+        sWorkbook_Name = "../examples/search/data/RunControl_Data.xls"
         aSpreadsheet_List = ["Environment", "Urls", "SearchTerms", "RunControl"]
 
+        # TODO - Replace with parse_workbook
         # Read the Test control workbook into a  Hash of -Sheet Arrays of - Column data Hashes of - STRING of data
-        $hWorkbook_Data = parse_workbook_xls(sWorkbook_Name, aSpreadsheet_List)
+        $hWorkbook_Data = parse_workbook(sWorkbook_Name, aSpreadsheet_List)
+        #$hWorkbook_Data = parse_workbook_xls(sWorkbook_Name, aSpreadsheet_List)
 
         # Split the Workbook Hash of - Sheet Arrays of-  Column data Hashes - into separate Arrays by Sheet
         $aSpreadsheet_ENV = $hWorkbook_Data["Environment"]
@@ -239,7 +239,6 @@ class Example_Search_TestClass < Test::Unit::TestCase
     end
   end # END TestCase - test_0000_Search_Prep
 
-
   #===========================================================================#
   # Testcase: test_Search_003_FLOW
   #
@@ -247,7 +246,6 @@ class Example_Search_TestClass < Test::Unit::TestCase
   #
   #===========================================================================#
   def test_Search_003_FLOW
-
 
     sTestCase_Name = "test_Search_003_FLOW"
     puts2("\nStarting Testcase: #{sTestCase_Name}")
@@ -266,7 +264,6 @@ class Example_Search_TestClass < Test::Unit::TestCase
       browser.goto($sAccessURL)
       puts2("Current URL: " + browser.url )
       puts2(" Emulating Web Browser version: " + browser.get_doc_app_version)
-
 
       # Use the Environment setting to parse the name of the query fields for the current environment
       # Find the Row of data matching the Execution Environment (The Row data is in a HASH)
@@ -326,7 +323,6 @@ class Example_Search_TestClass < Test::Unit::TestCase
         browser.button(:name, "#{$sSubmitButtonName}").click
         sleep(3)
 
-
         puts2("Validating expected link: #{sExpectedLinkHref}")
         assert(browser.link(:href, sExpectedLinkHref).exists?)
 
@@ -337,8 +333,6 @@ class Example_Search_TestClass < Test::Unit::TestCase
         browser.goto($sAccessURL)
 
       end
-
-
 
       #######################################
 
@@ -360,7 +354,6 @@ class Example_Search_TestClass < Test::Unit::TestCase
         puts2("\nCollecting current HTML tag counts...")
         browser.generate_testcode_html_tag_counts()
       end
-
 
       # Force any open browsers to exit
       kill_browsers()
