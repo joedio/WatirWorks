@@ -1,7 +1,0 @@
-A different file with different content
-A line with the word OK in it
-
-OK
-
-value = setting # Comment
-#value = setting # Comment

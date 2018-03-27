@@ -1,6 +1,0 @@
-A line with the word OK in it
-
-OK
-
-value = setting # Comment
-#value = setting # Comment
