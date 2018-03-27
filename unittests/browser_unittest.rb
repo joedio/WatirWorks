@@ -67,7 +67,7 @@ end
 
 # WatirWorks global variables
 #
-sRun_TestType = "browser"
+sRun_TestType = "web"
 iRun_TestLevel = 0
 
 # Inherit or set the default browser

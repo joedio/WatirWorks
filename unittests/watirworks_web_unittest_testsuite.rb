@@ -1,6 +1,6 @@
 #--
 #=============================================================================#
-# File: watirworks_browser_unittest_testsuite.rb
+# File: watirworks_web_unittest_testsuite.rb
 #
 #  Copyright (c) 2008-2018, Joe DiMauro
 #  All rights reserved.
@@ -74,7 +74,7 @@ bIncludeInSuite = true
 # Only tests matching this setting will be run.
 # ("" = ignore setting)
 #sRun_TestType = "nobrowser"
-sRun_TestType = "browser"
+sRun_TestType = "web"
 #sRun_TestType = ""
 
 # Set the WatirWorks iRun_TestLevel variable to your choice of test level to launch
