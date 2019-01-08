@@ -4,10 +4,7 @@
 	<comment>A Ruby 2.2.2 project</comment>
 	<projects>
 	</projects>
-	<buildSpec>
-	<buildCommand>
-		<name>org.eclipse.dltk.core.scriptbuilder</name>
-		<arguments></arguments></buildCommand></buildSpec>
 	<natures>
-	<nature>org.eclipse.dltk.ruby.core.nature</nature></natures>
+		<nature>org.eclipse.dltk.ruby.core.nature</nature>
+	</natures>
 </projectDescription>
